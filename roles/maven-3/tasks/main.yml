@@ -10,15 +10,15 @@
   become: yes
   command: /bin/tar xzf /var/local/apache-maven-{{ maven_version }}-bin.tar.gz
   args:
-    chdir: /usr/share
-    creates: /usr/share/apache-maven-{{ maven_version }}
+    chdir: /opt
+    creates: /opt/apache-maven-{{ maven_version }}
     warn: no
 
-- name: Link maven into /usr/share/maven
+- name: Link maven into /opt/maven
   become: yes
-  file: src=/usr/share/apache-maven-{{ maven_version }} dest=/usr/share/maven state=link
+  file: src=/opt/apache-maven-{{ maven_version }} dest=/opt/maven state=link
 
-- name: Link mvn
+- name: Link mvn binary into /usr/bin
   become: yes
-  file: src=/usr/share/maven/bin/mvn dest=/usr/bin/mvn state=link
+  file: src=/opt/maven/bin/mvn dest=/usr/bin/mvn state=link
 
