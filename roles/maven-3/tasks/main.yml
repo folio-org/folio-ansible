@@ -1,0 +1,24 @@
+---
+# Role to install maven-3 binary from Apache
+- name: Download maven binary
+  become: yes
+  get_url:
+    url: http://archive.apache.org/dist/maven/maven-3/{{ maven_version }}/binaries/apache-maven-{{ maven_version }}-bin.tar.gz
+    dest: /var/local/apache-maven-{{ maven_version }}-bin.tar.gz
+
+- name: Install maven
+  become: yes
+  command: /bin/tar xzf /var/local/apache-maven-{{ maven_version }}-bin.tar.gz
+  args:
+    chdir: /usr/share
+    creates: /usr/share/apache-maven-{{ maven_version }}
+    warn: no
+
+- name: Link maven into /usr/share/maven
+  become: yes
+  file: src=/usr/share/apache-maven-{{ maven_version }} dest=/usr/share/maven state=link
+
+- name: Link mvn
+  become: yes
+  file: src=/usr/share/maven/bin/mvn dest=/usr/bin/mvn state=link
+

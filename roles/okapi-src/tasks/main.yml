@@ -1,0 +1,17 @@
+---
+# Role to deploy an Okapi server from source to a Debian Jessie box
+- name: Install git
+  become: yes
+  apt: name=git state=present
+
+- name: Clone Okapi repository
+  become: yes
+  git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
+
+- name: Build Okapi
+  become: yes
+  shell: /usr/bin/mvn install > install.log
+  args:
+    chdir: "{{ okapi_src_home }}"
+    creates: "{{ okapi_src_home }}/okapi-core/target"  
+
