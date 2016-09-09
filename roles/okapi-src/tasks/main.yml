@@ -30,6 +30,14 @@
   file: state=link src={{ okapi_src_home }}/okapi-core/target/okapi-core-fat.jar path={{ okapi_home }}/lib/okapi-core-fat.jar
 
 # Temporary hack until init files are available
+- name: Check if Okapi core is running
+  become: yes
+  shell: netstat -anp | grep 9130 | grep LISTEN
+  register: okapi_check
+  ignore_errors: yes
+  changed_when: no
+
 - name: Launch okapi-core
   become: yes
   shell: nohup java -jar {{ okapi_home }}/lib/okapi-core-fat.jar dev &
+  when: okapi_check.stdout.find('java') == -1
