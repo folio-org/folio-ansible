@@ -1,0 +1,33 @@
+---
+# Role to deploy a Docker server
+- name: Install prereqs from apt
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-virtualenv
+    - python-pip
+    - python-apt
+
+- name: Install apt key for Docker
+  become: yes
+  apt_key: id=58118E89F3A912897C070ADBF76221572C52609D keyserver=hkp://p80.pool.sks-keyservers.net:80
+
+- name: Install apt repository for Docker
+  become: yes
+  apt_repository: repo="deb https://apt.dockerproject.org/repo debian-jessie main"
+
+- name: Create docker group
+  become: yes
+  group: name=docker
+
+- name: Add users to docker group
+  become: yes
+  user: name={{ item }} groups=docker
+  with_items: "{{ docker_users }}"
+    
+- name: Install Docker Engine
+  become: yes
+  apt: name=docker-engine
+
