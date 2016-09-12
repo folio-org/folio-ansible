@@ -1,0 +1,26 @@
+{
+  "id" : "test-auth",
+  "name" : "Okapi test auth module",
+  "provides" : [ {
+    "id" : "test-auth",
+    "version" : "3.4.5"
+  } ],
+  "requires" : [ {
+    "id" : "test-basic",
+    "version" : "2.2.1"
+  } ],
+  "routingEntries" : [ {
+    "methods" : [ "*" ],
+    "path" : "/",
+    "level" : "10",
+    "type" : "headers"
+  }, {
+    "methods" : [ "POST" ],
+    "path" : "/login",
+    "level" : "20",
+    "type" : "request-response"
+  } ],
+  "launchDescriptor" : {
+    "exec" : "java -Dport=%p -jar {{ okapi_src_home }}/okapi-test-auth-module/target/okapi-test-auth-module-fat.jar"
+  }
+}
