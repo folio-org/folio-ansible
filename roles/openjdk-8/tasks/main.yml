@@ -1,0 +1,13 @@
+---
+# Install openjdk-8-jdk on Debian Jessie
+- name: Install python-apt
+  become: yes
+  apt: name=python-apt state=present
+
+- name: Add backports apt repo
+  become: yes
+  apt_repository: repo="deb http://ftp.debian.org/debian jessie-backports main" state=present update_cache=yes
+
+- name: Install Java 8 from apt
+  become: yes
+  apt: name=openjdk-8-jdk state=present

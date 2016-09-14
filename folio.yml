@@ -1,0 +1,8 @@
+---
+# Ansible playbook to deploy Okapi and FOLIO modules
+# Group for development - run from source, deploy test modules
+# Vagrantfile puts default VM into this group
+- hosts: dev
+  roles:
+    - okapi-src
+    - okapi-test

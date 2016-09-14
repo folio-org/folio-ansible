@@ -1,0 +1,5 @@
+---
+# Common tasks for all roles
+- name: Update apt-cache
+  become: yes
+  apt: update-cache=yes

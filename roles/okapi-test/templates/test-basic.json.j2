@@ -1,0 +1,19 @@
+{
+  "id" : "test-basic",
+  "name" : "Okapi test module",
+  "provides" : [ {
+    "id" : "test-basic",
+    "version" : "2.2.3"
+  } ],
+  "routingEntries" : [ {
+    "methods" : [ "GET", "POST" ],
+    "path" : "/testb",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ "test-basic.needed" ],
+    "permissionsDesired" : [ "test-basic.extra" ]
+  } ],
+  "launchDescriptor" : {
+    "exec" : "java -Dport=%p -jar {{ okapi_src_home }}/okapi-test-module/target/okapi-test-module-fat.jar"
+  }
+}
