@@ -6,4 +6,3 @@
   roles:
     - okapi-test
     - mod-auth-src
-    - raml-module-builder

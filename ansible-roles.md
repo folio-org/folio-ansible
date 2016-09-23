@@ -27,8 +27,10 @@ deploys the modules. Depends on okapi-src.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
-builds the code. Depends on openjdk-8 and maven-3.
+builds the code. Depends on openjdk-8 and maven-3. Not strictly
+necessary for module development.
 
 ## docker-engine
-Installs the Docker engine from the Docker repository.
+Installs the Docker engine from the Docker repository. Not strictly
+necessary for module development.
 
