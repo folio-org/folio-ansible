@@ -42,6 +42,8 @@
   become: yes
   shell: nohup java -jar {{ okapi_home }}/lib/okapi-core-fat.jar dev > {{ okapi_home }}/logs/okapi.log &
   when: okapi_check.stdout.find('java') == -1
+  register: okapi_launch
 
 - name: Give Okapi a chance to spin up
   pause: seconds=5
+  when: okapi_launch.changed == true
