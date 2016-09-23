@@ -5,6 +5,7 @@
   apt: name={{ item }} state=present
   with_items:
     - git
+    - curl
 
 - name: Clone Okapi repository
   become: yes
@@ -39,5 +40,8 @@
 
 - name: Launch okapi-core
   become: yes
-  shell: nohup java -jar {{ okapi_home }}/lib/okapi-core-fat.jar dev &
+  shell: nohup java -jar {{ okapi_home }}/lib/okapi-core-fat.jar dev > {{ okapi_home }}/logs/okapi.log &
   when: okapi_check.stdout.find('java') == -1
+
+- name: Give Okapi a chance to spin up
+  pause: seconds=5

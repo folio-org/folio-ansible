@@ -1,3 +1,4 @@
 /.vagrant
 *.retry
 /okapi-src
+/mod-auth-src

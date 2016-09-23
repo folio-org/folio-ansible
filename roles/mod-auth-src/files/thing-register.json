@@ -1,0 +1,45 @@
+{
+    "id" : "thing-module",
+    "name" : "thing",
+    "provides" : [
+        {
+            "id" : "thing",
+            "version" : "0.0.1"
+        }
+    ],
+    "routingEntries" : [
+        {
+            "methods" : [ "GET" ],
+            "path" : "/things",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "thing.read" ],
+            "permissionsDesired" : [ "thing.see_sensitive" ]
+        },
+        {
+            "methods" : [ "POST" ],
+            "path" : "/things",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "thing.create" ],
+            "permissionsDesired" : [ "thing.see_sensitive" ]
+        },
+        {
+            "methods" : [ "PUT" ],
+            "path" : "/things",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "thing.edit" ],
+            "permissionsDesired" : [ "thing.see_sensitive" ]
+        },
+        {
+            "methods" : [ "DELETE" ],
+            "path" : "/things",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "thing.delete" ],
+            "permissionsDesired" : [ "thing.see_sensitive" ]
+        }
+
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "id" : "permissions-module",
+    "name" : "permissions",
+    "provides" : [
+        {
+            "id" : "permissions",
+            "version" : "0.0.1"
+        }
+    ],
+    "routingEntries" : [
+        {
+            "methods" : [ "GET" ],
+            "path" : "/perms/privileged",
+            "level" : "5",
+            "type" : "request-response"
+        },
+        {
+            "methods" : [ "POST" ],
+            "path" : "/perms/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.users.create" ]
+        },
+        {
+            "methods" : [ "GET" ],
+            "path" : "/perms/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.users.read" ]
+        },
+        {
+            "methods" : [ "DELETE" ],
+            "path" : "/perms/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.users.delete" ]
+        },
+        {
+            "methods" : [ "GET" ],
+            "path" : "/perms/permissions",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.permissions.read"]
+        },
+    {
+            "methods" : [ "POST" ],
+            "path" : "/perms/permissions",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.permissions.create"]
+        },
+  {
+            "methods" : [ "DELETE" ],
+            "path" : "/perms/permissions",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "perms.permissions.delete"]
+        }
+
+    ]
+
+}

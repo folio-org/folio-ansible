@@ -1,0 +1,127 @@
+---
+# Role to build the auth modules and run them from source
+- name: Install mod-auth prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - mongodb
+    - nodejs
+    - npm
+
+- name: Install n
+  become: yes
+  npm: name=n global=yes state=present
+
+# This will always register as changed
+- name: Move to latest Node.js stable
+  become: yes
+  command: n stable
+
+- name: Clone mod-auth repository
+  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }}
+
+- name: Build mod-auth modules
+  shell: /usr/bin/mvn install > install.log
+  args:
+    chdir: "{{ item }}"
+    creates: "{{ item }}/target"  
+  with_items:
+    - "{{ mod_auth_src_home }}/authentication_module"
+    - "{{ mod_auth_src_home }}/authorization_module"
+    - "{{ mod_auth_src_home }}/permissions_module"
+
+- name: Build Node.js sample modules
+  npm: state=present path={{ mod_auth_src_home }}/testing/{{ item }}
+  with_items:
+    - thing_module
+    - retrieve_module
+
+- name: Load testing data
+  command: mongoimport -d test -c users {{ mod_auth_src_home }}/testing/mongo/{{ item }}
+  with_items:
+    - users.json
+    - permissions.json
+    - credentials.json
+
+- name: Check auth module registration
+  uri:
+    url: http://localhost:9130/_/proxy/modules/{{ item }}
+    status_code: 200, 404
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+  register: auth_reg_status
+
+- name: Register auth modules
+  uri:
+    url: http://localhost:9130/_/proxy/modules
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', item.file) }}"
+    status_code: 201
+  when: auth_reg_status.results[item.index].status == 404
+  with_items:
+    - { file: permissions-register.json, index: 0 }
+    - { file: authentication-register.json, index: 1 }
+    - { file: authorization-register.json, index: 2 }
+    - { file: thing-register.json, index: 3 }
+    - { file: retrieve-register.json, index: 4 }
+
+- name: Check auth module deployment
+  uri:
+    url: http://localhost:9130/_/discovery/modules/{{ item }}
+    status_code: 200, 404
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+  register: auth_deploy_status
+
+- name: Deploy auth modules
+  uri:
+    url: http://localhost:9130/_/discovery/modules
+    method: POST
+    body_format: json
+    body: "{{ lookup('template', item.template) }}"
+    status_code: 201
+  when: auth_deploy_status.results[item.index].status == 404
+  with_items:
+    - { template: permissions-deploy.json.j2, index: 0 }
+    - { template: authentication-deploy.json.j2, index: 1 }
+    - { template: authorization-deploy.json.j2, index: 2 }
+    - { template: thing-deploy.json.j2, index: 3 }
+    - { template: retrieve-deploy.json.j2, index: 4 }
+
+- name: Check diku tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku
+    status_code: 200, 404
+  register: diku_status
+
+- name: Create diku tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants
+    method: POST
+    body_format: json
+    body: "{{ lookup('file','diku.json') }}"
+    status_code: 201
+  when: diku_status.status == 404
+
+- name: Enable auth modules for tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku/modules
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item }}" }'
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+
