@@ -1,0 +1,19 @@
+{
+    "id" : "retrieve-module",
+    "name" : "retrieve",
+    "provides" : [
+        {
+            "id" : "retrieve",
+            "version" : "0.0.1"
+        }
+    ],
+    "routingEntries" : [
+        {
+            "methods" : [ "GET" ],
+            "path" : "/retrieve",
+            "level" : "30",
+            "type" : "request-response"
+        }
+    ],
+    "modulePermissions" : [ "thing.read", "thing.see_sensitive" ]
+}

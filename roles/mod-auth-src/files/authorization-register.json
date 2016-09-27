@@ -1,0 +1,25 @@
+{
+    "id" : "authorization-module",
+    "name" : "authorization",
+    "provides" : [
+        {
+            "id" : "authorization",
+            "version" : "0.0.1"
+        }
+    ],
+    "routingEntries" : [
+        {
+            "methods" : [ "*" ],
+            "path" : "/",
+            "level" : "10",
+            "type" : "request-only"
+        },
+        {
+            "methods" : [ "POST" ],
+            "path" : "/token",
+            "level" : "20",
+            "type" : "request-response"
+        }
+    ],
+    "modulePermissions" : [ "perms.users.read" ]
+}

@@ -1,0 +1,40 @@
+{
+    "id" : "authentication-module",
+    "name" : "authentication",
+    "provides" : [
+        {
+            "id" : "authentication",
+            "version" : "0.0.1"
+        }
+    ],
+    "routingEntries" : [
+        {
+            "methods" : [ "POST" ],
+            "path" : "/authn/login",
+            "level" : "30",
+            "type" : "request-response"
+        },
+        {
+            "methods" : [ "POST" ],
+            "path" : "/authn/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "authentication.adduser" ]
+        },
+        {
+            "methods" : [ "PUT" ],
+            "path" : "/authn/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "authentication.modifyUser" ]
+        },
+        {
+            "methods" : [ "DELETE" ],
+            "path" : "/authn/users",
+            "level" : "30",
+            "type" : "request-response",
+            "permissionsRequired" : [ "authentication.removeUser" ]
+        }
+    ],
+    "modulePermissions" : [ "auth.signtoken" ]
+}
