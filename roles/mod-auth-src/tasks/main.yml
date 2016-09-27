@@ -4,7 +4,6 @@
   become: yes
   apt: name={{ item }} state=present
   with_items:
-    - mongodb
     - nodejs
     - npm
 
@@ -37,11 +36,11 @@
     - retrieve_module
 
 - name: Load testing data
-  command: mongoimport -d test -c users {{ mod_auth_src_home }}/testing/mongo/{{ item }}
+  command: mongoimport -d test -c {{ item.collection }} {{ mod_auth_src_home }}/testing/mongo/{{ item.file }}
   with_items:
-    - users.json
-    - permissions.json
-    - credentials.json
+    - { collection: users, file: users.json }
+    - { collection: permissions, file: permissions.json }
+    - { collection: credentials, file: credentials.json }
 
 - name: Check auth module registration
   uri:

@@ -1,0 +1,23 @@
+---
+# Role to install the MongoDB Community Edition from the Mongo apt repository
+- name: Install prereqs from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-virtualenv
+    - python-pip
+    - python-apt
+
+- name: Install apt key for Mongo
+  become: yes
+  apt_key: id=EA312927 keyserver=hkp://p80.pool.sks-keyservers.net:80
+
+- name: Install apt repository for Mongo
+  become: yes
+  apt_repository: repo="deb https://repo.mongodb.org/apt/debian wheezy/mongodb-org/3.2 main"
+
+- name: Install Mongo
+  become: yes
+  apt: name=mongodb-org state=present
