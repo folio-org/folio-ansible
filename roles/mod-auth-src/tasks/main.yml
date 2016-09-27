@@ -18,19 +18,67 @@
 
 - name: Clone mod-auth repository
   git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }}
+  register: mod_auth_clone
+
+- name: Force Maven build if repository updated
+  file: path={{ mod_auth_src_home }}/{{ item }}/install.log state=absent
+  with_items:
+    - authentication_module
+    - authorization_module
+    - permissions_module
+  when: mod_auth_clone.changed 
+
+- name: Remove auth modules for tenant if repository updated
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku/modules/{{ item }}
+    method: DELETE
+    status_code: 204, 404
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+  when: mod_auth_clone.changed 
+
+- name: Undeploy auth modules if repo updated
+  uri:
+    url: http://localhost:9130/_/discovery/modules/{{ item }}
+    method: DELETE
+    status_code: 204, 404
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+  when: mod_auth_clone.changed 
+
+- name: Unregister auth modules if repo updated
+  uri:
+    url: http://localhost:9130/_/proxy/modules/{{ item }}
+    method: DELETE
+    status_code: 204, 404
+  with_items:
+    - permissions-module
+    - authentication-module
+    - authorization-module
+    - thing-module
+    - retrieve-module
+  when: mod_auth_clone.changed 
 
 - name: Build mod-auth modules
-  shell: /usr/bin/mvn install > install.log
+  shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ item }}"
-    creates: "{{ item }}/target"  
+    creates: "{{ item }}/install.log"  
   with_items:
     - "{{ mod_auth_src_home }}/authentication_module"
     - "{{ mod_auth_src_home }}/authorization_module"
     - "{{ mod_auth_src_home }}/permissions_module"
 
 - name: Build Node.js sample modules
-  npm: state=present path={{ mod_auth_src_home }}/testing/{{ item }}
+  npm: state=latest path={{ mod_auth_src_home }}/testing/{{ item }}
   with_items:
     - thing_module
     - retrieve_module
