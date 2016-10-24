@@ -10,6 +10,11 @@
     - python-pip
     - python-apt
 
+# Need to specify v.1.9.0 due to Ansible bug #17495
+- name: Install docker-py from pip
+  become: yes
+  pip: name=docker-py version=1.9.0
+
 - name: Install apt key for Docker
   become: yes
   apt_key: id=58118E89F3A912897C070ADBF76221572C52609D keyserver=hkp://p80.pool.sks-keyservers.net:80
@@ -30,4 +35,3 @@
 - name: Install Docker Engine
   become: yes
   apt: name=docker-engine
-
