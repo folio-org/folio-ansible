@@ -1,8 +1,8 @@
 # Build a working development FOLIO installation from source
 
-This repository contains two sample Vagrantfiles, an Ansible playbook
+This repository contains a sample Vagrantfile, an Ansible playbook
 and roles to build a development environment for FOLIO. The
-Vagrantfiles create a VirtualBox VM based on the
+Vagrantfile creates a VirtualBox VM based on the
 "[debian/contrib-jessie64](https://atlas.hashicorp.com/debian/boxes/contrib-jessie64)"
 image on Atlas (for shared folder support). The root of the project
 directory is shared with the VM at the /vagrant mountpoint. In
