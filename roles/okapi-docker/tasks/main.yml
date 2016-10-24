@@ -1,0 +1,26 @@
+# Role to deploy an Okapi server from source in a Docker container to a Debian Jessie box
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - curl
+
+- name: Clone Okapi repository
+  become: yes
+  git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
+  register: okapi_clone
+
+- name: Remove Okapi container if repository updated
+  docker_container: name=okapi image=okapi published_ports=9130:9130 state=absent
+  when: okapi_clone.changed
+
+- name: Remove Okapi image if repository updated
+  docker_image: name=okapi state=absent
+  when: okapi_clone.changed
+
+- name: Build Okapi Docker image
+  docker_image: name=okapi path={{ okapi_src_home }}
+
+- name: Launch Okapi Docker container
+  docker_container: name=okapi image=okapi published_ports=9130:9130
