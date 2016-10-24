@@ -31,6 +31,15 @@ folio-org/okapi repository. Depends on okapi-src.
 Clones the folio-org/mod-auth repository from GitHub, builds and
 deploys the modules. Depends on mongodb-org and okapi-src.
 
+## mod-circulation-build
+Clones and builds the source from folio-org/mod-circulation on
+GitHub. Depends on common, openjdk-8-jdk, and maven-3.
+
+## mod-circulation-docker
+Builds the Docker image for mod-circulation and launches it via
+Okapi. Depends on mod-circulation-build, docker-engine, and
+okapi-docker or okapi-src.
+
 ## mongodb-org
 Installs a more recent MongoDB Community Edition from the Mongo
 repository.

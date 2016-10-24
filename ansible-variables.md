@@ -21,6 +21,12 @@ okapi_home: /opt/okapi
 # mod-auth-src role
 mod_auth_src_home: /opt/mod-auth-src
 
+# mod-circulation-build role
+mod_circulation_src_home: /opt/mod-circulation-src
+
+# mod-circulation-docker role
+# also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
+
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder
 

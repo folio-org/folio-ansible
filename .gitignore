@@ -2,4 +2,5 @@
 *.retry
 /okapi-src
 /mod-auth-src
+/mod-circulation-src
 /raml-module-builder
