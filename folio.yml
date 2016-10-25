@@ -11,4 +11,4 @@
 - hosts: docker
   roles:
     - okapi-docker
-    - mod-circulation-build
+    - mod-circulation-docker

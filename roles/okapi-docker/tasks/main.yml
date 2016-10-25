@@ -12,7 +12,7 @@
   register: okapi_clone
 
 - name: Remove Okapi container if repository updated
-  docker_container: name=okapi image=okapi published_ports=9130:9130 state=absent
+  docker_container: name=okapi image=okapi network_mode=host state=absent
   when: okapi_clone.changed
 
 - name: Remove Okapi image if repository updated
@@ -23,4 +23,12 @@
   docker_image: name=okapi path={{ okapi_src_home }}
 
 - name: Launch Okapi Docker container
-  docker_container: name=okapi image=okapi published_ports=9130:9130
+  docker_container: name=okapi image=okapi network_mode=host
+  register: okapi_launch
+
+- name: Give Okapi a chance to spin up
+  pause: seconds=10
+  when: okapi_launch.changed == true  
+
+- name: Set okapi_deploy
+  set_fact: okapi_deploy=docker

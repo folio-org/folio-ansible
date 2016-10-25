@@ -15,6 +15,10 @@
   become: yes
   pip: name=docker-py version=1.9.0
 
+- name: Install python-apt
+  become: yes
+  apt: name=python-apt state=present
+
 - name: Install apt key for Docker
   become: yes
   apt_key: id=58118E89F3A912897C070ADBF76221572C52609D keyserver=hkp://p80.pool.sks-keyservers.net:80
@@ -31,7 +35,26 @@
   become: yes
   user: name={{ item }} groups=docker
   with_items: "{{ docker_users }}"
-    
+
 - name: Install Docker Engine
   become: yes
   apt: name=docker-engine
+
+- name: Create systemd configuration directory for Docker
+  become: yes
+  file: path=/etc/systemd/system/docker.service.d state=directory
+
+- name: Copy docker-opts.conf for systemd
+  become: yes
+  copy: src=docker-opts.conf dest=/etc/systemd/system/docker.service.d/docker-opts.conf
+  register: docker_opts
+
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+  when: docker_opts.changed
+    
+- name: Restart Docker
+  become: yes
+  service: name=docker state=restarted
+  when: docker_opts.changed

@@ -61,3 +61,6 @@
 - name: Give Okapi a chance to spin up
   pause: seconds=5
   when: okapi_launch.changed == true
+
+- name: Set okapi_deploy
+  set_fact: okapi_deploy=src

@@ -1,0 +1,34 @@
+{
+  "id" : "mod-circulation",
+  "name" : "Circulation",
+  "provides" : [ {
+    "id" : "circulation",
+    "version" : "0.1.1"
+  } ],
+  "routingEntries" : [ {
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/bibs",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  },{
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/items",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  },{
+    "methods" : [ "GET", "POST", "DELETE" ],
+    "path" : "/patrons",
+    "level" : "30",
+    "type" : "request-response",
+    "permissionsRequired" : [ ],
+    "permissionsDesired" : [ ]
+  }],
+  "launchDescriptor" : {
+    "dockerImage" : "mod-circulation",
+    "dockerCMD" : [ "embed_mongo=true" ]
+  }
+}
