@@ -45,10 +45,12 @@
   changed_when: "mod_circ_unreg.status == 204"
 
 - name: Remove mod-circulation image if repository updated
-  docker_image: name=mod-circulation state=absent
+  become: yes
+  command: docker rmi -f mod-circulation
   when: mod_circulation_clone.changed
 
 - name: Build mod-circulation Docker image
+  become: yes
   docker_image: name=mod-circulation path={{ mod_circulation_src_home }}
 
 - name: Check mod-circulation module registration

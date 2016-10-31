@@ -12,17 +12,21 @@
   register: okapi_clone
 
 - name: Remove Okapi container if repository updated
+  become: yes
   docker_container: name=okapi image=okapi network_mode=host state=absent
   when: okapi_clone.changed
 
 - name: Remove Okapi image if repository updated
+  become: yes
   docker_image: name=okapi state=absent
   when: okapi_clone.changed
 
 - name: Build Okapi Docker image
+  become: yes
   docker_image: name=okapi path={{ okapi_src_home }}
 
 - name: Launch Okapi Docker container
+  become: yes
   docker_container: name=okapi image=okapi network_mode=host
   register: okapi_launch
 
