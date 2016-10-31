@@ -17,49 +17,49 @@
   register: diku_tenant
   changed_when: "diku_tenant.status == 201"
 
-- name: Remove mod-circulation for tenant if repository updated
+- name: Remove mod-users for tenant if repository updated
   uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules/mod-circulation
+    url: http://localhost:9130/_/proxy/tenants/diku/modules/mod-users
     method: DELETE
     status_code: 204, 404
-  when: mod_circulation_clone.changed
+  when: mod_users_clone.changed
   register: mod_circ_diku_delete
   changed_when: "mod_circ_diku_delete.status == 204"
 
-- name: Undeploy mod-circulation module if repo updated
+- name: Undeploy mod-users module if repo updated
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-circulation
+    url: http://localhost:9130/_/discovery/modules/mod-users
     method: DELETE
     status_code: 204, 404
-  when: mod_circulation_clone.changed
+  when: mod_users_clone.changed
   register: mod_circ_undeploy
   changed_when: "mod_circ_undeploy.status == 204"
 
-- name: Un-register mod-circulation if repository updated
+- name: Un-register mod-users if repository updated
   uri:
-    url: http://localhost:9130/_/proxy/modules/mod-circulation
+    url: http://localhost:9130/_/proxy/modules/mod-users
     method: DELETE
     status_code: 204, 404
-  when: mod_circulation_clone.changed
+  when: mod_users_clone.changed
   register: mod_circ_unreg
   changed_when: "mod_circ_unreg.status == 204"
 
-- name: Remove mod-circulation image if repository updated
+- name: Remove mod-users image if repository updated
   become: yes
-  docker_image: name=mod-circulation state=absent force=yes
-  when: mod_circulation_clone.changed
+  docker_image: name=mod-users state=absent force=yes
+  when: mod_users_clone.changed
 
-- name: Build mod-circulation Docker image
+- name: Build mod-users Docker image
   become: yes
-  docker_image: name=mod-circulation path={{ mod_circulation_src_home }}
+  docker_image: name=mod-users path={{ mod_users_src_home }}
 
-- name: Check mod-circulation module registration
+- name: Check mod-users module registration
   uri:
-    url: http://localhost:9130/_/proxy/modules/mod-circulation
+    url: http://localhost:9130/_/proxy/modules/mod-users
     status_code: 200, 404
   register: mod_circ_reg_status
 
-- name: Register mod-circulation module
+- name: Register mod-users module
   uri:
     url: http://localhost:9130/_/proxy/modules
     method: POST
@@ -70,29 +70,29 @@
   register: mod_circ_reg
   changed_when: "mod_circ_reg.status == 201"
 
-- name: Check mod-circulation module deployment
+- name: Check mod-users module deployment
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-circulation
+    url: http://localhost:9130/_/discovery/modules/mod-users
     status_code: 200, 404
   register: mod_circ_deploy_status
 
-- name: Deploy mod-circulation module
+- name: Deploy mod-users module
   uri:
     url: http://localhost:9130/_/discovery/modules
     method: POST
     HEADER_Content-Type: application/json
-    body: '{ "srvcId" : "mod-circulation", "nodeId" : "localhost" }'
+    body: '{ "srvcId" : "mod-users", "nodeId" : "localhost" }'
     status_code: 201
   when: mod_circ_deploy_status.status == 404
   register: mod_circ_deploy
   changed_when: "mod_circ_deploy.status == 201"
 
 # will always register as changed
-- name: Enable mod-circulation module for tenant
+- name: Enable mod-users module for tenant
   uri:
     url: http://localhost:9130/_/proxy/tenants/diku/modules
     method: POST
     body_format: json
-    body: '{ "id" : "mod-circulation" }'
+    body: '{ "id" : "mod-users" }'
   register: mod_circ_enable
   changed_when: mod_circ_enable.status == 200

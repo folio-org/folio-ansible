@@ -40,6 +40,15 @@ Builds the Docker image for mod-circulation and launches it via
 Okapi. Depends on mod-circulation-build, docker-engine, and
 okapi-docker or okapi-src.
 
+## mod-users-build
+Clones and builds the source from folio-org/mod-users on
+GitHub. Depends on common, openjdk-8-jdk, and maven-3.
+
+## mod-circulation-docker
+Builds the Docker image for mod-users and launches it via
+Okapi. Depends on mod-users-build, docker-engine, and
+okapi-docker or okapi-src.
+
 ## mongodb-org
 Installs a more recent MongoDB Community Edition from the Mongo
 repository.

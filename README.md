@@ -13,7 +13,10 @@ installation up and running quickly. For more details, see the
 this directory.
 
 ## Quick Start
+### for deployment from JAR files
 `$ vagrant up`
+### for deployment from Docker
+`$ FOLIO_DEPLOY=docker; vagrant up`
 
 ## Requirements
 1. [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.1
@@ -21,5 +24,5 @@ this directory.
   * [Vagrant](https://www.vagrantup.com)
   * [VirtualBox](https://www.virtualbox.org)
 
-This installation has been tested on OS X "El Capitan"
+This installation has been tested on macOS "Sierra"
 

@@ -27,6 +27,12 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-users-build role
+mod_users_src_home: /opt/mod-users-src
+
+# mod-users-docker role
+# also uses {{ mod_users_src_home }} from mod-users-build dependency
+
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder
 
