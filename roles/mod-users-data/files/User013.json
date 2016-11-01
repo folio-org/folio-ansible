@@ -1,0 +1,17 @@
+{
+   "patron_group" : "on_campus",
+   "username" : "josiane",
+   "personal" : {
+      "full_name" : "Silas Simonis",
+      "email_alternate" : "sasha@nader-weber-and-kovacek.bi",
+      "email_primary" : "rosalee@spinka-hoppe-and-roob.sc"
+   },
+   "active" : true,
+   "meta" : {
+      "creation_date" : "2014-05-09",
+      "last_login_date" : "2005-12-04"
+   },
+   "type" : "patron",
+   "id" : "898B73DF-3F71-4875-A369-DA73EA7591F1"
+}
+

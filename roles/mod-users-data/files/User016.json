@@ -1,0 +1,17 @@
+{
+   "active" : true,
+   "username" : "maymie",
+   "personal" : {
+      "full_name" : "Kathryn Funk",
+      "email_alternate" : "dylan@considine-toy.io",
+      "email_primary" : "arne@mann-and-sons.mo.us"
+   },
+   "patron_group" : "on_campus",
+   "id" : "094E3B42-993E-4874-952F-AF3D893AF878",
+   "meta" : {
+      "creation_date" : "2003-12-14",
+      "last_login_date" : "2004-08-29"
+   },
+   "type" : "patron"
+}
+

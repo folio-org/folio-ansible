@@ -1,6 +1,4 @@
 ---
 dependencies:
   - { role: docker-engine }
-  - { role: okapi-src, when: okapi_deploy == 'src' }
-  - { role: okapi-docker, when: okapi_deploy == 'docker' }
   - { role: mod-users-build }

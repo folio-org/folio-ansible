@@ -1,0 +1,17 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1982-02-03",
+      "last_login_date" : "1973-08-15"
+   },
+   "id" : "1CD67A1A-CCE6-412D-8563-F8BE7F793C7F",
+   "patron_group" : "on_campus",
+   "active" : true,
+   "personal" : {
+      "full_name" : "Maximo Sipes",
+      "email_primary" : "michaela@borer-bruen.jp",
+      "email_alternate" : "kacey@mann-raynor.aq"
+   },
+   "username" : "nicola"
+}
+

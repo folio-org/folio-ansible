@@ -1,39 +1,28 @@
 ---
 # Role to build a Docker image from source and launch with Okapi
-- name: Check diku tenant
+- name: Check status of mod-users deployment
   uri:
-    url: http://localhost:9130/_/proxy/tenants/diku
+    url: http://localhost:9130/_/discovery/modules/mod-users
     status_code: 200, 404
-  register: diku_status
-
-- name: Create diku tenant
-  uri:
-    url: http://localhost:9130/_/proxy/tenants
-    method: POST
-    body_format: json
-    body: "{{ lookup('file','diku.json') }}"
-    status_code: 201
-  when: diku_status.status == 404
-  register: diku_tenant
-  changed_when: "diku_tenant.status == 201"
-
-- name: Remove mod-users for tenant if repository updated
-  uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules/mod-users
-    method: DELETE
-    status_code: 204, 404
   when: mod_users_clone.changed
-  register: mod_circ_diku_delete
-  changed_when: "mod_circ_diku_delete.status == 204"
+  register: mod_users_deploy_status
+
+- name: Set fact - instId for mod-users
+  set_fact: mod_users_instid={{ mod_users_deploy_status.json.0.instId }}
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
 
 - name: Undeploy mod-users module if repo updated
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-users
+    url: http://localhost:9130/_/discovery/modules/mod-users/{{ mod_users_instid }}
     method: DELETE
     status_code: 204, 404
-  when: mod_users_clone.changed
-  register: mod_circ_undeploy
-  changed_when: "mod_circ_undeploy.status == 204"
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  register: mod_users_undeploy
+  changed_when: "mod_users_undeploy.status == 204"
 
 - name: Un-register mod-users if repository updated
   uri:
@@ -41,8 +30,8 @@
     method: DELETE
     status_code: 204, 404
   when: mod_users_clone.changed
-  register: mod_circ_unreg
-  changed_when: "mod_circ_unreg.status == 204"
+  register: mod_users_unreg
+  changed_when: "mod_users_unreg.status == 204"
 
 - name: Remove mod-users image if repository updated
   become: yes
@@ -57,7 +46,7 @@
   uri:
     url: http://localhost:9130/_/proxy/modules/mod-users
     status_code: 200, 404
-  register: mod_circ_reg_status
+  register: mod_users_reg_status
 
 - name: Register mod-users module
   uri:
@@ -66,15 +55,15 @@
     body_format: json
     body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
     status_code: 201
-  when: mod_circ_reg_status.status == 404
-  register: mod_circ_reg
-  changed_when: "mod_circ_reg.status == 201"
+  when: mod_users_reg_status.status == 404
+  register: mod_users_reg
+  changed_when: "mod_users_reg.status == 201"
 
 - name: Check mod-users module deployment
   uri:
     url: http://localhost:9130/_/discovery/modules/mod-users
     status_code: 200, 404
-  register: mod_circ_deploy_status
+  register: mod_users_deploy_status
 
 - name: Deploy mod-users module
   uri:
@@ -83,30 +72,11 @@
     HEADER_Content-Type: application/json
     body: '{ "srvcId" : "mod-users", "nodeId" : "localhost" }'
     status_code: 201
-  when: mod_circ_deploy_status.status == 404
-  register: mod_circ_deploy
-  changed_when: "mod_circ_deploy.status == 201"
+  when: mod_users_deploy_status.status == 404
+  register: mod_users_deploy
+  changed_when: "mod_users_deploy.status == 201"
 
-# will always register as changed
-- name: Enable mod-users module for tenant
-  uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules
-    method: POST
-    body_format: json
-    body: '{ "id" : "mod-users" }'
-  register: mod_circ_enable
-  changed_when: mod_circ_enable.status == 200
+- name: Give mod_users a chance to spin up
+  pause: seconds=10
+  when: mod_users_deploy.changed == true  
 
-# load a user
-- name: Load a user
-  uri:
-    url: http://localhost:9130/users
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-    body: "{{ lookup('file', 'Users.json') }}"
-    status_code: 201
-    register: load_user
-    changed_when: load_user == 201

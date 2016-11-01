@@ -1,34 +1,21 @@
 ---
 # Role to build a Docker image from source and launch with Okapi
-- name: Check diku tenant
+- name: Check status of mod-circulation deployment
   uri:
-    url: http://localhost:9130/_/proxy/tenants/diku
+    url: http://localhost:9130/_/discovery/modules/mod-circulation
     status_code: 200, 404
-  register: diku_status
-
-- name: Create diku tenant
-  uri:
-    url: http://localhost:9130/_/proxy/tenants
-    method: POST
-    body_format: json
-    body: "{{ lookup('file','diku.json') }}"
-    status_code: 201
-  when: diku_status.status == 404
-  register: diku_tenant
-  changed_when: "diku_tenant.status == 201"
-
-- name: Remove mod-circulation for tenant if repository updated
-  uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules/mod-circulation
-    method: DELETE
-    status_code: 204, 404
   when: mod_circulation_clone.changed
-  register: mod_circ_diku_delete
-  changed_when: "mod_circ_diku_delete.status == 204"
+  register: mod_circulation_deploy_status
+
+- name: Set fact - instId for mod-circulation
+  set_fact: mod_circulation_instid={{ mod_circulation_deploy_status.json.0.instId }}
+  when:
+    - mod_circulation_clone.changed
+    - mod_circulation_deploy_status.status == 200
 
 - name: Undeploy mod-circulation module if repo updated
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-circulation
+    url: http://localhost:9130/_/discovery/modules/mod-circulation/{{ mod_circ_instid }}
     method: DELETE
     status_code: 204, 404
   when: mod_circulation_clone.changed
@@ -87,12 +74,3 @@
   register: mod_circ_deploy
   changed_when: "mod_circ_deploy.status == 201"
 
-# will always register as changed
-- name: Enable mod-circulation module for tenant
-  uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules
-    method: POST
-    body_format: json
-    body: '{ "id" : "mod-circulation" }'
-  register: mod_circ_enable
-  changed_when: mod_circ_enable.status == 200

@@ -22,14 +22,8 @@ Vagrant.configure(2) do |config|
   # Ansible provisioning
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "folio.yml"
-    if ENV["FOLIO_DEPLOY"] == "docker"
-      ansible.groups = {
-        "docker" => ["default"]
-      }
-    else
-      ansible.groups = {
-        "dev" => ["default"]
-      }
-    end
+    ansible.groups = {
+      "dev" => ["default"]
+    }
   end
 end

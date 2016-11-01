@@ -34,5 +34,3 @@
   pause: seconds=10
   when: okapi_launch.changed == true  
 
-- name: Set okapi_deploy
-  set_fact: okapi_deploy=docker
