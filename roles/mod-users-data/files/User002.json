@@ -1,0 +1,17 @@
+{
+   "id" : "28E626D5-F446-451C-AA78-64BCDAD8303D",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1971-08-25",
+      "creation_date" : "2005-09-23"
+   },
+   "active" : true,
+   "username" : "daphne",
+   "personal" : {
+      "email_primary" : "broderick@runolfsdottir-roob-and-zulauf.ga",
+      "email_alternate" : "herminio@lindgren-group.info",
+      "full_name" : "Skyla Feil"
+   },
+   "patron_group" : "on_campus"
+}
+

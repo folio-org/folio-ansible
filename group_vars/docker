@@ -1,2 +1,4 @@
 ---
 okapi_src_home: /vagrant/okapi-src
+mod_circulation_src_home: /vagrant/mod-circulation-src
+mod_users_src_home: /vagrant/mod-users-src

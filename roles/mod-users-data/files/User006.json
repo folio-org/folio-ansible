@@ -1,0 +1,17 @@
+{
+   "patron_group" : "on_campus",
+   "username" : "hillard",
+   "personal" : {
+      "full_name" : "Kelton Abshire",
+      "email_alternate" : "leland@abernathy-heaney.md",
+      "email_primary" : "mathias@jenkins-kemmer-and-grady.jo"
+   },
+   "active" : true,
+   "meta" : {
+      "creation_date" : "2005-06-29",
+      "last_login_date" : "1989-04-02"
+   },
+   "type" : "patron",
+   "id" : "0EC149F3-EA04-430B-8B6E-7B3CE1D77D07"
+}
+

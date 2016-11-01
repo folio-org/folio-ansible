@@ -13,7 +13,14 @@ installation up and running quickly. For more details, see the
 this directory.
 
 ## Quick Start
-`$ vagrant up`
+`$ vagrant up` will start up a VM with Okapi and the mod-users module
+running in Docker containers on the VM. The Okapi port on the VM
+(9130) will be forwarded to localhost:9130.
+
+To try other roles, edit [folio.yml](folio.yml) and rebuild the
+Vagrant box. A running system requires an Okapi role (either
+okapi-docker or okapi-src) underneath whatever modules you select. The
+data roles require that the module they relate to be selected.
 
 ## Requirements
 1. [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.1
@@ -21,5 +28,5 @@ this directory.
   * [Vagrant](https://www.vagrantup.com)
   * [VirtualBox](https://www.virtualbox.org)
 
-This installation has been tested on OS X "El Capitan"
+This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 

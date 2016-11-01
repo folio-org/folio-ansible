@@ -1,0 +1,76 @@
+---
+# Role to build a Docker image from source and launch with Okapi
+- name: Check status of mod-circulation deployment
+  uri:
+    url: http://localhost:9130/_/discovery/modules/mod-circulation
+    status_code: 200, 404
+  when: mod_circulation_clone.changed
+  register: mod_circulation_deploy_status
+
+- name: Set fact - instId for mod-circulation
+  set_fact: mod_circulation_instid={{ mod_circulation_deploy_status.json.0.instId }}
+  when:
+    - mod_circulation_clone.changed
+    - mod_circulation_deploy_status.status == 200
+
+- name: Undeploy mod-circulation module if repo updated
+  uri:
+    url: http://localhost:9130/_/discovery/modules/mod-circulation/{{ mod_circ_instid }}
+    method: DELETE
+    status_code: 204, 404
+  when: mod_circulation_clone.changed
+  register: mod_circ_undeploy
+  changed_when: "mod_circ_undeploy.status == 204"
+
+- name: Un-register mod-circulation if repository updated
+  uri:
+    url: http://localhost:9130/_/proxy/modules/mod-circulation
+    method: DELETE
+    status_code: 204, 404
+  when: mod_circulation_clone.changed
+  register: mod_circ_unreg
+  changed_when: "mod_circ_unreg.status == 204"
+
+- name: Remove mod-circulation image if repository updated
+  become: yes
+  docker_image: name=mod-circulation state=absent force=yes
+  when: mod_circulation_clone.changed
+
+- name: Build mod-circulation Docker image
+  become: yes
+  docker_image: name=mod-circulation path={{ mod_circulation_src_home }}
+
+- name: Check mod-circulation module registration
+  uri:
+    url: http://localhost:9130/_/proxy/modules/mod-circulation
+    status_code: 200, 404
+  register: mod_circ_reg_status
+
+- name: Register mod-circulation module
+  uri:
+    url: http://localhost:9130/_/proxy/modules
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    status_code: 201
+  when: mod_circ_reg_status.status == 404
+  register: mod_circ_reg
+  changed_when: "mod_circ_reg.status == 201"
+
+- name: Check mod-circulation module deployment
+  uri:
+    url: http://localhost:9130/_/discovery/modules/mod-circulation
+    status_code: 200, 404
+  register: mod_circ_deploy_status
+
+- name: Deploy mod-circulation module
+  uri:
+    url: http://localhost:9130/_/discovery/modules
+    method: POST
+    HEADER_Content-Type: application/json
+    body: '{ "srvcId" : "mod-circulation", "nodeId" : "localhost" }'
+    status_code: 201
+  when: mod_circ_deploy_status.status == 404
+  register: mod_circ_deploy
+  changed_when: "mod_circ_deploy.status == 201"
+

@@ -1,0 +1,18 @@
+---
+# Role to load a dummy tenant
+- name: Check diku tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku
+    status_code: 200, 404
+  register: diku_status
+
+- name: Create diku tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants
+    method: POST
+    body_format: json
+    body: "{{ lookup('file','diku.json') }}"
+    status_code: 201
+  when: diku_status.status == 404
+  register: diku_tenant
+  changed_when: "diku_tenant.status == 201"

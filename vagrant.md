@@ -36,3 +36,9 @@ The roles that are provisioned on the Vagrant docker box are:
   working directory as "okapi-src" (/vagrant/okapi-src on the Vagrant
   box). A Docker image is created and launched.
 
+* mod-circulation-docker: The folio-org/mod-circulation GitHub
+  repository is cloned into the working directory as
+  "mod-circulation-src" (/vagrant/mod-circulation-src on the Vagrant
+  box. The source is built and a Docker image is created to run the
+  JAR. A container is launched through Okapi and some test data is
+  loaded.

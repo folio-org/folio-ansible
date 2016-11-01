@@ -1,0 +1,17 @@
+{
+   "id" : "477F0C2B-943C-43F6-8F42-B6FB5784FF66",
+   "meta" : {
+      "last_login_date" : "2005-06-11",
+      "creation_date" : "2006-04-30"
+   },
+   "type" : "patron",
+   "active" : true,
+   "personal" : {
+      "email_alternate" : "misael@grimes-and-sons.ae",
+      "email_primary" : "loyce@greenholt-and-sons.cs",
+      "full_name" : "Graham Armstrong"
+   },
+   "username" : "jeremy",
+   "patron_group" : "on_campus"
+}
+

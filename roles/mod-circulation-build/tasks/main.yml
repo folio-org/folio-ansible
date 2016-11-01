@@ -1,0 +1,21 @@
+---
+# Role to build mod-circulation from source
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+
+- name: Clone mod-circulation repository
+  git: repo=https://github.com/folio-org/mod-circulation.git dest={{ mod_circulation_src_home }}
+  register: mod_circulation_clone
+
+- name: Force Maven build if repository updated
+  file: path={{ mod_circulation_src_home }}/install.log state=absent
+  when: mod_circulation_clone.changed
+
+- name: Build mod-circulation
+  shell: /usr/bin/mvn -q clean install > install.log
+  args:
+    chdir: "{{ mod_circulation_src_home }}"
+    creates: "{{ mod_circulation_src_home }}/install.log"  
