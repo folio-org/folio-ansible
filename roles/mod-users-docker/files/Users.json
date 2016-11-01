@@ -1,0 +1,16 @@
+{
+    "username" : "jhandey",
+    "id" : "7261ecaae3a74dc68b468e12a70b1aec",
+    "active" : true,
+    "type" : "patron",
+    "patron_group" : "on_campus",
+    "meta" : {
+        "creation_date" : "2016-11-05T0723",
+        "last_login_date" : ""
+    },
+    "personal" : {
+        "full_name" : "Jack Michael Handey",
+        "email_primary" : "jhandey@biglibrary.org",
+        "email_alternate" : "handyjack65@gmail.com"
+    }
+}

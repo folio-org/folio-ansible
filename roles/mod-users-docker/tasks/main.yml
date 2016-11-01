@@ -96,3 +96,17 @@
     body: '{ "id" : "mod-users" }'
   register: mod_circ_enable
   changed_when: mod_circ_enable.status == 200
+
+# load a user
+- name: Load a user
+  uri:
+    url: http://localhost:9130/users
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{{ lookup('file', 'Users.json') }}"
+    status_code: 201
+    register: load_user
+    changed_when: load_user == 201
