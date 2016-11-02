@@ -29,7 +29,7 @@
     - authentication_module
     - authorization_module
     - permissions_module
-  when: mod_auth_clone.changed 
+  when: mod_auth_clone.changed
 
 - name: Remove auth modules for tenant if repository updated
   uri:
@@ -42,7 +42,7 @@
     - authorization-module
     - thing-module
     - retrieve-module
-  when: mod_auth_clone.changed 
+  when: mod_auth_clone.changed
 
 - name: Undeploy auth modules if repo updated
   uri:
@@ -55,7 +55,7 @@
     - authorization-module
     - thing-module
     - retrieve-module
-  when: mod_auth_clone.changed 
+  when: mod_auth_clone.changed
 
 - name: Unregister auth modules if repo updated
   uri:
@@ -68,13 +68,13 @@
     - authorization-module
     - thing-module
     - retrieve-module
-  when: mod_auth_clone.changed 
+  when: mod_auth_clone.changed
 
 - name: Build mod-auth modules
   shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ item }}"
-    creates: "{{ item }}/install.log"  
+    creates: "{{ item }}/install.log"
   with_items:
     - "{{ mod_auth_src_home }}/authentication_module"
     - "{{ mod_auth_src_home }}/authorization_module"

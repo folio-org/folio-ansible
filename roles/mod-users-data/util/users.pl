@@ -35,5 +35,5 @@ for (my $i = 0; $i < $users; $i++) {
   close(OUT);
 }
 
-exit;               
+exit;
 

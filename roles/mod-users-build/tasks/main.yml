@@ -18,4 +18,4 @@
   shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ mod_users_src_home }}"
-    creates: "{{ mod_users_src_home }}/install.log"  
+    creates: "{{ mod_users_src_home }}/install.log"

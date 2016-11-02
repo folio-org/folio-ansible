@@ -78,5 +78,5 @@
 
 - name: Give mod_users a chance to spin up
   pause: seconds=10
-  when: mod_users_deploy.changed == true  
+  when: mod_users_deploy.changed == true
 
