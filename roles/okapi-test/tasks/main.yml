@@ -68,7 +68,7 @@
     body: '{ "id" : "testlib", "name" : "Test Library", "description" : "Our Own Test Library" }'
     status_code: 201
   when: testlib_status.status == 404
-  
+
 - name: Enable test-basic module for testlib
   uri:
     url: http://localhost:9130/_/proxy/tenants/testlib/modules

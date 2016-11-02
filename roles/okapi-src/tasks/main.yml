@@ -32,7 +32,7 @@
   shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ okapi_src_home }}"
-    creates: "{{ okapi_src_home }}/install.log"  
+    creates: "{{ okapi_src_home }}/install.log"
 
 - name: Set up Okapi home directory
   become: yes

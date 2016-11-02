@@ -15,7 +15,7 @@ that apply to that group are used to provision the box.
 The roles that are provisioned on the Vagrant dev box are:
 * okapi-src: The folio-org/okapi GitHub repository is cloned into the
   working directory as "okapi-src" (/vagrant/okapi-src on the Vagrant
-  box). It is built using Maven, and linked into the more canonical
+  box). It is built using Apache Maven, and linked into the more canonical
   Okapi home directory (/opt/okapi), then launched.
 
 * okapi-test: The test modules from okapi-src are deployed to the

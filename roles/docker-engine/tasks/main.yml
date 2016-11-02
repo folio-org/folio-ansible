@@ -53,7 +53,7 @@
   become: yes
   command: systemctl daemon-reload
   when: docker_opts.changed
-    
+
 - name: Restart Docker
   become: yes
   service: name=docker state=restarted
