@@ -30,3 +30,6 @@ data roles require that the module they relate to be selected.
 
 This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
+## Additional information
+
+Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
