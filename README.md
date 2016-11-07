@@ -33,3 +33,19 @@ This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 ## Additional information
 
 Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
+
+## Troubleshooting
+
+Vagrant v1.8.1 is known to work. Later versions may run into problems
+-- in particular v1.8.7 on MacOS 10.12.1 fails, saying:
+
+	Box 'debian/contrib-jessie64' could not be found. Attempting to find and install
+
+This is because the Vagrant distribution for some reason includes own `curl` binary,
+`/opt/vagrant/embedded/bin/curl`, but not a corresponding
+`libcurl.4.dylib` library. The version of that library included in the
+operating system provides version 7.0.0 but Vagrant's `curl` binary
+requires version 9.0.0.
+
+The stupid but successful fix is to use Vagrant 1.8.1, not a later
+version.
