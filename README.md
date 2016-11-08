@@ -17,6 +17,10 @@ this directory.
 running in Docker containers on the VM. The Okapi port on the VM
 (9130) will be forwarded to localhost:9130.
 
+To test this, fetch a list of users:
+
+	$ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
+
 To try other roles, edit [folio.yml](folio.yml) and rebuild the
 Vagrant box. A running system requires an Okapi role (either
 okapi-docker or okapi-src) underneath whatever modules you select. The
