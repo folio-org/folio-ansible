@@ -40,6 +40,8 @@ Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
 
 ## Troubleshooting
 
+### Regent Vagrant versions have non-working `curl`
+
 Vagrant v1.8.1 is known to work. Later versions may run into problems
 -- in particular v1.8.7 on MacOS 10.12.1 fails, saying:
 
@@ -53,3 +55,14 @@ requires version 9.0.0.
 
 The stupid but successful fix is to use Vagrant 1.8.1, not a later
 version.
+
+### Loading users
+
+Sometimes users do not correctly load within the virtual machine. It's
+not yet clear why this happens, but it can typically be fixed by
+running
+
+	$ vagrant provision
+
+(If necessary, multiple times.)
+
