@@ -16,14 +16,18 @@ Vagrant.configure(2) do |config|
   # Share the project folder on /vagrant (this is the default)
   config.vm.synced_folder ".", "/vagrant"
 
-  # Set up port forwarding
-  config.vm.network "forwarded_port", guest: 9130, host: 9130
-
-  # Ansible provisioning
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = "folio.yml"
-    ansible.groups = {
-      "dev" => ["default"]
-    }
+  config.vm.define "dev", primary: true do |dev|
+    config.vm.network "forwarded_port", guest: 9130, host: 9130
+    dev.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+    end
   end
+
+  config.vm.define "demo", autostart: false do |demo|
+    config.vm.network "forwarded_port", guest: 9130, host: 9131
+    demo.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+    end
+  end
+
 end

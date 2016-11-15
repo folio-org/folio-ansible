@@ -1,0 +1,53 @@
+---
+# Role to deploy an Okapi server from source to a Debian Jessie box
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - curl
+
+- name: Copy Okapi service file
+  become: yes
+  copy: src=okapi.service dest=/etc/systemd/system/okapi.service
+
+- name: Enable Okapi service
+  become: yes
+  service: name=okapi enabled=yes
+ 
+- name: Clone Okapi repository
+  become: yes
+  git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
+  register: okapi_clone
+
+- name: Force Maven build if repository updated
+  file: path={{ okapi_src_home }}/install.log state=absent
+  when: okapi_clone.changed
+
+- name: Stop Okapi service if repository updated
+  become: yes
+  service: name=okapi state=stopped
+
+- name: Build Okapi
+  become: yes
+  shell: /usr/bin/mvn -q clean install > install.log
+  args:
+    chdir: "{{ okapi_src_home }}"
+    creates: "{{ okapi_src_home }}/install.log"
+
+- name: Set up Okapi home directory
+  become: yes
+  file: state=directory path={{ item }}
+  with_items:
+    - /opt/okapi/lib
+    - /opt/okapi/conf
+    - /opt/okapi/logs
+
+- name: Link in Okapi jar
+  become: yes
+  file: state=link src={{ okapi_src_home }}/okapi-core/target/okapi-core-fat.jar path={{ okapi_home }}/lib/okapi-core-fat.jar
+
+- name: Start Okapi service
+  become: yes
+  service: name=okapi state=started
+

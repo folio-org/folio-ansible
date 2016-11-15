@@ -1,0 +1,9 @@
+[Unit]
+Description=FOLIO Okapi server
+After=mongod.target
+
+[Service]
+ExecStart=/usr/bin/java -Dstorage=mongo -jar /opt/okapi/lib/okapi-core-fat.jar dev
+
+[Install]
+WantedBy=multi-user.target

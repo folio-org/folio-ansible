@@ -8,7 +8,11 @@ These could be overridden with `group_vars` or `host_vars`.
 # maven-3 role
 maven_version: 3.3.9
 
-# okapi-docker roles
+# okapi-demo role
+okapi_src_home: /opt/okapi-src
+okapi_home: /opt/okapi
+
+# okapi-docker role
 okapi_src_home: /opt/okapi-src
 
 # okapi-src role
