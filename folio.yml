@@ -12,4 +12,4 @@
   roles:
     - okapi-demo
     - mod-users-demo
-    #- demo-data
+    - mod-users-data

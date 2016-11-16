@@ -51,5 +51,8 @@ okapi_home: /opt/okapi
 
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder
+
+# tenant-data
+okapi_url: http://localhost:9130/
 ```
 

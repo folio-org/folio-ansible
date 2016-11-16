@@ -5,10 +5,6 @@
 ## common
 Currently just runs `apt-cache update`
 
-## demo-data
-Creates a demo tenant and loads sample data into a running Okapi
-instance with mod-users
-
 ## docker-engine
 Installs the Docker engine from the Docker repository. Not strictly
 necessary for module development.
@@ -79,3 +75,5 @@ repository.
 Clones the folio-org/raml-module-builder repository from GitHub,
 builds the code. Depends on openjdk-8 and maven-3.
 
+## tenant-data
+Load a demo tenant into a running Okapi instance

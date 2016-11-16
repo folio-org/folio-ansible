@@ -1,5 +1,11 @@
 ---
 # Role to deploy a mod-users server from compiled source to a Debian Jessie box
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - curl
+
 - name: Set up mod-users home directory
   become: yes
   file: state=directory path={{ item }}
@@ -52,4 +58,3 @@
   when: mod_users_deploy_status.status == 404
   register: mod_users_deploy
   changed_when: "mod_users_deploy.status == 201"
-
