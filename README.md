@@ -56,6 +56,10 @@ requires version 9.0.0.
 The stupid but successful fix is to use Vagrant 1.8.1, not a later
 version.
 
+(This is
+[a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969)
+so by implication, all previous versions were probably OK.)
+
 ### Loading users
 
 Sometimes users do not correctly load within the virtual machine. It's
