@@ -34,16 +34,12 @@ data roles require that the module they relate to be selected.
 
 This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
-## Additional information
-
-Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
-
 ## Troubleshooting
 
-### Regent Vagrant versions have non-working `curl`
+### Recent Vagrant versions have non-working `curl`
 
 Vagrant v1.8.1 is known to work. Later versions may run into problems
--- in particular v1.8.7 on MacOS 10.12.1 fails, saying:
+-- in particular v1.8.7 on macOS 10.12.1 fails, saying:
 
 	Box 'debian/contrib-jessie64' could not be found. Attempting to find and install
 
@@ -70,3 +66,6 @@ running
 
 (If necessary, multiple times.)
 
+## Additional information
+
+Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
