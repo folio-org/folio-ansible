@@ -1,0 +1,33 @@
+---
+# Role to deploy a mod-users server from compiled source to a Debian Jessie box
+- name: Copy mod-users service file
+  become: yes
+  copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+
+- name: Enable mod-users service
+  become: yes
+  service: name=mod-users enabled=yes
+ 
+- name: Set up mod-users home directory
+  become: yes
+  file: state=directory path={{ item }}
+  with_items:
+    - "{{ mod_users_home }}/lib"
+    - "{{ mod_users_home }}/conf"
+
+- name: Link in mod-users jar
+  become: yes
+  file: state=link src={{ mod_users_src_home }}/target/mod-users-fat.jar path={{ mod_users_home }}/lib/mod-users-fat.jar
+
+- name: Link in logging configuration
+  become: yes
+  file: state=link src={{ mod_users_src_home }}/target/classes/vertx-default-jul-logging.properties path={{ mod_users_home }}/conf/vertx-default-jul-logging.properties
+
+- name: Copy mongo configuration
+  become: yes
+  copy: src=mongo-conf.json dest={{ mod_users_home }}/conf/mongo-conf.json
+
+- name: Start mod-users service
+  become: yes
+  service: name=mod-users state=started
+

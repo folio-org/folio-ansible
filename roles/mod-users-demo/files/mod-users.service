@@ -1,0 +1,9 @@
+[Unit]
+Description=FOLIO mod-users server
+After=mongod.target
+
+[Service]
+ExecStart=/usr/bin/java -jar /opt/mod-users/lib/mod-users-fat.jar java.util.logging.config.file=/opt/mod-users/co/vertx-default-jul-logging.properties mongo_connection=/opt/mod-users/conf/mongo-conf.json
+
+[Install]
+WantedBy=multi-user.target

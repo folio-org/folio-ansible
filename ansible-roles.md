@@ -17,9 +17,9 @@ and Maven 3.
 Installs Apache Maven 3 from the Apache archive.
 
 ## okapi-demo
-Clones the folio-org/okapi repository from GitHub, installs okapi as a
-system service with persistent storage, creates demo tenant. Depends
-on common, openjdk-8-jdk, maven-3, and mongodb-org.
+Clones the folio-org/okapi repository from GitHub, installs and
+launches Okapi as a system service with persistent storage. Depends on
+common, openjdk-8-jdk, maven-3, and mongodb-org.
 
 ## okapi-docker
 Clones the folio-org/okapi repository from GitHub, builds and launches
@@ -54,17 +54,16 @@ Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
 
 ## mod-users-demo
-Launches mod-users with persistent storage from the folioci Docker
-image. Registers container with Okapi for the demo tenant. Loads
-sample data.
+Installs and launches mod-users as a system service with persistent
+storage. Depends on mod-users-build and mongodb-org.
 
 ## mod-users-docker
 Builds a Docker image from the Dockerfile and registers it with
 Okapi. Depends on docker-engine, mod-users-build.
 
 ## mod-circulation-docker
-Builds the Docker image for mod-users and launches it via
-Okapi. Depends on mod-users-build, docker-engine, and
+Builds the Docker image for mod-circulation and launches it via
+Okapi. Depends on mod-circulation-build, docker-engine, and
 okapi-docker or okapi-src.
 
 ## mongodb-org
@@ -73,6 +72,5 @@ repository.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
-builds the code. Depends on openjdk-8 and maven-3. Not strictly
-necessary for module development.
+builds the code. Depends on openjdk-8 and maven-3.
 

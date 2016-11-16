@@ -34,6 +34,10 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 
+# mod-users-demo role
+mod_users_home: /opt/mod-users
+# also uses {{ mod_users_src_home }} from mod-users-build dependency
+
 # mod-users-docker role
 # also uses {{ mod_users_src_home }} from mod-users-build dependency
 

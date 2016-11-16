@@ -11,4 +11,4 @@
 - hosts: demo
   roles:
     - okapi-demo
-    #- mod-users-demo
+    - mod-users-demo
