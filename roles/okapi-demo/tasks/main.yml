@@ -27,6 +27,7 @@
 - name: Stop Okapi service if repository updated
   become: yes
   service: name=okapi state=stopped
+  when: okapi_clone.changed
 
 - name: Build Okapi
   become: yes
@@ -50,4 +51,3 @@
 - name: Start Okapi service
   become: yes
   service: name=okapi state=started
-

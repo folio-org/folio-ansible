@@ -5,6 +5,10 @@
 ## common
 Currently just runs `apt-cache update`
 
+## demo-data
+Creates a demo tenant and loads sample data into a running Okapi
+instance with mod-users
+
 ## docker-engine
 Installs the Docker engine from the Docker repository. Not strictly
 necessary for module development.
@@ -54,8 +58,9 @@ Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
 
 ## mod-users-demo
-Installs and launches mod-users as a system service with persistent
-storage. Depends on mod-users-build and mongodb-org.
+Installs and launches mod-users with persistent storage in a running
+Okapi instance. Depends on mod-users-build and mongodb-org.
+*Note: without a running Okapi instance, this role will fail*
 
 ## mod-users-docker
 Builds a Docker image from the Dockerfile and registers it with
