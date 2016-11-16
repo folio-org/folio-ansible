@@ -9,7 +9,8 @@
   register: mod_users_enable
   changed_when: mod_users_enable.status == 200
 
-- name: Load a user
+# This should really only happen if the users aren't already there
+- name: Load users
   uri:
     url: http://localhost:9130/users
     method: POST

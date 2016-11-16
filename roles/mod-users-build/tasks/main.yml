@@ -7,14 +7,17 @@
     - git
 
 - name: Clone mod-users repository
+  become: yes
   git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }}
   register: mod_users_clone
 
 - name: Force Maven build if repository updated
+  become: yes
   file: path={{ mod_users_src_home }}/install.log state=absent
   when: mod_users_clone.changed
 
 - name: Build mod-users
+  become: yes
   shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ mod_users_src_home }}"

@@ -1,0 +1,55 @@
+---
+# Role to deploy a mod-users server from compiled source to a Debian Jessie box
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - curl
+
+- name: Set up mod-users home directory
+  become: yes
+  file: state=directory path={{ item }}
+  with_items:
+    - "{{ mod_users_home }}/lib"
+    - "{{ mod_users_home }}/conf"
+
+- name: Link in mod-users jar
+  become: yes
+  file: state=link src={{ mod_users_src_home }}/target/mod-users-fat.jar path={{ mod_users_home }}/lib/mod-users-fat.jar
+
+- name: Link in logging configuration
+  become: yes
+  file: state=link src={{ mod_users_src_home }}/target/classes/vertx-default-jul-logging.properties path={{ mod_users_home }}/conf/vertx-default-jul-logging.properties
+
+- name: Copy mongo configuration
+  become: yes
+  copy: src=mongo-conf.json dest={{ mod_users_home }}/conf/mongo-conf.json
+
+- name: Check mod-users module registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/modules/mod-users"
+    status_code: 200, 404
+  register: mod_users_reg_status
+
+- name: Register mod-users module
+  uri:
+    url: "{{ okapi_url }}_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    status_code: 201
+  when: mod_users_reg_status.status == 404
+  register: mod_users_reg
+  changed_when: "mod_users_reg.status == 201"
+
+- name: Copy deployment descriptor
+  become: yes
+  copy: src=DeploymentDescriptor.json dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
+
+- name: Copy mod-users.service file
+  become: yes
+  copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+
+- name: Deploy mod-users with systemd
+  become: yes
+  service: name=mod-users enabled=yes state=started
