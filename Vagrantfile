@@ -17,14 +17,14 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder ".", "/vagrant"
 
   config.vm.define "dev", primary: true do |dev|
-    config.vm.network "forwarded_port", guest: 9130, host: 9130
+    dev.vm.network "forwarded_port", guest: 9130, host: 9130
     dev.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
     end
   end
 
   config.vm.define "demo", autostart: false do |demo|
-    config.vm.network "forwarded_port", guest: 9130, host: 9131
+    demo.vm.network "forwarded_port", guest: 9130, host: 9131
     demo.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
     end

@@ -42,19 +42,14 @@
   register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
 
-- name: Check mod-users module deployment
-  uri:
-    url: "{{ okapi_url }}_/discovery/modules/mod-users"
-    status_code: 200, 404
-  register: mod_users_deploy_status
+- name: Copy deployment descriptor
+  become: yes
+  copy: src=DeploymentDescriptor.json dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
 
-- name: Deploy mod-users module
-  uri:
-    url: "{{ okapi_url }}_/discovery/modules"
-    method: POST
-    HEADER_Content-Type: application/json
-    body: '{ "srvcId" : "mod-users", "nodeId" : "localhost" }'
-    status_code: 201
-  when: mod_users_deploy_status.status == 404
-  register: mod_users_deploy
-  changed_when: "mod_users_deploy.status == 201"
+- name: Copy mod-users.service file
+  become: yes
+  copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+
+- name: Deploy mod-users with systemd
+  become: yes
+  service: name=mod-users enabled=yes state=started

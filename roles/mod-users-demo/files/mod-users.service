@@ -1,0 +1,11 @@
+[Unit]
+Description=Deploy FOLIO mod-users module to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @/opt/mod-users/conf/DeploymentDescriptor.json http://localhost:9130/_/discovery/modules
+
+[Install]
+WantedBy=multi-user.target
