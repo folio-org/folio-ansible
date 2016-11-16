@@ -13,6 +13,7 @@ installation up and running quickly. For more details, see the
 this directory.
 
 The primary audiences for these playbooks are:
+
 1. Developers who want to take the code for a spin in a VM, without altering their own working environment.
 2. DevOps and others interested in automating FOLIO image builds
 3. System administrators interested in deployment down the road.
