@@ -12,6 +12,12 @@ installation up and running quickly. For more details, see the
 [ansible-roles](ansible-roles.md) and [vagrant](vagrant.md) files in
 this directory.
 
+The primary audiences for these playbooks are:
+1. Developers who want to take the code for a spin in a VM, without
+   altering their own working environment.
+2. DevOps and others interested in automating FOLIO image builds
+3. System administrators interested in deployment down the road.
+
 ## Quick Start
 `$ vagrant up` will start up a VM with Okapi and the mod-users module
 running in Docker containers on the VM. The Okapi port on the VM

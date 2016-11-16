@@ -16,26 +16,6 @@ and Maven 3.
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
 
-## okapi-demo
-Clones the folio-org/okapi repository from GitHub, installs and
-launches Okapi as a system service with persistent storage. Depends on
-common, openjdk-8-jdk, maven-3, and mongodb-org.
-
-## okapi-docker
-Clones the folio-org/okapi repository from GitHub, builds and launches
-an Okapi server in development mode in a Docker container. Depends on
-docker-engine.
-
-## okapi-src
-Clones the folio-org/okapi repository from GitHub, builds the JAR
-files needed for deployment. Depends on common, openjdk-8, and
-maven-3. Launches an Okapi server in development mode from the source
-tree.
-
-## okapi-test
-Deploys the Okapi test modules from the source code in the
-folio-org/okapi repository. Depends on okapi-src.
-
 ## mod-auth-src
 Clones the folio-org/mod-auth repository from GitHub, builds and
 deploys the modules. Depends on mongodb-org and okapi-src.
@@ -70,6 +50,26 @@ okapi-docker or okapi-src.
 ## mongodb-org
 Installs a more recent MongoDB Community Edition from the Mongo
 repository.
+
+## okapi-demo
+Clones the folio-org/okapi repository from GitHub, installs and
+launches Okapi as a system service with persistent storage. Depends on
+common, openjdk-8-jdk, maven-3, and mongodb-org.
+
+## okapi-docker
+Clones the folio-org/okapi repository from GitHub, builds and launches
+an Okapi server in development mode in a Docker container. Depends on
+docker-engine.
+
+## okapi-src
+Clones the folio-org/okapi repository from GitHub, builds the JAR
+files needed for deployment. Depends on common, openjdk-8, and
+maven-3. Launches an Okapi server in development mode from the source
+tree.
+
+## okapi-test
+Deploys the Okapi test modules from the source code in the
+folio-org/okapi repository. Depends on okapi-src.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
