@@ -44,23 +44,20 @@ This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
 ### Recent Vagrant versions have non-working `curl`
 
-Vagrant v1.8.1 is known to work. Later versions may run into problems
--- in particular v1.8.7 on macOS 10.12.1 fails, saying:
+On macOS at least, there is an issue with the current Vagrant v1.8.7
 
-	Box 'debian/contrib-jessie64' could not be found. Attempting to find and install
-
-This is because the Vagrant distribution for some reason includes own `curl` binary,
+The Vagrant distribution for some reason includes its own `curl` binary,
 `/opt/vagrant/embedded/bin/curl`, but not a corresponding
 `libcurl.4.dylib` library. The version of that library included in the
 operating system provides version 7.0.0 but Vagrant's `curl` binary
 requires version 9.0.0.
 
-The stupid but successful fix is to use Vagrant 1.8.1, not a later
-version.
+The recommended workaround is to remove the 'bin/curl' that comes
+with vagrant, and so just let it use the system one (see
+[FOLIO-379](https://issues.folio.org/browse/FOLIO-379).
 
 (This is
-[a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969)
-so by implication, all previous versions were probably OK.)
+[a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969).
 
 ### Loading users
 
