@@ -12,7 +12,7 @@
   roles:
     - okapi-demo
     - mod-users-demo
-    # - mod-users-data
+    - mod-users-data
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes
