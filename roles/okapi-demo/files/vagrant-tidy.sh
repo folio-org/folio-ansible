@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 cat - << EOWARNING
 WARNING: This script will fil up your left over disk space.
  
