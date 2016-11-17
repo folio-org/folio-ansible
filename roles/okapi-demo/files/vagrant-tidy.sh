@@ -1,6 +1,6 @@
 #!/bin/sh
 cat - << EOWARNING
-WARNING: This script will fil up your left over disk space.
+WARNING: This script will fill up your left over disk space.
 
 DO NOT RUN THIS WHEN YOUR VIRTUAL HD IS RAW!!!!!!
 
