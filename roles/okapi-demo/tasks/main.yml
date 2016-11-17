@@ -14,7 +14,7 @@
 - name: Enable Okapi service
   become: yes
   service: name=okapi enabled=yes
- 
+
 - name: Clone Okapi repository
   become: yes
   git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
