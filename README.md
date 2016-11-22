@@ -59,6 +59,18 @@ with vagrant, and so just let it use the system one (see
 (This is
 [a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969).
 
+### VERR_SVM_DISABLED
+
+Trying to start VirtualBox may fail with the message
+
+> Stderr: VBoxManage: error: AMD-V is disabled in the BIOS (or by the host OS) (VERR_SVM_DISABLED)
+
+This indicates that the BIOS of the host hardware is not configured to
+support virtualisation. The only fix is to reboot the host and poke
+around in the BIOS settings. The necessary setting should be found in
+the CPU Configuration, and will have a name like SVM, Secure Virtual
+Machine Mode or AMD-V. Good luck!
+
 ### Loading users
 
 Sometimes users do not correctly load within the virtual machine. It's
