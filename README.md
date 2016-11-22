@@ -5,6 +5,17 @@ Copyright (C) 2016 The Open Library Foundation
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
+<!-- ../okapi/doc/md2toc -l 2 README.md -->
+* [Quick Start](#quick-start)
+* [Requirements](#requirements)
+* [Troubleshooting](#troubleshooting)
+    * [Recent Vagrant versions have non-working `curl`](#recent-vagrant-versions-have-non-working-curl)
+    * [VERR_SVM_DISABLED](#verrsvmdisabled)
+    * [Loading users](#loading-users)
+* [See Also](#see-also)
+* [Additional information](#additional-information)
+
+
 # Sample Ansible playbook and roles for FOLIO (and Vagrant)
 
 This repository contains some sample Ansible roles for getting a FOLIO
