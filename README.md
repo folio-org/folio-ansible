@@ -81,6 +81,11 @@ running
 
 (If necessary, multiple times.)
 
+## See Also
+
+A ready-built VM is also available: see
+[the demo directory](demo/README.md).
+
 ## Additional information
 
 Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
