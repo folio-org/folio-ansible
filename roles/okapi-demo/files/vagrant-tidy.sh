@@ -40,8 +40,10 @@ let count--
 dd if=/dev/zero of=/boot/whitespace bs=1024 count=$count;
 rm /boot/whitespace;
 
+# Whiteout swap, update fstab
 swappart=`cat /proc/swaps | tail -n1 | awk -F ' ' '{print $1}'`
 swapoff $swappart;
 dd if=/dev/zero of=$swappart;
 mkswap $swappart;
 swapon $swappart;
+sed -i.bak -r '/swap\s+sw/s|^UUID\=\w+\-\w+\-\w+\-\w+\-\w+|'$swappart'|' /etc/fstab;

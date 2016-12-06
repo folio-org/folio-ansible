@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   # Target platform is Debian/jessie on VirtualBox
   config.vm.box = "mod-users-demo"
   config.vm.box_url = "ftp://tekka.indexdata.com/pub/folio-vagrant/mod-users-demo.box"
-  config.vm.box_download_checksum = "9e4a993b0516ec28faf12d55b2348e9f"
+  config.vm.box_download_checksum = "ec501fde2a20fda915b811a76d8e102a"
   config.vm.box_download_checksum_type = "md5"
 
   # Give us a little headroom
