@@ -106,7 +106,8 @@ fix:
 
 A running mod-users module will show output like this:
 
-```vagrant@contrib-jessie:~$ sudo systemctl status mod-users
+```
+vagrant@contrib-jessie:~$ sudo systemctl status mod-users
 ● mod-users.service - Deploy FOLIO mod-users module to Okapi on localhost
    Loaded: loaded (/etc/systemd/system/mod-users.service; enabled)
    Active: inactive (dead) since Thu 2016-12-08 22:31:08 GMT; 9min ago
