@@ -80,8 +80,8 @@ with vagrant, and so just let it use the system one (see
 [FOLIO-379](https://issues.folio.org/browse/FOLIO-379)).
 
 (This is
-[a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969)
-- fixed in v1.9.0).
+[a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969),
+fixed in v1.9.0).
 
 ### VERR_SVM_DISABLED
 
