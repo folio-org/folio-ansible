@@ -2,7 +2,7 @@
 
 This repository contains some sample Ansible roles for getting a FOLIO
 installation up and running quickly. For more details, see the
-[doc](doc) directory.
+[doc](doc/index.md) directory.
 
 The primary audiences for this project are:
 
