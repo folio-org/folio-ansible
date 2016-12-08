@@ -5,7 +5,17 @@ Copyright (C) 2016 The Open Library Foundation
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
-<!-- ../okapi/doc/md2toc -l 2 README.md -->
+<!-- ../../okapi/doc/md2toc -l 2 index.md -->
+* [Vagrantfile targets](#vagrantfile-targets)
+* [Troubleshooting/Known Issues](#troubleshootingknown-issues)
+    * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
+    * [Viewing the Okapi log on `backend` or `demo` box](#viewing-the-okapi-log-on-backend-or-demo-box)
+    * [Viewing the Okapi log on `dev` box](#viewing-the-okapi-log-on-dev-box)
+    * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
+    * [VERR_SVM_DISABLED](#verrsvmdisabled)
+    * ["No running module instance found for mod-users" on `backend` or `demo` box](#no-running-module-instance-found-for-mod-users-on-backend-or-demo-box)
+    * [Loading users on `dev` box](#loading-users-on-dev-box)
+* [Additional information](#additional-information)
 
 ## Vagrantfile targets
 
