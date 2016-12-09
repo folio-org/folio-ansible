@@ -76,4 +76,4 @@ Clones the folio-org/raml-module-builder repository from GitHub,
 builds the code. Depends on openjdk-8 and maven-3.
 
 ## tenant-data
-Load a demo tenant into a running Okapi instance
+Load a demo tenant into a running Okapi instance.

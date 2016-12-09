@@ -13,6 +13,8 @@ The primary audiences for this project are:
 3. DevOps and others interested in automating FOLIO image builds
 4. System administrators interested in deployment down the road.
 
+## License
+
 Copyright (C) 2016 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
@@ -34,20 +36,20 @@ This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
 To run a backend "blackbox" system using Vagrant: `vagrant up backend`
 (currently includes Okapi, mod-users, sample tenant "diku", and sample
-user data)
+user data).
 
 To run a demo system using Vagrant: `vagrant up demo`
 (currently includes Okapi, mod-users, sample tenant "diku", and sample
-user data - exactly like the backend system, at the moment)
+user data -- exactly like the backend system, at the moment).
 
 To build a development environment using Vagrant: `vagrant up dev`
 * Requires Ansible \>= 2.1
 (currently includes Okapi and mod-users running in Docker containers,
 sample tenant "diku", and sample user data with source code shared in
-the working directory)
+the working directory).
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
-forwarded to localhost:9130.
+forwarded to localhost:9130
 
 To test this, fetch a list of users:
 

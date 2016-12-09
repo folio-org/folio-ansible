@@ -21,23 +21,23 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 
 The Vagrantfile in this project contains five target definitions:
 
-1. `dev` - a development box that runs Okapi and mod-users out of Docker
+1. `dev` -- a development box that runs Okapi and mod-users out of Docker
    containers, and loads sample user data. Okapi and mod-users are
    cloned from GitHub and then built from source on the VM as part of
    provisioning. Source code is shared with the host machine on the
    project root.
-2. `backend` - a fully loaded backend Okapi and mod-users system with
+2. `backend` -- a fully loaded backend Okapi and mod-users system with
    sample data.
-3. `demo` - currently, simply a duplicate of the `backend` box.
-4. `build_backend` - a target to build the `backend` box for
+3. `demo` -- currently, simply a duplicate of the `backend` box.
+4. `build_backend` -- a target to build the `backend` box for
    packaging.
-5. `build_demo` - a target to build the `demo` box for packaging.
+5. `build_demo` -- a target to build the `demo` box for packaging.
 
 ## Troubleshooting/Known Issues
 
 ### Vagrant "forwarded port to 9130 is already in use"
 
-All the Vagrant boxes defined in the Vagrant file forward port 9130
+All the Vagrant boxes defined in the Vagrantfile forward port 9130
 (Okapi) on the guest VM to port 9130 on the host. To change the port
 forwarding so that you can run multiple boxes at the same time, edit
 the Vagrantfile in the root directory of the project.
@@ -85,12 +85,12 @@ fixed in v1.9.0).
 
 ### VERR_SVM_DISABLED
 
-Trying to start VirtualBox may fail with the message
+Trying to start VirtualBox may fail with the message:
 
 > Stderr: VBoxManage: error: AMD-V is disabled in the BIOS (or by the host OS) (VERR_SVM_DISABLED)
 
 This indicates that the BIOS of the host hardware is not configured to
-support virtualisation. The only fix is to reboot the host and poke
+support virtualization. The only fix is to reboot the host and poke
 around in the BIOS settings. The necessary setting should be found in
 the CPU Configuration, and will have a name like SVM, Secure Virtual
 Machine Mode or AMD-V. Good luck!
@@ -141,7 +141,7 @@ To view the log output:
 Sometimes users do not correctly load when provisioning the `dev`
 Vagrant box, due to a timing issue (some components may not spin up
 before the provisioning script attempts to load the users). It can
-typically be fixed by running
+typically be fixed by running:
 
 	$ vagrant provision dev
 
@@ -153,5 +153,5 @@ typically be fixed by running
   [Ansible variables](ansible-variables.md) used in this project
 * [Vagrant documentation](https://www.vagrantup.com/docs/)
 * [Ansible documentation](http://docs.ansible.com/ansible/index.html)
-* [Docker documenation](https://docs.docker.com/)
+* [Docker documentation](https://docs.docker.com/)
 * Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
