@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "active" : true,
-   "personal" : {
-      "email_alternate" : "beaulah@crist-howell-and-barrows.be",
-      "email_primary" : "lester@lebsack-group.gov",
-      "full_name" : "Brayan Bahringer"
-   },
-   "username" : "arielle",
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "1989-02-20",
-      "creation_date" : "1979-01-01"
-   },
-   "id" : "91172F95-99D1-4706-A8E2-E8A41CD4DD8A"
+  "patron_group" : "on_campus",
+  "active" : true,
+  "personal" : {
+    "email_alternate" : "beaulah@crist-howell-and-barrows.be",
+    "email_primary" : "lester@lebsack-group.gov",
+    "full_name" : "Brayan Bahringer"
+  },
+  "username" : "arielle",
+  "type" : "patron",
+  "meta" : {
+    "last_login_date" : "1989-02-20",
+    "creation_date" : "1979-01-01"
+  },
+  "id" : "91172F95-99D1-4706-A8E2-E8A41CD4DD8A"
 }
-

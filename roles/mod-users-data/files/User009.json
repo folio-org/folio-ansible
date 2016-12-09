@@ -1,17 +1,16 @@
 {
-   "meta" : {
-      "last_login_date" : "2009-11-04",
-      "creation_date" : "2011-09-28"
-   },
-   "type" : "patron",
-   "id" : "5D8EBCF6-4061-4632-A530-6F2B21B03289",
-   "patron_group" : "on_campus",
-   "username" : "ayla",
-   "personal" : {
-      "email_primary" : "itzel@hyatt-kris-and-wunsch.ng",
-      "email_alternate" : "ernestina@wuckert-inc.nl",
-      "full_name" : "Wilbert Batz"
-   },
-   "active" : true
+  "meta" : {
+    "last_login_date" : "2009-11-04",
+    "creation_date" : "2011-09-28"
+  },
+  "type" : "patron",
+  "id" : "5D8EBCF6-4061-4632-A530-6F2B21B03289",
+  "patron_group" : "on_campus",
+  "username" : "ayla",
+  "personal" : {
+    "email_primary" : "itzel@hyatt-kris-and-wunsch.ng",
+    "email_alternate" : "ernestina@wuckert-inc.nl",
+    "full_name" : "Wilbert Batz"
+  },
+  "active" : true
 }
-

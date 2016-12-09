@@ -1,17 +1,16 @@
 {
-   "id" : "331EB0A0-A9FD-43DD-8C3D-2FF7BAE50168",
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "2015-06-12",
-      "creation_date" : "1985-12-22"
-   },
-   "active" : true,
-   "username" : "river",
-   "personal" : {
-      "full_name" : "Cristian Wolff",
-      "email_alternate" : "adrien@fisher-waelchi.et",
-      "email_primary" : "claire@toy-upton-and-ortiz.fr"
-   },
-   "patron_group" : "on_campus"
+  "id" : "331EB0A0-A9FD-43DD-8C3D-2FF7BAE50168",
+  "type" : "patron",
+  "meta" : {
+    "last_login_date" : "2015-06-12",
+    "creation_date" : "1985-12-22"
+  },
+  "active" : true,
+  "username" : "river",
+  "personal" : {
+    "full_name" : "Cristian Wolff",
+    "email_alternate" : "adrien@fisher-waelchi.et",
+    "email_primary" : "claire@toy-upton-and-ortiz.fr"
+  },
+  "patron_group" : "on_campus"
 }
-

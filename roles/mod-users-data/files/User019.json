@@ -1,17 +1,16 @@
 {
-   "active" : true,
-   "username" : "forest",
-   "personal" : {
-      "email_alternate" : "titus@bashirian-llc.kn",
-      "email_primary" : "alford@buckridge-group.vg",
-      "full_name" : "Cornelius Cassin"
-   },
-   "patron_group" : "on_campus",
-   "id" : "6AC4EF66-90CE-4215-BDB3-9DC3106DC010",
-   "type" : "patron",
-   "meta" : {
-      "creation_date" : "2010-04-19",
-      "last_login_date" : "1977-01-08"
-   }
+  "active" : true,
+  "username" : "forest",
+  "personal" : {
+    "email_alternate" : "titus@bashirian-llc.kn",
+    "email_primary" : "alford@buckridge-group.vg",
+    "full_name" : "Cornelius Cassin"
+  },
+  "patron_group" : "on_campus",
+  "id" : "6AC4EF66-90CE-4215-BDB3-9DC3106DC010",
+  "type" : "patron",
+  "meta" : {
+    "creation_date" : "2010-04-19",
+    "last_login_date" : "1977-01-08"
+  }
 }
-

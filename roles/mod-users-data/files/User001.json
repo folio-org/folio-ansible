@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "personal" : {
-      "email_alternate" : "jacynthe@hettinger-ward.nj.us",
-      "email_primary" : "nyah@hermann-hudson.biz",
-      "full_name" : "Delbert Watsica"
-   },
-   "username" : "alexandre",
-   "active" : true,
-   "meta" : {
-      "creation_date" : "1984-04-20",
-      "last_login_date" : "1976-08-14"
-   },
-   "type" : "patron",
-   "id" : "BA3AD42A-84BA-4E8D-91C5-80400DD3C864"
+  "patron_group" : "on_campus",
+  "personal" : {
+    "email_alternate" : "jacynthe@hettinger-ward.nj.us",
+    "email_primary" : "nyah@hermann-hudson.biz",
+    "full_name" : "Delbert Watsica"
+  },
+  "username" : "alexandre",
+  "active" : true,
+  "meta" : {
+    "creation_date" : "1984-04-20",
+    "last_login_date" : "1976-08-14"
+  },
+  "type" : "patron",
+  "id" : "BA3AD42A-84BA-4E8D-91C5-80400DD3C864"
 }
-

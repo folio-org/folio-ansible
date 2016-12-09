@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "active" : true,
-   "personal" : {
-      "full_name" : "Arlene Casper",
-      "email_primary" : "rowena@armstrong-mcglynn-and-johnston.nl",
-      "email_alternate" : "roberta@hills-and-sons.mo.us"
-   },
-   "username" : "lance",
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "2012-03-03",
-      "creation_date" : "1999-09-12"
-   },
-   "id" : "0F87DB46-890B-4254-9091-2D5553EB8571"
+  "patron_group" : "on_campus",
+  "active" : true,
+  "personal" : {
+    "full_name" : "Arlene Casper",
+    "email_primary" : "rowena@armstrong-mcglynn-and-johnston.nl",
+    "email_alternate" : "roberta@hills-and-sons.mo.us"
+  },
+  "username" : "lance",
+  "type" : "patron",
+  "meta" : {
+    "last_login_date" : "2012-03-03",
+    "creation_date" : "1999-09-12"
+  },
+  "id" : "0F87DB46-890B-4254-9091-2D5553EB8571"
 }
-
