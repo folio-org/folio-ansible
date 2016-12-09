@@ -45,7 +45,7 @@ user data -- exactly like the backend system, at the moment).
 To build a development environment using Vagrant: `vagrant up dev`
 * Requires Ansible \>= 2.1
 (currently includes Okapi and mod-users running in Docker containers,
-sample tenant "diku", and sample user data with source code shared in
+sample tenant "diku", and sample user data, with source code shared in
 the working directory).
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
