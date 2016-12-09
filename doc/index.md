@@ -154,4 +154,4 @@ typically be fixed by running
 * [Vagrant documentation](https://www.vagrantup.com/docs/)
 * [Ansible documentation](http://docs.ansible.com/ansible/index.html)
 * [Docker documenation](https://docs.docker.com/)
-* Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/) 
+* Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)

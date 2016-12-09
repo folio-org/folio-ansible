@@ -64,4 +64,4 @@ data roles require that the module they relate to be selected.
 * [Contributing guidelines](CONTRIBUTING.md)
 * [Vagrant documentation](https://www.vagrantup.com/docs/)
 * [Ansible documentation](http://docs.ansible.com/ansible/index.html)
-* Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/) 
+* Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
