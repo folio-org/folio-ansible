@@ -20,19 +20,13 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "backend", autostart: false do |backend|
-    backend.vm.box = "folio-backend"
-    backend.vm.box_url = "ftp://tekka.indexdata.com/pub/folio-vagrant/folio-backend.box"
-    backend.vm.box_download_checksum = "ec501fde2a20fda915b811a76d8e102a"
-    backend.vm.box_download_checksum_type = "md5"
+    backend.vm.box = "folio/folio-backend"
     backend.vm.synced_folder ".", "/vagrant", disabled: true
     backend.vm.network "forwarded_port", guest: 9130, host: 9130
   end
 
   config.vm.define "demo", autostart: false do |demo|
-    demo.vm.box = "folio-demo"
-    demo.vm.box_url = "ftp://tekka.indexdata.com/pub/folio-vagrant/folio-demo.box"
-    demo.vm.box_download_checksum = "ec501fde2a20fda915b811a76d8e102a"
-    demo.vm.box_download_checksum_type = "md5"
+    demo.vm.box = "folio/folio-demo"
     demo.vm.synced_folder ".", "/vagrant", disabled: true
     demo.vm.network "forwarded_port", guest: 9130, host: 9130
   end
