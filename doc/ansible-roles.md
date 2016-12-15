@@ -52,6 +52,9 @@ okapi-docker or okapi-src.
 Installs a more recent MongoDB Community Edition from the Mongo
 repository.
 
+## nodejs
+Installs nodejs, n, and mocha; configures n to use the latest node.
+
 ## okapi-demo
 Clones the folio-org/okapi repository from GitHub, installs and
 launches Okapi as a system service with persistent storage. Depends on
@@ -71,6 +74,8 @@ tree.
 ## okapi-test
 Deploys the Okapi test modules from the source code in the
 folio-org/okapi repository. Depends on okapi-src.
+
+## stripes-core
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,

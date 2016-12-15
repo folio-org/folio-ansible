@@ -52,6 +52,9 @@ okapi_home: /opt/okapi
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder
 
-# tenant-data
+# stripes-core role
+stripes_home: /opt/stripes
+
+# tenant-data role
 okapi_url: http://localhost:9130/
 ```

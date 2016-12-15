@@ -1,0 +1,61 @@
+---
+# role to clone and set up stripes-core from GitHub repo
+
+- name: Install prereqs
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+
+# This will always register as changed
+- name: Move to Node.js 6.X lts
+  become: yes
+  command: n lts
+ 
+- name: Create stripes home directory
+  become: yes
+  file: path={{ stripes_home }} state=directory
+
+# currently using Wayne's fork for environment variable support
+- name: Clone stripes-core repository
+  become: yes
+  git: repo=https://github.com/wafschneider/stripes-core.git dest={{ stripes_home }}/stripes-core
+  register: stripes_core_clone
+
+- name: Configure npm registry for stripes-core
+  become: yes
+  command: npm config set @folio:registry https://repository.folio.org/repository/npm-folio/
+  args:
+    chdir: "{{ stripes_home }}/stripes-core"
+
+- name: Install/update packages for stripes-core
+  become: yes
+  npm: path={{ stripes_home }}/stripes-core state=latest
+  register: stripes_dep_update
+
+- name: Configure npm registry for sample modules
+  become: yes
+  command: npm config set @folio-sample-modules:registry https://repository.folio.org/repository/npm-folio/
+  args:
+    chdir: "{{ stripes_home }}/stripes-core"
+
+# Ansible npm module doesn't seem to work with @folio-sample-modules registry
+# syntax - need to use command module
+
+- name: Install/update trivial module
+  become: yes
+  command: npm install @folio-sample-modules/trivial
+  args:
+    chdir: "{{ stripes_home }}/stripes-core"
+
+# this needs to be managed by systemd
+# - name: Stop server if code is updated (NO-OP)
+#   become: yes
+#   command: /bin/true
+#   when: stripes_core_clone.changed or stripes_dep_update.changed or trivial_update.changed
+
+# - name: Start up stripes
+#   become: yes
+#   command: npm run start
+#   args:
+#     chdir: "{{ stripes_home }}/stripes-core"
