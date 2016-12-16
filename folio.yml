@@ -13,7 +13,7 @@
     - okapi-demo
     - mod-users-demo
     - mod-users-data
-    - stripes-core
+    - ui-okapi-console
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

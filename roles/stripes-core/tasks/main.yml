@@ -42,6 +42,12 @@
     chdir: "{{ stripes_home }}/stripes-core"
   when: stripes_core_clone.changed
 
+- name: Check on trivial module installation
+  stat:
+    path: "{{ stripes_home }}/stripes-core/node_modules/@folio-sample-modules/trivial/package.json"
+    follow: yes
+  register: trivial_status
+
 # Ansible npm module doesn't seem to work with @folio-sample-modules registry
 # syntax - need to use command module
 - name: Install/update trivial module
@@ -49,7 +55,18 @@
   command: npm install @folio-sample-modules/trivial
   args:
     chdir: "{{ stripes_home }}/stripes-core"
-  when: stripes_core_clone.changed
+  when: stripes_core_clone.changed or trivial_status.stat.isreg is not defined
+  notify: Restart stripes
+
+- name: Check status of stripes.config.js
+  stat: path={{ stripes_home }}/stripes-core/stripes.config.js follow=yes
+  register: stripes_config
+
+- name: Copy stripes.config.js.example
+  become: yes
+  copy: src={{ stripes_home }}/stripes-core/stripes.config.js.example dest={{ stripes_home }}/stripes-core/stripes.config.js remote_src=yes
+  when: stripes_config.stat.isreg is not defined
+  notify: Restart stripes
 
 - name: create folio group
   become: yes

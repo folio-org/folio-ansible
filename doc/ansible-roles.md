@@ -86,3 +86,8 @@ builds the code. Depends on openjdk-8 and maven-3.
 
 ## tenant-data
 Load a demo tenant into a running Okapi instance.
+
+## ui-okapi-console
+Clones the folio-org/ui-okapi-console repository from GitHub, builds
+the ui-okapi-console UI modules and wires it into
+stripes-core. Depends on stripes-core and tenant-data.
