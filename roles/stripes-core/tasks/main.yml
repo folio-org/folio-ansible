@@ -7,21 +7,20 @@
   with_items:
     - git
 
-# This will always register as changed
-- name: Move to Node.js 6.X lts
-  become: yes
-  command: n lts
- 
 - name: Create stripes home directory
   become: yes
   file: path={{ stripes_home }} state=directory
 
-# currently using Wayne's fork for environment variable support
 - name: Clone stripes-core repository
   become: yes
-  git: repo=https://github.com/wafschneider/stripes-core.git dest={{ stripes_home }}/stripes-core
+  git: repo=https://github.com/folio-org/stripes-core.git dest={{ stripes_home }}/stripes-core
   register: stripes_core_clone
 
+# These will always register as changed - need to make idempotent
+- name: Move to Node.js 6.X lts
+  become: yes
+  command: n lts
+ 
 - name: Configure npm registry for stripes-core
   become: yes
   command: npm config set @folio:registry https://repository.folio.org/repository/npm-folio/
@@ -41,7 +40,6 @@
 
 # Ansible npm module doesn't seem to work with @folio-sample-modules registry
 # syntax - need to use command module
-
 - name: Install/update trivial module
   become: yes
   command: npm install @folio-sample-modules/trivial

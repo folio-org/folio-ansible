@@ -41,10 +41,10 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_demo", autostart: false do |build_demo|
-    build_demo.vm.box = "debian/contrib-jessie64"
+    build_demo.vm.box = "debian/jessie64"
     build_demo.vm.network "forwarded_port", guest: 9130, host: 9130
     build_demo.vm.network "forwarded_port", guest: 3000, host: 3000
-    # build_demo.vm.synced_folder ".", "/vagrant", disabled: true
+    build_demo.vm.synced_folder ".", "/vagrant", disabled: true
     build_demo.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
     end

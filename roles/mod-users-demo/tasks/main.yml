@@ -16,14 +16,17 @@
 - name: Link in mod-users jar
   become: yes
   file: state=link src={{ mod_users_src_home }}/target/mod-users-fat.jar path={{ mod_users_home }}/lib/mod-users-fat.jar
+  notify: Restart mod-users
 
 - name: Link in logging configuration
   become: yes
   file: state=link src={{ mod_users_src_home }}/target/classes/vertx-default-jul-logging.properties path={{ mod_users_home }}/conf/vertx-default-jul-logging.properties
+  notify: Restart mod-users
 
 - name: Copy mongo configuration
   become: yes
   copy: src=mongo-conf.json dest={{ mod_users_home }}/conf/mongo-conf.json
+  notify: Restart mod-users
 
 - name: Check mod-users module registration
   uri:
@@ -39,17 +42,32 @@
     body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
     status_code: 201
   when: mod_users_reg_status.status == 404
-  register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
+  notify: Restart mod-users
 
 - name: Copy deployment descriptor
   become: yes
   copy: src=DeploymentDescriptor.json dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
+  notify: Restart mod-users
 
 - name: Copy mod-users.service file
   become: yes
   copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+  notify:
+    - systemctl daemon-reload
+    - Restart mod-users
 
-- name: Deploy mod-users with systemd
+- name: Register mod-users with systemd
   become: yes
-  service: name=mod-users enabled=yes state=started
+  service: name=mod-users enabled=yes
+
+- name: Check mod-users deployment
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/mod-users"
+    status_code: 200, 404
+  register: mod_users_deploy_status
+
+- name: Notify handler to start mod-users
+  debug: msg="Setting mod-users to restart"
+  when: mod_users_deploy_status.status == 404
+  notify: Restart mod-users
