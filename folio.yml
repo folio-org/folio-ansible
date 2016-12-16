@@ -8,7 +8,21 @@
     - mod-users-data
 
 # Build a Vagrant box to package as a demo system
-- hosts: demo
+- hosts: build_demo
+  roles:
+    - okapi-demo
+    - mod-users-demo
+    - mod-users-data
+  tasks:
+    - name: Copy vagrant-tidy.sh to /root
+      become: yes
+      copy: src=roles/okapi-demo/files/vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
+
+    - debug:
+        msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
+
+# Build a Vagrant box to package as a backend system
+- hosts: build_backend
   roles:
     - okapi-demo
     - mod-users-demo

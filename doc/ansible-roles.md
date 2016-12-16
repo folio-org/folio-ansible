@@ -32,6 +32,7 @@ okapi-docker or okapi-src.
 ## mod-users-build
 Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
+*Note: this role is currently pinned to mod-users v0.1-mongo*
 
 ## mod-users-demo
 Installs and launches mod-users with persistent storage in a running
@@ -76,4 +77,4 @@ Clones the folio-org/raml-module-builder repository from GitHub,
 builds the code. Depends on openjdk-8 and maven-3.
 
 ## tenant-data
-Load a demo tenant into a running Okapi instance
+Load a demo tenant into a running Okapi instance.

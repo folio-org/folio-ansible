@@ -1,17 +1,16 @@
 {
-   "active" : true,
-   "username" : "holden",
-   "personal" : {
-      "email_alternate" : "karelle@ziemann-and-sons.ag",
-      "email_primary" : "joan@bergnaum-group.museum",
-      "full_name" : "Tatyana Ferry"
-   },
-   "patron_group" : "on_campus",
-   "id" : "0B9BA8E6-D529-407F-B8F3-4E246E6732C4",
-   "type" : "patron",
-   "meta" : {
-      "creation_date" : "1970-11-04",
-      "last_login_date" : "1999-03-04"
-   }
+  "active" : true,
+  "username" : "holden",
+  "personal" : {
+    "email_alternate" : "karelle@ziemann-and-sons.ag",
+    "email_primary" : "joan@bergnaum-group.museum",
+    "full_name" : "Tatyana Ferry"
+  },
+  "patron_group" : "on_campus",
+  "id" : "0B9BA8E6-D529-407F-B8F3-4E246E6732C4",
+  "type" : "patron",
+  "meta" : {
+    "creation_date" : "1970-11-04",
+    "last_login_date" : "1999-03-04"
+  }
 }
-

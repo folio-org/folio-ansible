@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "personal" : {
-      "email_primary" : "uriel@leannon-oconner-and-bayer.hi.us",
-      "email_alternate" : "maggie@lindgren-leuschke.km",
-      "full_name" : "Martin Kilback"
-   },
-   "username" : "winifred",
-   "active" : true,
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "2010-02-21",
-      "creation_date" : "2014-01-03"
-   },
-   "id" : "E3953CA3-3943-41E6-B2D5-038C916DC704"
+  "patron_group" : "on_campus",
+  "personal" : {
+    "email_primary" : "uriel@leannon-oconner-and-bayer.hi.us",
+    "email_alternate" : "maggie@lindgren-leuschke.km",
+    "full_name" : "Martin Kilback"
+  },
+  "username" : "winifred",
+  "active" : true,
+  "type" : "patron",
+  "meta" : {
+    "last_login_date" : "2010-02-21",
+    "creation_date" : "2014-01-03"
+  },
+  "id" : "E3953CA3-3943-41E6-B2D5-038C916DC704"
 }
-

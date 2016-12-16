@@ -1,5 +1,6 @@
 ---
 # Role to build a Docker image from source and launch with Okapi
+# Undeploy and rebuild if repository updated
 - name: Check status of mod-users deployment
   uri:
     url: http://localhost:9130/_/discovery/modules/mod-users
@@ -12,6 +13,36 @@
   when:
     - mod_users_clone.changed
     - mod_users_deploy_status.status == 200
+
+- name: Get tenants
+  uri:
+    url: http://localhost:9130/_/proxy/tenants
+    status_code: 200
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  register: tenants
+
+- name: Check tenant mod-user registration
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/{{ item.id }}/modules/mod-users
+    status_code: 200, 404
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  with_items: "{{ tenants.json | default([]) }}"
+  register: tenant_mod_users
+
+- name: Unregister mod-users module for tenants if repo updated
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/{{ item.item.id }}/modules/mod-users
+    method: DELETE
+    status_code: 204
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+    - item.status == 200
+  with_items: "{{ tenant_mod_users.results | default([]) }}"
 
 - name: Undeploy mod-users module if repo updated
   uri:

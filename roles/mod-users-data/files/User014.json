@@ -1,17 +1,16 @@
 {
-   "id" : "5FD5E380-1372-4415-A8B7-6ECCA3AD531A",
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "1992-07-22",
-      "creation_date" : "1995-04-07"
-   },
-   "active" : true,
-   "personal" : {
-      "email_alternate" : "harley@feest-turcotte.tx.us",
-      "email_primary" : "etha@heidenreich-group.biz",
-      "full_name" : "Modesto Padberg"
-   },
-   "username" : "casimir",
-   "patron_group" : "on_campus"
+  "id" : "5FD5E380-1372-4415-A8B7-6ECCA3AD531A",
+  "type" : "patron",
+  "meta" : {
+    "last_login_date" : "1992-07-22",
+    "creation_date" : "1995-04-07"
+  },
+  "active" : true,
+  "personal" : {
+    "email_alternate" : "harley@feest-turcotte.tx.us",
+    "email_primary" : "etha@heidenreich-group.biz",
+    "full_name" : "Modesto Padberg"
+  },
+  "username" : "casimir",
+  "patron_group" : "on_campus"
 }
-

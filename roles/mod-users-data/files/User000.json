@@ -1,17 +1,16 @@
 {
-   "type" : "patron",
-   "meta" : {
-      "creation_date" : "1998-04-26",
-      "last_login_date" : "1989-11-05"
-   },
-   "id" : "8BB3E559-E8BC-40E3-B7FD-2F495EDF9A47",
-   "patron_group" : "on_campus",
-   "active" : true,
-   "personal" : {
-      "full_name" : "Damion Fay Sr.",
-      "email_alternate" : "judy@miller-yost-and-ward.mn.us",
-      "email_primary" : "reta@terry-kovacek.gf"
-   },
-   "username" : "hipolito"
+  "type" : "patron",
+  "meta" : {
+    "creation_date" : "1998-04-26",
+    "last_login_date" : "1989-11-05"
+  },
+  "id" : "8BB3E559-E8BC-40E3-B7FD-2F495EDF9A47",
+  "patron_group" : "on_campus",
+  "active" : true,
+  "personal" : {
+    "full_name" : "Damion Fay Sr.",
+    "email_alternate" : "judy@miller-yost-and-ward.mn.us",
+    "email_primary" : "reta@terry-kovacek.gf"
+  },
+  "username" : "hipolito"
 }
-
