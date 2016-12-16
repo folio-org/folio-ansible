@@ -13,7 +13,7 @@
     - okapi-demo
     - mod-users-demo
     - mod-users-data
-    - ui-okapi-console
+    - ui-users
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

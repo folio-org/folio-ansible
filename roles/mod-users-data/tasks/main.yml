@@ -21,6 +21,7 @@
     body: "{{ lookup('file', item) }}"
     status_code: 201
   register: load_user
+  ignore_errors: yes
   changed_when: load_user.status == 201
   with_fileglob:
     - User*.json

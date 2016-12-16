@@ -1,5 +1,4 @@
 ---
 dependencies:
-  - { role: okapi-demo }
   - { role: stripes-core }
   - { role: tenant-data }

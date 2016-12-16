@@ -14,10 +14,6 @@
     - systemctl daemon-reload 
     - Restart Okapi
 
-- name: Enable Okapi service
-  become: yes
-  service: name=okapi enabled=yes
-
 - name: Clone Okapi repository
   become: yes
   git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
@@ -56,6 +52,10 @@
   become: yes
   file: state=link src={{ okapi_src_home }}/okapi-core/target/okapi-core-fat.jar path={{ okapi_home }}/lib/okapi-core-fat.jar
   notify: Restart Okapi
+
+- name: Enable and start Okapi service
+  become: yes
+  service: name=okapi enabled=yes state=started
 
 - name: Check okapi service status
   become: yes
