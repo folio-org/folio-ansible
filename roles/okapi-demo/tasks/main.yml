@@ -7,14 +7,6 @@
     - git
     - curl
 
-- name: create folio group
-  become: yes
-  group: name=folio system=yes
-
-- name: create folio user
-  become: yes
-  user: name=folio system=yes group=folio
-
 - name: Copy Okapi service file
   become: yes
   copy: src=okapi.service dest=/etc/systemd/system/okapi.service
@@ -75,4 +67,5 @@
 - name: Notify handler if okapi is down
   debug: msg="Setting Okapi to restart"
   when: okapi_status | failed
+  changed_when: yes
   notify: Restart Okapi

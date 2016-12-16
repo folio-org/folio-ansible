@@ -53,7 +53,7 @@ Installs a more recent MongoDB Community Edition from the Mongo
 repository.
 
 ## nodejs
-Installs nodejs, n, and mocha; configures n to use the latest node.
+Installs nodejs, n, and mocha
 
 ## okapi-demo
 Clones the folio-org/okapi repository from GitHub, installs and
@@ -76,6 +76,9 @@ Deploys the Okapi test modules from the source code in the
 folio-org/okapi repository. Depends on okapi-src.
 
 ## stripes-core
+Clones the folio-org/stripes-core repository from GitHub, builds
+stripes and the "trivial" module. Launches stripes as a system
+service. Depends on nodejs.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,

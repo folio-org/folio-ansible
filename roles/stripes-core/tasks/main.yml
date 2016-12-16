@@ -15,6 +15,7 @@
   become: yes
   git: repo=https://github.com/folio-org/stripes-core.git dest={{ stripes_home }}/stripes-core
   register: stripes_core_clone
+  notify: Restart stripes
 
 # These will always register as changed - need to make idempotent
 - name: Move to Node.js 6.X lts
@@ -26,17 +27,20 @@
   command: npm config set @folio:registry https://repository.folio.org/repository/npm-folio/
   args:
     chdir: "{{ stripes_home }}/stripes-core"
+  when: stripes_core_clone.changed
 
 - name: Install/update packages for stripes-core
   become: yes
-  npm: path={{ stripes_home }}/stripes-core state=latest
-  register: stripes_dep_update
+  npm: path={{ stripes_home }}/stripes-core
+  when: stripes_core_clone.changed
+  
 
 - name: Configure npm registry for sample modules
   become: yes
   command: npm config set @folio-sample-modules:registry https://repository.folio.org/repository/npm-folio/
   args:
     chdir: "{{ stripes_home }}/stripes-core"
+  when: stripes_core_clone.changed
 
 # Ansible npm module doesn't seem to work with @folio-sample-modules registry
 # syntax - need to use command module
@@ -45,15 +49,36 @@
   command: npm install @folio-sample-modules/trivial
   args:
     chdir: "{{ stripes_home }}/stripes-core"
+  when: stripes_core_clone.changed
 
-# this needs to be managed by systemd
-# - name: Stop server if code is updated (NO-OP)
-#   become: yes
-#   command: /bin/true
-#   when: stripes_core_clone.changed or stripes_dep_update.changed or trivial_update.changed
+- name: create folio group
+  become: yes
+  group: name=folio system=yes
 
-# - name: Start up stripes
-#   become: yes
-#   command: npm run start
-#   args:
-#     chdir: "{{ stripes_home }}/stripes-core"
+- name: create folio user
+  become: yes
+  user: name=folio system=yes group=folio
+
+- name: Copy stripes.service file
+  become: yes
+  template: src=stripes.service.j2 dest=/etc/systemd/system/stripes.service
+  notify:
+    - systemctl daemon-reload
+    - Restart stripes
+
+- name: Register stripes with systemd
+  become: yes
+  service: name=stripes enabled=yes
+
+- name: Check stripes service status
+  become: yes
+  command: systemctl status stripes
+  ignore_errors: yes
+  changed_when: no
+  register: stripes_status
+
+- name: Notify handler if stripes is down
+  debug: msg="Setting stripes to restart"
+  when: stripes_status | failed
+  changed_when: yes
+  notify: Restart stripes
