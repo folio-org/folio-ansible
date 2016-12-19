@@ -16,14 +16,17 @@
 - name: Link in mod-users jar
   become: yes
   file: state=link src={{ mod_users_src_home }}/target/mod-users-fat.jar path={{ mod_users_home }}/lib/mod-users-fat.jar
+  notify: Restart mod-users
 
 - name: Link in logging configuration
   become: yes
   file: state=link src={{ mod_users_src_home }}/target/classes/vertx-default-jul-logging.properties path={{ mod_users_home }}/conf/vertx-default-jul-logging.properties
+  notify: Restart mod-users
 
 - name: Copy mongo configuration
   become: yes
   copy: src=mongo-conf.json dest={{ mod_users_home }}/conf/mongo-conf.json
+  notify: Restart mod-users
 
 - name: Check mod-users module registration
   uri:
@@ -41,15 +44,20 @@
   when: mod_users_reg_status.status == 404
   register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
+  notify: Restart mod-users
 
 - name: Copy deployment descriptor
   become: yes
   copy: src=DeploymentDescriptor.json dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
+  notify: Restart mod-users
 
 - name: Copy mod-users.service file
   become: yes
   copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+  notify:
+    - systemctl daemon-reload
+    - Restart mod-users
 
-- name: Deploy mod-users with systemd
+- name: Enable and start mod-users service
   become: yes
   service: name=mod-users enabled=yes state=started

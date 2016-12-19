@@ -1,0 +1,8 @@
+---
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+
+- name: Restart stripes
+  become: yes
+  service: name=stripes state=restarted

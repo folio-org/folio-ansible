@@ -1,0 +1,4 @@
+---
+dependencies:
+  - { role: stripes-core }
+  - { role: tenant-data }

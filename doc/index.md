@@ -4,8 +4,9 @@
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
-    * [Viewing the Okapi log on `backend` or `demo` box](#viewing-the-okapi-log-on-backend-or-demo-box)
-    * [Viewing the Okapi log on `dev` box](#viewing-the-okapi-log-on-dev-box)
+    * [Viewing the Okapi log on the `backend` or `demo` box](#viewing-the-okapi-log-on-the-backend-or-demo-box)
+    * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
+    * [Viewing the Okapi log on the `dev` box](#viewing-the-okapi-log-on-the-dev-box)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
     * ["No running module instance found for mod-users" on `backend` or `demo` box](#no-running-module-instance-found-for-mod-users-on-backend-or-demo-box)
@@ -23,7 +24,9 @@ The Vagrantfile in this project contains five target definitions:
    project root.
 2. `backend` -- a fully loaded backend Okapi and mod-users system with
    sample data.
-3. `demo` -- currently, simply a duplicate of the `backend` box.
+3. `demo` -- a fully loaded backend Okapi and mod-users system with
+   sample data, stripes-core loaded as a system service, and the
+   ui-users FOLIO app.
 4. `build_backend` -- a target to build the `backend` box for
    packaging.
 5. `build_demo` -- a target to build the `demo` box for packaging.
@@ -37,7 +40,7 @@ All the Vagrant boxes defined in the Vagrantfile forward port 9130
 forwarding so that you can run multiple boxes at the same time, edit
 the Vagrantfile in the root directory of the project.
 
-### Viewing the Okapi log on `backend` or `demo` box
+### Viewing the Okapi log on the `backend` or `demo` box
 
 On the `backend` and `demo` boxes, Okapi is deployed as a system
 service using
@@ -52,7 +55,19 @@ To follow the log:
 
     $ sudo journalctl -u okapi -f
 
-### Viewing the Okapi log on `dev` box
+### Viewing the stripes log on the `demo` box
+
+On the `demo` box, stripes is deployed as a system service using
+systemd, like Okapi. You can view the log by logging into the box with
+`vagrant ssh demo`, then:
+
+    $ sudo journalctl -u stripes
+
+To follow the log:
+
+    $ sudo journalctl -u stripes -f
+
+### Viewing the Okapi log on the `dev` box
 
 On the `dev` box, Okapi is deployed as a Docker container. You can use
 the Docker tools to look at the log. First log into the box with
