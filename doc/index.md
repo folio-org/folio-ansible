@@ -5,7 +5,7 @@
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
     * [Viewing the Okapi log on the `backend` or `demo` box](#viewing-the-okapi-log-on-the-backend-or-demo-box)
-    * [Viewing the Okapi log on the `demo` box](#viewing-the-okapi-log-on-the-demo-box)
+    * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
     * [Viewing the Okapi log on the `dev` box](#viewing-the-okapi-log-on-the-dev-box)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
