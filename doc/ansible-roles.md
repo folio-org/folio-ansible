@@ -32,17 +32,17 @@ okapi-docker or okapi-src.
 ## mod-users-build
 Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
-*Note: this role is currently pinned to mod-users v0.1-mongo*
+*Note: this role is currently pinned to mod-users v0.1-mongo.*
 
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
 *Note: without a running Okapi instance with mod-users installed and
-enabled, this role will fail*
+enabled, this role will fail.*
 
 ## mod-users-demo
 Installs and launches mod-users with persistent storage in a running
 Okapi instance. Depends on mod-users-build and mongodb-org.
-*Note: without a running Okapi instance, this role will fail*
+*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
 Builds a Docker image from the Dockerfile and registers it with
@@ -91,4 +91,4 @@ Adds the ui-users module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core and tenant-data.
 *Note: without a running Okapi instance with mod-users, this role will
-fail. Sample user data is available in mod-users-data*
+fail. Sample user data is available in mod-users-data.*
