@@ -77,8 +77,7 @@ folio-org/okapi repository. Depends on okapi-src.
 
 ## stripes-core
 Clones the folio-org/stripes-core repository from GitHub, builds
-stripes and the "trivial" module. Launches stripes as a system
-service. Depends on nodejs.
+stripes. Launches stripes as a system service. Depends on nodejs.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
@@ -92,4 +91,4 @@ Adds the ui-users module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core and tenant-data.
 *Note: without a running Okapi instance with mod-users, this role will
-fail*
+fail. Sample user data is available in mod-users-data*

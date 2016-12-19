@@ -39,8 +39,8 @@ To run a backend "blackbox" system using Vagrant: `vagrant up backend`
 user data).
 
 To run a demo system using Vagrant: `vagrant up demo`
-(currently includes Okapi, mod-users, sample tenant "diku", and sample
-user data -- exactly like the backend system, at the moment).
+(currently includes Okapi, mod-users, sample tenant "diku", sample
+user data, stripes-core, and ui-users).
 
 To build a development environment using Vagrant: `vagrant up dev`
 * Requires Ansible \>= 2.1
@@ -49,11 +49,16 @@ sample tenant "diku", and sample user data, with source code shared in
 the working directory).
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
-forwarded to localhost:9130
+forwarded to localhost:9130.
 
 To test this, fetch a list of users:
 
 	$ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
+
+For the `demo` system, the stripes port and user interface will be
+forwarded to localhost:3000. You should see the stripes user interface
+at `http://localhost:3000`.
+
 
 To try other roles, edit [folio.yml](folio.yml) and rebuild the
 "dev" Vagrant box. A running system requires an Okapi role (okapi-demo,
