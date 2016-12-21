@@ -21,7 +21,7 @@
 - name: Move to Node.js 6.X lts
   become: yes
   command: n lts
- 
+
 - name: Configure npm registry for stripes-core
   become: yes
   command: npm config set @folio:registry https://repository.folio.org/repository/npm-folioci/

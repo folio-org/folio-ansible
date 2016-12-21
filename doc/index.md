@@ -153,7 +153,7 @@ Vagrant box, due to a timing issue (some components may not spin up
 before the provisioning script attempts to load the users). It can
 typically be fixed by running:
 
-	$ vagrant provision dev
+    $ vagrant provision dev
 
 (If necessary, multiple times.)
 

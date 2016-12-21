@@ -11,7 +11,7 @@
   become: yes
   copy: src=okapi.service dest=/etc/systemd/system/okapi.service
   notify:
-    - systemctl daemon-reload 
+    - systemctl daemon-reload
     - Restart Okapi
 
 - name: Clone Okapi repository
