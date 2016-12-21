@@ -34,6 +34,15 @@ This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
 ## Quick Start
 
+If all you want to do is try out a prepackaged FOLIO demo Vagrant box,
+create a new directory, `cd` into it, and try:
+
+    $ vagrant init folio/folio-demo
+    $ vagrant up
+
+In addition, this project includes a [Vagrantfile](Vagrantfile) for
+creating different environments.
+
 To run a backend "blackbox" system using Vagrant: `vagrant up backend`
 (currently includes Okapi, mod-users, sample tenant "diku", and sample
 user data).
@@ -58,7 +67,6 @@ To test this, fetch a list of users:
 For the `demo` system, the stripes port and user interface will be
 forwarded to localhost:3000. You should see the stripes user interface
 at `http://localhost:3000`.
-
 
 To try other roles, edit [folio.yml](folio.yml) and rebuild the
 "dev" Vagrant box. A running system requires an Okapi role (okapi-demo,
