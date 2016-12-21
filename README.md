@@ -53,7 +53,7 @@ forwarded to localhost:9130.
 
 To test this, fetch a list of users:
 
-	$ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
+    $ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
 
 For the `demo` system, the stripes port and user interface will be
 forwarded to localhost:3000. You should see the stripes user interface
