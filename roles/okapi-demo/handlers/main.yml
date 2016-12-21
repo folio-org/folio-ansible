@@ -2,7 +2,7 @@
 - name: systemctl daemon-reload
   become: yes
   command: systemctl daemon-reload
-  
+
 - name: Restart Okapi
   become: yes
   service: name=okapi state=restarted
