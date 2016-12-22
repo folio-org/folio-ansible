@@ -3,7 +3,7 @@
 # Undeploy and rebuild if repository updated
 - name: Check status of mod-users deployment
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-users
+    url: http://localhost:9130/_/discovery/modules/users
     status_code: 200, 404
   when: mod_users_clone.changed
   register: mod_users_deploy_status
@@ -25,7 +25,7 @@
 
 - name: Check tenant mod-user registration
   uri:
-    url: http://localhost:9130/_/proxy/tenants/{{ item.id }}/modules/mod-users
+    url: http://localhost:9130/_/proxy/tenants/{{ item.id }}/modules/users
     status_code: 200, 404
   when:
     - mod_users_clone.changed
@@ -35,7 +35,7 @@
 
 - name: Unregister mod-users module for tenants if repo updated
   uri:
-    url: http://localhost:9130/_/proxy/tenants/{{ item.item.id }}/modules/mod-users
+    url: http://localhost:9130/_/proxy/tenants/{{ item.item.id }}/modules/users
     method: DELETE
     status_code: 204
   when:
@@ -46,7 +46,7 @@
 
 - name: Undeploy mod-users module if repo updated
   uri:
-    url: http://localhost:9130/_/discovery/modules/mod-users/{{ mod_users_instid }}
+    url: http://localhost:9130/_/discovery/modules/users/{{ mod_users_instid }}
     method: DELETE
     status_code: 204, 404
   when:
@@ -57,7 +57,7 @@
 
 - name: Un-register mod-users if repository updated
   uri:
-    url: http://localhost:9130/_/proxy/modules/mod-users
+    url: http://localhost:9130/_/proxy/modules/users
     method: DELETE
     status_code: 204, 404
   when: mod_users_clone.changed
@@ -75,39 +75,36 @@
 
 - name: Check mod-users module registration
   uri:
-    url: http://localhost:9130/_/proxy/modules/mod-users
+    url: http://localhost:9130/_/proxy/modules/users
     status_code: 200, 404
   register: mod_users_reg_status
+
+- name: Get the ModuleDescriptor
+  fetch: src={{ mod_users_src_home }}/ModuleDescriptor.json dest=/tmp
+  when: mod_users_reg_status.status == 404
 
 - name: Register mod-users module
   uri:
     url: http://localhost:9130/_/proxy/modules
     method: POST
     body_format: json
-    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_users_src_home ~ '/ModuleDescriptor.json') }}"
     status_code: 201
   when: mod_users_reg_status.status == 404
   register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
-
-- name: Check mod-users module deployment
-  uri:
-    url: http://localhost:9130/_/discovery/modules/mod-users
-    status_code: 200, 404
-  register: mod_users_deploy_status
 
 - name: Deploy mod-users module
   uri:
     url: http://localhost:9130/_/discovery/modules
     method: POST
     HEADER_Content-Type: application/json
-    body: '{ "srvcId" : "mod-users", "nodeId" : "localhost" }'
+    body: '{ "srvcId" : "mod-users", "nodeId" : "localhost", "descriptor" : { "dockerImage" : "mod-users", "dockerCMD" : "embed_postgres=true" } }'
     status_code: 201
-  when: mod_users_deploy_status.status == 404
+  when: mod_users_deploy_status.status == 404 or mod_users_undeploy.changed
   register: mod_users_deploy
   changed_when: "mod_users_deploy.status == 201"
 
 - name: Give mod_users a chance to spin up
   pause: seconds=10
   when: mod_users_deploy.changed == true
-
