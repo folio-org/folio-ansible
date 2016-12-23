@@ -1,23 +1,24 @@
 ---
 # Role to build mod-users from source
-- name: Install prereqs
+- name: Create mod-users src directory
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
+  file: path={{ mod_users_src_home }} state=directory owner={{ folio_user }} group={{ folio_group }}
 
 - name: Clone mod-users repository
   become: yes
+  become_user: "{{ folio_user }}"
   git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }}
   register: mod_users_clone
 
 - name: Force Maven build if repository updated
   become: yes
+  become_user: "{{ folio_user }}"
   file: path={{ mod_users_src_home }}/install.log state=absent
   when: mod_users_clone.changed
 
 - name: Build mod-users
   become: yes
+  become_user: "{{ folio_user }}"
   shell: /usr/bin/mvn -q clean install > install.log
   args:
     chdir: "{{ mod_users_src_home }}"

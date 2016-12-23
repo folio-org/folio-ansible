@@ -5,12 +5,14 @@ These could be overridden with `group_vars` or `host_vars`.
 ## YAML for variables with default values
 ```yaml
 ---
-# demo-data role
-okapi_url: http://localhost:9130/
+# common role
+folio_user: folio
+folio_group: folio
 
 # docker-engine role
 docker_users:
-  - "{{ ansible_user_id }}"
+  - "{{ folio_user }}"
+# {{ folio_user }} from common dependency
 
 # maven-3 role
 maven_version: 3.3.9
@@ -41,6 +43,7 @@ okapi_home: /opt/okapi
 
 # okapi-docker role
 okapi_src_home: /opt/okapi-src
+# also uses {{ folio_group }} and {{ folio_user }} from common dependency
 
 # okapi-src role
 okapi_src_home: /opt/okapi-src

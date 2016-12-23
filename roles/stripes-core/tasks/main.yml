@@ -51,14 +51,6 @@
   when: stripes_config.stat.isreg is not defined
   notify: Restart stripes
 
-- name: create folio group
-  become: yes
-  group: name=folio system=yes
-
-- name: create folio user
-  become: yes
-  user: name=folio system=yes group=folio
-
 - name: Copy stripes.service file
   become: yes
   template: src=stripes.service.j2 dest=/etc/systemd/system/stripes.service
