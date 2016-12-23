@@ -1,0 +1,12 @@
+[Unit]
+Description=FOLIO Okapi server
+After=postgresql.service
+
+[Service]
+User={{ folio_user }}
+ExecStart=/usr/bin/java -Dstorage=postgres -Dpostgres_user={{ okapi_pg_user }} -Dpostgres_password={{ okapi_pg_password }} -jar /opt/okapi/lib/okapi-core-fat.jar dev
+WorkingDirectory={{ okapi_home }}
+ExecStartPost=/bin/sleep 10
+
+[Install]
+WantedBy=multi-user.target

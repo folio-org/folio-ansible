@@ -1,0 +1,8 @@
+[Unit]
+Description=FOLIO Okapi server db initialization
+
+[Service]
+User={{ folio_user }}
+ExecStart=/usr/bin/java -Dstorage=postgres -Dpostgres_user={{ okapi_pg_user }} -Dpostgres_password={{ okapi_pg_password }} -Dpostgres_db_init=1 -jar /opt/okapi/lib/okapi-core-fat.jar dev
+WorkingDirectory={{ okapi_home }}
+ExecStartPost=/bin/sleep 10

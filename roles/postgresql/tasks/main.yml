@@ -1,0 +1,8 @@
+---
+# Role to set up a postgresql server for FOLIO
+- name: Install postgresql and friends from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql
+    - python-psycopg2

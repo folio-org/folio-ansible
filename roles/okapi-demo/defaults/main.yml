@@ -1,3 +1,5 @@
 ---
 okapi_src_home: /opt/okapi-src
 okapi_home: /opt/okapi
+okapi_pg_user: okapi
+okapi_pg_password: okapi25

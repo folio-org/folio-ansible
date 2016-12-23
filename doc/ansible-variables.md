@@ -40,6 +40,9 @@ okapi_url: http://localhost:9130/
 # okapi-demo role
 okapi_src_home: /opt/okapi-src
 okapi_home: /opt/okapi
+okapi_pg_user: okapi
+okapi_pg_password: okapi25
+# {{ folio_user }} and {{ folio_group }} from common dependency
 
 # okapi-docker role
 okapi_src_home: /opt/okapi-src

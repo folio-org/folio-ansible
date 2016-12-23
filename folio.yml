@@ -11,9 +11,9 @@
 - hosts: build_demo
   roles:
     - okapi-demo
-    - mod-users-demo
-    - mod-users-data
-    - ui-users
+  #   - mod-users-demo
+  #   - mod-users-data
+  #   - ui-users
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes
@@ -26,8 +26,8 @@
 - hosts: build_backend
   roles:
     - okapi-demo
-    - mod-users-demo
-    - mod-users-data
+    # - mod-users-demo
+    # - mod-users-data
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes
