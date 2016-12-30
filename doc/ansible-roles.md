@@ -3,7 +3,8 @@
 *All roles targeted for Debian 8 (Jessie)*
 
 ## common
-Currently just runs `apt-cache update`
+Runs `apt-cache update`, creates the folio user and group, installs
+git and curl from apt.
 
 ## docker-engine
 Installs the Docker engine from the Docker repository. Not strictly

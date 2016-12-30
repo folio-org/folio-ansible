@@ -1,13 +1,11 @@
 # Role to deploy an Okapi server from source in a Docker container to a Debian Jessie box
-- name: Install prereqs
+- name: Create Okapi src directory
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
-    - curl
+  file: path={{ okapi_src_home }} state=directory group={{ folio_group }} owner={{ folio_user }}
 
 - name: Clone Okapi repository
   become: yes
+  become_user: "{{ folio_user }}"
   git: repo=https://github.com/folio-org/okapi.git dest={{ okapi_src_home }}
   register: okapi_clone
 

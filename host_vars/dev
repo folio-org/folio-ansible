@@ -1,4 +1,6 @@
 ---
+folio_user: vagrant
+folio_group: vagrant
 okapi_src_home: /vagrant/okapi-src
 mod_auth_src_home: /vagrant/mod-auth-src
 mod_circulation_src_home: /vagrant/mod-circulation-src

@@ -1,3 +1,7 @@
 ---
 mod_users_home: /opt/mod-users
 okapi_url: http://localhost:9130/
+mod_users_pg_user: mod_users
+mod_users_pg_password: mod_users25
+mod_users_db: diku
+

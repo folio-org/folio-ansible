@@ -1,12 +1,6 @@
 ---
 # role to clone and set up stripes-core from GitHub repo
 
-- name: Install prereqs
-  become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
-
 - name: Create stripes home directory
   become: yes
   file: path={{ stripes_home }} state=directory
@@ -50,14 +44,6 @@
   copy: src=stripes.config.js dest={{ stripes_home }}/stripes-core/stripes.config.js
   when: stripes_config.stat.isreg is not defined
   notify: Restart stripes
-
-- name: create folio group
-  become: yes
-  group: name=folio system=yes
-
-- name: create folio user
-  become: yes
-  user: name=folio system=yes group=folio
 
 - name: Copy stripes.service file
   become: yes

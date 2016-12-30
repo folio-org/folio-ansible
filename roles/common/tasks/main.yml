@@ -3,3 +3,18 @@
 - name: Update apt-cache
   become: yes
   apt: update-cache=yes
+
+- name: create folio group
+  become: yes
+  group: name={{ folio_group }} system=yes
+
+- name: create folio user
+  become: yes
+  user: name={{ folio_user }} system=yes group={{ folio_group }}
+
+- name: Install prerequisites from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - git
+    - curl

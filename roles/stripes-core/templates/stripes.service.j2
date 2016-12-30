@@ -3,7 +3,7 @@ Description=FOLIO stripes server
 After=okapi.service
 
 [Service]
-User=folio
+User={{ folio_user }}
 Environment=STRIPES_HOST=0.0.0.0
 WorkingDirectory={{ stripes_home }}/stripes-core
 ExecStart=/usr/local/bin/npm run start

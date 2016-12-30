@@ -1,0 +1,7 @@
+{
+  "srvcId" : "users-module",
+  "nodeId" : "localhost",
+  "descriptor" : {
+    "exec" : "java -jar {{ mod_users_home }}/lib/mod-users-fat.jar -Dhttp.port=%p java.util.logging.config.file={{ mod_users_home }}/conf/vertx-default-jul-logging.properties db_connection={{ mod_users_home }}/conf/postgres-conf.json"
+  }
+}

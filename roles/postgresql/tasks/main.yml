@@ -1,0 +1,27 @@
+---
+# Role to set up a PostgreSQL server for FOLIO
+- name: Install prereqs from apt
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-virtualenv
+    - python-psycopg2 
+    - python-pip
+    - python-apt
+    - ssl-cert
+
+- name: Install apt key for PostgreSQL
+  become: yes
+  apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+- name: Install apt repository for PostgreSQL
+  become: yes
+  apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main"
+
+- name: Install postgresql from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - postgresql

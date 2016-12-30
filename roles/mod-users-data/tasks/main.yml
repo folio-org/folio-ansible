@@ -5,7 +5,7 @@
     url: http://localhost:9130/_/proxy/tenants/diku/modules
     method: POST
     body_format: json
-    body: '{ "id" : "mod-users" }'
+    body: '{ "id" : "users-module" }'
   register: mod_users_enable
   changed_when: mod_users_enable.status == 200
 
