@@ -117,5 +117,5 @@
   changed_when: "mod_users_deploy.status == 201"
 
 - name: Give mod_users a chance to spin up
-  pause: seconds=10
+  pause: seconds=45
   when: mod_users_deploy.changed == true
