@@ -1,5 +1,5 @@
 ---
 dependencies:
   - { role: mod-users-build }
-  - { role: mongodb-org }
+  - { role: postgresql }
 

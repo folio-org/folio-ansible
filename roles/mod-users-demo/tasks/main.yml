@@ -1,45 +1,126 @@
 ---
 # Role to deploy a mod-users server from compiled source to a Debian Jessie box
-- name: Install prereqs
-  become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - curl
-
 - name: Set up mod-users home directory
   become: yes
-  file: state=directory path={{ item }}
+  file: state=directory path={{ item }} owner={{ folio_user }} group={{ folio_group }}
   with_items:
     - "{{ mod_users_home }}/lib"
     - "{{ mod_users_home }}/conf"
 
 - name: Link in mod-users jar
   become: yes
+  become_user: "{{ folio_user }}"
   file: state=link src={{ mod_users_src_home }}/target/mod-users-fat.jar path={{ mod_users_home }}/lib/mod-users-fat.jar
   notify: Restart mod-users
 
 - name: Link in logging configuration
   become: yes
+  become_user: "{{ folio_user }}"
   file: state=link src={{ mod_users_src_home }}/target/classes/vertx-default-jul-logging.properties path={{ mod_users_home }}/conf/vertx-default-jul-logging.properties
   notify: Restart mod-users
 
-- name: Copy mongo configuration
+- name: Link in ModuleDescriptor
   become: yes
-  copy: src=mongo-conf.json dest={{ mod_users_home }}/conf/mongo-conf.json
+  become_user: "{{ folio_user }}"
+  file: state=link src={{ mod_users_src_home }}/ModuleDescriptor.json path={{ mod_users_home }}/conf/ModuleDescriptor.json
+
+- name: Copy postgresql configuration
+  become: yes
+  become_user: "{{ folio_user }}"
+  template: src=postgres-conf.json.j2 dest={{ mod_users_home }}/conf/postgres-conf.json
   notify: Restart mod-users
+
+- name: Create mod_users postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ mod_users_pg_user }}"
+    password: "{{ mod_users_pg_password }}"
+
+- name: Create mod_users db
+  become: yes
+  become_user: postgres
+  postgresql_db: name={{ mod_users_db }} owner={{ mod_users_pg_user }}
+
+# Undeploy if repository updated
+- name: Check status of mod-users deployment
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/users-module"
+    status_code: 200, 404
+  register: mod_users_deploy_status
+
+- name: Set fact - instId for mod-users
+  set_fact: mod_users_instid={{ mod_users_deploy_status.json.0.instId }}
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+
+- name: Get tenants
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants"
+    status_code: 200
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  register: tenants
+
+- name: Check tenant mod-user registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item.id }}/modules/users-module"
+    status_code: 200, 404
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  with_items: "{{ tenants.json | default([]) }}"
+  register: tenant_mod_users
+
+- name: Unregister mod-users module for tenants if repo updated
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item.item.id }}/modules/users-module"
+    method: DELETE
+    status_code: 204
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+    - item.status == 200
+  with_items: "{{ tenant_mod_users.results | default([]) }}"
+
+- name: Undeploy mod-users module if repo updated
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/users-module/{{ mod_users_instid }}"
+    method: DELETE
+    status_code: 204, 404
+  when:
+    - mod_users_clone.changed
+    - mod_users_deploy_status.status == 200
+  register: mod_users_undeploy
+  changed_when: "mod_users_undeploy.status == 204"
+
+- name: Un-register mod-users if repository updated
+  uri:
+    url: "{{ okapi_url }}_/proxy/modules/users-module"
+    method: DELETE
+    status_code: 204, 404
+  when: mod_users_clone.changed
+  register: mod_users_unreg
+  changed_when: "mod_users_unreg.status == 204"
 
 - name: Check mod-users module registration
   uri:
-    url: "{{ okapi_url }}_/proxy/modules/mod-users"
+    url: "{{ okapi_url }}_/proxy/modules/users-module"
     status_code: 200, 404
   register: mod_users_reg_status
+
+- name: Get the ModuleDescriptor
+  fetch: src={{ mod_users_home }}/conf/ModuleDescriptor.json dest=/tmp
+  when: mod_users_reg_status.status == 404
 
 - name: Register mod-users module
   uri:
     url: "{{ okapi_url }}_/proxy/modules"
     method: POST
     body_format: json
-    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_users_home ~ '/conf/ModuleDescriptor.json') }}"
     status_code: 201
   when: mod_users_reg_status.status == 404
   register: mod_users_reg
@@ -48,12 +129,13 @@
 
 - name: Copy deployment descriptor
   become: yes
-  copy: src=DeploymentDescriptor.json dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
+  become_user: "{{ folio_user }}"
+  template: src=DeploymentDescriptor.json.j2 dest={{ mod_users_home }}/conf/DeploymentDescriptor.json
   notify: Restart mod-users
 
 - name: Copy mod-users.service file
   become: yes
-  copy: src=mod-users.service dest=/etc/systemd/system/mod-users.service
+  template: src=mod-users.service.j2 dest=/etc/systemd/system/mod-users.service
   notify:
     - systemctl daemon-reload
     - Restart mod-users

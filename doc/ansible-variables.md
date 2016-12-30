@@ -28,11 +28,16 @@ mod_circulation_src_home: /opt/mod-circulation-src
 
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
+# {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-users-demo role
 mod_users_home: /opt/mod-users
 okapi_url: http://localhost:9130/
-# also uses {{ mod_users_src_home }} from mod-users-build dependency
+mod_users_pg_user: mod_users
+mod_users_pg_password: mod_users25
+mod_users_db: diku
+# {{ mod_users_src_home }} from mod-users-build dependency
+# {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-users-docker role
 # also uses {{ mod_users_src_home }} from mod-users-build dependency
