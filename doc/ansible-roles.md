@@ -17,9 +17,20 @@ and Maven 3.
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
 
-## mod-auth-src
+## mod-auth
 Clones the folio-org/mod-auth repository from GitHub, builds and
-deploys the modules. Depends on mongodb-org and okapi-src.
+deploys the modules. Depends on mongodb-org.
+*Note: without a running Okapi instance, this role will fail.*
+
+## mod-auth-demo
+Hooks up mod-auth with mod-users, loads sample permissions data for
+the sample tenant (diku). Depends on mod-auth, mod-users-demo,
+tenant-data.
+
+## mod-auth-sample
+Build and deploy the mod-auth Node.js sample modules (thing-module and
+retrieve-module). Depends on mod-auth.
+*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-circulation-build
 Clones and builds the source from folio-org/mod-circulation on
@@ -33,7 +44,6 @@ okapi-docker or okapi-src.
 ## mod-users-build
 Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
-*Note: this role is currently pinned to mod-users v0.1-mongo.*
 
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
@@ -42,7 +52,7 @@ enabled, this role will fail.*
 
 ## mod-users-demo
 Installs and launches mod-users with persistent storage in a running
-Okapi instance. Depends on mod-users-build and mongodb-org.
+Okapi instance. Depends on mod-users-build and postgresql.
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
@@ -59,7 +69,7 @@ Installs nodejs, n, and mocha
 ## okapi-demo
 Clones the folio-org/okapi repository from GitHub, installs and
 launches Okapi as a system service with persistent storage. Depends on
-common, openjdk-8-jdk, maven-3, and mongodb-org.
+common, openjdk-8-jdk, maven-3, and postgresql.
 
 ## okapi-docker
 Clones the folio-org/okapi repository from GitHub, builds and launches

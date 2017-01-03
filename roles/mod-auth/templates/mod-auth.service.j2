@@ -1,0 +1,18 @@
+[Unit]
+Description=Deploy FOLIO mod-auth modules to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_login.json {{ okapi_url }}_/discovery/modules
+ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_authtoken.json {{ okapi_url }}_/discovery/modules
+ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_permissions.json {{ okapi_url }}_/discovery/modules
+ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/login-module/localhost-9132
+ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/authtoken-module/localhost-9133
+ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/permissions-module/localhost-9134
+
+[Install]
+WantedBy=multi-user.target

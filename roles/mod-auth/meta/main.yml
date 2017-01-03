@@ -1,4 +1,4 @@
 ---
 dependencies:
-  - { role: okapi-src }
+  - { role: common }
   - { role: mongodb-org }

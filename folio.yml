@@ -28,6 +28,7 @@
     - okapi-demo
     - mod-users-demo
     - mod-users-data
+    - mod-auth
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

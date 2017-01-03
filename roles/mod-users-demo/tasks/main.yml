@@ -76,14 +76,16 @@
 
 - name: Unregister mod-users module for tenants if repo updated
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/{{ item.item.id }}/modules/users-module"
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item[0].id }}/modules/users-module"
     method: DELETE
     status_code: 204
   when:
     - mod_users_clone.changed
     - mod_users_deploy_status.status == 200
-    - item.status == 200
-  with_items: "{{ tenant_mod_users.results | default([]) }}"
+    - item[1].status == 200
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ tenant_mod_users.results | default([]) }}"
 
 - name: Undeploy mod-users module if repo updated
   uri:
