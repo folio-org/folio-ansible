@@ -9,7 +9,21 @@
   register: mod_users_enable
   changed_when: mod_users_enable.status == 200
 
+# temporary hack until OKAPI-232 is resolved
+- name: Initialize mod-users database for tenant
+  uri:
+    url: "{{ okapi_url }}tenant"
+    method: POST
+    headers:
+      Content-Type: application/json
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    status_code: 200,500
+  register: initdb
+  changed_when: initdb.status == 200
+
 # This should really only happen if the users aren't already there
+# 400 error means the user is already there, this is not ideal
 - name: Load users
   uri:
     url: http://localhost:9130/users
@@ -19,7 +33,7 @@
       X-Okapi-Tenant: diku
       Accept: application/json
     body: "{{ lookup('file', item) }}"
-    status_code: 201
+    status_code: 201,400
   register: load_user
   ignore_errors: yes
   changed_when: load_user.status == 201
