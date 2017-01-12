@@ -27,6 +27,10 @@ auth_modules:
   - { index: 2, module: permissions }
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
+# mod-auth-demo role
+# {{ mod_auth_home }}, {{ folio_user }}, {{ folio_group }},
+# {{ okapi_url }}, {{ auth_modules }} from mod-auth dependency
+
 # mod-circulation-build role
 mod_circulation_src_home: /opt/mod-circulation-src
 

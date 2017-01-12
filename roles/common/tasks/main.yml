@@ -12,6 +12,10 @@
   become: yes
   user: name={{ folio_user }} system=yes group={{ folio_group }}
 
+- name: Add ansible user to folio group
+  become: yes
+  user: name={{ ansible_user }} groups={{ folio_group }}
+
 - name: Install prerequisites from apt
   become: yes
   apt: name={{ item }} state=present

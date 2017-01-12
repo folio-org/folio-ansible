@@ -1,0 +1,14 @@
+{
+  "type" : "employee",
+  "meta" : {
+    "creation_date" : "2017-01-11",
+    "last_login_date" : "2017-01-11"
+  },
+  "id" : "1ad737b0-d847-11e6-bf26-cec0c932ce01",
+  "patron_group" : "on_campus",
+  "active" : true,
+  "personal" : {
+    "full_name" : "diku admin user"
+  },
+  "username" : "diku_admin"
+}

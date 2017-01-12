@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: mod-users-demo }
+  - { role: mod-auth }
+  - { role: tenant-data }

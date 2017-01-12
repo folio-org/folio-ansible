@@ -27,9 +27,13 @@ The Vagrantfile in this project contains five target definitions:
 3. `demo` -- a fully loaded backend Okapi and mod-users system with
    sample data, stripes-core loaded as a system service, and the
    ui-users FOLIO app.
-4. `build_backend` -- a target to build the `backend` box for
+4. `backend_auth` -- the backend system, plus mod-auth. The sample
+   authorized user is `diku_admin` with password `admin`.
+5. `build_backend` -- a target to build the `backend` box for
    packaging.
-5. `build_demo` -- a target to build the `demo` box for packaging.
+6. `build_demo` -- a target to build the `demo` box for packaging.
+7. `build_backend_auth` -- a target to build the `backend_auth` box
+   for packaging.
 
 ## Troubleshooting/Known Issues
 

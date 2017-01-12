@@ -50,4 +50,13 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_backend_auth", autostart: false do |build_backend_auth|
+    build_backend_auth.vm.box = "debian/jessie64"
+    build_backend_auth.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_backend_auth.vm.synced_folder ".", "/vagrant", disabled: true
+    build_backend_auth.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+    end
+  end
+
 end

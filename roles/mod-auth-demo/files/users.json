@@ -1,0 +1,1 @@
+{ "_id" : { "$oid" : "57d2cf940a1f63eae94d3b06" }, "username" : "diku_admin", "tenant" : "diku", "permissions" : [ "users.super" ] }

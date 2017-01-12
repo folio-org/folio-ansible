@@ -53,10 +53,10 @@
   register: mod_auth_deploy_status
 
 - name: Set fact - instId for mod-auth
-  set_fact: "{{ item.module }}_instid={{ mod_auth_deploy_status.results[{{ item.index }}].json.0.instId }}"
+  set_fact: "{{ item.module }}_instid={{ mod_auth_deploy_status.results[item.index].json.0.instId }}"
   when:
     - mod_auth_clone.changed
-    - mod_auth_deploy_status.results[{{ item }}].status == 200
+    - mod_auth_deploy_status.results[{{ item.index }}].status == 200
   with_items: "{{ auth_modules }}"
 
 - name: Get tenants
