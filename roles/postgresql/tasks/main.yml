@@ -7,7 +7,7 @@
     - apt-transport-https
     - ca-certificates
     - python-virtualenv
-    - python-psycopg2 
+    - python-psycopg2
     - python-pip
     - python-apt
     - ssl-cert
