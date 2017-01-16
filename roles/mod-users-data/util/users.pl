@@ -25,9 +25,9 @@ for (my $i = 0; $i < $users; $i++) {
                        last_login_date => $faker->sqldate()
                       },
               personal => {
-                           full_name => $faker->name(),
-                           email_primary => $faker->email(),
-                           email_alternate => $faker->email()
+                           first_name => $faker->first_name(),
+                           last_name => $faker->last_name(),
+                           email => $faker->email()
                           }
              };
   open(OUT,">User" . sprintf("%03d",$i) . ".json");
