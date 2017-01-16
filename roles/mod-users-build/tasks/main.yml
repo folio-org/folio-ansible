@@ -7,7 +7,7 @@
 - name: Clone mod-users repository
   become: yes
   become_user: "{{ folio_user }}"
-  git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }} version=d26bba6908fa819918acf1e9e3dd264cca2beb6c
+  git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }}
   register: mod_users_clone
 
 - name: Force Maven build if repository updated
