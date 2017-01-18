@@ -1,17 +1,17 @@
 {
-   "meta" : {
-      "last_login_date" : "1971-01-11",
-      "creation_date" : "1988-12-04"
-   },
-   "id" : "B3EF08F5-1F8B-41E4-9F9B-795E3047B0D9",
-   "personal" : {
-      "last_name" : "King",
-      "email" : "hector@hackett-group.ac",
-      "first_name" : "Herminio"
-   },
-   "active" : true,
-   "username" : "monserrat",
+   "username" : "bridie",
    "type" : "patron",
-   "patron_group" : "on_campus"
+   "id" : "83DF77C7-92E7-4C82-A46C-BF168417CDB3",
+   "patron_group" : "on_campus",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Price",
+      "first_name" : "Hadley",
+      "email" : "leland@franecki-leffler.sr"
+   },
+   "meta" : {
+      "creation_date" : "1993-09-19",
+      "last_login_date" : "1987-06-30"
+   }
 }
 

@@ -1,17 +1,17 @@
 {
-   "active" : true,
-   "personal" : {
-      "first_name" : "Florian",
-      "last_name" : "Champlin",
-      "email" : "evelyn@kihn-haley-and-emard.cu"
-   },
-   "username" : "felix",
-   "id" : "D2D8E265-D5BC-4C5E-9AE3-5E479D98FB9B",
    "meta" : {
-      "creation_date" : "2002-01-20",
-      "last_login_date" : "1990-02-22"
+      "creation_date" : "2015-12-05",
+      "last_login_date" : "1977-05-11"
    },
+   "personal" : {
+      "last_name" : "Schmeler",
+      "email" : "roberta@crist-marks.kp",
+      "first_name" : "Arlie"
+   },
+   "patron_group" : "on_campus",
+   "active" : false,
    "type" : "patron",
-   "patron_group" : "on_campus"
+   "username" : "miracle",
+   "id" : "6B04F271-ECD7-42FC-B24E-222E7A36C7DC"
 }
 

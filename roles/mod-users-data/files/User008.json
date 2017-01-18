@@ -1,17 +1,17 @@
 {
-   "active" : true,
-   "personal" : {
-      "email" : "rigoberto@sauer-group.kg",
-      "last_name" : "Hoppe",
-      "first_name" : "Rosella"
-   },
-   "username" : "erna",
-   "meta" : {
-      "last_login_date" : "1972-01-17",
-      "creation_date" : "1991-10-31"
-   },
-   "id" : "72C81C2B-4BC3-42E7-8839-ADCDE8B6BA64",
+   "id" : "B8A01231-89FE-4344-A60F-475C417156E2",
    "type" : "patron",
-   "patron_group" : "on_campus"
+   "username" : "giovani",
+   "active" : true,
+   "patron_group" : "on_campus",
+   "personal" : {
+      "last_name" : "Price",
+      "email" : "marjorie@beer-stracke.io",
+      "first_name" : "Raheem"
+   },
+   "meta" : {
+      "last_login_date" : "1974-10-19",
+      "creation_date" : "2004-10-25"
+   }
 }
 
