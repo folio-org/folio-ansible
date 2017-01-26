@@ -1,0 +1,7 @@
+{
+  "srvcId" : "inventory-storage",
+  "nodeId" : "localhost",
+  "descriptor" : {
+    "exec" : "java -jar {{ mod_metadata_home }}/inventory-storage/lib/inventory-storage-fat.jar -Dhttp.port=%p java.util.logging.config.file={{ mod_metadata_home }}/inventory-storage/conf/log4j.properties db_connection={{ mod_metadata_home }}/inventory-storage/conf/postgres-conf.json"
+  }
+}

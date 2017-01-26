@@ -1,0 +1,25 @@
+---
+# Role to build mod-metadata modules from source
+- name: Create mod-metadata src directory
+  become: yes
+  file: path={{ mod_metadata_src_home }} state=directory owner={{ folio_user }} group={{ folio_group }}
+
+- name: Clone mod-metadata repository
+  become: yes
+  become_user: "{{ folio_user }}"
+  git: repo=https://github.com/folio-org/mod-metadata.git dest={{ mod_metadata_src_home }}
+  register: mod_metadata_clone
+
+- name: Force Maven build if repository updated
+  become: yes
+  become_user: "{{ folio_user }}"
+  file: path={{ mod_metadata_src_home }}/inventory-storage/install.log state=absent
+  when: mod_metadata_clone.changed
+
+- name: Build Inventory Storage module
+  become: yes
+  become_user: "{{ folio_user }}"
+  shell: /usr/bin/mvn -q clean package -Dmaven.test.skip=true > install.log
+  args:
+    chdir: "{{ mod_metadata_src_home }}/inventory-storage"
+    creates: "{{ mod_metadata_src_home }}/inventory-storage/install.log"

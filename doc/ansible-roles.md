@@ -30,10 +30,21 @@ Builds the Docker image for mod-circulation and launches it via
 Okapi. Depends on mod-circulation-build, docker-engine, and
 okapi-docker or okapi-src.
 
+## mod-metadata-build
+Clones and builds the source from folio-org/mod-metadata on
+GitHub. Depends on:
+- common
+- openjdk-8-jdk
+- maven-3
+
+## mod-metadata-demo
+Registers and deploys mod-metadata modules with persistent storage in
+a running Okapi instance. Depends on mod-users-build and postgresql.
+*Note: without a running Okapi instance, this role will fail.*
+
 ## mod-users-build
 Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8-jdk, and maven-3.
-*Note: this role is currently pinned to mod-users v0.1-mongo.*
 
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
@@ -41,8 +52,8 @@ Sample data for the mod-users backend module. Depends on tenant-data.
 enabled, this role will fail.*
 
 ## mod-users-demo
-Installs and launches mod-users with persistent storage in a running
-Okapi instance. Depends on mod-users-build and mongodb-org.
+Registers and deploys mod-users with persistent storage in a running
+Okapi instance. Depends on mod-users-build and postgresql.
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
@@ -55,6 +66,9 @@ repository.
 
 ## nodejs
 Installs nodejs, n, and mocha
+
+## postgresql
+Installs a more recent PostgreSQL from the PostgreSQL repository.
 
 ## okapi-demo
 Clones the folio-org/okapi repository from GitHub, installs and

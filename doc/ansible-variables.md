@@ -26,6 +26,19 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-metadata-build role
+mod_metadata_src_home: /opt/mod-metadata-src
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
+# mod-metadata-demo role
+mod_metadata_home: /opt/mod-metadata
+okapi_url: http://localhost:9130/
+mod_metadata_pg_user: mod_metadata
+mod_metadata_pg_password: mod_metadata25
+mod_metadata_db: mod_metadata
+# {{ mod_metadata_src_home }} from mod-metadata-build dependency
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
@@ -35,7 +48,7 @@ mod_users_home: /opt/mod-users
 okapi_url: http://localhost:9130/
 mod_users_pg_user: mod_users
 mod_users_pg_password: mod_users25
-mod_users_db: diku
+mod_users_db: mod_users
 # {{ mod_users_src_home }} from mod-users-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
