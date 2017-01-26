@@ -1,9 +1,5 @@
 ---
 # Role to deploy an Okapi server from source to a Debian Jessie box
-- name: Copy Okapi initializaiton service file
-  become: yes
-  template: src=okapi_init.service.j2 dest=/etc/systemd/system/okapi_init.service owner={{ folio_user }} group={{ folio_group }} mode=0600
-  register: okapi_init_copy
 
 - name: Copy Okapi service file
   become: yes
@@ -15,7 +11,7 @@
 - name: systemctl daemon-reload
   become: yes
   command: systemctl daemon-reload
-  when: okapi_init_copy.changed or okapi_service_copy.changed
+  when: okapi_service_copy.changed
 
 - name: Create Okapi src directory
   become: yes
@@ -80,12 +76,7 @@
 
 - name: Init Okapi db
   become: yes
-  service: name=okapi_init state=started
-  when: pg_db_create.changed
-
-- name: Stop Okapi init instance
-  become: yes
-  service: name=okapi_init state=stopped
+  shell: /usr/bin/java -Dstorage=postgres -jar {{ okapi_home }}/lib/okapi-core-fat.jar initdatabase
   when: pg_db_create.changed
 
 - name: Enable and start Okapi service
