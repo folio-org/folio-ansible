@@ -1,5 +1,11 @@
 ---
 # Role to enable mod-users for the sample tenant and load sample data
+- name: Check tenant mod-user registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/users-module"
+    status_code: 200, 404
+  register: tenant_mod_users
+
 - name: Enable mod-users module for tenant
   uri:
     url: http://localhost:9130/_/proxy/tenants/diku/modules
@@ -8,19 +14,7 @@
     body: '{ "id" : "users-module" }'
   register: mod_users_enable
   changed_when: mod_users_enable.status == 200
-
-# temporary, horrible hack until OKAPI-232 is fully resolved
-- name: Initialize mod-users database for tenant
-  uri:
-    url: "http://localhost:9131/_/tenant"
-    method: POST
-    headers:
-      Content-Type: application/json
-      X-Okapi-Tenant: diku
-      Accept: application/json
-    status_code: 200,500
-  register: initdb
-  changed_when: initdb.status == 200
+  when: tenant_mod_users.status == 404
 
 # This should really only happen if the users aren't already there
 # 400 error means the user is already there, this is not ideal
