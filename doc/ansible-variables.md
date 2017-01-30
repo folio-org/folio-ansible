@@ -30,6 +30,9 @@ mod_circulation_src_home: /opt/mod-circulation-src
 mod_metadata_src_home: /opt/mod-metadata-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
+# mod-metadata-data role
+# {{ okapi_url }} from tenant-data
+
 # mod-metadata-demo role
 mod_metadata_home: /opt/mod-metadata
 okapi_url: http://localhost:9130/
@@ -42,6 +45,9 @@ mod_metadata_db: mod_metadata
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
+
+# mod-users-data role
+# {{ okapi_url }} from tenant-data
 
 # mod-users-demo role
 mod_users_home: /opt/mod-users

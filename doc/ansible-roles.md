@@ -37,6 +37,11 @@ GitHub. Depends on:
 - openjdk-8-jdk
 - maven-3
 
+## mod-users-data
+Sample data for the mod-metadata backend modules. Depends on tenant-data.
+*Note: without a running Okapi instance with inventory and
+inventory-storage installed and enabled, this role will fail.*
+
 ## mod-metadata-demo
 Registers and deploys mod-metadata modules with persistent storage in
 a running Okapi instance. Depends on mod-users-build and postgresql.

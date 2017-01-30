@@ -19,7 +19,7 @@
 - name: Build Inventory Storage module
   become: yes
   become_user: "{{ folio_user }}"
-  shell: /usr/bin/mvn -q clean package -Dmaven.test.skip=true > install.log
+  shell: /usr/bin/mvn -q clean install -DskipTests > install.log
   args:
     chdir: "{{ mod_metadata_src_home }}/inventory-storage"
     creates: "{{ mod_metadata_src_home }}/inventory-storage/install.log"

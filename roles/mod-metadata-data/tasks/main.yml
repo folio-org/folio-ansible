@@ -1,0 +1,38 @@
+---
+# Role to enable mod-metadata modules for the sample tenant and load sample data
+- name: Check tenant registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/{{ item }}"
+    status_code: 200, 404
+  register: tenant_mod_metadata
+  with_items:
+    - inventory-storage
+
+- name: Enable mod-metadata modules for tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku/modules
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.module_id }}" }'
+  register: mod_metadata_enable
+  changed_when: mod_metadata_enable.status == 200
+  when: tenant_mod_metadata.results[{{ item.index }}].status == 404
+  with_items:
+    - { index: 0, module_id: inventory-storage }
+
+# - name: Load sample data
+#   uri:
+#     url: http://localhost:9130/users
+#     method: POST
+#     body_format: json
+#     headers:
+#       X-Okapi-Tenant: diku
+#       Accept: application/json
+#     body: "{{ lookup('file', item) }}"
+#     status_code: 201,400
+#   register: load_user
+#   ignore_errors: yes
+#   changed_when: load_user.status == 201
+#   with_fileglob:
+#     - User*.json
+

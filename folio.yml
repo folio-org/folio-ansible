@@ -25,10 +25,11 @@
 # Build a Vagrant box to package as a backend system
 - hosts: build_backend
   roles:
-    # - okapi-demo
-    # - mod-users-demo
-    # - mod-users-data
+    - okapi-demo
+    - mod-users-demo
+    - mod-users-data
     - mod-metadata-demo
+    - mod-metadata-data
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes
