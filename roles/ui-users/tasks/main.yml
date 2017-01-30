@@ -1,5 +1,5 @@
 ---
-# Role to build and deploy FOLIO ui-okapi-console
+# Role to build and deploy FOLIO ui-users
 
 - name: Configure npm registry for sample modules
   become: yes
@@ -21,6 +21,14 @@
     dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
     line: "  okapi: { 'url':'http://localhost:9130', 'tenant':'diku' },"
     regexp: "okapi"
+  notify: Restart stripes
+
+- name: disableAuth for demo
+  become: yes
+  lineinfile:
+    dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
+    line: "  config: { disableAuth: true },"
+    insertafter: "okapi\\:"
   notify: Restart stripes
 
 - name: Add ui-users to stripes
