@@ -6,3 +6,8 @@
 - name: Restart inventory-storage
   become: yes
   service: name=inventory-storage state=restarted
+
+- name: Restart inventory
+  become: yes
+  service: name=inventory state=restarted
+

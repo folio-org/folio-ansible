@@ -3,4 +3,5 @@ dependencies:
   - { role: common }
   - { role: openjdk-8 }
   - { role: maven-3 }
+  - { role: sdkman }
 

@@ -95,6 +95,10 @@ tree.
 Deploys the Okapi test modules from the source code in the
 folio-org/okapi repository. Depends on okapi-src.
 
+## sdkman
+Installs SDKMAN! from http://sdkman.io
+Depends on common
+
 ## stripes-core
 Clones the folio-org/stripes-core repository from GitHub, builds
 stripes. Launches stripes as a system service. Depends on nodejs.

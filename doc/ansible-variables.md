@@ -82,6 +82,9 @@ okapi_home: /opt/okapi
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder
 
+# sdkman role
+sdkman_user: folio
+
 # stripes-core role
 stripes_home: /opt/stripes
 

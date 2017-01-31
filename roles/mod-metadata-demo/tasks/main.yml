@@ -6,6 +6,8 @@
   with_items:
     - "{{ mod_metadata_home }}/inventory-storage/lib"
     - "{{ mod_metadata_home }}/inventory-storage/conf"
+    - "{{ mod_metadata_home }}/inventory/lib"
+    - "{{ mod_metadata_home }}/inventory/conf"
 
 - name: Link in inventory-storage jar
   become: yes
@@ -13,16 +15,25 @@
   file: state=link src={{ mod_metadata_src_home }}/inventory-storage/target/inventory-storage-fat.jar path={{ mod_metadata_home }}/inventory-storage/lib/inventory-storage-fat.jar
   notify: Restart inventory-storage
 
+- name: Link in inventory jar
+  become: yes
+  become_user: "{{ folio_user }}"
+  file: state=link src={{ mod_metadata_src_home }}/inventory/build/libs/inventory.jar path={{ mod_metadata_home }}/inventory/lib/inventory.jar
+  notify: Restart inventory
+
 - name: Link in logging configuration
   become: yes
   become_user: "{{ folio_user }}"
   file: state=link src={{ mod_metadata_src_home }}/inventory-storage/target/classes/log4j.properties path={{ mod_metadata_home }}/inventory-storage/conf/log4j.properties
   notify: Restart inventory-storage
 
-- name: Link in ModuleDescriptor
+- name: Link in ModuleDescriptors
   become: yes
   become_user: "{{ folio_user }}"
-  file: state=link src={{ mod_metadata_src_home }}/inventory-storage/ModuleDescriptor.json path={{ mod_metadata_home }}/inventory-storage/conf/ModuleDescriptor.json
+  file: state=link src={{ mod_metadata_src_home }}/{{ item }}/ModuleDescriptor.json path={{ mod_metadata_home }}/{{ item }}/conf/ModuleDescriptor.json
+  with_items:
+    - inventory-storage
+    - inventory
 
 - name: Copy postgresql configuration
   become: yes
@@ -46,15 +57,21 @@
 # Undeploy if repository updated
 - name: Check status of mod-metadata deployment
   uri:
-    url: "{{ okapi_url }}_/discovery/modules/inventory-storage"
+    url: "{{ okapi_url }}_/discovery/modules/{{ item }}"
     status_code: 200, 404
   register: mod_metadata_deploy_status
+  with_items:
+    - inventory-storage
+    - inventory
 
-- name: Set fact - instId for mod-metadata
-  set_fact: mod_metadata_instid={{ mod_metadata_deploy_status.json.0.instId }}
+- name: Set fact - instId for mod-metadata modules
+  set_fact: "{{item.module}}_instId={{ mod_metadata_deploy_status.results[item.index].json.0.instId }}"
   when:
     - mod_metadata_clone.changed
-    - mod_metadata_deploy_status.status == 200
+    - mod_metadata_deploy_status.results[item.index].status == 200
+  with_items:
+    - { module: inventory_storage, index: 0 }
+    - { module: inventory, index: 1 }
 
 - name: Get tenants
   uri:
@@ -62,85 +79,109 @@
     status_code: 200
   when:
     - mod_metadata_clone.changed
-    - mod_metadata_deploy_status.status == 200
   register: tenants
 
 - name: Check tenant mod-metadata registration
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/{{ item.id }}/modules/inventory-storage"
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module }}"
     status_code: 200, 404
   when:
     - mod_metadata_clone.changed
-    - mod_metadata_deploy_status.status == 200
-  with_items: "{{ tenants.json | default([]) }}"
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - [ { module: inventory-storage, index: 0 }, { module: inventory, index: 1 } ]
   register: tenant_mod_metadata
 
 - name: Unregister mod-metadata modules for tenants if repo updated
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/{{ item.item.id }}/modules/inventory-storage"
+    url: "{{ item.url }}"
     method: DELETE
     status_code: 204
   when:
     - mod_metadata_clone.changed
-    - mod_metadata_deploy_status.status == 200
     - item.status == 200
   with_items: "{{ tenant_mod_metadata.results | default([]) }}"
 
 - name: Undeploy mod-metadata module if repo updated
   uri:
-    url: "{{ okapi_url }}_/discovery/modules/inventory-storage/{{ mod_metadata_instid }}"
+    url: "{{ okapi_url }}_/discovery/modules/{{ item.module }}/{{ item.instId }}"
     method: DELETE
     status_code: 204, 404
   when:
     - mod_metadata_clone.changed
-    - mod_metadata_deploy_status.status == 200
+    - mod_metadata_deploy_status.results[item.index].status == 200
   register: mod_metadata_undeploy
   changed_when: "mod_metadata_undeploy.status == 204"
+  with_items:
+    - { module: inventory-storage, instId: "{{ inventory_storage_instId | default('') }}", index: 0 }
+    - { module: inventory, instId: "{{ inventory_instId | default('') }}", index: 1 }
 
 - name: Un-register mod-metadata if repository updated
   uri:
-    url: "{{ okapi_url }}_/proxy/modules/inventory-storage"
+    url: "{{ okapi_url }}_/proxy/modules/{{ item }}"
     method: DELETE
     status_code: 204, 404
   when: mod_metadata_clone.changed
   register: mod_metadata_unreg
   changed_when: "mod_metadata_unreg.status == 204"
+  with_items:
+    - inventory-storage
+    - inventory
 
 - name: Check mod-metadata module registration
   uri:
-    url: "{{ okapi_url }}_/proxy/modules/inventory-storage"
+    url: "{{ okapi_url }}_/proxy/modules/{{ item }}"
     status_code: 200, 404
   register: mod_metadata_reg_status
+  with_items:
+    - inventory-storage
+    - inventory
 
-- name: Get the ModuleDescriptor
-  fetch: src={{ mod_metadata_home }}/inventory-storage/conf/ModuleDescriptor.json dest=/tmp
-  when: mod_metadata_reg_status.status == 404
+- name: Get the ModuleDescriptors
+  fetch: src={{ mod_metadata_home }}/{{ item.module }}/conf/ModuleDescriptor.json dest=/tmp
+  when: mod_metadata_reg_status.results[item.index].status == 404
+  with_items:
+    - { module: inventory-storage, index: 0 }
+    - { module: inventory, index: 1 }
 
-- name: Register mod-metadata module
+- name: Register mod-metadata modules
   uri:
     url: "{{ okapi_url }}_/proxy/modules"
     method: POST
     body_format: json
-    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_metadata_home ~ '/inventory-storage/conf/ModuleDescriptor.json') }}"
+    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_metadata_home ~ '/' ~ item.module ~ '/conf/ModuleDescriptor.json') }}"
     status_code: 201
-  when: mod_metadata_reg_status.status == 404
+  when: mod_metadata_reg_status.results[item.index].status == 404
   register: mod_metadata_reg
   changed_when: "mod_metadata_reg.status == 201"
-  notify: Restart inventory-storage
+  notify: Restart {{ item.module }}
+  with_items:
+    - { module: inventory-storage, index: 0 }
+    - { module: inventory, index: 1 }
 
 - name: Copy deployment descriptor
   become: yes
   become_user: "{{ folio_user }}"
-  template: src=DeploymentDescriptor.json.j2 dest={{ mod_metadata_home }}/inventory-storage/conf/DeploymentDescriptor.json
-  notify: Restart inventory-storage
+  template: src=DeploymentDescriptor_{{ item }}.json.j2 dest={{ mod_metadata_home }}/{{ item }}/conf/DeploymentDescriptor.json
+  notify: Restart {{ item }}
+  with_items:
+    - inventory-storage
+    - inventory
 
-- name: Copy inventory-storage.service file
+- name: Copy service files
   become: yes
-  template: src=inventory-storage.service.j2 dest=/etc/systemd/system/inventory-storage.service
+  template: src={{ item }}.service.j2 dest=/etc/systemd/system/{{ item }}.service
   notify:
     - systemctl daemon-reload
-    - Restart inventory-storage
+    - Restart {{ item }}
+  with_items:
+    - inventory-storage
+    - inventory
 
-- name: Enable and start inventory-storage service
+- name: Enable and start services
   become: yes
-  service: name=inventory-storage enabled=yes state=started
+  service: name={{ item }} enabled=yes state=started
+  with_items:
+    - inventory-storage
+    - inventory
+    
