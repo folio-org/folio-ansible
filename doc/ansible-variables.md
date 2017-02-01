@@ -31,6 +31,7 @@ mod_metadata_src_home: /opt/mod-metadata-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-metadata-data role
+mod_metadata_src_home: /opt/mod-metadata-src
 # {{ okapi_url }} from tenant-data
 
 # mod-metadata-demo role

@@ -30,7 +30,7 @@
 - name: Build Inventory module
   become: yes
   become_user: "{{ folio_user }}"
-  shell: source /home/{{ folio_user }}/.sdkman/bin/sdkman-init.sh && source {{ mod_metadata_src_home }}/setup-environment.sh && gradle build > install.log
+  shell: source /home/{{ folio_user }}/.sdkman/bin/sdkman-init.sh && source {{ mod_metadata_src_home }}/setup-environment.sh && gradle fatJar > install.log
   args:
     chdir: "{{ mod_metadata_src_home }}/inventory"
     creates: "{{ mod_metadata_src_home }}/inventory/install.log"

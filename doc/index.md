@@ -33,6 +33,14 @@ The Vagrantfile in this project contains five target definitions:
 
 ## Troubleshooting/Known Issues
 
+### Stopping modules through systemd is non-functional
+
+The systemd service files for the FOLIO modules make unwarrented
+assumptions about the instance ID of the module. While they will work
+fine for deploying modules to a running Okapi instance, they will very
+likely fail to undeploy the same module. See
+[FOLIO-451](https://issues.folio.org/browse/FOLIO-451).
+
 ### Vagrant "forwarded port to 9130 is already in use"
 
 All the Vagrant boxes defined in the Vagrantfile forward port 9130
