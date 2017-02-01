@@ -1,0 +1,37 @@
+---
+# Role to enable mod-metadata modules for the sample tenant and load sample data
+- name: Check tenant registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/{{ item }}"
+    status_code: 200, 404
+  register: tenant_mod_metadata
+  with_items:
+    - inventory-storage
+    - inventory
+
+- name: Enable mod-metadata modules for tenant
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.module_id }}" }'
+  register: mod_metadata_enable
+  changed_when: mod_metadata_enable.status == 200
+  when: tenant_mod_metadata.results[{{ item.index }}].status == 404
+  with_items:
+    - { index: 0, module_id: inventory-storage }
+    - { index: 1, module_id: inventory }
+
+- name: Check for sample data
+  uri:
+    url: "{{ okapi_url }}item-storage/items"
+    headers:
+      Content-Type: application/json
+      X-Okapi-Tenant: diku
+      Accept: application/json
+  register: inventory_items
+
+- name: Load sample data
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@{{ mod_metadata_src_home }}/inventory/sample-data/multiple-mods-records.xml {{ okapi_url }}inventory/ingest/mods"
+  when: inventory_items.json.totalRecords == 0
+
