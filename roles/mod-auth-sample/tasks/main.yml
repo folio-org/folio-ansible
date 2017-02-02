@@ -1,0 +1,14 @@
+---
+# Role to build and deploy the Node.js sample modules for mod-auth
+- name: Build Node.js sample modules
+  npm: state=latest path={{ mod_auth_src_home }}/testing/{{ item }}
+  with_items:
+    - thing_module
+    - retrieve_module
+
+- name: Load testing data
+  command: mongoimport -d test -c {{ item.collection }} {{ mod_auth_src_home }}/testing/mongo/{{ item.file }}
+  with_items:
+    - { collection: users, file: users.json }
+    - { collection: permissions, file: permissions.json }
+    - { collection: credentials, file: credentials.json }

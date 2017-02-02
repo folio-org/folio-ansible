@@ -1,0 +1,8 @@
+---
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+
+- name: Restart mod-auth
+  become: yes
+  service: name=mod-auth state=restarted

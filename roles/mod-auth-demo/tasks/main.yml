@@ -1,0 +1,53 @@
+---
+# Role to build a demo mod-auth with user permissions for the sample tenant
+# note this will fail if modules are already hooked up - how to make idempotent?
+# This should really only happen if the users aren't already there
+# 400 error means the user is already there, this is not ideal
+- name: Load users
+  uri:
+    url: http://localhost:9130/users
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,400
+  register: load_user
+  ignore_errors: yes
+  changed_when: load_user.status == 201
+  with_fileglob:
+    - "*_user.json"
+
+- name: Copy the users, permissions, and credentials files
+  become: yes
+  copy: src={{ item }} dest={{ mod_auth_home }}/conf/{{ item }} owner={{ folio_user }} group={{ folio_group }} mode=0664
+  with_items:
+    - users.json
+    - permissions.json
+    - credentials.json
+
+- name: Load users, permissions, and credentials into Mongo
+  command: mongoimport --drop -d test -c {{ item }} {{ mod_auth_home }}/conf/{{ item }}.json
+  with_items:
+    - users
+    - permissions
+    - credentials
+
+- name: Check mod-auth modules tenant registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/{{ item.module }}-module"
+    status_code: 200, 404
+  register: tenant_mod_auth
+  with_items: "{{ auth_modules }}"
+
+- name: Enable mod-auth modules for tenant
+  uri:
+    url: http://localhost:9130/_/proxy/tenants/diku/modules
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.module }}-module" }'
+  register: mod_auth_enable
+  changed_when: mod_auth_enable.status == 200
+  when: tenant_mod_auth.results[item.index].status == 404
+  with_items: "{{ auth_modules }}"

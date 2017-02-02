@@ -7,6 +7,7 @@
 - name: Clone mod-users repository
   become: yes
   become_user: "{{ folio_user }}"
+#  git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }} version=e6cd9e2cfb8fd9e9e888daae91e775d478d0bf61
   git: repo=https://github.com/folio-org/mod-users.git dest={{ mod_users_src_home }}
   register: mod_users_clone
 

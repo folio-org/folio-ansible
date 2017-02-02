@@ -17,8 +17,19 @@ docker_users:
 # maven-3 role
 maven_version: 3.3.9
 
-# mod-auth-src role
+# mod-auth role
+mod_auth_home: /opt/mod-auth
 mod_auth_src_home: /opt/mod-auth-src
+okapi_url: http://localhost:9130/
+auth_modules:
+  - { index: 0, module: login }
+  - { index: 1, module: authtoken }
+  - { index: 2, module: permissions }
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
+# mod-auth-demo role
+# {{ mod_auth_home }}, {{ folio_user }}, {{ folio_group }},
+# {{ okapi_url }}, {{ auth_modules }} from mod-auth dependency
 
 # mod-circulation-build role
 mod_circulation_src_home: /opt/mod-circulation-src

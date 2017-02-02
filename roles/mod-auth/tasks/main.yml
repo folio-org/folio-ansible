@@ -1,0 +1,185 @@
+---
+# Role to build the auth modules and run them from source
+- name: Create mod-auth src directory
+  become: yes
+  file: path={{ mod_auth_src_home }} state=directory owner={{ folio_user }} group={{ folio_group }}
+
+- name: Clone mod-auth repository
+  become: yes
+  become_user: "{{ folio_user }}"
+  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }}
+  register: mod_auth_clone
+
+- name: Force Maven build if repository updated
+  become: yes
+  file: path={{ mod_auth_src_home }}/{{ item.module }}_module/install.log state=absent
+  with_items: "{{ auth_modules }}"
+  when: mod_auth_clone.changed
+
+- name: Build mod-auth modules
+  become: yes
+  become_user: "{{ folio_user }}"
+  shell: /usr/bin/mvn -q clean install > install.log
+  args:
+    chdir: "{{ mod_auth_src_home }}/{{ item.module }}_module"
+    creates: "{{ mod_auth_src_home }}/{{ item.module }}_module/install.log"
+  with_items: "{{ auth_modules }}"
+
+- name: Set up mod-auth home directory
+  become: yes
+  file: state=directory path={{ item }} owner={{ folio_user }} group={{ folio_group }}
+  with_items:
+    - "{{ mod_auth_home }}/lib"
+    - "{{ mod_auth_home }}/conf"
+
+- name: Link in mod-auth jars
+  become: yes
+  become_user: "{{ folio_user }}"
+  file: state=link src={{ mod_auth_src_home }}/{{ item.module }}_module/target/{{ item.module }}_module-fat.jar path={{ mod_auth_home }}/lib/{{ item.module }}_module-fat.jar
+  with_items: "{{ auth_modules }}"
+
+- name: Link in module descriptors
+  become: yes
+  become_user: "{{ folio_user }}"
+  file: state=link src={{ mod_auth_src_home }}/testing/auth_test/module_descriptors/{{ item.module }}.json path="{{ mod_auth_home }}/conf/ModuleDescriptor_{{ item.module }}.json"
+  with_items: "{{ auth_modules }}"
+
+# Undeploy if repository updated
+- name: Check status of mod-auth deployment
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/{{ item.module }}-module"
+    status_code: 200, 404
+  with_items: "{{ auth_modules }}"
+  register: mod_auth_deploy_status
+
+- name: Set fact - instId for mod-auth
+  set_fact: "{{ item.module }}_instid={{ mod_auth_deploy_status.results[item.index].json.0.instId }}"
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[{{ item.index }}].status == 200
+  with_items: "{{ auth_modules }}"
+
+- name: Get tenants
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants"
+    status_code: 200
+  when:
+    - mod_auth_clone.changed
+  register: tenants
+
+- name: Check tenant auth module registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module }}-module"
+    status_code: 200, 404
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[{{ item[1].index }}].status == 200
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ auth_modules }}"
+  register: tenant_module
+
+- name: Unregister auth modules for tenants if repo updated
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module }}-module"
+    method: DELETE
+    status_code: 204
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[{{ item[1].index }}].status == 200
+    - tenant_module.results[{{ item[1].index }}].status == 200
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ auth_modules }}"
+
+# should be a clever way to do with with looping
+- name: Undeploy login-module if repo updated
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/login-module/{{ login_instid }}"
+    method: DELETE
+    status_code: 204, 404
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[0].status == 200
+  register: login_module_undeploy
+  changed_when: "login_module_undeploy.status == 204"
+
+- name: Undeploy authtoken-module if repo updated
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/authtoken-module/{{ authtoken_instid }}"
+    method: DELETE
+    status_code: 204, 404
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[1].status == 200
+  register: authtoken_module_undeploy
+  changed_when: "authtoken_module_undeploy.status == 204"
+
+- name: Undeploy permissions-module if repo updated
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/permissions-module/{{ permissions_instid }}"
+    method: DELETE
+    status_code: 204, 404
+  when:
+    - mod_auth_clone.changed
+    - mod_auth_deploy_status.results[2].status == 200
+  register: permissions_module_undeploy
+  changed_when: "permissions_module_undeploy.status == 204"
+
+- name: Un-register mod-auth if repository updated
+  uri:
+    url: "{{ okapi_url }}_/proxy/modules/{{ item.module }}-module"
+    method: DELETE
+    status_code: 204, 404
+  when: mod_auth_clone.changed
+  register: mod_auth_unreg
+  with_items: "{{ auth_modules }}"
+  changed_when: "mod_auth_unreg.status == 204"
+
+- name: Check auth module registration
+  uri:
+    url: http://localhost:9130/_/proxy/modules/{{ item.module }}-module
+    status_code: 200, 404
+  with_items: "{{ auth_modules }}"
+  register: auth_reg_status
+
+- name: Get the module descriptors
+  fetch: src={{ mod_auth_home }}/conf/ModuleDescriptor_{{ item.module }}.json dest=/tmp
+  when: auth_reg_status.results[{{ item.index }}].status == 404
+  with_items: "{{ auth_modules }}"
+
+- name: Register auth modules
+  uri:
+    url: "{{ okapi_url }}_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_auth_home ~ '/conf/ModuleDescriptor_' ~ item.module ~ '.json') }}"
+    status_code: 201
+  when: auth_reg_status.results[{{ item.index }}].status == 404
+  register: auth_reg
+  changed_when: "auth_reg.status == 201"
+  with_items: "{{ auth_modules }}"
+
+- name: Check auth module deployment
+  uri:
+    url: "{{ okapi_url }}_/discovery/modules/{{ item.module }}-module"
+    status_code: 200, 404
+  with_items: "{{ auth_modules }}"
+  register: auth_deploy_status
+
+- name: Copy deployment descriptors
+  become: yes
+  become_user: "{{ folio_user }}"
+  template: src=DeploymentDescriptor.json.j2 dest={{ mod_auth_home }}/conf/DeploymentDescriptor_{{ item.module }}.json
+  with_items: "{{ auth_modules }}"
+
+- name: Copy mod-auth.service file
+  become: yes
+  template: src=mod-auth.service.j2 dest=/etc/systemd/system/mod-auth.service
+  notify:
+    - systemctl daemon-reload
+    - Restart mod-auth
+
+- name: Enable and start mod-auth service
+  become: yes
+  service: name=mod-auth enabled=yes state=started
