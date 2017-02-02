@@ -1,0 +1,37 @@
+---
+# Role to build mod-metadata modules from source
+- name: Create mod-metadata src directory
+  become: yes
+  file: path={{ mod_metadata_src_home }} state=directory owner={{ folio_user }} group={{ folio_group }}
+
+- name: Clone mod-metadata repository
+  become: yes
+  become_user: "{{ folio_user }}"
+  git: repo=https://github.com/folio-org/mod-metadata.git dest={{ mod_metadata_src_home }}
+  register: mod_metadata_clone
+
+- name: Force build if repository updated
+  become: yes
+  become_user: "{{ folio_user }}"
+  file: path={{ mod_metadata_src_home }}/{{ item }} state=absent
+  when: mod_metadata_clone.changed
+  with_items:
+    - inventory-storage/install.log
+    - inventory/install.log
+
+- name: Build Inventory Storage module
+  become: yes
+  become_user: "{{ folio_user }}"
+  shell: /usr/bin/mvn -q clean install -DskipTests > install.log
+  args:
+    chdir: "{{ mod_metadata_src_home }}/inventory-storage"
+    creates: "{{ mod_metadata_src_home }}/inventory-storage/install.log"
+
+- name: Build Inventory module
+  become: yes
+  become_user: "{{ folio_user }}"
+  shell: source /home/{{ folio_user }}/.sdkman/bin/sdkman-init.sh && source {{ mod_metadata_src_home }}/setup-environment.sh && gradle fatJar > install.log
+  args:
+    chdir: "{{ mod_metadata_src_home }}/inventory"
+    creates: "{{ mod_metadata_src_home }}/inventory/install.log"
+    executable: /bin/bash
