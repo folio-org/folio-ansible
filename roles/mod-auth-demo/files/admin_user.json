@@ -8,7 +8,9 @@
   "patron_group" : "on_campus",
   "active" : true,
   "personal" : {
-    "full_name" : "diku admin user"
+    "first_name" : "DIKU",
+    "last_name" : "administrator",
+    "email" : "admin@diku.dk"
   },
   "username" : "diku_admin"
 }

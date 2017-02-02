@@ -1,1 +1,3 @@
-{ "_id" : { "$oid" : "57d2cf940a1f63eae94d3b06" }, "username" : "diku_admin", "tenant" : "diku", "permissions" : [ "users.super" ] }
+{ "username" : "diku_admin", "tenant" : "diku", "permissions" : [ "users.super" ] }
+{ "username" : "auth_test1", "tenant" : "diku", "permissions" : [ "users.super" ] }
+{ "username" : "auth_test2", "tenant" : "diku", "permissions" : [ "users.super" ] }

@@ -3,19 +3,21 @@
 # note this will fail if modules are already hooked up - how to make idempotent?
 # This should really only happen if the users aren't already there
 # 400 error means the user is already there, this is not ideal
-- name: Import the diku_admin user
+- name: Load users
   uri:
-    url: "{{ okapi_url }}users"
+    url: http://localhost:9130/users
     method: POST
     body_format: json
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
-    body: "{{ lookup('file', 'admin-user.json') }}"
+    body: "{{ lookup('file', item) }}"
     status_code: 201,400
   register: load_user
   ignore_errors: yes
   changed_when: load_user.status == 201
+  with_fileglob:
+    - "*_user.json"
 
 - name: Copy the users, permissions, and credentials files
   become: yes
@@ -32,6 +34,13 @@
     - permissions
     - credentials
 
+- name: Check mod-auth modules tenant registration
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/{{ item.module }}-module"
+    status_code: 200, 404
+  register: tenant_mod_auth
+  with_items: "{{ auth_modules }}"
+
 - name: Enable mod-auth modules for tenant
   uri:
     url: http://localhost:9130/_/proxy/tenants/diku/modules
@@ -39,5 +48,6 @@
     body_format: json
     body: '{ "id" : "{{ item.module }}-module" }'
   register: mod_auth_enable
-  changed_when: mod_users_enable.status == 200
+  changed_when: mod_auth_enable.status == 200
+  when: tenant_mod_auth.results[item.index].status == 404
   with_items: "{{ auth_modules }}"
