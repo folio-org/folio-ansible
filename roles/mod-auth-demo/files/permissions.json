@@ -12,3 +12,8 @@
 { "_id" : { "$oid" : "57d2cf490a1f63eae94d3b02" }, "permission_name" : "users.edit", "tenant" : "diku", "sub_permissions" : [] }
 { "_id" : { "$oid" : "57d2cf530a1f63eae94d3b03" }, "permission_name" : "users.delete", "tenant" : "diku", "sub_permissions" : [] }
 { "_id" : { "$oid" : "57d2cf690a1f63eae94d3b05" }, "permission_name" : "users.super", "tenant" : "diku", "sub_permissions" : [ "users.read", "users.create", "users.edit", "users.delete" ] }
+{ "permission_name" : "login.addUser", "tenant" : "diku", "sub_permissions" : [] }
+{ "permission_name" : "login.readUser", "tenant" : "diku", "sub_permissions" : [] }
+{ "permission_name" : "login.modifyUser", "tenant" : "diku", "sub_permissions" : [] }
+{ "permission_name" : "login.removeUser", "tenant" : "diku", "sub_permissions" : [] }
+{ "permission_name" : "login", "tenant" : "diku", "sub_permissions" : ["login.addUser", "login.modifyUser", "login.removeUser", "login.readUser"] }
