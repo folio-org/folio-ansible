@@ -1,5 +1,5 @@
 ---
-# Role to build and deploy FOLIO ui-users
+# Role to build and deploy FOLIO ui-okapi-console
 
 - name: Configure npm registry for sample modules
   become: yes
@@ -8,9 +8,9 @@
     chdir: "{{ stripes_home }}/stripes-core"
   when: stripes_core_clone.changed
 
-- name: Install/update packages for ui-users
+- name: Install/update packages for ui-okapi-console
   become: yes
-  command: npm install @folio-sample-modules/users
+  command: npm install @folio-sample-modules/okapi-console
   args:
     chdir: "{{ stripes_home }}/stripes-core"
   notify: Restart stripes
@@ -23,18 +23,10 @@
     insertafter: "okapi\\:"
   notify: Restart stripes
 
-- name: Set up Okapi for demo tenant
+- name: Add okapi-console to stripes
   become: yes
   lineinfile:
     dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
-    line: "    'tenant' : 'diku',"
-    insertafter: "okapi\\:"
-  notify: Restart stripes
-
-- name: Add ui-users to stripes
-  become: yes
-  lineinfile:
-    dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
-    line: "    '@folio-sample-modules/users': {},"
+    line: "    '@folio-sample-modules/okapi-console': {},"
     insertafter: "modules\\:"
   notify: Restart stripes
