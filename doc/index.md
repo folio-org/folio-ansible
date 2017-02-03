@@ -22,11 +22,11 @@ The Vagrantfile in this project contains five target definitions:
    cloned from GitHub and then built from source on the VM as part of
    provisioning. Source code is shared with the host machine on the
    project root.
-2. `backend` -- a fully loaded backend Okapi and mod-users system with
-   sample data.
+2. `backend` -- a fully loaded backend Okapi, mod-users, and
+   mod-metadata system with sample data.
 3. `demo` -- a fully loaded backend Okapi and mod-users system with
    sample data, stripes-core loaded as a system service, and the
-   ui-users FOLIO app.
+   ui-users and ui-okapi-console FOLIO apps.
 4. `backend_auth` -- the backend system, plus mod-auth. There are three sample
    authorized users:
    * `diku_admin` with password `admin`.

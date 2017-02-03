@@ -121,6 +121,12 @@ builds the code. Depends on openjdk-8 and maven-3.
 ## tenant-data
 Load a demo tenant into a running Okapi instance.
 
+## ui-okapi-console
+Adds the ui-okapi-console module to stripes-core from
+https://repository.folio.org/repository/npm-folioci/
+Depends on stripes-core and tenant-data.
+*Note: without a running Okapi instance, this role will fail.*
+
 ## ui-users
 Adds the ui-users module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/

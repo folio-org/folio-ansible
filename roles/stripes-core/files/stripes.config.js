@@ -1,5 +1,7 @@
 module.exports = {
-  okapi: { },
+  config: { 'disableAuth' : true },
+  okapi: {
+  },
   modules: {
   }
 };

@@ -103,6 +103,9 @@ stripes_home: /opt/stripes
 # tenant-data role
 okapi_url: http://localhost:9130/
 
+# ui-okapi-console
+# also uses {{ stripes_home }} from stripes-core dependency
+
 # ui-users
 # also uses {{ stripes_home }} from stripes-core dependency
 ```
