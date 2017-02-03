@@ -4,7 +4,7 @@
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
-    * [Viewing the Okapi log on the `backend` or `demo` box](#viewing-the-okapi-log-on-the-backend-or-demo-box)
+    * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backend_auth-or-demo-box)
     * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
     * [Viewing the Okapi log on the `dev` box](#viewing-the-okapi-log-on-the-dev-box)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
@@ -27,8 +27,11 @@ The Vagrantfile in this project contains five target definitions:
 3. `demo` -- a fully loaded backend Okapi and mod-users system with
    sample data, stripes-core loaded as a system service, and the
    ui-users FOLIO app.
-4. `backend_auth` -- the backend system, plus mod-auth. The sample
-   authorized user is `diku_admin` with password `admin`.
+4. `backend_auth` -- the backend system, plus mod-auth. There are three sample
+   authorized users:
+   * `diku_admin` with password `admin`.
+   * `auth_test1` with password `diku`.
+   * `auth_test2` with password `diku`.
 5. `build_backend` -- a target to build the `backend` box for
    packaging.
 6. `build_demo` -- a target to build the `demo` box for packaging.
@@ -52,10 +55,10 @@ All the Vagrant boxes defined in the Vagrantfile forward port 9130
 forwarding so that you can run multiple boxes at the same time, edit
 the Vagrantfile in the root directory of the project.
 
-### Viewing the Okapi log on the `backend` or `demo` box
+### Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box
 
-On the `backend` and `demo` boxes, Okapi is deployed as a system
-service using
+On the `backend`, `backend_auth`, and `demo` boxes, Okapi is deployed
+as a system service using
 [systemd](https://www.freedesktop.org/wiki/Software/systemd/), the
 Debian standard, so you can use the standard systemd tools to look at
 the log. First log into the box with `vagrant ssh backend` or `vagrant
