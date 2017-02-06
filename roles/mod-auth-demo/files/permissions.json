@@ -1,10 +1,12 @@
 { "_id" : { "$oid" : "57e00c2e43ed636513395e89" }, "permission_name" : "perms.users.create", "tenant" : "diku" }
 { "_id" : { "$oid" : "57e00c3743ed636513395e8a" }, "permission_name" : "perms.users.read", "tenant" : "diku" }
 { "_id" : { "$oid" : "57e00c4343ed636513395e8b" }, "permission_name" : "perms.users.delete", "tenant" : "diku" }
+{ "permission_name" : "perms.users.edit", "tenant" : "diku" }
 { "_id" : { "$oid" : "57e00c5643ed636513395e8c" }, "permission_name" : "perms.permissions.read", "tenant" : "diku" }
 { "_id" : { "$oid" : "57e00c6143ed636513395e8d" }, "permission_name" : "perms.permissions.create", "tenant" : "diku" }
 { "_id" : { "$oid" : "57e00c6c43ed636513395e8e" }, "permission_name" : "perms.permissions.delete", "tenant" : "diku" }
-{ "_id" : { "$oid" : "57e01ad843ed636513395e8f" }, "permission_name" : "perms.permissions", "tenant" : "diku", "sub_permissions" : [ "perms.permissions.read", "perms.permissions.create", "perms.permissions.delete" ] }
+{ "permission_name" : "perms.permissions.edit", "tenant" : "diku" }
+{ "_id" : { "$oid" : "57e01ad843ed636513395e8f" }, "permission_name" : "perms.permissions", "tenant" : "diku", "sub_permissions" : [ "perms.permissions.read", "perms.permissions.create", "perms.permissions.delete", "perms.permissions.edit" ] }
 { "_id" : { "$oid" : "57e01b1843ed636513395e90" }, "permission_name" : "perms.users", "tenant" : "diku", "sub_permissions" : [ "perms.users.create", "perms.users.read", "perms.users.delete", "perms.users.edit" ] }
 { "_id" : { "$oid" : "57e01b3e43ed636513395e91" }, "permission_name" : "perms", "tenant" : "diku", "sub_permissions" : [ "perms.users", "perms.permissions" ] }
 { "_id" : { "$oid" : "57d2cf150a1f63eae94d3b00" }, "permission_name" : "users.read", "tenant" : "diku", "sub_permissions" : [] }

@@ -25,6 +25,12 @@ Vagrant.configure(2) do |config|
     backend.vm.network "forwarded_port", guest: 9130, host: 9130
   end
 
+  config.vm.define "backend_auth", autostart: false do |backend_auth|
+    backend_auth.vm.box = "folio/folio-backend-auth"
+    backend_auth.vm.synced_folder ".", "/vagrant", disabled: true
+    backend_auth.vm.network "forwarded_port", guest: 9130, host: 9130
+  end
+
   config.vm.define "demo", autostart: false do |demo|
     demo.vm.box = "folio/folio-demo"
     demo.vm.synced_folder ".", "/vagrant", disabled: true
