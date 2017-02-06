@@ -47,7 +47,8 @@
     method: POST
     body_format: json
     body: '{ "id" : "{{ item.module }}-module" }'
+    status_code: 201
   register: mod_auth_enable
-  changed_when: mod_auth_enable.status == 200
+  changed_when: mod_auth_enable.status == 201
   when: tenant_mod_auth.results[item.index].status == 404
   with_items: "{{ auth_modules }}"

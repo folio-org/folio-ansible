@@ -15,8 +15,9 @@
     method: POST
     body_format: json
     body: '{ "id" : "{{ item.module_id }}" }'
+    status_code: 201
   register: mod_metadata_enable
-  changed_when: mod_metadata_enable.status == 200
+  changed_when: mod_metadata_enable.status == 201
   when: tenant_mod_metadata.results[{{ item.index }}].status == 404
   with_items:
     - { index: 0, module_id: inventory-storage }

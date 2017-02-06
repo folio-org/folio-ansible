@@ -12,8 +12,9 @@
     method: POST
     body_format: json
     body: '{ "id" : "users-module" }'
+    status_code: 201
   register: mod_users_enable
-  changed_when: mod_users_enable.status == 200
+  changed_when: mod_users_enable.status == 201
   when: tenant_mod_users.status == 404
 
 # This should really only happen if the users aren't already there
