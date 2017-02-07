@@ -1,15 +1,26 @@
 ---
-# Install openjdk-8-jdk on Debian Jessie
+# Install openjdk-8-jdk 
 - name: Install python-apt
   become: yes
   apt: name=python-apt state=present
 
-- name: Add backports apt repo
+- name: Add backports apt repo if distro is Debian Jessie
   become: yes
   apt_repository: repo="deb http://ftp.debian.org/debian jessie-backports main" state=present update_cache=yes
+  when: ansible_distribution_release == "jessie"
 
-- name: Install Java 8 from apt
+- name: Install Java 8 on jessie from backports
   become: yes
   apt: name={{ item }} state=present default_release=jessie-backports
   with_items:
     - openjdk-8-jdk
+  when: ansible_distribution_release == "jessie"
+
+- name: Install Java 8
+  become: yes
+  apt: name=openjdk-8-jdk state=present 
+
+- name: Make Java 8 the system default 
+  become: yes
+  command: update-java-alternatives --set java-1.8.0-openjdk-amd64
+  creates: /etc/.set_java_ansible
