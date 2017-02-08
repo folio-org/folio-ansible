@@ -1,0 +1,48 @@
+---
+
+- name: Create Okapi postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ okapi_pg_user }}"
+    password: "{{ okapi_pg_password }}"
+    role_attr_flags: CREATEDB
+  when: okapi_storage == "postgres"
+
+- name: Create Okapi db
+  become: yes
+  become_user: postgres
+  postgresql_db: name={{ okapi_pg_database }}  owner={{ okapi_pg_user }}
+  when: okapi_storage == "postgres"
+
+- name: Configure FOLIO CI apt repository
+  become: yes
+  apt_repository: 
+    repo: deb https://jenkins-aws.indexdata.com/apt-repo binary/
+    filename: folioci
+    state: present
+  
+- name: Install okapi debian package 
+  become: yes
+  apt: name=okapi allow_unauthenticated=yes
+  
+
+- name: Install okapi.conf
+  template: 
+    src: okapi.conf.j2 
+    dest: /etc/folio/okapi/okapi.conf 
+    owner: root 
+    group: root 
+    mode: 0644
+  notify: okapi restart
+
+- name: Install hazelcast.xml
+  template: 
+    src: hazelcast-aws.xml.j2 
+    dest: /etc/folio/okapi/hazelcast.xml 
+    owner: root 
+    group: okapi
+    mode: 0640
+  when: hazelcast_aws_conf == "true"
+  notify: okapi restart
+
