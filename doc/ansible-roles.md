@@ -10,16 +10,15 @@ git and curl from apt.
 Installs the Docker engine from the Docker repository. Not strictly
 necessary for module development.
 
-## openjdk-8
-Installs the openjdk-8-jdk package from backports, required for Okapi
-and Maven 3.
-
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
 
 ## mod-auth
 Clones the folio-org/mod-auth repository from GitHub, builds and
-deploys the modules. Depends on mongodb-org.
+deploys the modules. Depends on:
+- common
+- mongodb-org
+- okapi-undeploy
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-auth-demo
@@ -56,7 +55,10 @@ inventory-storage installed and enabled, this role will fail.*
 
 ## mod-metadata-demo
 Registers and deploys mod-metadata modules with persistent storage in
-a running Okapi instance. Depends on mod-users-build and postgresql.
+a running Okapi instance. Depends on:
+- mod-metadata-build
+- postgresql
+- okapi-undeploy
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-build
@@ -70,7 +72,10 @@ enabled, this role will fail.*
 
 ## mod-users-demo
 Registers and deploys mod-users with persistent storage in a running
-Okapi instance. Depends on mod-users-build and postgresql.
+Okapi instance. Depends on:
+- mod-users-build
+- postgresql
+- okapi-undeploy
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
@@ -106,6 +111,14 @@ tree.
 ## okapi-test
 Deploys the Okapi test modules from the source code in the
 folio-org/okapi repository. Depends on okapi-src.
+
+## okapi-undeploy
+Installs a simple script to undeploy all instances of a module from a
+running Okapi. Depends on common.
+
+## openjdk-8
+Installs the openjdk-8-jdk package from backports, required for Okapi
+and Maven 3.
 
 ## sdkman
 Installs SDKMAN! from http://sdkman.io

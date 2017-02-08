@@ -26,6 +26,7 @@ auth_modules:
   - { index: 1, module: authtoken }
   - { index: 2, module: permissions }
 # {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency 
 
 # mod-auth-demo role
 # {{ mod_auth_home }}, {{ folio_user }}, {{ folio_group }},
@@ -54,6 +55,7 @@ mod_metadata_pg_password: mod_metadata25
 mod_metadata_db: mod_metadata
 # {{ mod_metadata_src_home }} from mod-metadata-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency 
 
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
@@ -70,6 +72,7 @@ mod_users_pg_password: mod_users25
 mod_users_db: mod_users
 # {{ mod_users_src_home }} from mod-users-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency
 
 # mod-users-docker role
 # also uses {{ mod_users_src_home }} from mod-users-build dependency
@@ -91,6 +94,10 @@ okapi_home: /opt/okapi
 
 # okapi-test role
 # also uses {{ okapi_src_home }} from okapi-src dependency
+
+# okapi-undeploy role
+okapi_home: /opt/okapi
+# {{ folio_user }} and {{ folio_group }} from common dependency
 
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder

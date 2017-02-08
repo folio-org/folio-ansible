@@ -8,7 +8,7 @@ User={{ folio_user }}
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_metadata_home }}/inventory/conf/DeploymentDescriptor.json {{ okapi_url }}_/discovery/modules
-ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/inventory/localhost-9133
+ExecStop={{ okapi_home }}/bin/okapi-undeploy inventory {{ okapi_url }}
 
 [Install]
 WantedBy=multi-user.target
