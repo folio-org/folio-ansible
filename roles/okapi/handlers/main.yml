@@ -1,0 +1,5 @@
+---
+
+- name: okapi restart
+  become: yes
+  service: name=okapi state=restarted
