@@ -2,4 +2,5 @@
 dependencies:
   - { role: mod-metadata-build }
   - { role: postgresql }
+  - { role: okapi-undeploy }
 

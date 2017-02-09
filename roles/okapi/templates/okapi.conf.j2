@@ -1,0 +1,80 @@
+#
+# FOLIO Okapi configuration 
+#
+
+#  Okapi requires exactly one command to be given depending on how #  it is utilized.  #
+# 'cluster' - for running in clustered mode/production
+# 'dev' - for running in development, single-node mode
+# 'deployment' - for okapi deployment only. Clustered mode
+# 'proxy' -  for proxy + discovery. Clustered mode
+#
+# 
+role={{ okapi_role }}
+
+# 'cluster' config options 
+#
+# -hazelcast-config-cp file -- Read config from class path
+# -hazelcast-config-file file -- Read config from local file
+# -hazelcast-config-url url -- Read config from URL
+#
+cluster_config="-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"
+
+# Specify the network interface Vertx cluster should bind to. 
+# By default, it will bind to all network interfaces.  This may have 
+# unintended consequences.
+cluster_interface={{ okapi_interface }}
+
+# Specify which port the cluster should bind to for cluster 
+# communication.  (Note: This different from '5701' which is used for 
+# cluster discovery).  If not set, a random port will be used. 
+cluster_port={{ okapi_cluster_port }}
+
+# Enable the sending of various metrics to a Carbon back end. 
+# Boolean '0' or '1'. Set to '1' to enable and set Carbon/Graphite 
+# host and port.
+enable_metrics={{ okapi_metrics }}
+carbon_host={{ carbon_host }}
+carbon_port={{ carbon_port }}
+
+# Default okapi port
+port={{ okapi_port }}   
+
+# Define port range for modules. Default range: 9131-9141.
+port_start={{ okapi_port_start }}
+port_end={{ okapi_port_end }}
+
+# Hostname to be used in the URLs returned by the deloyment service. 
+# Defaults to 'localhost'
+host={{ okapi_host }}
+
+# Define the storage back end - 'postgres' or 'inmemory' 
+# ('postgres' only valid when 'role' is set to 'cluster' or 'dev')
+# (valid only when 'role' is set to 'dev' or 'cluster')
+storage={{ okapi_storage }}
+
+# Set Postgres parameters.  Ignored unless 'storage="postgres"'
+postgres_host={{ pg_host }}               # default 'localhost'
+postgres_port={{ pg_port }}               # default postgres port
+postgres_user={{ okapi_pg_user }}               # default
+postgres_password={{ okapi_pg_password }} # default
+postgres_database={{ okapi_pg_database }}       # default
+
+# Define Docker URL if we are deploying modules via Docker. 
+dockerurl={{ okapi_dockerurl }}
+
+# Tell Okapi its own official URL.  This gets passed to the 
+# modules as X-Okapi-Url header, and the modules can use this 
+# to make further requests to Okapi.  Defaults to 'http://localhost:9130'
+# or whatever port specified. There should be no trailing slash, but if 
+# there happens to be one, Okapi will remove it. 
+okapiurl={{ okapi_url }}
+
+# Okapi Logging options
+#
+# Define logging level.  Defaults to 'INFO'; other valid values are 'DEBUG',
+# 'TRACE', 'WARN', and 'ERROR' 
+loglevel="INFO"
+
+# Specify external log4j configuration file.  Otherwise logging defaults 
+# to STDOUT.  If defined, 'loglevel' is ignored.
+log4j_config="/etc/folio/okapi/log4j.properties"

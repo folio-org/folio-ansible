@@ -10,9 +10,9 @@ RemainAfterExit=yes
 ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_login.json {{ okapi_url }}_/discovery/modules
 ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_authtoken.json {{ okapi_url }}_/discovery/modules
 ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_auth_home }}/conf/DeploymentDescriptor_permissions.json {{ okapi_url }}_/discovery/modules
-ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/login-module/localhost-9134
-ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/authtoken-module/localhost-9135
-ExecStop=/usr/bin/curl -s -X DELETE {{ okapi_url }}_/discovery/modules/permissions-module/localhost-9136
+ExecStop={{ okapi_home }}/bin/okapi-undeploy login-module {{ okapi_url }}
+ExecStop={{ okapi_home }}/bin/okapi-undeploy authtoken-module {{ okapi_url }}
+ExecStop={{ okapi_home }}/bin/okapi-undeploy permissions-module {{ okapi_url }}
 
 [Install]
 WantedBy=multi-user.target

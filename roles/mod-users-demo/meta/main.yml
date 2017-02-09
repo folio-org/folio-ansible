@@ -1,5 +1,6 @@
 ---
 dependencies:
+  - { role: okapi-undeploy }
   - { role: mod-users-build }
   - { role: postgresql }
 

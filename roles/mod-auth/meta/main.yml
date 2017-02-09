@@ -2,3 +2,4 @@
 dependencies:
   - { role: common }
   - { role: mongodb-org }
+  - { role: okapi-undeploy }
