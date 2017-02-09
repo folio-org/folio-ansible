@@ -22,6 +22,6 @@
 
 - name: Make Java 8 the system default 
   become: yes
-  command: update-java-alternatives --set java-1.8.0-openjdk-amd64
+  shell: update-java-alternatives --set java-1.8.0-openjdk-amd64 && touch /etc/.set_javadefault_ansible
   args:
-    creates: /etc/.set_java_ansible
+    creates: /etc/.set_javadefault_ansible
