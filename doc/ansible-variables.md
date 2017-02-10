@@ -11,8 +11,6 @@ folio_group: folio
 
 # docker-engine role
 docker_users:
-  - "{{ folio_user }}"
-# {{ folio_user }} from common dependency
 
 # maven-3 role
 maven_version: 3.3.9
@@ -57,6 +55,15 @@ mod_metadata_db: mod_metadata
 # {{ folio_user }} and {{ folio_group }} from common dependency
 # {{ okapi_home }} from okapi-undeploy dependency 
 
+# mod-users role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_users_home: /usr/share/folio/mod-users
+mod_users_conf: /etc/folio/mod-users
+okapi_port: 9130
+okapi_url: "http://{{ ansible_fqdn }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_fqdn }}"
+
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
@@ -77,6 +84,35 @@ mod_users_db: mod_users
 # mod-users-docker role
 # also uses {{ mod_users_src_home }} from mod-users-build dependency
 
+# okapi role
+okapi_role: cluster
+okapi_interface: eth0
+okapi_cluster_port: 9001
+okapi_port: 9130
+okapi_port_start: 9131
+okapi_port_end: 9141
+okapi_storage: postgres
+okapi_url: "http://{{ ansible_fqdn }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_fqdn }}"
+pg_host: localhost
+pg_port: 5432
+okapi_pg_user: okapi
+okapi_pg_password: okapi25
+okapi_pg_database: okapi
+okapi_dockerurl: http://localhost:4243
+
+okapi_metrics: 0
+carbon_host: localhost
+carbon_port: 2003
+
+hazelcast_aws_conf: "false"
+hazelcast_aws_region: us-east-1
+hazelcast_security_group: okapi
+hazelcast_aws_access_key: 12345678
+hazelcast_aws_secret_key: 12345678
+hazelcast_ec2_tag_key: Group
+hazelcast_ec2_tag_value: Demo
+
 # okapi-demo role
 okapi_src_home: /opt/okapi-src
 okapi_home: /opt/okapi
@@ -96,8 +132,9 @@ okapi_home: /opt/okapi
 # also uses {{ okapi_src_home }} from okapi-src dependency
 
 # okapi-undeploy role
-okapi_home: /opt/okapi
-# {{ folio_user }} and {{ folio_group }} from common dependency
+okapi_home: /usr/share/folio/okapi
+folio_user: okapi
+folio_group: okapi
 
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder

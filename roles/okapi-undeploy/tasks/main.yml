@@ -9,8 +9,8 @@
 
 - name: Set up Okapi home directory
   become: yes
-  file: state=directory path={{ okapi_home }}/bin owner={{ folio_user }} group={{ folio_group }}
+  file: state=directory path={{ okapi_home }}/bin
 
 - name: Copy okapi-undeploy script
   become: yes
-  copy: src=okapi-undeploy dest={{ okapi_home}}/bin/okapi-undeploy owner={{ folio_user }} group={{ folio_group }} mode=0755
+  copy: src=okapi-undeploy dest={{ okapi_home}}/bin/okapi-undeploy mode=0755

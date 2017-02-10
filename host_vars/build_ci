@@ -1,0 +1,8 @@
+---
+okapi_role: dev
+okapi_url: "http://localhost:{{ okapi_port }}"
+okapi_host: "localhost"
+folio_user: okapi
+folio_group: okapi
+docker_users:
+  - "{{ folio_user }}"

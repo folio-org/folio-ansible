@@ -1,0 +1,14 @@
+[Unit]
+Description=Deploy FOLIO mod-users module to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/curl -s -X POST -H "Content-Type: application/json" -d @{{ mod_users_conf }}/DeploymentDescriptor.json {{ okapi_url }}/_/discovery/modules
+ExecStop={{ okapi_home }}/bin/okapi-undeploy users-module {{ okapi_url }}
+
+[Install]
+WantedBy=multi-user.target

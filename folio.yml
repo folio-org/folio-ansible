@@ -55,3 +55,9 @@
 
     - debug:
         msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
+
+# Build a Vagrant box for CI testing
+- hosts: build_ci
+  roles:
+    - okapi
+    - mod-users

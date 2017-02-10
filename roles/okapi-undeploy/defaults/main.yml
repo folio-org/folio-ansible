@@ -1,0 +1,4 @@
+---
+okapi_home: /usr/share/folio/okapi
+folio_user: okapi
+folio_group: okapi
