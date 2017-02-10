@@ -6,6 +6,7 @@
   with_items:
     - libjson-xs-perl
     - libjson-perl
+    - curl
 
 - name: Set up Okapi home directory
   become: yes

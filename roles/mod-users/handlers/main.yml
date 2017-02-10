@@ -2,4 +2,3 @@
 - name: Restart mod-users
   become: yes
   service: name=mod-users state=restarted
-  when: not mod_users_startup.changed

@@ -25,7 +25,9 @@ if ($response->is_success) {
     }
   }
 } elsif ($response->code == 404) {
-  die "Module $module not deployed on $okapi\n";
+  warn "Module $module not deployed on $okapi\n";
+} elsif ($response->message =~ /^Can\'t connect to/) {
+  warn "Can't connect to okapi at $okapi\n";
 } else {
   die "Undeploy failed: " . $response->status_line . "\n";
 }

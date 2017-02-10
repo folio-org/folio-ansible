@@ -5,17 +5,15 @@
 # Setup #
 #########
 
-- name: Install prerequisites from apt
-  become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - curl
-
 - name: Pull the mod-users Docker image
   become: yes
   become_user: "{{ folio_user }}"
   docker_image: name=folioci/mod-users
   register: mod_users_pull
+
+- name: Set up mod-users home directory
+  become: yes
+  file: state=directory path={{ mod_users_home }}/bin
 
 - name: Set up mod-users conf directory
   become: yes
@@ -29,6 +27,24 @@
 - name: Copy deployment descriptor
   become: yes
   template: src=DeploymentDescriptor.json.j2 dest={{ mod_users_conf }}/DeploymentDescriptor.json
+  notify:
+    - Restart mod-users
+
+- name: Copy mod-users.conf
+  become: yes
+  template: src=mod-users.conf.j2 dest={{ mod_users_conf }}/mod-users.conf
+  notify:
+    - Restart mod-users
+
+- name: Copy mod-users.env
+  become: yes
+  copy: src=mod-users.env dest=/etc/default/mod-users
+  notify:
+    - Restart mod-users
+
+- name: Copy mod-users.sh
+  become: yes
+  copy: src=mod-users.sh dest={{ mod_users_home }}/bin/mod-users.sh mode=0755
   notify:
     - Restart mod-users
 
@@ -118,8 +134,3 @@
   register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
   notify: Restart mod-users
-
-- name: Start mod-users service
-  become: yes
-  service: name=mod-users enabled=yes state=started
-  register: mod_users_startup
