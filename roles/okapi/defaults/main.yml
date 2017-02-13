@@ -1,11 +1,13 @@
 
 okapi_role: cluster
+# 'eth0' is th default ec2 network interface
 okapi_interface: eth0
 okapi_cluster_port: 9001
 okapi_port: 9130
 okapi_port_start: 9131
 okapi_port_end: 9141
-okapi_storage: postgres
+# change to 'postgres' for postgres backend
+okapi_storage: inmemory
 okapi_url: "http://{{ ansible_fqdn }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_fqdn }}"
 pg_host: localhost
@@ -30,4 +32,3 @@ hazelcast_aws_access_key: 12345678
 hazelcast_aws_secret_key: 12345678
 hazelcast_ec2_tag_key: Group
 hazelcast_ec2_tag_value: Demo
-
