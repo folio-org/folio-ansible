@@ -17,7 +17,7 @@ role={{ okapi_role }}
 # -hazelcast-config-file file -- Read config from local file
 # -hazelcast-config-url url -- Read config from URL
 #
-cluster_config="-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"
+cluster_config={{ okapi_cluster_config_file }}
 
 # Specify the network interface Vertx cluster should bind to. 
 # By default, it will bind to all network interfaces.  This may have 

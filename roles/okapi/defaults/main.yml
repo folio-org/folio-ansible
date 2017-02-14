@@ -1,8 +1,9 @@
 
 okapi_role: cluster
-# 'eth0' is th default ec2 network interface
+# 'eth0' is th default ec2 network interface. May be different on other systems
 okapi_interface: eth0
 okapi_cluster_port: 9001
+okapi_cluster_config_file: ""
 okapi_port: 9130
 okapi_port_start: 9131
 okapi_port_end: 9141
@@ -22,9 +23,12 @@ carbon_host: localhost
 carbon_port: 2003
 
 # Edit the following hazelcast variables as appropriate for your site
-# either here or at the host or group var level. 
-# set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
-# you are running ec2 instances
+# either here or at the host or group var level.  These are mostly
+# needed for advanced configuration or running Okapi in 'cluster' mode
+# on AWS.
+# 
+# Set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
+# you are running on ec2 instances
 hazelcast_aws_conf: "false"
 hazelcast_aws_region: us-east-1
 hazelcast_security_group: okapi
@@ -32,3 +36,4 @@ hazelcast_aws_access_key: 12345678
 hazelcast_aws_secret_key: 12345678
 hazelcast_ec2_tag_key: Group
 hazelcast_ec2_tag_value: Demo
+hazelcast_address: "10.*"
