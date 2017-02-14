@@ -32,6 +32,7 @@
   when: hazelcast_aws_conf == "true"
 
 - name: Install okapi.conf
+  become: yes
   template: 
     src: okapi.conf.j2 
     dest: /etc/folio/okapi/okapi.conf 
@@ -41,6 +42,7 @@
   notify: okapi restart
 
 - name: Install hazelcast.xml
+  become: yes
   template: 
     src: hazelcast-aws.xml.j2 
     dest: /etc/folio/okapi/hazelcast.xml 
@@ -52,6 +54,7 @@
 
 
 - name: Initialize okapi database
+  become: yes
   shell: /usr/share/folio/okapi/bin/okapi.sh --initdb && touch /var/lib/okapi/.db_init 
   args:
     creates: /var/lib/okapi/.db_init
