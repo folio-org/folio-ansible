@@ -63,6 +63,7 @@
 
 
 - name: Initialize okapi database
+  become: yes
   shell: /usr/share/folio/okapi/bin/okapi.sh --initdb && touch /var/lib/okapi/.db_init 
   args:
     creates: /var/lib/okapi/.db_init
