@@ -63,8 +63,8 @@
             <discovery-strategies>
             </discovery-strategies>
         </join>
-        <interfaces enabled="false">
-            <interface>10.10.1.*</interface>
+        <interfaces enabled="true">
+            <interface>{{ hazelcast_address }}</interface>
         </interfaces>
         <ssl enabled="false"/>
         <socket-interceptor enabled="false"/>
