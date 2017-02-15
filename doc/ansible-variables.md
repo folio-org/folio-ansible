@@ -11,6 +11,7 @@ folio_group: folio
 
 # docker-engine role
 docker_users:
+  - okapi
 
 # maven-3 role
 maven_version: 3.3.9
