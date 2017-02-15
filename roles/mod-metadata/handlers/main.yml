@@ -1,0 +1,4 @@
+---
+- name: Restart mod-metadata
+  become: yes
+  service: name=mod-metadata state=restarted

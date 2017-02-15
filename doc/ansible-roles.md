@@ -18,6 +18,7 @@ deploys the modules. Depends on:
 - common
 - mongodb-org
 - okapi-undeploy
+
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-auth-demo
@@ -28,6 +29,7 @@ tenant-data.
 ## mod-auth-sample
 Build and deploy the mod-auth Node.js sample modules (thing-module and
 retrieve-module). Depends on mod-auth.
+
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-circulation-build
@@ -46,18 +48,29 @@ GitHub. Depends on:
 - openjdk-8
 - maven-3
 
+## mod-metadata
+Loads the Docker images for the inventory-storage and inventory
+modules from Docker Hub, registers and deploys as a system service in
+a running Okapi instance, with persistent storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
 ## mod-metadata-data
 Sample data for the mod-metadata backend modules. Depends on
 tenant-data and common.
+
 *Note: without a running Okapi instance with inventory and
 inventory-storage installed and enabled, this role will fail.*
 
-## mod-metadata-demo
+## mod-metadata-demo (*Deprecated*)
 Registers and deploys mod-metadata modules with persistent storage in
 a running Okapi instance. Depends on:
 - mod-metadata-build
 - postgresql
 - okapi-undeploy
+
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users
@@ -67,6 +80,7 @@ storage. Depends on:
 - postgresql
 - docker-engine
 - okapi-undeploy
+
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-build
@@ -75,20 +89,20 @@ GitHub. Depends on common, openjdk-8, and maven-3.
 
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
+
 *Note: without a running Okapi instance with mod-users installed and
 enabled, this role will fail.*
 
-## mod-users-demo
-*Deprecated*
+## mod-users-demo (*Deprecated*)
 Registers and deploys mod-users with persistent storage in a running
 Okapi instance. Depends on:
 - mod-users-build
 - postgresql
 - okapi-undeploy
+
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-users-docker
-*Deprecated*
+## mod-users-docker (*Deprecated*)
 Builds a Docker image from the Dockerfile and registers it with
 Okapi. Depends on docker-engine, mod-users-build.
 
@@ -106,14 +120,12 @@ Installs a more recent PostgreSQL from the PostgreSQL repository.
 Installs Okapi from apt as a system service with persistent
 storage. Depends on openjdk-8 and postgresql.
 
-## okapi-demo
-*Deprecated*
- Clones the folio-org/okapi repository from GitHub, installs and
+## okapi-demo (*Deprecated*)
+Clones the folio-org/okapi repository from GitHub, installs and
 launches Okapi as a system service with persistent storage. Depends on
 common, openjdk-8, maven-3, and postgresql.
 
-## okapi-docker
-*Deprecated*
+## okapi-docker (*Deprecated*)
 Clones the folio-org/okapi repository from GitHub, builds and launches
 an Okapi server in development mode in a Docker container. Depends on
 docker-engine.
@@ -155,11 +167,13 @@ Load a demo tenant into a running Okapi instance.
 Adds the ui-okapi-console module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core and tenant-data.
+
 *Note: without a running Okapi instance, this role will fail.*
 
 ## ui-users
 Adds the ui-users module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core and tenant-data.
+
 *Note: without a running Okapi instance with mod-users, this role will
 fail. Sample user data is available in mod-users-data.*

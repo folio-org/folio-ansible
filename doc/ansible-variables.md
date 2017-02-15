@@ -37,6 +37,20 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-metadata role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_metadata_home: /usr/share/folio/mod-metadata
+mod_metdata_conf: /etc/folio/mod-metadata
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_default_ipv4.address }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: mod_metadata
+pg_password: mod_metadata25
+mod_users_db: mod_metadata
+
 # mod-metadata-build role
 mod_metadata_src_home: /opt/mod-metadata-src
 # {{ folio_user }} and {{ folio_group }} from common dependency

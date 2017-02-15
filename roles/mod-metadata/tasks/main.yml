@@ -1,0 +1,158 @@
+---
+# Role to pull the Docker image from folioci and deploy into running Okapi
+
+#########
+# Setup #
+#########
+
+- name: Pull the mod-metadata Docker images
+  become: yes
+  become_user: "{{ folio_user }}"
+  docker_image: name={{ item.docker_image }}
+  register: mod_metadata_pull
+  with_items: "{{ mod_metadata_modules }}"
+
+- name: Set up mod-metadata home directory
+  become: yes
+  file: state=directory path={{ mod_metadata_home }}/bin
+
+- name: Set up mod-metadata conf directory
+  become: yes
+  file: state=directory path={{ mod_metadata_conf }}
+
+- name: Copy module descriptors
+  become: yes
+  copy: src=ModuleDescriptor_{{ item.module }}.json dest={{ mod_metadata_conf }}/ModuleDescriptor_{{ item.module }}.json
+  register: mod_metadata_mod_descr_update
+  with_items: "{{ mod_metadata_modules }}"
+
+- name: Copy deployment descriptors
+  become: yes
+  template: src=DeploymentDescriptor_{{ item.module }}.json.j2 dest={{ mod_metadata_conf }}/DeploymentDescriptor_{{ item.module }}.json
+  with_items: "{{ mod_metadata_modules }}"
+  notify:
+    - Restart mod-metadata
+
+- name: Create mod_metadata postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ pg_user }}"
+    password: "{{ pg_password }}"
+    role_attr_flags: SUPERUSER
+
+- name: Create mod_metadata db
+  become: yes
+  become_user: postgres
+  postgresql_db: name={{ mod_metadata_db }} owner={{ pg_user }}
+
+- name: Copy mod-metadata.conf
+  become: yes
+  template: src=mod-metadata.conf.j2 dest={{ mod_metadata_conf }}/mod-metadata.conf
+  notify:
+    - Restart mod-metadata
+
+- name: Copy mod-metadata.env
+  become: yes
+  copy: src=mod-metadata.env dest=/etc/default/mod-metadata
+  notify:
+    - Restart mod-metadata
+
+- name: Copy mod-metadata.sh
+  become: yes
+  copy: src=mod-metadata.sh dest={{ mod_metadata_home }}/bin/mod-metadata.sh mode=0755
+  notify:
+    - Restart mod-metadata
+
+- name: Copy mod-metadata.service file
+  become: yes
+  template: src=mod-metadata.service.j2 dest=/etc/systemd/system/mod-metadata.service
+  register: mod_metadata_service_update
+  notify:
+    - Restart mod-metadata
+
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+  when: mod_metadata_service_update.changed
+
+- name: Enable mod-metadata service
+  become: yes
+  service: name=mod-metadata enabled=yes
+
+##########################
+# Undeploy if new images #
+##########################
+
+- name: Get tenants
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants"
+    status_code: 200
+  when:
+    - mod_metadata_pull.changed or mod_metadata_mod_descr_update.changed
+  register: tenants
+
+- name: Check tenant mod-user registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module }}"
+    status_code: 200, 404
+  when:
+    - mod_metadata_pull.changed or mod_metadata_mod_descr_update.changed
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ mod_metadata_modules }}"
+  register: tenant_mod_metadata
+
+- name: Unregister mod-metadata module for tenants if images updated
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].json.id }}"
+    method: DELETE
+    status_code: 204
+  when:
+    - mod_metadata_pull.changed or mod_metadata_mod_descr_update.changed
+    - item[1].status == 200
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ tenant_mod_metadata.results | default([]) }}"
+
+- name: Stop mod-metadata service if image updated
+  become: yes
+  service: name=mod-metadata state=stopped
+  when:
+    - mod_metadata_pull.changed or mod_metadata_mod_descr_update.changed
+
+- name: Un-register mod-metadata if image updated
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module }}"
+    method: DELETE
+    status_code: 204, 404
+  when: mod_metadata_pull.changed or mod_metadata_mod_descr_update.changed
+  register: mod_metadata_unreg
+  changed_when: "mod_metadata_unreg.status == 204"
+  with_items: "{{ mod_metadata_modules }}"
+
+####################################
+# Register and launch mod-metadata #
+####################################
+
+- name: Check mod-metadata module registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module }}"
+    status_code: 200, 404
+  with_items: "{{ mod_metadata_modules }}"
+  register: mod_metadata_reg_status
+
+- name: Register mod-metadata module
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', 'ModuleDescriptor_' ~ item.module ~ '.json') }}"
+    status_code: 201
+  when: mod_metadata_reg_status.results[item.index].status == 404
+  register: mod_metadata_reg
+  changed_when: "mod_metadata_reg.status == 201"
+  with_items: "{{ mod_metadata_modules }}"
+  notify: Restart mod-metadata
+
+- meta: flush_handlers
