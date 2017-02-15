@@ -50,15 +50,18 @@ pg_port: 5432
 pg_user: mod_metadata
 pg_password: mod_metadata25
 mod_users_db: mod_metadata
+mod_metadata_modules:
+  - { index: 0, module: inventory-storage }
 
 # mod-metadata-build role
 mod_metadata_src_home: /opt/mod-metadata-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-metadata-data role
-mod_metadata_src_home: /opt/mod-metadata-src
-# {{ okapi_url }} from tenant-data
-# {{ folio_user }} and {{ folio_group }} from common dependency
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_metadata_modules:
+  - { index: 0, module: inventory-storage }
 
 # mod-metadata-demo role
 mod_metadata_home: /opt/mod-metadata

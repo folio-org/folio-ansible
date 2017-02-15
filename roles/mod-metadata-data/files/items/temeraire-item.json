@@ -1,0 +1,15 @@
+{
+  "id": "0b96a642-5e7f-452d-9cae-9cee66c9a892",
+  "instanceId": "cf23adf0-61ba-4887-bf82-956c4aae2260",
+  "title": "Temeraire",
+  "barcode": "645398607547",
+  "materialType": {
+    "name": "Book"
+  },
+  "status": {
+    "name": "Available"
+  },
+  "location": {
+    "name": "Main Library"
+  }
+}
