@@ -41,3 +41,5 @@
     dest: /etc/postgresql/9.6/main/pg_hba.conf
     line: "host  all  all  0.0.0.0/0  md5"
   notify: Restart postgresql
+
+- meta: flush_handlers

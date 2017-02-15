@@ -70,3 +70,4 @@
   when: okapi_storage == "postgres"
   notify: okapi restart
 
+- meta: flush_handlers

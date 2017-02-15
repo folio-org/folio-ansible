@@ -63,7 +63,7 @@
 
 - name: Copy mod-users.service file
   become: yes
-  template: src=mod-users.service.j2 dest=/usr/lib/systemd/system/mod-users.service
+  template: src=mod-users.service.j2 dest=/etc/systemd/system/mod-users.service
   register: mod_users_service_update
   notify:
     - Restart mod-users
@@ -147,3 +147,5 @@
   register: mod_users_reg
   changed_when: "mod_users_reg.status == 201"
   notify: Restart mod-users
+
+- meta: flush_handlers
