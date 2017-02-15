@@ -5,3 +5,8 @@ mod_users_conf: /etc/folio/mod-users
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: mod_users
+pg_password: mod_users25
+mod_users_db: mod_users

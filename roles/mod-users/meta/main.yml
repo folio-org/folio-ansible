@@ -1,4 +1,5 @@
 ---
 dependencies:
+  - { role: postgresql }
   - { role: docker-engine }
   - { role: okapi-undeploy }

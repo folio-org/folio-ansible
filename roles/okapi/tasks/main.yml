@@ -33,7 +33,7 @@
   
 - name: Install okapi debian package 
   become: yes
-  apt: name=okapi allow_unauthenticated=yes
+  apt: name=okapi allow_unauthenticated=yes state=latest
 
 - name: Enable external hazelcast config if AWS
   set_fact: 

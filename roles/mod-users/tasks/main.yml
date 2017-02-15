@@ -30,6 +30,19 @@
   notify:
     - Restart mod-users
 
+- name: Create mod_users postgresql user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ pg_user }}"
+    password: "{{ pg_password }}"
+    role_attr_flags: SUPERUSER
+
+- name: Create mod_users db
+  become: yes
+  become_user: postgres
+  postgresql_db: name={{ mod_users_db }} owner={{ pg_user }}
+
 - name: Copy mod-users.conf
   become: yes
   template: src=mod-users.conf.j2 dest={{ mod_users_conf }}/mod-users.conf

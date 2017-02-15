@@ -26,3 +26,18 @@
   with_items:
     - postgresql
     - postgresql-contrib
+
+- name: Configure postgresql to listen on all interfaces
+  become: yes
+  lineinfile:
+    dest: /etc/postgresql/9.6/main/postgresql.conf
+    line: "listen_addresses = '*'"
+    insertafter: 'Connection Settings'
+  notify: Restart postgresql
+
+- name: Configure postgresql to allow connections from all addresses
+  become: yes
+  lineinfile:
+    dest: /etc/postgresql/9.6/main/pg_hba.conf
+    line: "host  all  all  0.0.0.0/0  md5"
+  notify: Restart postgresql
