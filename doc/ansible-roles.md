@@ -7,8 +7,7 @@ Runs `apt-cache update`, creates the folio user and group, installs
 git and curl from apt.
 
 ## docker-engine
-Installs the Docker engine from the Docker repository. Not strictly
-necessary for module development.
+Installs the Docker engine from the Docker repository.
 
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
@@ -63,7 +62,9 @@ a running Okapi instance. Depends on:
 
 ## mod-users
 Loads the Docker image from Docker Hub, registers and deploys as a
-system service in a running Okapi instance. Depends on:
+system service in a running Okapi instance, with persistent
+storage. Depends on:
+- postgresql
 - docker-engine
 - okapi-undeploy
 *Note: without a running Okapi instance, this role will fail.*
@@ -78,6 +79,7 @@ Sample data for the mod-users backend module. Depends on tenant-data.
 enabled, this role will fail.*
 
 ## mod-users-demo
+*Deprecated*
 Registers and deploys mod-users with persistent storage in a running
 Okapi instance. Depends on:
 - mod-users-build
@@ -86,6 +88,7 @@ Okapi instance. Depends on:
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
+*Deprecated*
 Builds a Docker image from the Dockerfile and registers it with
 Okapi. Depends on docker-engine, mod-users-build.
 
@@ -100,15 +103,17 @@ Installs nodejs, n, and mocha
 Installs a more recent PostgreSQL from the PostgreSQL repository.
 
 ## okapi
-Installs Okapi from apt as a system service. Depends on openjdk-8
-and postgresql.
+Installs Okapi from apt as a system service with persistent
+storage. Depends on openjdk-8 and postgresql.
 
 ## okapi-demo
-Clones the folio-org/okapi repository from GitHub, installs and
+*Deprecated*
+ Clones the folio-org/okapi repository from GitHub, installs and
 launches Okapi as a system service with persistent storage. Depends on
 common, openjdk-8, maven-3, and postgresql.
 
 ## okapi-docker
+*Deprecated*
 Clones the folio-org/okapi repository from GitHub, builds and launches
 an Okapi server in development mode in a Docker container. Depends on
 docker-engine.
