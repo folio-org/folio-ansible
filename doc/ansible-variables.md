@@ -11,8 +11,6 @@ folio_group: folio
 
 # docker-engine role
 docker_users:
-  - "{{ folio_user }}"
-# {{ folio_user }} from common dependency
 
 # maven-3 role
 maven_version: 3.3.9
@@ -57,6 +55,20 @@ mod_metadata_db: mod_metadata
 # {{ folio_user }} and {{ folio_group }} from common dependency
 # {{ okapi_home }} from okapi-undeploy dependency 
 
+# mod-users role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_users_home: /usr/share/folio/mod-users
+mod_users_conf: /etc/folio/mod-users
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_default_ipv4.address }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: mod_users
+pg_password: mod_users25
+mod_users_db: mod_users
+
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
@@ -77,6 +89,46 @@ mod_users_db: mod_users
 # mod-users-docker role
 # also uses {{ mod_users_src_home }} from mod-users-build dependency
 
+# okapi role
+okapi_role: cluster
+# 'eth0' is th default ec2 network interface. May be different on other systems
+okapi_interface: eth0
+okapi_cluster_port: 9001
+okapi_cluster_config_file: ""
+okapi_port: 9130
+okapi_port_start: 9131
+okapi_port_end: 9141
+# change to 'postgres' for postgres backend
+okapi_storage: inmemory
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_default_ipv4.address }}"
+pg_host: localhost
+pg_port: 5432
+okapi_pg_user: okapi
+okapi_pg_password: okapi25
+okapi_pg_database: okapi
+okapi_dockerurl: http://localhost:4243
+
+okapi_metrics: 0
+carbon_host: localhost
+carbon_port: 2003
+
+# Edit the following hazelcast variables as appropriate for your site
+# either here or at the host or group var level.  These are mostly
+# needed for advanced configuration or running Okapi in 'cluster' mode
+# on AWS.
+# 
+# Set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
+# you are running on ec2 instances
+hazelcast_aws_conf: "false"
+hazelcast_aws_region: us-east-1
+hazelcast_security_group: okapi
+hazelcast_aws_access_key: 12345678
+hazelcast_aws_secret_key: 12345678
+hazelcast_ec2_tag_key: Group
+hazelcast_ec2_tag_value: Demo
+hazelcast_address: "10.*"
+
 # okapi-demo role
 okapi_src_home: /opt/okapi-src
 okapi_home: /opt/okapi
@@ -96,8 +148,9 @@ okapi_home: /opt/okapi
 # also uses {{ okapi_src_home }} from okapi-src dependency
 
 # okapi-undeploy role
-okapi_home: /opt/okapi
-# {{ folio_user }} and {{ folio_group }} from common dependency
+okapi_home: /usr/share/folio/okapi
+folio_user: okapi
+folio_group: okapi
 
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder

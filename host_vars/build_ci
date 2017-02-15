@@ -1,0 +1,7 @@
+---
+okapi_role: dev
+okapi_storage: postgres
+folio_user: okapi
+folio_group: okapi
+docker_users:
+  - "{{ folio_user }}"

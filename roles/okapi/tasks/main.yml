@@ -1,5 +1,14 @@
 ---
 
+- name: Install prereqs from apt for adding repository
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-apt
+    - ssl-cert
+
 - name: Create Okapi postgresql user
   become: yes
   become_user: postgres
@@ -24,7 +33,7 @@
   
 - name: Install okapi debian package 
   become: yes
-  apt: name=okapi allow_unauthenticated=yes
+  apt: name=okapi allow_unauthenticated=yes state=latest
 
 - name: Enable external hazelcast config if AWS
   set_fact: 
@@ -36,8 +45,8 @@
   template: 
     src: okapi.conf.j2 
     dest: /etc/folio/okapi/okapi.conf 
-    owner: root 
-    group: root 
+    owner: okapi
+    group: okapi
     mode: 0644
   notify: okapi restart
 
@@ -46,7 +55,7 @@
   template: 
     src: hazelcast-aws.xml.j2 
     dest: /etc/folio/okapi/hazelcast.xml 
-    owner: root 
+    owner: okapi
     group: okapi
     mode: 0640
   when: hazelcast_aws_conf == "true"
@@ -61,3 +70,4 @@
   when: okapi_storage == "postgres"
   notify: okapi restart
 
+- meta: flush_handlers

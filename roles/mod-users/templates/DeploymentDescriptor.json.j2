@@ -1,0 +1,14 @@
+{
+  "srvcId" : "users-module",
+  "nodeId" : "{{ okapi_host }}",
+  "descriptor" : {
+    "dockerImage" : "folioci/mod-users",
+    "env" : [
+      { "name" : "db.host", "value" : "{{ pg_host }}" },
+      { "name" : "db.port", "value" : "{{ pg_port }}" },
+      { "name" : "db.username", "value" : "{{ pg_user }}" },
+      { "name" : "db.password", "value" : "{{ pg_password }}" },
+      { "name" : "db.database", "value" : "{{ mod_users_db }}" }
+    ]
+  }
+}

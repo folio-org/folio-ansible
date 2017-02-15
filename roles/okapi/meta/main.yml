@@ -1,3 +1,4 @@
 ---
 dependencies:
   - { role: openjdk-8 }
+  - { role: postgresql, when: okapi_storage == 'postgres' }

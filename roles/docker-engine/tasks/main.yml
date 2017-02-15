@@ -19,13 +19,17 @@
   become: yes
   apt: name=python-apt state=present
 
+# - name: Install apt key for Docker
+#   become: yes
+#   apt_key: id=58118E89F3A912897C070ADBF76221572C52609D keyserver=hkp://p80.pool.sks-keyservers.net:80
+
 - name: Install apt key for Docker
   become: yes
-  apt_key: id=58118E89F3A912897C070ADBF76221572C52609D keyserver=hkp://p80.pool.sks-keyservers.net:80
+  apt_key: url=https://yum.dockerproject.org/gpg
 
 - name: Install apt repository for Docker
   become: yes
-  apt_repository: repo="deb https://apt.dockerproject.org/repo debian-jessie main"
+  apt_repository: repo="deb https://apt.dockerproject.org/repo {{ ansible_distribution | lower() }}-{{ ansible_distribution_release }} main"
 
 - name: Create docker group
   become: yes

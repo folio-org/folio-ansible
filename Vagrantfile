@@ -65,4 +65,13 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_ci", autostart: false do |build_ci|
+    build_ci.vm.box = "debian/jessie64"
+    build_ci.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_ci.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_ci.vm.synced_folder ".", "/vagrant", disabled: true
+    build_ci.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+    end
+  end
 end

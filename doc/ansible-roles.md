@@ -7,8 +7,7 @@ Runs `apt-cache update`, creates the folio user and group, installs
 git and curl from apt.
 
 ## docker-engine
-Installs the Docker engine from the Docker repository. Not strictly
-necessary for module development.
+Installs the Docker engine from the Docker repository.
 
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
@@ -33,7 +32,7 @@ retrieve-module). Depends on mod-auth.
 
 ## mod-circulation-build
 Clones and builds the source from folio-org/mod-circulation on
-GitHub. Depends on common, openjdk-8-jdk, and maven-3.
+GitHub. Depends on common, openjdk-8, and maven-3.
 
 ## mod-circulation-docker
 Builds the Docker image for mod-circulation and launches it via
@@ -44,7 +43,7 @@ okapi-docker or okapi-src.
 Clones and builds the source from folio-org/mod-metadata on
 GitHub. Depends on:
 - common
-- openjdk-8-jdk
+- openjdk-8
 - maven-3
 
 ## mod-metadata-data
@@ -61,9 +60,18 @@ a running Okapi instance. Depends on:
 - okapi-undeploy
 *Note: without a running Okapi instance, this role will fail.*
 
+## mod-users
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance, with persistent
+storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+*Note: without a running Okapi instance, this role will fail.*
+
 ## mod-users-build
 Clones and builds the source from folio-org/mod-users on
-GitHub. Depends on common, openjdk-8-jdk, and maven-3.
+GitHub. Depends on common, openjdk-8, and maven-3.
 
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
@@ -71,6 +79,7 @@ Sample data for the mod-users backend module. Depends on tenant-data.
 enabled, this role will fail.*
 
 ## mod-users-demo
+*Deprecated*
 Registers and deploys mod-users with persistent storage in a running
 Okapi instance. Depends on:
 - mod-users-build
@@ -79,6 +88,7 @@ Okapi instance. Depends on:
 *Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users-docker
+*Deprecated*
 Builds a Docker image from the Dockerfile and registers it with
 Okapi. Depends on docker-engine, mod-users-build.
 
@@ -92,12 +102,18 @@ Installs nodejs, n, and mocha
 ## postgresql
 Installs a more recent PostgreSQL from the PostgreSQL repository.
 
+## okapi
+Installs Okapi from apt as a system service with persistent
+storage. Depends on openjdk-8 and postgresql.
+
 ## okapi-demo
-Clones the folio-org/okapi repository from GitHub, installs and
+*Deprecated*
+ Clones the folio-org/okapi repository from GitHub, installs and
 launches Okapi as a system service with persistent storage. Depends on
-common, openjdk-8-jdk, maven-3, and postgresql.
+common, openjdk-8, maven-3, and postgresql.
 
 ## okapi-docker
+*Deprecated*
 Clones the folio-org/okapi repository from GitHub, builds and launches
 an Okapi server in development mode in a Docker container. Depends on
 docker-engine.
@@ -114,7 +130,7 @@ folio-org/okapi repository. Depends on okapi-src.
 
 ## okapi-undeploy
 Installs a simple script to undeploy all instances of a module from a
-running Okapi. Depends on common.
+running Okapi.
 
 ## openjdk-8
 Installs the openjdk-8-jdk package from backports, required for Okapi
