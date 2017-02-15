@@ -92,7 +92,8 @@ mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-users-data role
-# {{ okapi_url }} from tenant-data
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
 # mod-users-demo role
 mod_users_home: /opt/mod-users

@@ -2,13 +2,13 @@
 # Role to enable mod-users for the sample tenant and load sample data
 - name: Check tenant mod-user registration
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/users-module"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/users-module"
     status_code: 200, 404
   register: tenant_mod_users
 
 - name: Enable mod-users module for tenant
   uri:
-    url: http://localhost:9130/_/proxy/tenants/diku/modules
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
     body: '{ "id" : "users-module" }'
@@ -21,7 +21,7 @@
 # 400 error means the user is already there, this is not ideal
 - name: Load users
   uri:
-    url: http://localhost:9130/users
+    url: "{{ okapi_url }}/users"
     method: POST
     body_format: json
     headers:

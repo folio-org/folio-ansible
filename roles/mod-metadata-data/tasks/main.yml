@@ -1,6 +1,9 @@
 ---
 # Role to enable mod-metadata modules for the sample tenant and load
 # sample data
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
 - name: Check tenant registration
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.module }}"

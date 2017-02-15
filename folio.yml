@@ -59,8 +59,8 @@
 # Build a Vagrant box for CI testing
 - hosts: build_ci
   roles:
-    # - okapi
-    # - mod-users
-    # - mod-users-data
-    # - mod-metadata
+    - okapi
+    - mod-users
+    - mod-users-data
+    - mod-metadata
     - mod-metadata-data
