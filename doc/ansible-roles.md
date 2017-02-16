@@ -178,10 +178,11 @@ Depends on stripes-core.
 ## ui-users
 Adds the ui-users module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
-Depends on stripes-core and tenant-data.
+Depends on stripes-core.
 
-*Note: without a running Okapi instance with mod-users, this role will
-fail. Sample user data is available in mod-users-data.*
+*Note: without a running Okapi instance and a configured tenant, the
+ Users application will not run. Sample user data is available in
+ mod-users-data.*
 
 ## yarn
 Installs the [yarn package manager](https://yarnpkg.com) from the yarn

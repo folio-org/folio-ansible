@@ -195,5 +195,6 @@ okapi_url: http://localhost:9130/
 # also uses {{ stripes_home }} and from stripes-core dependency
 
 # ui-users
-# also uses {{ stripes_home }} from stripes-core dependency
+# also uses {{ stripes_home }}, {{ stripes_conf }}, and
+# {{ stripes_user }} from stripes-core dependency.
 ```
