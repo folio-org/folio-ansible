@@ -42,4 +42,12 @@
     line: "host  all  all  0.0.0.0/0  md5"
   notify: Restart postgresql
 
+- name: Create a postgres admin user that can create roles and databases 
+  become: yes
+  become_user: postgres
+  postgresql_user: 
+    name: "{{ pg_admin_user }}"
+    password: "{{ pg_admin_password }}"
+    role_attr_flags: CREATEDB,CREATEROLE,LOGIN
+    
 - meta: flush_handlers
