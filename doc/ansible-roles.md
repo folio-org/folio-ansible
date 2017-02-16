@@ -153,8 +153,9 @@ Installs SDKMAN! from http://sdkman.io
 Depends on common
 
 ## stripes-core
-Clones the folio-org/stripes-core repository from GitHub, builds
-stripes. Launches stripes as a system service. Depends on nodejs.
+Installs stripes from the
+[folioci npm repository](https://repository.folio.org). Launches the
+stripes dev server as a system service. Depends on yarn.
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
@@ -177,3 +178,7 @@ Depends on stripes-core and tenant-data.
 
 *Note: without a running Okapi instance with mod-users, this role will
 fail. Sample user data is available in mod-users-data.*
+
+## yarn
+Installs the [yarn package manager](https://yarnpkg.com) from the yarn
+repository. Depends on nodejs.

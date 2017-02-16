@@ -3,10 +3,10 @@ Description=FOLIO stripes server
 After=okapi.service
 
 [Service]
-User={{ folio_user }}
+User={{ stripes_user }}
 Environment=STRIPES_HOST=0.0.0.0
-WorkingDirectory={{ stripes_home }}/stripes-core
-ExecStart=/usr/local/bin/npm run start
+WorkingDirectory={{ stripes_home }}
+ExecStart=/usr/bin/yarn start
 
 [Install]
 WantedBy=multi-user.target

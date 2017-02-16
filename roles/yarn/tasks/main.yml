@@ -1,0 +1,23 @@
+---
+# Role to install the yarn package manager for Node
+- name: Install prereqs from apt
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-apt
+    - ssl-cert
+
+- name: Install apt key for yarn
+  become: yes
+  apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+
+- name: Install apt repository for yarn
+  become: yes
+  apt_repository: repo="deb https://dl.yarnpkg.com/debian/ stable main"
+
+- name: Install yarn from apt
+  become: yes
+  apt: name=yarn
+

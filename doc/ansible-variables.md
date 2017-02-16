@@ -178,7 +178,11 @@ raml_module_builder_home: /opt/raml-module-builder
 sdkman_user: folio
 
 # stripes-core role
-stripes_home: /opt/stripes
+stripes_user: okapi
+stripes_group: okapi
+stripes_home: /usr/share/folio/stripes
+stripes_conf: /etc/folio/stripes
+folio_registry: https://repository.folio.org/repository/npm-folioci/
 
 # tenant-data role
 okapi_url: http://localhost:9130/
