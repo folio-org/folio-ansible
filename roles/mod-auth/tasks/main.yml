@@ -7,7 +7,7 @@
 - name: Clone mod-auth repository
   become: yes
   become_user: "{{ folio_user }}"
-  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }}
+  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }} version=mongo-final
   register: mod_auth_clone
 
 - name: Force Maven build if repository updated

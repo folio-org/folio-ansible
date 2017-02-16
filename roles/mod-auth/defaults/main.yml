@@ -6,5 +6,6 @@ auth_modules:
   - { index: 0, module: login }
   - { index: 1, module: authtoken }
   - { index: 2, module: permissions }
-# {{ folio_user }} and {{ folio_group }} from common dependency
+folio_user: folio
+folio_group: folio
 
