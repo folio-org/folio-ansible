@@ -66,8 +66,8 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
-pg_user: mod_users
-pg_password: mod_users25
+pg_user: "{{ pg_admin_user }}" # from postgresql dependency
+pg_password: "{{ pg_admin_password }}" # from postgresql dependency
 mod_users_db: mod_users
 
 # mod-users-build role
@@ -105,8 +105,8 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
 pg_host: localhost
 pg_port: 5432
-okapi_pg_user: okapi
-okapi_pg_password: okapi25
+okapi_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
+okapi_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
 okapi_pg_database: okapi
 okapi_dockerurl: http://localhost:4243
 
