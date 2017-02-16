@@ -180,15 +180,19 @@ sdkman_user: folio
 # stripes-core role
 stripes_user: okapi
 stripes_group: okapi
+stripes_okapi_port: 9130
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
 stripes_home: /usr/share/folio/stripes
 stripes_conf: /etc/folio/stripes
+stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
+folio_sample_modules_registry: https://repository.folio.org/repository/npm-folioci/
 
 # tenant-data role
 okapi_url: http://localhost:9130/
 
 # ui-okapi-console
-# also uses {{ stripes_home }} from stripes-core dependency
+# also uses {{ stripes_home }} and from stripes-core dependency
 
 # ui-users
 # also uses {{ stripes_home }} from stripes-core dependency

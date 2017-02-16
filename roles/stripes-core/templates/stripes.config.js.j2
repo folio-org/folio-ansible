@@ -1,0 +1,10 @@
+module.exports = {
+  config: { "disableAuth" : true },
+  okapi: {
+    "url" : "{{ stripes_okapi_url }}",
+    "tenant" : "{{ stripes_tenant }}"
+  },
+  modules: {
+    "@folio-sample-modules/okapi-console": {}
+  }
+};

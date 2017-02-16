@@ -29,10 +29,17 @@
   args:
     creates: "{{ stripes_conf }}/.set_folioregistry_ansible"
  
+- name: Configure @folio-sample-modules:registry for stripes-core
+  become: yes
+  become_user: "{{ stripes_user }}"
+  shell: yarn config set @folio-sample-modules:registry {{ folio_sample_modules_registry }} && touch {{ stripes_conf }}/.set_foliosamplemodulesregistry_ansible
+  args:
+    creates: "{{ stripes_conf }}/.set_foliosamplemodulesregistry_ansible"
+
 - name: Copy stripes.config.js
   become: yes
   become_user: "{{ stripes_user }}"
-  copy: src=stripes.config.js dest={{ stripes_conf }}/stripes.config.js force=no
+  template: src=stripes.config.js.j2 dest={{ stripes_conf }}/stripes.config.js force=no
   notify: Restart stripes
 
 - name: Link stripes.config.js

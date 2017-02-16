@@ -155,7 +155,11 @@ Depends on common
 ## stripes-core
 Installs stripes from the
 [folioci npm repository](https://repository.folio.org). Launches the
-stripes dev server as a system service. Depends on yarn.
+stripes dev server with the Okapi Console as a system service. Depends
+on yarn.
+
+*Note: without a running Okapi instance and a configured tenant, the
+ Okapi Console will not run*
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
@@ -164,10 +168,10 @@ builds the code. Depends on openjdk-8 and maven-3.
 ## tenant-data
 Load a demo tenant into a running Okapi instance.
 
-## ui-okapi-console
+## ui-okapi-console (*Deprecated*)
 Adds the ui-okapi-console module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
-Depends on stripes-core and tenant-data.
+Depends on stripes-core.
 
 *Note: without a running Okapi instance, this role will fail.*
 
