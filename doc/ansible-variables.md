@@ -66,8 +66,8 @@ mod_metadata_modules:
 # mod-metadata-demo role
 mod_metadata_home: /opt/mod-metadata
 okapi_url: http://localhost:9130/
-mod_metadata_pg_user: mod_metadata
-mod_metadata_pg_password: mod_metadata25
+mod_metadata_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
+mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
 mod_metadata_db: mod_metadata
 # {{ mod_metadata_src_home }} from mod-metadata-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
