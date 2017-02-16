@@ -18,7 +18,6 @@
  
 - name: Move to Node.js 6.X lts
   become: yes
-  become_user: "{{ stripes_user }}"
   shell: n lts && touch {{ stripes_conf }}/.set_nodedefault_ansible
   args:
     creates: "{{ stripes_conf }}/.set_nodedefault_ansible"
