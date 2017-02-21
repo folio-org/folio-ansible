@@ -44,14 +44,14 @@ Other Vagrant boxes available are `folio/folio-backend` and
 `folio/folio-backend-auth`.
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
-forwarded to localhost:9130.
+forwarded to `localhost:9130`.
 
 To test this, fetch a list of users:
 
     $ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
 
 For the `demo` system, the stripes port and user interface will be
-forwarded to localhost:3000. You should see the stripes user interface
+forwarded to `localhost:3000`. You should see the stripes user interface
 at `http://localhost:3000`.
 
 For more information, see [Vagrant VMs and Ansible roles](doc/index.md).
