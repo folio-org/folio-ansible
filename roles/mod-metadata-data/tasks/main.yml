@@ -51,7 +51,7 @@
       Accept: application/json
   register: inventory_items
 
-- name: Load sample data from MODS ingent
+- name: Load sample data from MODS ingest
   command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@{{ mod_metadata_src_home }}/inventory/sample-data/multiple-mods-records.xml {{ okapi_url }}inventory/ingest/mods"
   when: inventory_items.json.totalRecords == 0
 
