@@ -34,15 +34,6 @@ retrieve-module). Depends on mod-auth and nodejs.
 
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-circulation-build
-Clones and builds the source from folio-org/mod-circulation on
-GitHub. Depends on common, openjdk-8, and maven-3.
-
-## mod-circulation-docker
-Builds the Docker image for mod-circulation and launches it via
-Okapi. Depends on mod-circulation-build, docker-engine, and
-okapi-docker or okapi-src.
-
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
 modules from Docker Hub, registers and deploys as a system service in
@@ -53,28 +44,12 @@ a running Okapi instance, with persistent storage. Depends on:
 
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-metadata-build (*Deprecated*)
-Clones and builds the source from folio-org/mod-metadata on
-GitHub. Depends on:
-- common
-- openjdk-8
-- maven-3
-
 ## mod-metadata-data
 Sample data for the mod-metadata backend modules. Depends on
 tenant-data and common.
 
 *Note: without a running Okapi instance with inventory and
 inventory-storage installed and enabled, this role will fail.*
-
-## mod-metadata-demo (*Deprecated*)
-Registers and deploys mod-metadata modules with persistent storage in
-a running Okapi instance. Depends on:
-- mod-metadata-build
-- postgresql
-- okapi-undeploy
-
-*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-users
 Loads the Docker image from Docker Hub, registers and deploys as a
@@ -86,28 +61,11 @@ storage. Depends on:
 
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-users-build (*Deprecated*)
-Clones and builds the source from folio-org/mod-users on
-GitHub. Depends on common, openjdk-8, and maven-3.
-
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
 
 *Note: without a running Okapi instance with mod-users installed and
 enabled, this role will fail.*
-
-## mod-users-demo (*Deprecated*)
-Registers and deploys mod-users with persistent storage in a running
-Okapi instance. Depends on:
-- mod-users-build
-- postgresql
-- okapi-undeploy
-
-*Note: without a running Okapi instance, this role will fail.*
-
-## mod-users-docker (*Deprecated*)
-Builds a Docker image from the Dockerfile and registers it with
-Okapi. Depends on docker-engine, mod-users-build.
 
 ## mongodb-org
 Installs a more recent MongoDB Community Edition from the Mongo
@@ -199,3 +157,46 @@ Depends on stripes-core.
 ## yarn
 Installs the [yarn package manager](https://yarnpkg.com) from the yarn
 repository. Depends on nodejs.
+
+## mod-circulation-build (*Deprecated*)
+Clones and builds the source from folio-org/mod-circulation on
+GitHub. Depends on common, openjdk-8, and maven-3.
+
+## mod-circulation-docker (*Deprecated*)
+Builds the Docker image for mod-circulation and launches it via
+Okapi. Depends on mod-circulation-build, docker-engine, and
+okapi-docker or okapi-src.
+
+## mod-metadata-build (*Deprecated*)
+Clones and builds the source from folio-org/mod-metadata on
+GitHub. Depends on:
+- common
+- openjdk-8
+- maven-3
+
+## mod-metadata-demo (*Deprecated*)
+Registers and deploys mod-metadata modules with persistent storage in
+a running Okapi instance. Depends on:
+- mod-metadata-build
+- postgresql
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
+
+## mod-users-build (*Deprecated*)
+Clones and builds the source from folio-org/mod-users on
+GitHub. Depends on common, openjdk-8, and maven-3.
+
+## mod-users-demo (*Deprecated*)
+Registers and deploys mod-users with persistent storage in a running
+Okapi instance. Depends on:
+- mod-users-build
+- postgresql
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
+
+## mod-users-docker (*Deprecated*)
+Builds a Docker image from the Dockerfile and registers it with
+Okapi. Depends on docker-engine, mod-users-build.
+

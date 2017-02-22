@@ -1,6 +1,0 @@
----
-okapi_role: dev
-okapi_storage: postgres
-folio_user: okapi
-folio_group: okapi
-stripes_okapi_url: http://localhost:9130

@@ -1,12 +1,5 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
-# Group for development
-- hosts: dev
-  roles:
-    - okapi-docker
-    - mod-users-docker
-    - mod-users-data
-
 # Build a Vagrant box to package as a demo system
 - hosts: build_demo
   roles:
