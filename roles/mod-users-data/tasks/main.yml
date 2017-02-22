@@ -1,5 +1,9 @@
 ---
 # Role to enable mod-users for the sample tenant and load sample data
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
 - name: Check tenant mod-user registration
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/users-module"
