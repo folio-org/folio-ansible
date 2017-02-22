@@ -7,7 +7,7 @@
 - name: Clone mod-auth repository
   become: yes
   become_user: "{{ folio_user }}"
-  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }}
+  git: repo=https://github.com/folio-org/mod-auth.git dest={{ mod_auth_src_home }} version=mongo-final
   register: mod_auth_clone
 
 - name: Force Maven build if repository updated
@@ -31,6 +31,7 @@
   with_items:
     - "{{ mod_auth_home }}/lib"
     - "{{ mod_auth_home }}/conf"
+    - "{{ mod_auth_home }}/bin"
 
 - name: Link in mod-auth jars
   become: yes
@@ -173,6 +174,12 @@
   template: src=DeploymentDescriptor.json.j2 dest={{ mod_auth_home }}/conf/DeploymentDescriptor_{{ item.module }}.json
   with_items: "{{ auth_modules }}"
 
+- name: Copy mod-auth startup script
+  become: yes
+  become_user: "{{ folio_user }}"
+  template: src=mod-auth.sh.j2 dest={{ mod_auth_home }}/bin/mod-auth.sh mode=0755
+  notify: Restart mod-auth
+
 - name: Copy mod-auth.service file
   become: yes
   template: src=mod-auth.service.j2 dest=/etc/systemd/system/mod-auth.service
@@ -180,6 +187,9 @@
     - systemctl daemon-reload
     - Restart mod-auth
 
-- name: Enable and start mod-auth service
+- name: Enable mod-auth service
   become: yes
-  service: name=mod-auth enabled=yes state=started
+  service: name=mod-auth enabled=yes
+
+- meta: flush_handlers
+

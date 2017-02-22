@@ -1,5 +1,5 @@
 ---
 dependencies:
-  - { role: mod-users-demo }
+  - { role: mod-users }
   - { role: mod-users-data }
   - { role: mod-auth }
