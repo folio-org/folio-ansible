@@ -35,6 +35,9 @@ Vagrant.configure(2) do |config|
     build_backend.vm.synced_folder ".", "/vagrant", disabled: true
     build_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_backend"]
+      }
     end
   end
 
@@ -44,6 +47,9 @@ Vagrant.configure(2) do |config|
     build_backend_auth.vm.synced_folder ".", "/vagrant", disabled: true
     build_backend_auth.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_backend_auth"]
+      }
     end
   end
 
@@ -54,6 +60,9 @@ Vagrant.configure(2) do |config|
     build_demo.vm.synced_folder ".", "/vagrant", disabled: true
     build_demo.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_demo"]
+      }
     end
   end
 
