@@ -1,0 +1,10 @@
+{
+  "srvcId" : "inventory",
+  "nodeId" : "{{ okapi_host }}",
+  "descriptor" : {
+    "dockerImage" : "folioci/mod-inventory",
+    "env" : [
+      { "name" : "JAVA_OPTS", "value" : "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+    ]
+  }
+}

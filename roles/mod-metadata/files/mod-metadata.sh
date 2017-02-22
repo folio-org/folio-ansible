@@ -22,7 +22,7 @@ else
   exit 2;
 fi
 
-for i in "inventory-storage" ; do
+for i in "inventory-storage" "inventory" ; do
   if [ ! -f "${CONF_DIR}/DeploymentDescriptor_${i}.json" ] ; then
     echo "Cannot locate DeploymentDescriptor_${i}.json" 1>&2
     exit 2;
@@ -45,7 +45,7 @@ if [ "$1" = "start" ] ; then
     fi
   done
   if [ "$OKAPI" = "1" ] ; then
-    for i in "inventory-storage" ; do
+    for i in "inventory-storage" "inventory" ; do
       $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/DeploymentDescriptor_${i}.json ${okapi_url}/_/discovery/modules
       if [ "$?" = "0" ] ; then
         echo "$i deployed to $okapi_url"
@@ -59,7 +59,7 @@ if [ "$1" = "start" ] ; then
     exit 1;
   fi
 elif [ "$1" = "stop" ] ; then
-  for i in "inventory-storage" ; do
+  for i in "inventory-storage" "inventory" ; do
     $OKAPI_UNDEPLOY $i $okapi_url
     if [ "$?" = "0" ] ; then
       echo "$i undeployed from $okapi_url";

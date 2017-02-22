@@ -7,8 +7,10 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
-mod_metadata_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
-mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
 mod_metadata_db: mod_metadata
 mod_metadata_modules:
   - { index: 0, module: inventory-storage, docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, docker_image: folioci/mod-inventory }
+  
