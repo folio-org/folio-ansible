@@ -1,6 +1,6 @@
 
 okapi_role: cluster
-# 'eth0' is th default ec2 network interface. May be different on other systems
+# 'eth0' is the default ec2 network interface. May be different on other systems
 okapi_interface: eth0
 okapi_cluster_port: 9001
 okapi_cluster_config_file: ""

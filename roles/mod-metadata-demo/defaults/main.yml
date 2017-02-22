@@ -4,4 +4,5 @@ okapi_url: http://localhost:9130/
 mod_metadata_pg_user: mod_metadata
 mod_metadata_pg_password: mod_metadata25
 mod_metadata_db: mod_metadata
-
+folio_user: folio
+folio_group: folio
