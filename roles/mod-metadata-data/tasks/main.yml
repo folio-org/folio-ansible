@@ -1,41 +1,31 @@
 ---
-# Role to enable mod-metadata modules for the sample tenant and load sample data
-# clone repo to get sample data
-- name: Create mod-metadata src directory
-  become: yes
-  file: path={{ mod_metadata_src_home }} state=directory owner={{ folio_user }} group={{ folio_group }}
-
-- name: Clone mod-metadata repository
-  become: yes
-  become_user: "{{ folio_user }}"
-  git: repo=https://github.com/folio-org/mod-metadata.git dest={{ mod_metadata_src_home }} update=no
+# Role to enable mod-metadata modules for the sample tenant and load
+# sample data
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
 
 - name: Check tenant registration
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/diku/modules/{{ item }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.module }}"
     status_code: 200, 404
   register: tenant_mod_metadata
-  with_items:
-    - inventory-storage
-    - inventory
+  with_items: "{{ mod_metadata_modules }}"
 
 - name: Enable mod-metadata modules for tenant
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/diku/modules"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ item.module_id }}" }'
+    body: '{ "id" : "{{ item.module }}" }'
     status_code: 201
   register: mod_metadata_enable
   changed_when: mod_metadata_enable.status == 201
-  when: tenant_mod_metadata.results[{{ item.index }}].status == 404
-  with_items:
-    - { index: 0, module_id: inventory-storage }
-    - { index: 1, module_id: inventory }
+  when: tenant_mod_metadata.results[item.index].status == 404
+  with_items: "{{ mod_metadata_modules }}"
 
 - name: Check for sample instances
   uri:
-    url: "{{ okapi_url }}instance-storage/instances"
+    url: "{{ okapi_url }}/instance-storage/instances"
     headers:
       Content-Type: application/json
       X-Okapi-Tenant: diku
@@ -44,66 +34,51 @@
 
 - name: Check for sample items
   uri:
-    url: "{{ okapi_url }}item-storage/items"
+    url: "{{ okapi_url }}/item-storage/items"
     headers:
       Content-Type: application/json
       X-Okapi-Tenant: diku
       Accept: application/json
   register: inventory_items
 
-- name: Load sample data from MODS ingest
-  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@{{ mod_metadata_src_home }}/inventory/sample-data/multiple-mods-records.xml {{ okapi_url }}inventory/ingest/mods"
-  when: inventory_items.json.totalRecords == 0
-
-- name: Get inventory storage instance files
-  find: path={{ mod_metadata_src_home }}/inventory-storage/sample-data/instances pattern="*.json"
-  register: instance_files
-  when: inventory_instances.json.totalRecords == 0
-
-- name: Slurp inventory storage instance files
-  slurp: src={{ item.path }}
-  register: slurp_instances
-  with_items: "{{ instance_files.files }}"
-  when: inventory_instances.json.totalRecords == 0
-
 - name: Load inventory storage instances
   uri:
-    url: "{{ okapi_url }}instance-storage/instances"
+    url: "{{ okapi_url }}/instance-storage/instances"
     method: POST
     body_format: json
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
-    body: "{{ item.content | b64decode }}"
+    body: "{{ lookup('file', item) }}"
     status_code: 201
   register: load_instance
   changed_when: load_instance.status == 201
-  with_items: "{{ slurp_instances.results }}"
   when: inventory_instances.json.totalRecords == 0
-
-- name: Get inventory storage item files
-  find: path={{ mod_metadata_src_home }}/inventory-storage/sample-data/items pattern="*.json"
-  register: item_files
-  when: inventory_items.json.totalRecords == 0
-
-- name: Slurp inventory storage item files
-  slurp: src={{ item.path }}
-  register: slurp_items
-  with_items: "{{ item_files.files }}"
-  when: inventory_items.json.totalRecords == 0
-
+  with_fileglob:
+    - instances/*.json
+  
 - name: Load inventory storage items
   uri:
-    url: "{{ okapi_url }}item-storage/items"
+    url: "{{ okapi_url }}/item-storage/items"
     method: POST
     body_format: json
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
-    body: "{{ item.content | b64decode }}"
+    body: "{{ lookup('file', item) }}"
     status_code: 201
   register: load_item
   changed_when: load_item.status == 201
-  with_items: "{{ slurp_items.results }}"
   when: inventory_items.json.totalRecords == 0
+  with_fileglob:
+    - items/*.json
+
+- name: Copy sample MODS data
+  become: yes
+  copy: src=multiple-mods-records.xml dest=/etc/.mod-metadata-mods_ansible.xml
+  register: mods_sample
+
+- name: Load sample data from MODS ingest
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  when: mods_sample.changed
 

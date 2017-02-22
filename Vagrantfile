@@ -11,14 +11,6 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
-  config.vm.define "dev", autostart: false do |dev|
-    dev.vm.box = "debian/contrib-jessie64"
-    dev.vm.network "forwarded_port", guest: 9130, host: 9130
-    dev.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-    end
-  end
-
   config.vm.define "backend", autostart: false do |backend|
     backend.vm.box = "folio/folio-backend"
     backend.vm.synced_folder ".", "/vagrant", disabled: true
@@ -43,6 +35,21 @@ Vagrant.configure(2) do |config|
     build_backend.vm.synced_folder ".", "/vagrant", disabled: true
     build_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_backend"]
+      }
+    end
+  end
+
+  config.vm.define "build_backend_auth", autostart: false do |build_backend_auth|
+    build_backend_auth.vm.box = "debian/jessie64"
+    build_backend_auth.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_backend_auth.vm.synced_folder ".", "/vagrant", disabled: true
+    build_backend_auth.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_backend_auth"]
+      }
     end
   end
 
@@ -53,25 +60,10 @@ Vagrant.configure(2) do |config|
     build_demo.vm.synced_folder ".", "/vagrant", disabled: true
     build_demo.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "blackbox" => ["build_demo"]
+      }
     end
   end
 
-  config.vm.define "build_backend_auth", autostart: false do |build_backend_auth|
-    build_backend_auth.vm.box = "debian/jessie64"
-    build_backend_auth.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_backend_auth.vm.synced_folder ".", "/vagrant", disabled: true
-    build_backend_auth.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-    end
-  end
-
-  config.vm.define "build_ci", autostart: false do |build_ci|
-    build_ci.vm.box = "debian/jessie64"
-    build_ci.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_ci.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_ci.vm.synced_folder ".", "/vagrant", disabled: true
-    build_ci.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-    end
-  end
 end

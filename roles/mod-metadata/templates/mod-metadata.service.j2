@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO mod-metadata modules to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ mod_metadata_home }}/bin/mod-metadata.sh start
+ExecStop={{ mod_metadata_home }}/bin/mod-metadata.sh stop
+
+[Install]
+WantedBy=multi-user.target

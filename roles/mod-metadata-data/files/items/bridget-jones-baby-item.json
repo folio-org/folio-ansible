@@ -1,0 +1,15 @@
+{
+  "id": "1b6d3338-186e-4e35-9e75-1b886b0da53e",
+  "instanceId": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",
+  "title": "Bridget Jones's Baby",
+  "barcode": "453987605438",
+  "materialType": {
+    "name": "DVD"
+  },
+  "status": {
+    "name": "Checked Out"
+  },
+  "location": {
+    "name": "Main Library"
+  }
+}

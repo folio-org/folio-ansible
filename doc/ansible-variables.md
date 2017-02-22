@@ -37,20 +37,37 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-metadata role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_metadata_home: /usr/share/folio/mod-metadata
+mod_metdata_conf: /etc/folio/mod-metadata
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+okapi_host: "{{ ansible_default_ipv4.address }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: mod_metadata
+pg_password: mod_metadata25
+mod_users_db: mod_metadata
+mod_metadata_modules:
+  - { index: 0, module: inventory-storage }
+
 # mod-metadata-build role
 mod_metadata_src_home: /opt/mod-metadata-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-metadata-data role
-mod_metadata_src_home: /opt/mod-metadata-src
-# {{ okapi_url }} from tenant-data
-# {{ folio_user }} and {{ folio_group }} from common dependency
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_metadata_modules:
+  - { index: 0, module: inventory-storage }
 
 # mod-metadata-demo role
 mod_metadata_home: /opt/mod-metadata
 okapi_url: http://localhost:9130/
-mod_metadata_pg_user: mod_metadata
-mod_metadata_pg_password: mod_metadata25
+mod_metadata_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
+mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
 mod_metadata_db: mod_metadata
 # {{ mod_metadata_src_home }} from mod-metadata-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
@@ -75,7 +92,8 @@ mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
 
 # mod-users-data role
-# {{ okapi_url }} from tenant-data
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
 # mod-users-demo role
 mod_users_home: /opt/mod-users
@@ -160,14 +178,23 @@ raml_module_builder_home: /opt/raml-module-builder
 sdkman_user: folio
 
 # stripes-core role
-stripes_home: /opt/stripes
+stripes_user: okapi
+stripes_group: okapi
+stripes_okapi_port: 9130
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_home: /usr/share/folio/stripes
+stripes_conf: /etc/folio/stripes
+stripes_tenant: diku
+folio_registry: https://repository.folio.org/repository/npm-folioci/
+folio_sample_modules_registry: https://repository.folio.org/repository/npm-folioci/
 
 # tenant-data role
 okapi_url: http://localhost:9130/
 
 # ui-okapi-console
-# also uses {{ stripes_home }} from stripes-core dependency
+# also uses {{ stripes_home }} and from stripes-core dependency
 
 # ui-users
-# also uses {{ stripes_home }} from stripes-core dependency
+# also uses {{ stripes_home }}, {{ stripes_conf }}, and
+# {{ stripes_user }} from stripes-core dependency.
 ```

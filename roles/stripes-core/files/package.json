@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "stripes build stripes.config.js",
+    "stripes": "stripes",
+    "start": "stripes dev stripes.config.js"
+  },
+  "dependencies": {
+    "@folio/okapi-console": "^0.0.1-test",
+    "@folio/stripes-core": "^0.0.9-test"
+  }
+}

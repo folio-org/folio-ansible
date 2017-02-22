@@ -1,0 +1,15 @@
+{
+  "id": "23f2c8e1-bd5d-4f27-9398-a688c998808a",
+  "instanceId": "6506b79b-7702-48b2-9774-a1c538fdd34e",
+  "title": "Nod",
+  "barcode": "697685458679",
+  "materialType": {
+    "name": "Book"
+  },
+  "status": {
+    "name": "Checked Out"
+  },
+  "location": {
+    "name": "Main Library"
+  }
+}

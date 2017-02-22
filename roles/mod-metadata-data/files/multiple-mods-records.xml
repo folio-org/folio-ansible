@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods_records>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">69228882</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140619</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1856</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">enk</mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Huntley, Henry Veel</mods_ns:namePart>
+      <mods_ns:namePart type="termsOfAddress">sir.</mods_ns:namePart>
+      <mods_ns:role>
+        <mods_ns:roleTerm type="text">creator</mods_ns:roleTerm>
+      </mods_ns:role>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>California: its gold and its inhabitants, by the author of 'Seven years on the Slave coast of Africa'.</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Lond.</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:dateIssued>1856</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>2 vols. ; cm.19.</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:subject>
+      <mods_ns:hierarchicalGeographic>
+        <mods_ns:country>England</mods_ns:country>
+        <mods_ns:city>London</mods_ns:city>
+      </mods_ns:hierarchicalGeographic>
+    </mods_ns:subject>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="University of Oxford Libraries" postcode="OX1 3BG" coords="51.754054,-1.254373" copacCode="oxf">UkOxU</h:org>
+          <h:objId>69228882</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="Oxford University" heldBy="University of Oxford Libraries" coords="51.754054,-1.254373">Contact the Bodleian Library</h:loc>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">43620390</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140401</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1833</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:recordInfo>
+      <mods_ns:recordContentSource authority="marcorg">Uk</mods_ns:recordContentSource>
+    </mods_ns:recordInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>MABIL, Pier Luigi.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>[Dell\xE2\x80\x99Emulazione e dell\xE2\x80\x99Influenza della Poesia sui Costumi, discorsi due.]</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:originInfo>
+      <mods_ns:edition>[Another edition.]</mods_ns:edition>
+    </mods_ns:originInfo>
+    <mods_ns:note type="linking entry complexity">In : C., G. Scelte Orazioni Italiane, etc. 1833. 12\xC2\xBA.</mods_ns:note>
+    <mods_ns:relatedItem>
+      <mods_ns:titleInfo>
+        <mods_ns:title>Dell\xE2\x80\x99Emulazione e dell\xE2\x80\x99Influenza della Poesia sui Costumi, discorsi due.</mods_ns:title>
+      </mods_ns:titleInfo>
+      <mods_ns:originInfo>
+        <mods_ns:publisher>Brescia, 1804. 8\xC2\xBA.</mods_ns:publisher>
+      </mods_ns:originInfo>
+      <mods_ns:identifier type="local">(Uk)MP1.0002438942</mods_ns:identifier>
+    </mods_ns:relatedItem>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="British Library (blc)" postcode="NW1 2DB" coords="51.528903,-0.127483" copacCode="blc">Uk</h:org>
+          <h:objId>43620390</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="British Library" heldBy="British Library (blc)" postcode="NW1 2DB" location="British Library, St Pancras" subLocation="Humanities and Social Sciences, St Pancras Reading Rooms" coords="51.528903,-0.127483">HMNTS</h:loc>
+              <h:shelfmark>12301.e.19</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">53556908</mods_ns:recordIdentifier>
+      <mods_ns:recordIdentifier source="StGlU">b13803414</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20160505</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:recordInfo>
+      <mods_ns:descriptionStandard>aacr</mods_ns:descriptionStandard>
+    </mods_ns:recordInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1991</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">nyu</mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:identifier type="isbn">0889464944</mods_ns:identifier>
+    <mods_ns:classification authority="ddc" edition="20">828.91209</mods_ns:classification>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Essays on C.S. Lewis and George MacDonald</mods_ns:title>
+      <mods_ns:subTitle>truth, fiction, and the power of imagination</mods_ns:subTitle>
+    </mods_ns:titleInfo>
+    <mods_ns:note type="statement of responsibility">edited by Cynthia Marshall.</mods_ns:note>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Lewiston, N.Y. ; Lampeter</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:publisher>Edwin Mellen</mods_ns:publisher>
+      <mods_ns:dateIssued>1991</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>[156] p.</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:relatedItem type="series">
+      <mods_ns:titleInfo>
+        <mods_ns:title>Studies in British literature</mods_ns:title>
+        <mods_ns:partNumber>v. 11</mods_ns:partNumber>
+      </mods_ns:titleInfo>
+    </mods_ns:relatedItem>
+    <mods_ns:subject>
+      <mods_ns:name type="personal">
+        <mods_ns:namePart>Lewis, C. S. (Clive Staples)</mods_ns:namePart>
+        <mods_ns:namePart type="date">1898-1963.</mods_ns:namePart>
+      </mods_ns:name>
+    </mods_ns:subject>
+    <mods_ns:subject>
+      <mods_ns:name type="personal">
+        <mods_ns:namePart>MacDonald, George</mods_ns:namePart>
+        <mods_ns:namePart type="date">1824-1905</mods_ns:namePart>
+      </mods_ns:name>
+      <mods_ns:topic>Influence</mods_ns:topic>
+      <mods_ns:topic>Lewis.</mods_ns:topic>
+    </mods_ns:subject>
+    <mods_ns:subject authority="lcsh">
+      <mods_ns:topic>Fantastic fiction, English</mods_ns:topic>
+      <mods_ns:topic>History and criticism.</mods_ns:topic>
+    </mods_ns:subject>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Marshall, Cynthia.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:relatedItem type="series">
+      <mods_ns:titleInfo type="uniform">
+        <mods_ns:title>Studies in British literature ; v. 11</mods_ns:title>
+      </mods_ns:titleInfo>
+    </mods_ns:relatedItem>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:language>
+      <mods_ns:languageTerm authority="iso639-2b" type="code">eng</mods_ns:languageTerm>
+      <mods_ns:languageTerm type="text">English</mods_ns:languageTerm>
+    </mods_ns:language>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="University of Glasgow Libraries" postcode="G12 8QE" coords="55.873577,-4.288573" copacCode="gla">StGlU</h:org>
+          <h:objId>53556908</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="Glasgow University" heldBy="University of Glasgow Libraries" postcode="G12 8QE" location="University of Glasgow Library" subLocation="Main Library, Level 9" coords="55.873577,-4.288573">gul09</h:loc>
+              <h:shelfmark>English NL183 ESS</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">22169083</mods_ns:recordIdentifier>
+      <mods_ns:recordIdentifier source="StEdNL">1851914</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20160625</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1991</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">ie </mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:identifier displayLabel="National Bibliography Number" type="bnb">GB9141816</mods_ns:identifier>
+    <mods_ns:identifier type="isbn">0716524783</mods_ns:identifier>
+    <mods_ns:recordInfo>
+      <mods_ns:recordContentSource authority="marcorg">NBSCCM</mods_ns:recordContentSource>
+    </mods_ns:recordInfo>
+    <mods_ns:classification authority="ddc" edition="20">759.415</mods_ns:classification>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Fallon, Brian.</mods_ns:namePart>
+      <mods_ns:role>
+        <mods_ns:roleTerm type="text">creator</mods_ns:roleTerm>
+      </mods_ns:role>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Edward McGuire, RHA</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:note type="statement of responsibility">Brian Fallon ; with a catalogue by Sally McGuire and poems and memoirs by Anthony Cronin ... [et al.] ; foreword by James White.</mods_ns:note>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Blackrock, Co. Dublin</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:publisher>Irish Academic Press</mods_ns:publisher>
+      <mods_ns:dateIssued>1991</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>[176]p</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:genre>Illustrated</mods_ns:genre>
+    <mods_ns:language>
+      <mods_ns:languageTerm authority="iso639-2b" type="code">eng</mods_ns:languageTerm>
+      <mods_ns:languageTerm type="text">English</mods_ns:languageTerm>
+    </mods_ns:language>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="National Library of Scotland" postcode="EH1 1EW" coords="55.948551,-3.191874" copacCode="nls">StEdNL</h:org>
+          <h:objId>22169083</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="National Library of Scotland" heldBy="National Library of Scotland" postcode="EH1 1EW" location="National Library of Scotland" subLocation="General Reading Room (stored in George IV Bridge)" coords="55.948551,-3.191874">0H409</h:loc>
+              <h:shelfmark>H4.91.1391</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">37696876</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140401</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:recordInfo>
+      <mods_ns:descriptionStandard>aacr</mods_ns:descriptionStandard>
+    </mods_ns:recordInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">2006</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">yu </mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:identifier type="isbn">8683385124</mods_ns:identifier>
+    <mods_ns:recordInfo>
+      <mods_ns:recordContentSource authority="marcorg">Uk</mods_ns:recordContentSource>
+      <mods_ns:languageOfCataloging>
+        <mods_ns:languageTerm authority="iso639-2b" type="code">eng</mods_ns:languageTerm>
+      </mods_ns:languageOfCataloging>
+    </mods_ns:recordInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Nikitovic\xCC\x81, Pavle</mods_ns:namePart>
+      <mods_ns:namePart type="date">1945-</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Pavle Nik Nikitovic\xCC\x81</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:note type="statement of responsibility">[esej "Veliki igrac\xCC\x8C"] Ratko Boz\xCC\x8Covic\xCC\x81.</mods_ns:note>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Beograd</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:publisher>Radionica Dus\xCC\x8Ce</mods_ns:publisher>
+      <mods_ns:dateIssued>2006</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>148 p. : col. ill. ; 30 cm.</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:note type="language">In Serbian (Roman) and English.</mods_ns:note>
+    <mods_ns:subject authority="lcsh">
+      <mods_ns:name type="personal">
+        <mods_ns:namePart>Nikitovic\xCC\x81, Pavle</mods_ns:namePart>
+        <mods_ns:namePart type="date">1945-</mods_ns:namePart>
+      </mods_ns:name>
+    </mods_ns:subject>
+    <mods_ns:subject authority="lcsh">
+      <mods_ns:topic>Art, Serbian</mods_ns:topic>
+      <mods_ns:temporal>20th century.</mods_ns:temporal>
+    </mods_ns:subject>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Boz\xCC\x8Covic\xCC\x81, Ratko.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:genre>Illustrated</mods_ns:genre>
+    <mods_ns:language>
+      <mods_ns:languageTerm authority="iso639-2b" type="code">eng</mods_ns:languageTerm>
+      <mods_ns:languageTerm type="text">English</mods_ns:languageTerm>
+    </mods_ns:language>
+    <mods_ns:language>
+      <mods_ns:languageTerm authority="iso639-2b" type="code">scc</mods_ns:languageTerm>
+      <mods_ns:languageTerm type="text">Serbian</mods_ns:languageTerm>
+    </mods_ns:language>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="British Library" postcode="NW1 2DB" coords="51.528903,-0.127483" copacCode="bli">Uk</h:org>
+          <h:objId>37696876</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="British Library" heldBy="British Library" postcode="NW1 2DB" location="British Library, St Pancras" subLocation="Humanities and Social Sciences, St Pancras Reading Rooms" coords="51.528903,-0.127483">HMNTS</h:loc>
+              <h:shelfmark>LF.31.b.3126</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">69250051</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140401</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1901</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">fr </mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Riemann, Othon.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Grammaire compar\xC3\xA9e du grec et du latin. Phon\xC3\xA9tique et \xC3\xA9tude des formes grecques et latines, par O. Riemann &amp; H. Goelzer.</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Par.</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:dateIssued>1901</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>cm.25.</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Goelzer, Henri Jules E.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:subject>
+      <mods_ns:hierarchicalGeographic>
+        <mods_ns:country>France</mods_ns:country>
+        <mods_ns:city>Paris</mods_ns:city>
+      </mods_ns:hierarchicalGeographic>
+    </mods_ns:subject>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="University of Oxford Libraries" postcode="OX1 3BG" coords="51.754054,-1.254373" copacCode="oxf">UkOxU</h:org>
+          <h:objId>69250051</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="Oxford University" heldBy="University of Oxford Libraries" postcode="OX1 3BG" location="Bodleian Library" subLocation="Bodleian Library" coords="51.754054,-1.254373">Bodleian Library</h:loc>
+              <h:shelfmark>3047 d.38</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:local xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <mods_ns:subject authority="lcsh">
+          <mods_ns:topic>Greek language</mods_ns:topic>
+        </mods_ns:subject>
+      </cpc:local>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">69077747</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140628</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1832</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">enk</mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Dunlop, William</mods_ns:namePart>
+      <mods_ns:namePart type="termsOfAddress">M.D.</mods_ns:namePart>
+      <mods_ns:role>
+        <mods_ns:roleTerm type="text">creator</mods_ns:roleTerm>
+      </mods_ns:role>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Statistical sketches of Upper Canada, for the use of emigrants, by a backwoodsman [W. Dunlop].</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Lond.</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:dateIssued>1832</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>(8\xE2\x81\xB0)</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:subject authority="pre20">
+      <mods_ns:name type="corporate">
+        <mods_ns:namePart>Canada (Upper)</mods_ns:namePart>
+      </mods_ns:name>
+    </mods_ns:subject>
+    <mods_ns:subject>
+      <mods_ns:hierarchicalGeographic>
+        <mods_ns:country>England</mods_ns:country>
+        <mods_ns:city>London</mods_ns:city>
+      </mods_ns:hierarchicalGeographic>
+    </mods_ns:subject>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="University of Oxford Libraries" postcode="OX1 3BG" coords="51.754054,-1.254373" copacCode="oxf">UkOxU</h:org>
+          <h:objId>69077747</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="Oxford University" heldBy="University of Oxford Libraries" coords="51.754054,-1.254373">Contact the Bodleian Library</h:loc>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+  <mods_ns:mods xmlns:mods_ns="http://www.loc.gov/mods/v3" version="3.5">
+    <mods_ns:recordInfo>
+      <mods_ns:recordIdentifier source="UkMaC">69247446</mods_ns:recordIdentifier>
+      <mods_ns:recordCreationDate encoding="iso8601">20140401</mods_ns:recordCreationDate>
+    </mods_ns:recordInfo>
+    <mods_ns:typeOfResource>text</mods_ns:typeOfResource>
+    <mods_ns:originInfo>
+      <mods_ns:issuance>multipart monograph</mods_ns:issuance>
+    </mods_ns:originInfo>
+    <mods_ns:originInfo>
+      <mods_ns:dateIssued encoding="marc">1878</mods_ns:dateIssued>
+      <mods_ns:place>
+        <mods_ns:placeTerm authority="marccountry" type="code">gw </mods_ns:placeTerm>
+      </mods_ns:place>
+    </mods_ns:originInfo>
+    <mods_ns:name type="personal">
+      <mods_ns:namePart>Riemann, Karl Wilhelm J. Hugo.</mods_ns:namePart>
+    </mods_ns:name>
+    <mods_ns:titleInfo>
+      <mods_ns:title>Studien zur Geschichte der Notenschrift.</mods_ns:title>
+    </mods_ns:titleInfo>
+    <mods_ns:originInfo eventType="publisher">
+      <mods_ns:place>
+        <mods_ns:placeTerm type="text">Leipz.</mods_ns:placeTerm>
+      </mods_ns:place>
+      <mods_ns:dateIssued>1878</mods_ns:dateIssued>
+    </mods_ns:originInfo>
+    <mods_ns:physicalDescription>
+      <mods_ns:extent>cm.22.</mods_ns:extent>
+    </mods_ns:physicalDescription>
+    <mods_ns:subject>
+      <mods_ns:hierarchicalGeographic>
+        <mods_ns:country>Germany</mods_ns:country>
+        <mods_ns:city>Leipzig</mods_ns:city>
+      </mods_ns:hierarchicalGeographic>
+    </mods_ns:subject>
+    <mods_ns:physicalDescription>
+      <mods_ns:form authority="marcform">print</mods_ns:form>
+    </mods_ns:physicalDescription>
+    <mods_ns:location>
+      <mods_ns:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="University of Oxford Libraries" postcode="OX1 3BG" coords="51.754054,-1.254373" copacCode="oxf">UkOxU</h:org>
+          <h:objId>69247446</h:objId>
+          <h:holds>
+            <h:item>
+              <h:loc heldByShortName="Oxford University" heldBy="University of Oxford Libraries" postcode="OX1 3BG" location="Bodleian Library" subLocation="Bodleian Library" coords="51.754054,-1.254373">Bodleian Library</h:loc>
+              <h:shelfmark>174 e.63</h:shelfmark>
+            </h:item>
+          </h:holds>
+        </h:localHolds>
+      </mods_ns:holdingExternal>
+    </mods_ns:location>
+    <mods_ns:extension>
+      <cpc:local xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <mods_ns:subject authority="lcsh">
+          <mods_ns:topic>Music</mods_ns:topic>
+        </mods_ns:subject>
+      </cpc:local>
+      <cpc:flags xmlns:cpc="http://copac.ac.uk/schemas/mods-copac/v1">
+        <cpc:flag>copbok</cpc:flag>
+        <cpc:flag>coppri</cpc:flag>
+        <cpc:flag>m21bk</cpc:flag>
+        <cpc:flag>rtypa</cpc:flag>
+      </cpc:flags>
+    </mods_ns:extension>
+  </mods_ns:mods>
+</mods_records>

@@ -95,7 +95,6 @@
     status_code: 200, 404
   when:
     - mod_users_pull.changed or mod_users_mod_descr_update.changed
-    - mod_users_deploy_status.status == 200
   with_items: "{{ tenants.json | default([]) }}"
   register: tenant_mod_users
 

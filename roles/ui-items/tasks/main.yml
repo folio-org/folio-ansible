@@ -1,0 +1,29 @@
+---
+# Role to build and deploy FOLIO ui-users
+
+- name: Update stripes-core package.json for ui-items
+  become: yes
+  become_user: "{{ stripes_user }}"
+  lineinfile:
+    dest: "{{ stripes_conf }}/package.json"
+    line: '    "@folio/items": "^0.0.1-test",'
+    insertafter: 'dependencies'
+  notify: Restart stripes
+
+- name: Add ui-items to stripes config
+  become: yes
+  lineinfile:
+    dest: "{{ stripes_conf }}/stripes.config.js"
+    line: "    '@folio/items': {},"
+    insertafter: "modules\\:"
+  notify: Restart stripes
+
+- name: Rebuild stripes with ui-items dependency
+  become: yes
+  become_user: "{{ stripes_user }}"
+  command: yarn install
+  args:
+    chdir: "{{ stripes_home }}"
+    creates: "{{ stripes_home }}/node_modules/@folio/items"
+  notify: Restart stripes
+

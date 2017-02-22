@@ -1,40 +1,29 @@
 ---
 # Role to build and deploy FOLIO ui-users
 
-- name: Configure npm registry for sample modules
+- name: Update stripes-core package.json for ui-users
   become: yes
-  command: npm config set @folio-sample-modules:registry https://repository.folio.org/repository/npm-folioci/
-  args:
-    chdir: "{{ stripes_home }}/stripes-core"
-  when: stripes_core_clone.changed
-
-- name: Install/update packages for ui-users
-  become: yes
-  command: npm install @folio-sample-modules/users
-  args:
-    chdir: "{{ stripes_home }}/stripes-core"
+  become_user: "{{ stripes_user }}"
+  lineinfile:
+    dest: "{{ stripes_conf }}/package.json"
+    line: '    "@folio/users": "^0.0.1-test",'
+    insertafter: 'dependencies'
   notify: Restart stripes
 
-- name: Set up Okapi for stripes
+- name: Add ui-users to stripes config
   become: yes
   lineinfile:
-    dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
-    line: "    'url' : 'http://localhost:9130',"
-    insertafter: "okapi\\:"
-  notify: Restart stripes
-
-- name: Set up Okapi for demo tenant
-  become: yes
-  lineinfile:
-    dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
-    line: "    'tenant' : 'diku',"
-    insertafter: "okapi\\:"
-  notify: Restart stripes
-
-- name: Add ui-users to stripes
-  become: yes
-  lineinfile:
-    dest: "{{ stripes_home }}/stripes-core/stripes.config.js"
-    line: "    '@folio-sample-modules/users': {},"
+    dest: "{{ stripes_conf }}/stripes.config.js"
+    line: "    '@folio/users': {},"
     insertafter: "modules\\:"
   notify: Restart stripes
+
+- name: Rebuild stripes with ui-users dependency
+  become: yes
+  become_user: "{{ stripes_user }}"
+  command: yarn install
+  args:
+    chdir: "{{ stripes_home }}"
+    creates: "{{ stripes_home }}/node_modules/@folio/users"
+  notify: Restart stripes
+

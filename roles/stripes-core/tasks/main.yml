@@ -1,48 +1,72 @@
 ---
-# role to clone and set up stripes-core from GitHub repo
+# role to set up stripes-core from npm repo
 
-- name: Create stripes home directory
+- name: create stripes group
   become: yes
-  file: path={{ stripes_home }} state=directory
+  group: name={{ stripes_group }} system=yes
 
-- name: Clone stripes-core repository
+- name: create stripes user
   become: yes
-  git: repo=https://github.com/folio-org/stripes-core.git dest={{ stripes_home }}/stripes-core
-  register: stripes_core_clone
-  notify: Restart stripes
+  user: name={{ stripes_user }} system=yes group={{ stripes_group }}
 
-# These will always register as changed - need to make idempotent
+- name: Create stripes directories
+  become: yes
+  file: path={{ item }} state=directory owner={{ stripes_user }} group={{ stripes_group }}
+  with_items:
+    - "{{ stripes_home }}"
+    - "{{ stripes_conf }}"
+ 
 - name: Move to Node.js 6.X lts
   become: yes
-  command: n lts
-
-- name: Configure npm registry for stripes-core
-  become: yes
-  command: npm config set @folio:registry https://repository.folio.org/repository/npm-folioci/
+  shell: n lts && touch {{ stripes_conf }}/.set_nodedefault_ansible
   args:
-    chdir: "{{ stripes_home }}/stripes-core"
-  when: stripes_core_clone.changed
+    creates: "{{ stripes_conf }}/.set_nodedefault_ansible"
 
-- name: Install/update packages for stripes-core
+- name: Configure @folio:registry for stripes-core
   become: yes
-  npm: path={{ stripes_home }}/stripes-core
-  when: stripes_core_clone.changed
-
-- name: Configure npm registry for sample modules
-  become: yes
-  command: npm config set @folio-sample-modules:registry https://repository.folio.org/repository/npm-folioci/
+  become_user: "{{ stripes_user }}"
+  shell: yarn config set @folio:registry {{ folio_registry }} && touch {{ stripes_conf }}/.set_folioregistry_ansible
   args:
-    chdir: "{{ stripes_home }}/stripes-core"
-  when: stripes_core_clone.changed
-
-- name: Check status of stripes.config.js
-  stat: path={{ stripes_home }}/stripes-core/stripes.config.js follow=yes
-  register: stripes_config
+    creates: "{{ stripes_conf }}/.set_folioregistry_ansible"
+ 
+- name: Configure @folio-sample-modules:registry for stripes-core
+  become: yes
+  become_user: "{{ stripes_user }}"
+  shell: yarn config set @folio-sample-modules:registry {{ folio_sample_modules_registry }} && touch {{ stripes_conf }}/.set_foliosamplemodulesregistry_ansible
+  args:
+    creates: "{{ stripes_conf }}/.set_foliosamplemodulesregistry_ansible"
 
 - name: Copy stripes.config.js
   become: yes
-  copy: src=stripes.config.js dest={{ stripes_home }}/stripes-core/stripes.config.js
-  when: stripes_config.stat.isreg is not defined
+  become_user: "{{ stripes_user }}"
+  template: src=stripes.config.js.j2 dest={{ stripes_conf }}/stripes.config.js force=no
+  notify: Restart stripes
+
+- name: Link stripes.config.js
+  become: yes
+  become_user: "{{ stripes_user }}"
+  file: src={{ stripes_conf }}/stripes.config.js dest={{ stripes_home }}/stripes.config.js state=link
+  notify: Restart stripes
+
+- name: Copy package.json
+  become: yes
+  become_user: "{{ stripes_user }}"
+  copy: src=package.json dest={{ stripes_conf }}/package.json force=no
+  notify: Restart stripes
+
+- name: Link package.json
+  become: yes
+  become_user: "{{ stripes_user }}"
+  file: src={{ stripes_conf }}/package.json dest={{ stripes_home }}/package.json state=link
+  notify: Restart stripes
+
+- name: Install packages for stripes-core
+  become: yes
+  become_user: "{{ stripes_user }}"
+  command: yarn install
+  args:
+    chdir: "{{ stripes_home }}"
+    creates: "{{ stripes_home }}/yarn.lock"
   notify: Restart stripes
 
 - name: Copy stripes.service file
@@ -68,3 +92,5 @@
   when: stripes_status | failed
   changed_when: yes
   notify: Restart stripes
+
+- meta: flush_handlers
