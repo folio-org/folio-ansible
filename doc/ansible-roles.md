@@ -16,6 +16,8 @@ Installs Apache Maven 3 from the Apache archive.
 Clones the folio-org/mod-auth repository from GitHub, builds and
 deploys the modules. Depends on:
 - common
+- openjdk-8
+- maven-3
 - mongodb-org
 - okapi-undeploy
 
@@ -28,7 +30,7 @@ tenant-data.
 
 ## mod-auth-sample
 Build and deploy the mod-auth Node.js sample modules (thing-module and
-retrieve-module). Depends on mod-auth.
+retrieve-module). Depends on mod-auth and nodejs.
 
 *Note: without a running Okapi instance, this role will fail.*
 
@@ -41,13 +43,6 @@ Builds the Docker image for mod-circulation and launches it via
 Okapi. Depends on mod-circulation-build, docker-engine, and
 okapi-docker or okapi-src.
 
-## mod-metadata-build
-Clones and builds the source from folio-org/mod-metadata on
-GitHub. Depends on:
-- common
-- openjdk-8
-- maven-3
-
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
 modules from Docker Hub, registers and deploys as a system service in
@@ -57,6 +52,14 @@ a running Okapi instance, with persistent storage. Depends on:
 - okapi-undeploy
 
 *Note: without a running Okapi instance, this role will fail.*
+
+## mod-metadata-build (*Deprecated*)
+Clones and builds the source from folio-org/mod-metadata on
+GitHub. Depends on:
+- common
+- openjdk-8
+- maven-3
+
 ## mod-metadata-data
 Sample data for the mod-metadata backend modules. Depends on
 tenant-data and common.
@@ -83,7 +86,7 @@ storage. Depends on:
 
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-users-build
+## mod-users-build (*Deprecated*)
 Clones and builds the source from folio-org/mod-users on
 GitHub. Depends on common, openjdk-8, and maven-3.
 
@@ -174,6 +177,15 @@ https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core.
 
 *Note: without a running Okapi instance, this role will fail.*
+
+## ui-items
+Adds the ui-items module to stripes-core from
+https://repository.folio.org/repository/npm-folioci/
+Depends on stripes-core.
+
+*Note: without a running Okapi instance and a configured tenant, the
+ Items application will not run. Sample data is available in
+ mod-metadata-data.*
 
 ## ui-users
 Adds the ui-users module to stripes-core from

@@ -4,7 +4,8 @@
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
-    * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backend_auth-or-demo-box)
+    * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backendauth-or-demo-box)
+    * [Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box](#viewing-backend-module-logs-on-the-backend-backendauth-or-demo-box)
     * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
     * [Viewing the Okapi log on the `dev` box](#viewing-the-okapi-log-on-the-dev-box)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
@@ -23,30 +24,30 @@ The Vagrantfile in this project contains five target definitions:
    provisioning. Source code is shared with the host machine on the
    project root.
 2. `backend` -- a fully loaded backend Okapi, mod-users, and
-   mod-metadata system with sample data.
-3. `demo` -- a fully loaded backend Okapi and mod-users system with
-   sample data, stripes-core loaded as a system service, and the
-   ui-users and ui-okapi-console FOLIO apps.
-4. `backend_auth` -- the backend system, plus mod-auth. There are three sample
+   mod-metadata system with sample data. Okapi is installed using the
+   Debian install package, and the mod-users and mod-metadata modules
+   are installed and launched as Docker containers. This target pulls
+   the image hosted on
+   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend).
+3. `backend_auth` -- the backend system, plus mod-auth. mod-auth is
+   deployed from source as a system service. There are three sample
    authorized users:
    * `diku_admin` with password `admin`.
    * `auth_test1` with password `diku`.
    * `auth_test2` with password `diku`.
+   This target pulls the image hosted on
+   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth).
+4. `demo` -- the backend system, plus stripes-core, and the
+   ui-okapi-console, ui-users, and ui-items FOLIO apps. This target
+   pulls the image hosted on
+   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth).
 5. `build_backend` -- a target to build the `backend` box for
    packaging.
-6. `build_demo` -- a target to build the `demo` box for packaging.
-7. `build_backend_auth` -- a target to build the `backend_auth` box
+6. `build_backend_auth` -- a target to build the `backend_auth` box
    for packaging.
+7. `build_demo` -- a target to build the `demo` box for packaging. 
 
 ## Troubleshooting/Known Issues
-
-### Stopping modules through systemd is non-functional
-
-The systemd service files for the FOLIO modules make unwarrented
-assumptions about the instance ID of the module. While they will work
-fine for deploying modules to a running Okapi instance, they will very
-likely fail to undeploy the same module. See
-[FOLIO-451](https://issues.folio.org/browse/FOLIO-451).
 
 ### Vagrant "forwarded port to 9130 is already in use"
 
@@ -57,23 +58,27 @@ the Vagrantfile in the root directory of the project.
 
 ### Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box
 
-On the `backend`, `backend_auth`, and `demo` boxes, Okapi is deployed
-as a system service using
-[systemd](https://www.freedesktop.org/wiki/Software/systemd/), the
-Debian standard, so you can use the standard systemd tools to look at
-the log. First log into the box with `vagrant ssh backend` or `vagrant
-ssh demo`, then:
+The Okapi logfile is at `/var/log/folio/okapi/okapi.log`.
 
-    $ sudo journalctl -u okapi
+### Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box
 
-To follow the log:
+Backend modules (other than mod-auth) on the prebuilt boxes are
+deployed by Okapi as Docker containers. To view the logs:
 
-    $ sudo journalctl -u okapi -f
+1. Log into the box using `vagrant ssh`.
+2. Get the container name of the module you want to check with `sudo
+docker ps`.
+3. Look at the log with `sudo docker logs <container_name>`. You can
+   follow the log by adding the `--follow` paramenter to the `docker
+   logs` command.
+
+mod-auth modules are deployed directly from a JAR by Okapi, so their
+logs are combined with the Okapi log.
 
 ### Viewing the stripes log on the `demo` box
 
 On the `demo` box, stripes is deployed as a system service using
-systemd, like Okapi. You can view the log by logging into the box with
+systemd. You can view the log by logging into the box with
 `vagrant ssh demo`, then:
 
     $ sudo journalctl -u stripes

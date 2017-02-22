@@ -10,11 +10,13 @@
 # Build a Vagrant box to package as a demo system
 - hosts: build_demo
   roles:
-    - okapi-demo
-    - mod-users-demo
+    - okapi
+    - mod-users
     - mod-users-data
-    - ui-okapi-console
+    - mod-metadata
+    - mod-metadata-data
     - ui-users
+    - ui-items
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes
@@ -26,10 +28,10 @@
 # Build a Vagrant box to package as a backend system
 - hosts: build_backend
   roles:
-    - okapi-demo
-    - mod-users-demo
+    - okapi
+    - mod-users
     - mod-users-data
-    - mod-metadata-demo
+    - mod-metadata
     - mod-metadata-data
   tasks:
     - name: Copy vagrant-tidy.sh to /root
@@ -55,15 +57,4 @@
 
     - debug:
         msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
-
-# Build a Vagrant box for CI testing
-- hosts: build_ci
-  roles:
-    - okapi
-    - mod-users
-    - mod-users-data
-    - mod-metadata
-    - mod-metadata-data
-    - ui-users
-    - ui-items
 
