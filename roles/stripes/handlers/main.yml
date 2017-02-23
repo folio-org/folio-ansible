@@ -1,0 +1,16 @@
+---
+- name: Rebuild stripes
+  become: yes
+  become_user: "{{ stripes_user }}"
+  command: yarn install
+  args:
+    chdir: "{{ stripes_home }}"
+  notify: Restart stripes
+
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+
+- name: Restart stripes
+  become: yes
+  service: name=stripes state=restarted

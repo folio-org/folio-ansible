@@ -103,14 +103,20 @@ and Maven 3.
 Installs SDKMAN! from http://sdkman.io
 Depends on common
 
-## stripes-core
+## stripes
 Installs stripes from the
 [folioci npm repository](https://repository.folio.org). Launches the
-stripes dev server with the Okapi Console as a system service. Depends
-on yarn.
+stripes dev server as a system service. Depends on yarn. Includes the
+following Stripes modules:
+- trivial
+- ui-items
+- ui-okapi-console
+- ui-users
 
-*Note: without a running Okapi instance and a configured tenant, the
- Okapi Console will not run*
+*Note: requires a running Okapi with a configured tenant, mod-users,
+ and mod-metadata Sample data available in mod-users-data and
+ mod-metadata-data*
+
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
@@ -118,24 +124,6 @@ builds the code. Depends on openjdk-8 and maven-3.
 
 ## tenant-data
 Load a demo tenant into a running Okapi instance.
-
-## ui-items
-Adds the ui-items module to stripes-core from
-https://repository.folio.org/repository/npm-folioci/
-Depends on stripes-core.
-
-*Note: without a running Okapi instance and a configured tenant, the
- Items application will not run. Sample data is available in
- mod-metadata-data.*
-
-## ui-users
-Adds the ui-users module to stripes-core from
-https://repository.folio.org/repository/npm-folioci/
-Depends on stripes-core.
-
-*Note: without a running Okapi instance and a configured tenant, the
- Users application will not run. Sample user data is available in
- mod-users-data.*
 
 ## yarn
 Installs the [yarn package manager](https://yarnpkg.com) from the yarn
@@ -193,9 +181,37 @@ Clones the folio-org/okapi repository from GitHub, builds and launches
 an Okapi server in development mode in a Docker container. Depends on
 docker-engine.
 
+## stripes-core (*Deprecated*)
+Installs stripes from the
+[folioci npm repository](https://repository.folio.org). Launches the
+stripes dev server with the Okapi Console as a system service. Depends
+on yarn.
+
+*Note: without a running Okapi instance and a configured tenant, the
+ Okapi Console will not run*
+
+## ui-items (*Deprecated*)
+Adds the ui-items module to stripes-core from
+https://repository.folio.org/repository/npm-folioci/
+Depends on stripes-core.
+
+*Note: without a running Okapi instance and a configured tenant, the
+ Items application will not run. Sample data is available in
+ mod-metadata-data.*
+
 ## ui-okapi-console (*Deprecated*)
 Adds the ui-okapi-console module to stripes-core from
 https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core.
 
 *Note: without a running Okapi instance, this role will fail.*
+
+## ui-users (*Deprecated*)
+Adds the ui-users module to stripes-core from
+https://repository.folio.org/repository/npm-folioci/
+Depends on stripes-core.
+
+*Note: without a running Okapi instance and a configured tenant, the
+ Users application will not run. Sample user data is available in
+ mod-users-data.*
+

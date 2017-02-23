@@ -8,8 +8,7 @@
     - mod-users-data
     - mod-metadata
     - mod-metadata-data
-    - ui-users
-    - ui-items
+    - stripes
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

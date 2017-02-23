@@ -1,0 +1,12 @@
+[Unit]
+Description=FOLIO stripes server
+After=okapi.service
+
+[Service]
+User={{ stripes_user }}
+Environment=STRIPES_HOST=0.0.0.0
+WorkingDirectory={{ stripes_home }}
+ExecStart=/usr/bin/yarn start
+
+[Install]
+WantedBy=multi-user.target
