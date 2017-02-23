@@ -177,6 +177,22 @@ raml_module_builder_home: /opt/raml-module-builder
 # sdkman role
 sdkman_user: folio
 
+# stripes role
+stripes_user: okapi
+stripes_group: okapi
+stripes_okapi_port: 9130
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_home: /usr/share/folio/stripes
+stripes_conf: /etc/folio/stripes
+stripes_tenant: diku
+folio_registry: https://repository.folio.org/repository/npm-folioci/
+stripes_modules:
+  - { name: "@folio/trivial", version: "^0.0.2-test" }
+  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
+  - { name: "@folio/users", version: "^0.0.1-test" }
+  - { name: "@folio/items", version: "^0.0.1-test" }
+
+
 # stripes-core role
 stripes_user: okapi
 stripes_group: okapi
