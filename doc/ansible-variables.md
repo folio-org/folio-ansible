@@ -41,7 +41,7 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # folio_user needs to be a user with access to Docker
 folio_user: okapi
 mod_metadata_home: /usr/share/folio/mod-metadata
-mod_metdata_conf: /etc/folio/mod-metadata
+mod_metadata_conf: /etc/folio/mod-metadata
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
