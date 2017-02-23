@@ -46,7 +46,7 @@ if [ "$1" = "start" ] ; then
   done
   if [ "$OKAPI" = "1" ] ; then
     for i in "inventory-storage" "inventory" ; do
-      $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/DeploymentDescriptor_${i}.json ${okapi_url}/_/discovery/modules
+      $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/DeploymentDescriptor_${i}.json ${okapi_url}/_/deployment/modules
       if [ "$?" = "0" ] ; then
         echo "$i deployed to $okapi_url"
       else

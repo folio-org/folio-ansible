@@ -1,6 +1,5 @@
 {
   "srvcId" : "{{ item.module }}-module",
-  "nodeId" : "{{ ansible_default_ipv4.address }}",
   "descriptor" : {
     "exec" : "java -jar -Dlog.level=debug -Dvertx.logger-delegate-factory-class-name=io.vertx.core.logging.SLF4JLogDelegateFactory -Dport=%p -jar {{ mod_auth_home }}/lib/{{ item.module }}_module-fat.jar"
   }

@@ -43,7 +43,7 @@ if [ "$1" = "start" ] ; then
     fi
   done
   if [ "$OKAPI" = "1" ] ; then
-    $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/DeploymentDescriptor.json ${okapi_url}/_/discovery/modules
+    $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/DeploymentDescriptor.json ${okapi_url}/_/deployment/modules
     if [ "$?" = "0" ] ; then
       echo "mod-users deployed to $okapi_url"
     else

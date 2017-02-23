@@ -44,7 +44,6 @@ mod_metadata_home: /usr/share/folio/mod-metadata
 mod_metadata_conf: /etc/folio/mod-metadata
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-okapi_host: "{{ ansible_default_ipv4.address }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_user: mod_metadata
@@ -80,7 +79,6 @@ mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-okapi_host: "{{ ansible_default_ipv4.address }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_user: "{{ pg_admin_user }}" # from postgresql dependency
