@@ -1,51 +1,136 @@
 # folio-ansible - Vagrant VMs and Ansible Roles
 
 <!-- ../../okapi/doc/md2toc -l 2 index.md -->
+* [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
+* [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
+* [Updating FOLIO components (except for mod-auth) on Vagrant boxes](#updating-folio-components-except-for-mod-auth-on-vagrant-boxes)
+    * [Updating Okapi](#updating-okapi)
+    * [Updating Docker-based modules](#updating-docker-based-modules)
+    * [Updating Stripes](#updating-stripes)
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
     * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backendauth-or-demo-box)
     * [Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box](#viewing-backend-module-logs-on-the-backend-backendauth-or-demo-box)
     * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
-    * [Viewing the Okapi log on the `dev` box](#viewing-the-okapi-log-on-the-dev-box)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
-    * ["No running module instance found for mod-users" on `backend` or `demo` box](#no-running-module-instance-found-for-mod-users-on-backend-or-demo-box)
-    * [Loading users on `dev` box](#loading-users-on-dev-box)
 * [Additional information](#additional-information)
+
+## Prebuilt Vagrant boxes
+
+The Vagrantfile and Ansible playbooks and roles in this project are
+used to generate three prebuilt Vagrant boxes, available on
+[Hashicorp Atlas](https://atlas.hashicorp.com/folio):
+
+* [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
+  -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
+  Stripes, and the Stripes modules trivial, ui-okapi-console,
+  ui-users, and ui-items.
+
+* [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
+  -- a backend FOLIO system, with Okapi, mod-users, and the
+  mod-metadata modules.
+
+* [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
+  -- a backend FOLIO system with the mod-auth authentication
+  subsystem, with Okapi, mod-users, mod-metadata, and the mod-auth
+  modules. The authorization subsystem includes three sample users,
+  `diku_admin` (password "admin"), `auth_test1` (password "diku"), and
+  `auth_test2` (password "diku").
+
+All Vagrant boxes come with sample user and inventory data. The
+modules are enabled for the sample tenant, "diku".
+
+To try out any of these boxes, create an empty directory, `cd` into
+it, and initialize a Vagrantfile, e.g.:
+
+    $ vagrant init --minimal folio/folio-demo
+
+Then you can launch the Vagrant box with `vagrant up`. Okapi will be
+listening on localhost port 9130, and the Stripes development server
+will be on localhost port 3000 (on the demo box only).
+
+## FOLIO system setup on Vagrant boxes
+
+The prebuilt Vagrant boxes have the FOLIO stack set up to mimic
+production. Okapi is installed using a Debian installation package,
+with its home directory in `/usr/share/folio/okapi`, configuration
+files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
+backend modules, `users-module` (from mod-users), `inventory`, and
+`inventory-storage` (from mod-metadata) are deployed through Okapi
+using its Docker deployment facility, while the mod-auth modules are
+deployed through Okapi `exec` deployment from JAR files. systemd
+service units are used to manage starting and stopping backend modules
+and Stripes. Modules are installed following the convention of
+configuration in `/etc/folio` and static files in `/usr/share/folio`
+(except for mod-auth modules, which are installed in `/opt/mod-auth`
+-- but this is expected to change).
+
+Data is persisted for all modules using a PostgreSQL (or, in the case of
+the mod-auth modules, Mongo) server running on the Vagrant box. The
+Docker engine is also installed, and configured to listen on
+localhost:4243 of the Vagrant box so that Okapi can use it for module
+deployment.
+
+## Updating FOLIO components (except for mod-auth) on Vagrant boxes
+
+All FOLIO components on the prebuilt Vagrant box except for mod-auth
+come from artifacts created by the FOLIO CI process. That means that
+whenever a commit to the master branch of the source repository passes
+unit tests, a new artifact is made available. This makes it very easy
+to update.
+
+*WARNING*: just because it is easy to update does not mean it is
+necessarily a good idea. The versions of the various components on the
+prebuilt boxes are known to work together. Updating any of them may
+well introduce breaking changes that will cause your FOLIO system to
+stop working.
+
+mod-auth should not be updated on the Vagrant box, it is currently
+pinned to a specific mod-auth release (mongo-final).
+
+### Updating Okapi
+
+    $ sudo apt-get update
+    $ sudo apt-get install okapi
+
+### Updating Docker-based modules
+
+    # for a list of images
+    $ sudo docker images
+    
+    # to update mod-users
+    $ sudo docker pull folioci/mod-users
+
+    # to undeploy and redeploy using the new image
+    $ sudo systemctl restart mod-users
+
+### Updating Stripes
+
+To update Stripes or any Stripes components, update the Stripes
+`package.json` file at `/etc/folio/stripes/package.json`, changing the
+version of the component in the `dependencies`. Then `cd` to
+`/usr/share/folio/stripes` and type the following commands:
+
+    $ sudo -u okapi yarn install
+    $ sudo systemctl restart stripes
 
 ## Vagrantfile targets
 
-The Vagrantfile in this project contains five target definitions:
+The Vagrantfile in this project contains six target definitions:
 
-1. `dev` -- a development box that runs Okapi and mod-users out of Docker
-   containers, and loads sample user data. Okapi and mod-users are
-   cloned from GitHub and then built from source on the VM as part of
-   provisioning. Source code is shared with the host machine on the
-   project root.
-2. `backend` -- a fully loaded backend Okapi, mod-users, and
-   mod-metadata system with sample data. Okapi is installed using the
-   Debian install package, and the mod-users and mod-metadata modules
-   are installed and launched as Docker containers. This target pulls
-   the image hosted on
-   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend).
-3. `backend_auth` -- the backend system, plus mod-auth. mod-auth is
-   deployed from source as a system service. There are three sample
-   authorized users:
-   * `diku_admin` with password `admin`.
-   * `auth_test1` with password `diku`.
-   * `auth_test2` with password `diku`.
-   This target pulls the image hosted on
-   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth).
-4. `demo` -- the backend system, plus stripes-core, and the
-   ui-okapi-console, ui-users, and ui-items FOLIO apps. This target
-   pulls the image hosted on
-   [Hashicorp Atlas](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth).
-5. `build_backend` -- a target to build the `backend` box for
+1. `backend` -- This target pulls the folio/folio-backend Vagrant box
+   hosted on Atlas.
+2. `backend_auth` -- This target pulls the folio/folio-backend-auth
+   Vagrant box hosted on Atlas.
+3. `demo` -- This target pulls the folio/folio-demo Vagrant box hosted
+   on Atlas.
+4. `build_backend` -- a target to build the `backend` box for
    packaging.
-6. `build_backend_auth` -- a target to build the `backend_auth` box
+5. `build_backend_auth` -- a target to build the `backend_auth` box
    for packaging.
-7. `build_demo` -- a target to build the `demo` box for packaging. 
+6. `build_demo` -- a target to build the `demo` box for packaging. 
 
 ## Troubleshooting/Known Issues
 
@@ -87,14 +172,6 @@ To follow the log:
 
     $ sudo journalctl -u stripes -f
 
-### Viewing the Okapi log on the `dev` box
-
-On the `dev` box, Okapi is deployed as a Docker container. You can use
-the Docker tools to look at the log. First log into the box with
-`vagrant ssh dev`, then:
-
-    $ docker logs okapi
-
 ### Some recent Vagrant versions have non-working `curl`
 
 On macOS at least, there is an issue with Vagrant v1.8.7
@@ -124,58 +201,6 @@ support virtualization. The only fix is to reboot the host and poke
 around in the BIOS settings. The necessary setting should be found in
 the CPU Configuration, and will have a name like SVM, Secure Virtual
 Machine Mode or AMD-V. Good luck!
-
-### "No running module instance found for mod-users" on `backend` or `demo` box
-
-This can happen if for some reason the okapi service on the box failed
-to start up quickly enough for the mod-users service to deploy. To
-fix:
-
-1. Log into the box with `vagrant ssh backend` or `vagrant ssh demo`
-2. `sudo systemctl status mod-users`
-
-A running mod-users module will show output like this:
-
-```
-vagrant@contrib-jessie:~$ sudo systemctl status mod-users
-● mod-users.service - Deploy FOLIO mod-users module to Okapi on localhost
-   Loaded: loaded (/etc/systemd/system/mod-users.service; enabled)
-   Active: inactive (dead) since Thu 2016-12-08 22:31:08 GMT; 9min ago
-  Process: 769 ExecStart=/usr/bin/curl -s -X POST -H Content-Type: application/json -d @/opt/mod-users/conf/DeploymentDescriptor.json http://localhost:9130/_/discovery/modules (code=exited, status=0/SUCCESS)
- Main PID: 769 (code=exited, status=0/SUCCESS)
-
-Dec 08 22:31:08 contrib-jessie curl[769]: {
-Dec 08 22:31:08 contrib-jessie curl[769]: "instId" : "localhost-9131",
-Dec 08 22:31:08 contrib-jessie curl[769]: "srvcId" : "mod-users",
-Dec 08 22:31:08 contrib-jessie curl[769]: "nodeId" : "localhost",
-Dec 08 22:31:08 contrib-jessie curl[769]: "url" : "http://localhost:9131",
-Dec 08 22:31:08 contrib-jessie curl[769]: "descriptor" : {
-Dec 08 22:31:08 contrib-jessie curl[769]: "exec" : "java -jar /opt/mod-users/lib/mod-users-fat.jar -Dhttp.port=...json"
-Dec 08 22:31:08 contrib-jessie curl[769]: }
-Dec 08 22:31:08 contrib-jessie curl[769]: }
-Dec 08 22:31:08 contrib-jessie systemd[1]: Started Deploy FOLIO mod-users module to Okapi on localhost.
-Hint: Some lines were ellipsized, use -l to show in full.
-```
-
-If you don't see the descriptor in the log output, the service may not
-have deployed. Try:
-
-    $ sudo systemctl start mod-users
-
-To view the log output:
-
-    $ sudo journalctl -u mod-users
-
-### Loading users on `dev` box
-
-Sometimes users do not correctly load when provisioning the `dev`
-Vagrant box, due to a timing issue (some components may not spin up
-before the provisioning script attempts to load the users). It can
-typically be fixed by running:
-
-    $ vagrant provision dev
-
-(If necessary, multiple times.)
 
 ## Additional information
 

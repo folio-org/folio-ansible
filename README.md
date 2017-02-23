@@ -50,33 +50,14 @@ To test this, fetch a list of users:
 
     $ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
 
-For the `demo` system, the stripes port and user interface will be
-forwarded to `localhost:3000`. You should see the stripes user interface
+For the `demo` system, the Stripes port and user interface will be
+forwarded to `localhost:3000`. You should see the Stripes user interface
 at `http://localhost:3000`.
 
 For more information, see [Vagrant VMs and Ansible roles](doc/index.md).
 
 In addition, this project includes a [Vagrantfile](Vagrantfile) for
 creating different environments.
-
-To run a backend "blackbox" system using Vagrant: `vagrant up backend`
-(currently includes Okapi, mod-users, sample tenant "diku", and sample
-user data).
-
-To run a demo system using Vagrant: `vagrant up demo`
-(currently includes Okapi, mod-users, sample tenant "diku", sample
-user data, stripes-core, and ui-users).
-
-To build a development environment using Vagrant: `vagrant up dev`
-* Requires Ansible \>= 2.1
-(currently includes Okapi and mod-users running in Docker containers,
-sample tenant "diku", and sample user data, with source code shared in
-the working directory).
-
-To try other roles, edit [folio.yml](folio.yml) and rebuild the
-"dev" Vagrant box. A running system requires an Okapi role (okapi-demo,
-okapi-docker, or okapi-src) underneath whatever modules you select. The
-data roles require that the module they relate to be selected.
 
 ## Documentation
 
