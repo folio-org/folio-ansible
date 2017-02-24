@@ -22,6 +22,13 @@ a running Okapi instance, with persistent storage. Depends on:
 
 *Note: without a running Okapi instance, this role will fail.*
 
+## mod-auth-data
+Hooks up mod-auth modules for the sample tenant, loads sample users
+and auth data. Depends on tenant-data.
+
+*Note: without a running Okapi instance with mod-users, this role will
+ fail*
+
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
 modules from Docker Hub, registers and deploys as a system service in

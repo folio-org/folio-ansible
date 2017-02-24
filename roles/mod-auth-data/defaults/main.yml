@@ -1,0 +1,24 @@
+---
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_auth_modules:
+  - { index: 0, module: authtoken-module }
+  - { index: 1, module: login-module }
+  - { index: 2, module: permissions-module }
+mod_auth_admin: { username: diku_admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms\\\", \\\"login\\\"" }
+bootstrap_permissions:
+  - { id: 8cd22acd-e347-4382-9344-42020f65bb86, permissionName: login.addUser, subPermissions: "" }
+  - { id: e8fd127f-19c6-406a-91b2-fbc601edb0ec, permissionName: login.modifyUser, subPermissions: "" }
+  - { id: 71d2aa6a-c39a-4e3c-b7ad-9548a1c8267d, permissionName: login.readUser, subPermissions: "" }
+  - { id: 6c7a4410-4ec0-46f5-9fcd-754f47a9e5cd, permissionName: login.removeUser, subPermissions: "" }
+  - { id: a239a767-3c49-47c4-99e5-5485dc7ac8fd, permissionName: login, subPermissions: "\\\"login.addUser\\\", \\\"login.modifyUser\\\", \\\"login.removeUser\\\", \\\"login.readUser\\\"" }
+  - { id: 83613c13-f412-4bc4-86b6-77e084e39921, permissionName: perms.permissions.create, subPermissions: "" }
+  - { id: 5914e7fd-d1d9-455e-b520-f8435a342671, permissionName: perms.permissions.delete, subPermissions: "" }
+  - { id: afd0c500-8c01-4140-85d5-11e1461df4d8, permissionName: perms.permissions.read, subPermissions: "" }
+  - { id: 4ec6aadd-f5ba-4e32-9c01-d6636261a274, permissionName: perms.permissions, subPermissions: "\\\"perms.permissions.read\\\", \\\"perms.permissions.create\\\", \\\"perms.permissions.delete\\\"" }
+  - { id: 9b115c7f-5b2b-4a5f-868f-347362e9e544, permissionName: perms.users.create, subPermissions: "" }
+  - { id: dd61cfc2-8a9c-420c-ba74-5400398efa4a, permissionName: perms.users.modify, subPermissions: "" }
+  - { id: 5df3f0c6-315f-45ce-a690-f17198c797d9, permissionName: perms.users.delete, subPermissions: "" }
+  - { id: 95993363-ee9e-4fad-84db-6c6bba408ef8, permissionName: perms.users.read, subPermissions: "" }
+  - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"" }
+  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\"" }
