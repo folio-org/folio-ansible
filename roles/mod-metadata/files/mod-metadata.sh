@@ -33,7 +33,7 @@ done
 if [ "$1" = "start" ] ; then
   echo -n "Checking for Okapi..."
   OKAPI=0
-  for i in 1 2 3 4 5 ; do
+  for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 ; do
     $CURL --output /dev/null --silent --get --fail ${okapi_url}/_/proxy/modules
     if [ "$?" = "0" ] ; then
       echo "OK"
