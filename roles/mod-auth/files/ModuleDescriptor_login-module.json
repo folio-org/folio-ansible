@@ -1,0 +1,71 @@
+{
+  "id": "login-module",
+  "name": "login",
+  "provides": [
+    {
+      "id": "login",
+      "version": "0.0.1"
+    },
+    {
+      "id": "_tenant",
+      "version": "0.0.1"
+    }
+  ],
+  "routingEntries": [
+    {
+      "methods": [
+        "POST"
+      ],
+      "path": "/authn/login",
+      "level": "30",
+      "type": "request-response"
+    },
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/authn/credentials",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "login.readUser"
+      ]
+    },
+    {
+      "methods": [
+        "POST"
+      ],
+      "path": "/authn/credentials",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "login.addUser"
+      ]
+    },
+    {
+      "methods": [
+        "PUT"
+      ],
+      "path": "/authn/credentials",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "login.modifyUser"
+      ]
+    },
+    {
+      "methods": [
+        "DELETE"
+      ],
+      "path": "/authn/credentials",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "login.removeUser"
+      ]
+    }
+  ],
+  "modulePermissions": [
+    "auth.signtoken"
+  ]
+}

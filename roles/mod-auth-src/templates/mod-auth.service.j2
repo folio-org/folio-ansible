@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO mod-auth modules to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ mod_auth_home }}/bin/mod-auth.sh start
+ExecStop={{ mod_auth_home }}/bin/mod-auth.sh stop
+
+[Install]
+WantedBy=multi-user.target

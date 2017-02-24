@@ -17,6 +17,24 @@ docker_users:
 maven_version: 3.3.9
 
 # mod-auth role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_auth_home: /usr/share/folio/mod-auth
+mod_auth_conf: /etc/folio/mod-auth
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_auth_db: mod_auth
+mod_auth_modules:
+  - { index: 0, module: authtoken, docker_image: folioci/mod-authtoken }
+  - { index: 1, module: login, docker_image: folioci/mod-login }
+  - { index: 2, module: permissions, docker_image: folioci/mod-permissions }
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
+# mod-auth-src role
 mod_auth_home: /opt/mod-auth
 mod_auth_src_home: /opt/mod-auth-src
 okapi_url: http://localhost:9130/
@@ -46,11 +64,13 @@ okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
-pg_user: mod_metadata
-pg_password: mod_metadata25
-mod_users_db: mod_metadata
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_metadata_db: mod_metadata
 mod_metadata_modules:
-  - { index: 0, module: inventory-storage }
+  - { index: 0, module: inventory-storage, docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, docker_image: folioci/mod-inventory }
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
 # mod-metadata-build role
 mod_metadata_src_home: /opt/mod-metadata-src
@@ -81,9 +101,10 @@ okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
-pg_user: "{{ pg_admin_user }}" # from postgresql dependency
-pg_password: "{{ pg_admin_password }}" # from postgresql dependency
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
 mod_users_db: mod_users
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src

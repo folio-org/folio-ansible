@@ -1,0 +1,94 @@
+{
+  "id": "permissions-module",
+  "name": "permissions",
+  "provides": [
+    {
+      "id": "permissions",
+      "version": "0.0.1"
+    },
+    {
+      "id": "_tenant",
+      "version": "0.0.1"
+    }
+  ],
+  "routingEntries": [
+    {
+      "methods": [
+        "POST"
+      ],
+      "path": "/perms/users",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.users.create"
+      ]
+    },
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/perms/users",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.users.read"
+      ]
+    },
+    {
+      "methods": [
+        "PUT"
+      ],
+      "path": "/perms/users",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.users.modify"
+      ]
+    },
+
+    {
+      "methods": [
+        "DELETE"
+      ],
+      "path": "/perms/users",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.users.delete"
+      ]
+    },
+    {
+      "methods": [
+        "GET"
+      ],
+      "path": "/perms/permissions",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.permissions.read"
+      ]
+    },
+    {
+      "methods": [
+        "POST"
+      ],
+      "path": "/perms/permissions",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.permissions.create"
+      ]
+    },
+    {
+      "methods": [
+        "DELETE"
+      ],
+      "path": "/perms/permissions",
+      "level": "30",
+      "type": "request-response",
+      "permissionsRequired": [
+        "perms.permissions.delete "
+      ]
+    }
+  ]
+}

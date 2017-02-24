@@ -1,0 +1,31 @@
+{
+  "id": "authtoken-module",
+  "name": "authtoken",
+  "provides": [
+    {
+      "id": "authtoken",
+      "version": "0.0.1"
+    }
+  ],
+  "routingEntries": [
+    {
+      "methods": [
+        "*"
+      ],
+      "path": "/",
+      "level": "10",
+      "type": "request-only"
+    },
+    {
+      "methods": [
+        "POST"
+      ],
+      "path": "/token",
+      "level": "20",
+      "type": "request-response"
+    }
+  ],
+  "modulePermissions": [
+    "perms.users.read"
+  ]
+}

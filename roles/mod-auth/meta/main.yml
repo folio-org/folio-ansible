@@ -1,7 +1,5 @@
 ---
 dependencies:
-  - { role: common }
-  - { role: openjdk-8 }
-  - { role: maven-3 }
-  - { role: mongodb-org }
+  - { role: postgresql }
+  - { role: docker-engine }
   - { role: okapi-undeploy }
