@@ -47,9 +47,11 @@ it, and initialize a Vagrantfile, e.g.:
 
     $ vagrant init --minimal folio/folio-demo
 
-Then you can launch the Vagrant box with `vagrant up`. Okapi will be
-listening on localhost port 9130, and the Stripes development server
-will be on localhost port 3000 (on the demo box only).
+If you have downloaded a previous version of the box, you will also
+need to update it with `vagrant box update`. Then you can launch the
+Vagrant box with `vagrant up`. Okapi will be listening on localhost
+port 9130, and the Stripes development server will be on localhost
+port 3000 (on the demo box only).
 
 ## FOLIO system setup on Vagrant boxes
 
