@@ -85,4 +85,64 @@
   shell: psql -qtc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ mod_auth_admin.username }}\",\"permissions\":[{{ mod_auth_admin.permissions }}]}')" mod_auth
   when: diku_admin_permissions.stdout | int == 0
 
-# Now use the API to post the rest of the updates
+###############################################
+# Create other mod_auth permissions and users #
+###############################################
+
+- name: Login as {{ mod_auth_admin.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ mod_auth_admin.username }}', 'password' : '{{ mod_auth_admin.password }}' }"
+    status_code: 201
+  register: mod_auth_login
+
+- name: Check mod-users permissions
+  uri:
+    url: "{{ okapi_url }}/perms/permissions?query=permissionName%3D%5Eusers"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+  register: check_mod_users_perms
+
+- name: Load mod-users permissions
+  uri:
+    url: "{{ okapi_url }}/perms/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: |
+      {
+        'id' : '{{ item.id }}',
+        'permissionName' : '{{ item.permissionName }}',
+        'displayName' : '{{ item.displayName }}',
+        'subPermissions' : {{ item.subPermissions }}
+      }
+    status_code: 201
+  register: load_mod_users_perms
+  changed_when: load_mod_users_perms.status == 201
+  with_items: "{{ mod_users_permissions }}"
+  when: check_mod_users_perms.json.totalRecords == 0
+
+- name: Grant mod-users permissions
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "users" }'
+    status_code: 200,400
+  register: mod_users_admin_perms
+  changed_when: mod_users_admin_perms.status == 200
+  with_items: "{{ mod_auth_users }}"
