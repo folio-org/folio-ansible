@@ -23,10 +23,12 @@ bootstrap_permissions:
   - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"" }
   - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\"" }
 mod_users_permissions:
-  - { id: 9b42cd1c-9516-498c-a271-a1a086328c92, permissionName: users.create, displayName: "Create Users", subPermissions: "[]" }
-  - { id: f7d0e9ec-23b2-47fb-abd9-8db3122e49c7, permissionName: users.read, displayName: "Read Users", subPermissions: "[]" }
-  - { id: 13b731df-e6f0-4ffb-adb1-b2d8b4590ad2, permissionName: users.edit, displayName: "Edit Users", subPermissions: "[]" }
-  - { id: 91f48a1c-6c1d-40b6-861f-e599b1fdf502, permissionName: users.delete, displayName: "Delete Users", subPermissions: "[]" }
-  - { id: 98d2b20f-53e1-4385-9f19-3ed4fae1c450, permissionName: users, displayName: "All Users Permissions", subPermissions: "['users.create','users.read','users.edit','users.delete']" }
+  - { permissionName: users.create, displayName: "Create Users", subPermissions: "[]" }
+  - { permissionName: users.read, displayName: "Read Users", subPermissions: "[]" }
+  - { permissionName: users.edit, displayName: "Edit Users", subPermissions: "[]" }
+  - { permissionName: users.delete, displayName: "Delete Users", subPermissions: "[]" }
+  - { permissionName: users, displayName: "All Users Permissions", subPermissions: "['users.create','users.read','users.edit','users.delete']" }
 mod_auth_users:
-  - { username: diku_admin }
+  - { username: auth_test1, password: diku }
+  - { username: auth_test2, password: diku }
+

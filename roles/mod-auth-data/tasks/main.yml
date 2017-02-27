@@ -121,7 +121,6 @@
       Accept: application/json
     body: |
       {
-        'id' : '{{ item.id }}',
         'permissionName' : '{{ item.permissionName }}',
         'displayName' : '{{ item.displayName }}',
         'subPermissions' : {{ item.subPermissions }}
@@ -132,9 +131,9 @@
   with_items: "{{ mod_users_permissions }}"
   when: check_mod_users_perms.json.totalRecords == 0
 
-- name: Grant mod-users permissions
+- name: Grant mod-users permissions to {{ mod_auth_admin.username }}
   uri:
-    url: "{{ okapi_url }}/perms/users/{{ item.username }}/permissions"
+    url: "{{ okapi_url }}/perms/users/{{ mod_auth_admin.username }}/permissions"
     method: POST
     body_format: json
     headers:
@@ -143,6 +142,35 @@
       Accept: application/json
     body: '{ "permissionName" : "users" }'
     status_code: 200,400
+  register: mod_users_admin_perms
+  changed_when: mod_users_admin_perms.status == 200
+
+- name: Create mod-auth credentials for other uers
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}", "password" : "{{ item.password }}" }'
+    status_code: 201,400
+  register: create_creds
+  changed_when: create_creds.status == 201
+  with_items: "{{ mod_auth_users }}"
+
+- name: Grant mod-users permissions to other users
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users" ] }'
+    status_code: 201,400
   register: mod_users_admin_perms
   changed_when: mod_users_admin_perms.status == 200
   with_items: "{{ mod_auth_users }}"
