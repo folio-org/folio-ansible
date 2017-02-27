@@ -1,0 +1,176 @@
+---
+# Role to build a demo mod-auth with user permissions for the sample tenant
+
+# This should really only happen if the users aren't already there
+# 400 error means the user is already there, this is not ideal
+# 403 error means the modules are already hooked up for the tenant,
+# also not ideal
+- name: Load users into users-module
+  uri:
+    url: "{{ okapi_url }}/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,400,403
+  register: load_user
+  ignore_errors: yes
+  changed_when: load_user.status == 201
+  with_fileglob:
+    - "*_user.json"
+
+# need to do this first to initialize the schemas
+- name: Check mod-auth modules tenant registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.module }}"
+    status_code: 200, 404
+  register: tenant_mod_auth
+  with_items: "{{ mod_auth_modules }}"
+
+- name: Enable mod-auth modules for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.module }}" }'
+    status_code: 201
+  register: mod_auth_enable
+  changed_when: mod_auth_enable.status == 201
+  when: tenant_mod_auth.results[item.index].status == 404
+  with_items: "{{ mod_auth_modules }}"
+
+########################################
+# Bootstrap admin user and permissions #
+########################################
+
+- name: Check auth_credentials for diku_admin user
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "select count(*) from diku_login_module.auth_credentials where jsonb @> '{\"username\":\"{{ mod_auth_admin.username }}\"}'" mod_auth
+  register: diku_admin_credentials
+  changed_when: no
+
+- name: Insert diku_admin user into auth_credentials
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "insert into diku_login_module.auth_credentials (jsonb) values ('{\"username\":\"{{ mod_auth_admin.username }}\",\"hash\":\"{{ mod_auth_admin.hash }}\",\"salt\":\"{{ mod_auth_admin.salt }}\"}')" mod_auth
+  when: diku_admin_credentials.stdout | int == 0
+
+- name: Check db for permissions
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "select count(*) from diku_permissions_module.permissions" mod_auth
+  register: permissions_bootstrap
+  changed_when: no
+
+- name: Bootstrap permissions
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "insert into diku_permissions_module.permissions (jsonb) values ('{\"id\":\"{{ item.id }}\",\"tags\":[],\"permissionName\":\"{{ item.permissionName }}\",\"subPermissions\":[{{ item.subPermissions }}]}')" mod_auth
+  with_items: "{{ bootstrap_permissions }}"
+  when: permissions_bootstrap.stdout | int == 0
+
+- name: Check permissions_users for diku_admin user
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "select count(*) from diku_permissions_module.permissions_users where jsonb @> '{\"username\":\"{{ mod_auth_admin.username }}\"}'" mod_auth
+  register: diku_admin_permissions
+  changed_when: no
+
+- name: Insert diku_admin user into permissions_users
+  become: yes
+  become_user: postgres
+  shell: psql -qtc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ mod_auth_admin.username }}\",\"permissions\":[{{ mod_auth_admin.permissions }}]}')" mod_auth
+  when: diku_admin_permissions.stdout | int == 0
+
+###############################################
+# Create other mod_auth permissions and users #
+###############################################
+
+- name: Login as {{ mod_auth_admin.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ mod_auth_admin.username }}', 'password' : '{{ mod_auth_admin.password }}' }"
+    status_code: 201
+  register: mod_auth_login
+
+- name: Check mod-users permissions
+  uri:
+    url: "{{ okapi_url }}/perms/permissions?query=permissionName%3D%5Eusers"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+  register: check_mod_users_perms
+
+- name: Load mod-users permissions
+  uri:
+    url: "{{ okapi_url }}/perms/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: |
+      {
+        'permissionName' : '{{ item.permissionName }}',
+        'displayName' : '{{ item.displayName }}',
+        'subPermissions' : {{ item.subPermissions }}
+      }
+    status_code: 201
+  register: load_mod_users_perms
+  changed_when: load_mod_users_perms.status == 201
+  with_items: "{{ mod_users_permissions }}"
+  when: check_mod_users_perms.json.totalRecords == 0
+
+- name: Grant mod-users permissions to {{ mod_auth_admin.username }}
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ mod_auth_admin.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "users" }'
+    status_code: 200,400
+  register: mod_users_admin_perms
+  changed_when: mod_users_admin_perms.status == 200
+
+- name: Create mod-auth credentials for other uers
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}", "password" : "{{ item.password }}" }'
+    status_code: 201,400
+  register: create_creds
+  changed_when: create_creds.status == 201
+  with_items: "{{ mod_auth_users }}"
+
+- name: Grant mod-users permissions to other users
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users" ] }'
+    status_code: 201,400
+  register: mod_users_admin_perms
+  changed_when: mod_users_admin_perms.status == 200
+  with_items: "{{ mod_auth_users }}"

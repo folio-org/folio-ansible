@@ -13,26 +13,21 @@ Installs the Docker engine from the Docker repository.
 Installs Apache Maven 3 from the Apache archive.
 
 ## mod-auth
-Clones the folio-org/mod-auth repository from GitHub, builds and
-deploys the modules. Depends on:
-- common
-- openjdk-8
-- maven-3
-- mongodb-org
+Loads the Docker images for the authtoken, login, and permissions
+modules from Docker Hub, registers and deploys as a system service in
+a running Okapi instance, with persistent storage. Depends on:
+- postgresql
+- docker-engine
 - okapi-undeploy
 
 *Note: without a running Okapi instance, this role will fail.*
 
-## mod-auth-demo
-Hooks up mod-auth with mod-users, loads sample permissions data for
-the sample tenant (diku). Depends on mod-auth, mod-users-demo,
-tenant-data.
+## mod-auth-data
+Hooks up mod-auth modules for the sample tenant, loads sample users
+and auth data. Depends on tenant-data.
 
-## mod-auth-sample
-Build and deploy the mod-auth Node.js sample modules (thing-module and
-retrieve-module). Depends on mod-auth and nodejs.
-
-*Note: without a running Okapi instance, this role will fail.*
+*Note: without a running Okapi instance with mod-users, this role will
+ fail*
 
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
@@ -128,6 +123,28 @@ Load a demo tenant into a running Okapi instance.
 ## yarn
 Installs the [yarn package manager](https://yarnpkg.com) from the yarn
 repository. Depends on nodejs.
+
+## mod-auth-src (*Deprecated*)
+Clones the folio-org/mod-auth repository from GitHub, builds and
+deploys the modules. Depends on:
+- common
+- openjdk-8
+- maven-3
+- mongodb-org
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
+
+## mod-auth-demo (*Deprecated*)
+Hooks up mod-auth with mod-users, loads sample permissions data for
+the sample tenant (diku). Depends on mod-auth, mod-users-demo,
+tenant-data.
+
+## mod-auth-sample (*Deprecated*)
+Build and deploy the mod-auth Node.js sample modules (thing-module and
+retrieve-module). Depends on mod-auth and nodejs.
+
+*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-circulation-build (*Deprecated*)
 Clones and builds the source from folio-org/mod-circulation on

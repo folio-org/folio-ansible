@@ -3,7 +3,7 @@
 <!-- ../../okapi/doc/md2toc -l 2 index.md -->
 * [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
 * [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
-* [Updating FOLIO components (except for mod-auth) on Vagrant boxes](#updating-folio-components-except-for-mod-auth-on-vagrant-boxes)
+* [Updating FOLIO components on Vagrant boxes](#updating-folio-components-on-vagrant-boxes)
     * [Updating Okapi](#updating-okapi)
     * [Updating Docker-based modules](#updating-docker-based-modules)
     * [Updating Stripes](#updating-stripes)
@@ -59,38 +59,31 @@ The prebuilt Vagrant boxes have the FOLIO stack set up to mimic
 production. Okapi is installed using a Debian installation package,
 with its home directory in `/usr/share/folio/okapi`, configuration
 files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
-backend modules, `users-module` (from mod-users), `inventory`, and
-`inventory-storage` (from mod-metadata) are deployed through Okapi
-using its Docker deployment facility, while the mod-auth modules are
-deployed through Okapi `exec` deployment from JAR files. systemd
+backend modules, `users-module` (from mod-users), `inventory` and
+`inventory-storage` (from mod-metadata), and `login-module`,
+`permissions-module` and `authtoken-module` (from mod-auth) are
+deployed through Okapi using its Docker deployment facility. `systemd`
 service units are used to manage starting and stopping backend modules
 and Stripes. Modules are installed following the convention of
-configuration in `/etc/folio` and static files in `/usr/share/folio`
-(except for mod-auth modules, which are installed in `/opt/mod-auth`
--- but this is expected to change).
+configuration in `/etc/folio` and static files in `/usr/share/folio`.
 
-Data is persisted for all modules using a PostgreSQL (or, in the case of
-the mod-auth modules, Mongo) server running on the Vagrant box. The
-Docker engine is also installed, and configured to listen on
-localhost:4243 of the Vagrant box so that Okapi can use it for module
-deployment.
+Data is persisted for all modules using a PostgreSQL server running on
+the Vagrant box. The Docker engine is also installed, and configured
+to listen on localhost:4243 of the Vagrant box so that Okapi can use
+it for module deployment.
 
-## Updating FOLIO components (except for mod-auth) on Vagrant boxes
+## Updating FOLIO components on Vagrant boxes
 
-All FOLIO components on the prebuilt Vagrant box except for mod-auth
-come from artifacts created by the FOLIO CI process. That means that
-whenever a commit to the master branch of the source repository passes
-unit tests, a new artifact is made available. This makes it very easy
-to update.
+All FOLIO components on the prebuilt Vagrant box come from artifacts
+created by the FOLIO CI process. That means that whenever a commit to
+the master branch of the source repository passes unit tests, a new
+artifact is made available. This makes it very easy to update.
 
 *WARNING*: just because it is easy to update does not mean it is
 necessarily a good idea. The versions of the various components on the
 prebuilt boxes are known to work together. Updating any of them may
 well introduce breaking changes that will cause your FOLIO system to
 stop working.
-
-mod-auth should not be updated on the Vagrant box, it is currently
-pinned to a specific mod-auth release (mongo-final).
 
 ### Updating Okapi
 
@@ -149,8 +142,8 @@ The Okapi logfile is at `/var/log/folio/okapi/okapi.log`.
 
 ### Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box
 
-Backend modules (other than mod-auth) on the prebuilt boxes are
-deployed by Okapi as Docker containers. To view the logs:
+Backend modules on the prebuilt boxes are deployed by Okapi as Docker
+containers. To view the logs:
 
 1. Log into the box using `vagrant ssh`.
 2. Get the container name of the module you want to check with `sudo
@@ -158,9 +151,6 @@ docker ps`.
 3. Look at the log with `sudo docker logs <container_name>`. You can
    follow the log by adding the `--follow` paramenter to the `docker
    logs` command.
-
-mod-auth modules are deployed directly from a JAR by Okapi, so their
-logs are combined with the Okapi log.
 
 ### Viewing the stripes log on the `demo` box
 

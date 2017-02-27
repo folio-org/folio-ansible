@@ -1,0 +1,17 @@
+{
+   "username" : "auth_test1",
+   "type" : "employee",
+   "personal" : {
+      "email" : "kayla@collins-grady.lr",
+      "first_name" : "Maureen",
+      "last_name" : "Boyle"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "2015-05-05",
+      "creation_date" : "1989-07-08"
+   },
+   "id" : "77136CF1-FF93-4C45-B7B5-187BCB711745",
+   "patron_group" : "on_campus"
+}
+
