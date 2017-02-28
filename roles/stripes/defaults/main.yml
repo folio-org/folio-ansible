@@ -12,4 +12,5 @@ stripes_modules:
   - { name: "@folio/okapi-console", version: "^0.0.1-test" }
   - { name: "@folio/users", version: "^0.0.1-test" }
   - { name: "@folio/items", version: "^0.0.1-test" }
+  - { name: "@folio/scan", version: "^0.0.1" }
 
