@@ -1,4 +1,5 @@
 {
+  "license": "Apache-2.0",
   "scripts": {
     "build": "stripes build stripes.config.js",
     "stripes": "stripes",
@@ -8,6 +9,6 @@
     {% for module in stripes_modules %}
     "{{ module.name }}": "{{ module.version }}",
     {% endfor %}
-    "@folio/stripes-core": "^0.0.9-test"
+    "@folio/stripes-core": "{{ stripes_core_version }}"
   }
 }

@@ -8,7 +8,7 @@
 - name: Pull the mod-users Docker image
   become: yes
   become_user: "{{ folio_user }}"
-  docker_image: name=folioci/mod-users
+  docker_image: name=folioci/mod-users tag={{ mod_users_version }}
   register: mod_users_pull
 
 - name: Set up mod-users home directory

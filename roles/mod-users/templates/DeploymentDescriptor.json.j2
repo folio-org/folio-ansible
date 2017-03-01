@@ -1,7 +1,7 @@
 {
   "srvcId" : "users-module",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-users",
+    "dockerImage" : "folioci/mod-users:{{ mod_users_version }}",
     "env" : [
       { "name" : "db.host", "value" : "{{ pg_host }}" },
       { "name" : "db.port", "value" : "{{ pg_port }}" },

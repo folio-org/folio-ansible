@@ -7,6 +7,8 @@ stripes_home: /usr/share/folio/stripes
 stripes_conf: /etc/folio/stripes
 stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
+disable_auth: true
+stripes_core_version: "^0.0.11"
 stripes_modules:
   - { name: "@folio/trivial", version: "^0.0.2-test" }
   - { name: "@folio/okapi-console", version: "^0.0.1-test" }
