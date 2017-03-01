@@ -1,0 +1,36 @@
+---
+# Role to install ansible
+- name: Install prerequisites
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - python-apt 
+
+- name: Install software-properties-common on Ubuntu Xenial
+  become: yes
+  apt: name=software-properties-common
+  when: ansible_distribution_release == "xenial"
+
+- name: Add Ansible repo on Ubuntu Xenial
+  become: yes
+  apt_repository: repo="ppa:ansible/ansible"
+  when: ansible_distribution_release == "xenial"
+
+- name: Install apt key for Ansible repo on Debian Jessie
+  become: yes
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 93C4A3FD7BB9C367
+  when: ansible_distribution_release == "jessie"
+
+- name: Add Ansible repo on Debian Jessie
+  become: yes
+  apt_repository:
+    repo: "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main"
+  when: ansible_distribution_release == "jessie"
+
+- name: Install Ansible
+  become: yes
+  apt: name=ansible

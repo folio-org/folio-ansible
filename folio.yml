@@ -52,3 +52,21 @@
     - debug:
         msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
 
+# Build a Vagrant box to support FOLIO Developer Curriculum
+- hosts: build_curriculum
+  roles:
+    - common
+    - openjdk-8
+    - maven-3
+    - nodejs
+    - ansible
+    - docker-engine
+
+  tasks:
+    - name: Copy vagrant-tidy.sh to /root
+      become: yes
+      copy: src=roles/okapi-demo/files/vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
+
+    - debug:
+        msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
+

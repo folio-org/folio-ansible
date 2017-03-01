@@ -27,6 +27,13 @@ Vagrant.configure(2) do |config|
     demo.vm.box = "folio/folio-demo"
     demo.vm.synced_folder ".", "/vagrant", disabled: true
     demo.vm.network "forwarded_port", guest: 9130, host: 9130
+    demo.vm.network "forwarded_port", guest: 3000, host: 3000
+  end
+
+  config.vm.define "curriculum", autostart: false do |curriculum|
+    curriculum.vm.box = "folio/curriculum"
+    curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
+    curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
   end
 
   config.vm.define "build_backend", autostart: false do |build_backend|
@@ -66,4 +73,13 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_curriculum", autostart: false do |build_curriculum|
+    build_curriculum.vm.box = "debian/contrib-jessie64"
+    build_curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_curriculum.vm.synced_folder ".", "/vagrant", disabled: true
+    build_curriculum.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+    end
+  end
 end

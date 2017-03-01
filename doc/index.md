@@ -39,6 +39,11 @@ used to generate three prebuilt Vagrant boxes, available on
   `diku_admin` (password "admin"), `auth_test1` (password "diku"), and
   `auth_test2` (password "diku").
 
+* [folio/curriculum](https://atlas.hashicorp.com/folio/boxes/curriculum)
+  -- a box built to support the
+  [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
+  with prerequisites installed.
+
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
 
@@ -113,7 +118,7 @@ version of the component in the `dependencies`. Then `cd` to
 
 ## Vagrantfile targets
 
-The Vagrantfile in this project contains six target definitions:
+The Vagrantfile in this project contains eight target definitions:
 
 1. `backend` -- This target pulls the folio/folio-backend Vagrant box
    hosted on Atlas.
@@ -121,11 +126,15 @@ The Vagrantfile in this project contains six target definitions:
    Vagrant box hosted on Atlas.
 3. `demo` -- This target pulls the folio/folio-demo Vagrant box hosted
    on Atlas.
-4. `build_backend` -- a target to build the `backend` box for
+4. `curriculum` -- This target pulls the folio/curriculum Vagrant box
+   hosted on Atlas.
+5. `build_backend` -- a target to build the `backend` box for
    packaging.
-5. `build_backend_auth` -- a target to build the `backend_auth` box
+6. `build_backend_auth` -- a target to build the `backend_auth` box
    for packaging.
-6. `build_demo` -- a target to build the `demo` box for packaging. 
+7. `build_demo` -- a target to build the `demo` box for packaging.
+8. `build_curriculum` -- a target to build the `curriculum` box for
+   packaging.
 
 ## Troubleshooting/Known Issues
 
