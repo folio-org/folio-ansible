@@ -124,6 +124,7 @@ mod_metadata_db: mod_metadata
 folio_user: okapi
 mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
+mod_users_version: 4.0.0-SNAPSHOT
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 pg_host: "{{ ansible_default_ipv4.address }}"
@@ -230,6 +231,7 @@ stripes_okapi_port: 9130
 stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
 stripes_home: /usr/share/folio/stripes
 stripes_conf: /etc/folio/stripes
+disable_auth: true
 stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
 stripes_modules:
