@@ -1,0 +1,16 @@
+---
+# Role to make sure there are mod-auth users and permissions
+# for all users in mod-users
+# Just a temporary workaround to make the demo look nice
+
+- name: Get users
+  uri:
+    url: "{{ okapi_url }}/users?limit=100"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+  register: mod_users_users
+
+- debug: var=item.username
+  with_items: "{{ mod_users_users.json.users }}"
