@@ -10,10 +10,15 @@
     - python-pip
     - python-apt
 
-# Need to specify v.1.9.0 due to Ansible bug #17495
-- name: Install docker-py from pip
+- name: Install docker-py and docker-compose from pip
   become: yes
-  pip: name=docker-py version=1.9.0
+  pip: 
+    name: "{{ item.name }}"
+    version: "{{ item.version }}" 
+    state: present
+  with_items:
+     - { name: 'docker-py', version: '1.10.6' }
+     - { name: 'docker-compose', version: '1.9.0' }
 
 - name: Install python-apt
   become: yes
@@ -44,22 +49,6 @@
   become: yes
   apt: name=docker-engine
 
-- name: Install Docker Compose
-  become: yes
-  uri:
-    url: "https://github.com/docker/compose/releases/download/{{ docker_compose_ver }}/docker-compose-{{ ansible_system }}-{{ ansible_machine }}"
-    follow_redirects: safe
-    dest: /usr/local/bin/docker-compose
-    creates: /usr/local/bin/docker-compose
-
-- name: Fix permissions on docker-compose
-  become: yes
-  file:
-    path: /usr/local/bin/docker-compose
-    owner: root
-    group: root
-    mode: 0755
-    
 - name: Create systemd configuration directory for Docker
   become: yes
   file: path=/etc/systemd/system/docker.service.d state=directory
