@@ -2,4 +2,3 @@
 docker_users:
   - okapi
 
-docker_compose_ver: '1.11.2'
