@@ -231,7 +231,7 @@ stripes_okapi_port: 9130
 stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
 stripes_home: /usr/share/folio/stripes
 stripes_conf: /etc/folio/stripes
-disable_auth: true
+disable_auth: false
 stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
 stripes_modules:
