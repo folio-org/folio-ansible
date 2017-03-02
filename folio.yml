@@ -77,7 +77,7 @@
         line: localhost ansible_connection=local
 
     - name: Clone curriculum repository
-      git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum version=FOLIO-491
+      git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum
 
     - name: Copy vagrant-tidy.sh to /root
       become: yes
