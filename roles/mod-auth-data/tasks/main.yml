@@ -1,5 +1,9 @@
 ---
 # Role to build a demo mod-auth with user permissions for the sample tenant
+#
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
 
 # This should really only happen if the users aren't already there
 # 400 error means the user is already there, this is not ideal
