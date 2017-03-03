@@ -29,6 +29,16 @@ and auth data. Depends on tenant-data.
 *Note: without a running Okapi instance with mod-users, this role will
  fail*
 
+## mod-auth-demo-users
+Creates shim users in mod-auth login and permissions modules for all
+users in mod-users (with password = username), if they don't already
+exist in the mod-auth modules. Temporary fix until there is a business
+logic module that handles both users and authn/z. Depends on
+mod-auth-data.
+
+*Note: without a running Okapi instance with mod-users, this role will
+ fail*
+
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
 modules from Docker Hub, registers and deploys as a system service in

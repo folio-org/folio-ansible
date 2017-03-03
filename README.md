@@ -28,7 +28,7 @@ For Vagrant deployment:
 
 For Ansible provisioning (to build a dev VM, or to build the demo or
 backend system from scratch)
-* [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.1
+* [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.2
 
 This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
 
