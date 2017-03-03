@@ -46,6 +46,7 @@
     - mod-metadata-data
     - mod-auth
     - mod-auth-data
+    - mod-auth-demo-users
 
   tasks:
     - name: Copy vagrant-tidy.sh to /root

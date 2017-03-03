@@ -12,5 +12,56 @@
       Accept: application/json
   register: mod_users_users
 
-- debug: var=item.username
+- name: Check for login users
+  uri:
+    url: "{{ okapi_url }}/authn/credentials/{{ item.username }}"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    status_code: 200, 404
+  register: mod_login_users
   with_items: "{{ mod_users_users.json.users }}"
+
+- name: Create login users 
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.item.username }}", "password" : "{{ item.item.username }}" }'
+    status_code: 201
+  when: item.status == 404
+  register: create_creds
+  changed_when: create_creds.status == 201
+  with_items: "{{ mod_login_users.results }}"
+
+- name: Check for perms users
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.username }}"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    status_code: 200, 404
+  register: mod_permissions_users
+  with_items: "{{ mod_users_users.json.users }}"
+
+- name: Create perms users 
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.item.username }}", "permissions" : [ "users", "login", "perms" ] }'
+    status_code: 201
+  when: item.status == 404
+  register: create_perms
+  changed_when: create_perms.status == 201
+  with_items: "{{ mod_permissions_users.results }}"

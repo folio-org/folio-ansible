@@ -71,7 +71,7 @@
 - name: Bootstrap permissions
   become: yes
   become_user: postgres
-  shell: psql -qtc "insert into diku_permissions_module.permissions (jsonb) values ('{\"id\":\"{{ item.id }}\",\"tags\":[],\"permissionName\":\"{{ item.permissionName }}\",\"subPermissions\":[{{ item.subPermissions }}]}')" mod_auth
+  shell: psql -qtc "insert into diku_permissions_module.permissions (jsonb) values ('{\"id\":\"{{ item.id }}\",\"tags\":[],\"permissionName\":\"{{ item.permissionName }}\",\"displayName\":\"{{ item.displayName }}\",\"subPermissions\":[{{ item.subPermissions }}]}')" mod_auth
   with_items: "{{ bootstrap_permissions }}"
   when: permissions_bootstrap.stdout | int == 0
 
@@ -172,7 +172,7 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users" ] }'
+    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users", "login", "perms" ] }'
     status_code: 201,400
   register: mod_users_admin_perms
   changed_when: mod_users_admin_perms.status == 200
