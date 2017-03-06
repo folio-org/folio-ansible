@@ -1,0 +1,3 @@
+FROM nginx:1.11.10-alpine
+
+COPY stripes.conf /etc/nginx/conf.d/stripes.conf

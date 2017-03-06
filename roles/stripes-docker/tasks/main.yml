@@ -1,0 +1,59 @@
+---
+
+- name: create docker build dir
+  become: yes
+  file: 
+    path: "{{ stripes_conf_dir }}"
+    state: directory
+
+- name: copy Dockerfile to stripes conf dir
+  become: yes
+  copy: 
+    src: Dockerfile
+    dest: "{{ stripes_conf_dir }}/Dockerfile"
+
+- name: generate templates and copy to build dir
+  become: yes
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ stripes_conf_dir }}/{{ item.dest }}"
+  with_items: 
+    - { src: 'stripes.config.js.j2', dest: 'stripes.config.js' }
+    - { src: 'package.json.j2', dest: 'package.json' }
+    - { src: 'npmrc.j2', dest: 'npmrc' }
+
+- name: create docker network for stripes
+  become: yes
+  docker_network: 
+    name: stripes-net
+
+- name: build and start stripes docker container
+  become: yes
+  docker_service:
+    project_name: stripes
+    definition: 
+      version: '2'
+      services: 
+        stripes:
+          build: "{{ stripes_conf_dir }}"
+          image: stripes
+          environment: 
+            - STRIPES_HOST=0.0.0.0
+          ports: 
+            - "{{ stripes_host_address }}:3000:3000"
+          networks:  
+            stripes-net:
+              aliases:
+                - stripes-serv
+      networks: 
+        stripes-net: 
+          external: true
+    state: present
+  register: stripes_container_status
+
+- debug: 
+    var: stripes_container_status
+
+  # set up nginx proxy if with_nginx is 'true'.       
+- include: nginx.yml
+  when: with_nginx == true

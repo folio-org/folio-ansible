@@ -1,0 +1,6 @@
+{% if folioci %}
+registry=https://repository.folio.org/repository/npm-ci-all
+//repository.folio.org/repository/:_authToken={{ npm_authtoken }}
+{% else %}
+@folio:registry=https://repository.folio.org/repository/npm-folioci
+{% endif %}

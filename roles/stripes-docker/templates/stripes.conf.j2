@@ -1,0 +1,23 @@
+upstream stripes {
+   server stripes-serv:3000;
+}
+
+server {
+
+    listen   80;
+    server_name  {{ nginx_servername }};
+
+    root   /usr/share/nginx/html;
+
+    location / {
+        proxy_set_header   Host             $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+
+        proxy_pass http://stripes;
+
+    }
+
+}
+
