@@ -30,6 +30,7 @@
     # - mod-metadata-data
     # - mod-loan-storage
     - mod-circulation
+    - mod-circulation-data
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

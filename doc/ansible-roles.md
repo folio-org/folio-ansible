@@ -48,6 +48,15 @@ system service in a running Okapi instance. Depends on:
 *Note: without a running Okapi instance with mod-loan-storage, this
  role will fail*
 
+## mod-circulation-data
+Sample data for the mod-circulation business logic module. Depends on:
+- tenant-data
+- mod-users-data
+- mod-metadata-data
+
+*Note: without a running Okapi instance with mod-circulation and
+ mod-loan-storage installed and enabled, this role will fail.*
+
 ## mod-loan-storage
 Loads the Docker image from Docker Hub, registers and deploys as a
 system service in a running Okapi instance, with persistent

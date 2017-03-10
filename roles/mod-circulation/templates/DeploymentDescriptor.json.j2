@@ -1,6 +1,9 @@
 {
   "srvcId" : "circulation",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-circulation:{{ mod_circulation_version }}"
+    "dockerImage" : "folioci/mod-circulation:{{ mod_circulation_version }}",
+    "env" : [
+      { "name" : "JAVA_OPTS", "value" : "-Dport=9403" }
+    ]
   }
 }

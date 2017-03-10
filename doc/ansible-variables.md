@@ -90,6 +90,10 @@ mod_circulation_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
+# mod-circulation-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
 # mod-loan-storage role
 # folio_user needs to be a user with access to Docker
 folio_user: okapi
