@@ -81,6 +81,15 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-circulation role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_circulation_home: /usr/share/folio/mod-circulation
+mod_circulation_conf: /etc/folio/mod-circulation
+mod_circulation_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
 # mod-loan-storage role
 # folio_user needs to be a user with access to Docker
 folio_user: okapi

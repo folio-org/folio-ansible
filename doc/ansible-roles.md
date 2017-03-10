@@ -39,6 +39,15 @@ mod-auth-data.
 *Note: without a running Okapi instance with mod-users, this role will
  fail*
 
+## mod-circulation
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance. Depends on:
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance with mod-loan-storage, this
+ role will fail*
+
 ## mod-loan-storage
 Loads the Docker image from Docker Hub, registers and deploys as a
 system service in a running Okapi instance, with persistent
