@@ -39,6 +39,14 @@ mod-auth-data.
 *Note: without a running Okapi instance with mod-users, this role will
  fail*
 
+## mod-loan-storage
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance, with persistent
+storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
 ## mod-metadata
 Loads the Docker images for the inventory-storage and inventory
 modules from Docker Hub, registers and deploys as a system service in
