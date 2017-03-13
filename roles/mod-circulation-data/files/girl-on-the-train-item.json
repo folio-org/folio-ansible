@@ -4,4 +4,7 @@
   "itemId": "459afaba-5b39-468d-9072-eb1685e0ddf4",
   "loanDate": "2017-02-03T08:43:15Z",
   "returnDate": "2017-03-01T11:35:12Z",
+  "status": {
+    "name": "Closed"
+  }
 }
