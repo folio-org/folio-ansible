@@ -1,0 +1,36 @@
+{
+  "id": "loan-storage",
+  "name": "Loan Storage Module",
+  "provides": [
+    {
+      "id": "loan-storage",
+      "version": "0.1",
+      "routingEntries": [
+        {
+          "methods": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "path": "/loan-storage",
+          "type": "request-response",
+          "level": "30"
+        }]},
+    {
+      "id": "_tenant",
+      "version": "1.0",
+      "interfaceType": "system",
+      "routingEntries": [
+        {
+          "methods": [
+            "POST",
+            "DELETE"
+          ],
+          "path": "/_/tenant",
+          "type": "request-response"
+        }
+      ]
+    }
+  ]
+}

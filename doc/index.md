@@ -29,15 +29,16 @@ used to generate three prebuilt Vagrant boxes, available on
   ui-users, and ui-items.
 
 * [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
-  -- a backend FOLIO system, with Okapi, mod-users, and the
-  mod-metadata modules.
+  -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
+  modules, mod-loan-storage, and mod-circulation
 
 * [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
   -- a backend FOLIO system with the mod-auth authentication
-  subsystem, with Okapi, mod-users, mod-metadata, and the mod-auth
-  modules. The authorization subsystem includes three sample users,
-  `diku_admin` (password "admin"), `auth_test1` (password "diku"), and
-  `auth_test2` (password "diku").
+  subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
+  mod-circulation, and the mod-auth modules. The authorization
+  subsystem includes three sample users, `diku_admin` (password
+  "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
+  "diku").
 
 * [folio/curriculum](https://atlas.hashicorp.com/folio/boxes/curriculum)
   -- a box built to support the
@@ -64,13 +65,11 @@ The prebuilt Vagrant boxes have the FOLIO stack set up to mimic
 production. Okapi is installed using a Debian installation package,
 with its home directory in `/usr/share/folio/okapi`, configuration
 files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
-backend modules, `users-module` (from mod-users), `inventory` and
-`inventory-storage` (from mod-metadata), and `login-module`,
-`permissions-module` and `authtoken-module` (from mod-auth) are
-deployed through Okapi using its Docker deployment facility. `systemd`
-service units are used to manage starting and stopping backend modules
-and Stripes. Modules are installed following the convention of
-configuration in `/etc/folio` and static files in `/usr/share/folio`.
+backend modules are deployed through Okapi using its Docker deployment
+facility. `systemd` service units are used to manage starting and
+stopping backend modules and Stripes. Modules are installed following
+the convention of configuration in `/etc/folio` and static files in
+`/usr/share/folio`.
 
 Data is persisted for all modules using a PostgreSQL server running on
 the Vagrant box. The Docker engine is also installed, and configured

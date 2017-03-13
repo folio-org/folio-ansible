@@ -1,0 +1,4 @@
+---
+- name: Restart mod-loan-storage
+  become: yes
+  service: name=mod-loan-storage state=restarted
