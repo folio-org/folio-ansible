@@ -144,10 +144,13 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "permissionName" : "users" }'
+    body: '{ "permissionName" : "{{ item }}" }'
     status_code: 200,400
   register: mod_users_admin_perms
   changed_when: mod_users_admin_perms.status == 200
+  with_items:
+    - users
+    - usergroups
 
 - name: Create mod-auth credentials for other uers
   uri:
@@ -173,7 +176,7 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users", "login", "perms" ] }'
+    body: '{ "username" : "{{ item.username }}", "permissions" : [ "users", "login", "perms", "usergroups" ] }'
     status_code: 201,400
   register: mod_users_admin_perms
   changed_when: mod_users_admin_perms.status == 200

@@ -28,6 +28,11 @@ mod_users_permissions:
   - { permissionName: users.edit, displayName: "Users: Can edit user profile", subPermissions: "[]" }
   - { permissionName: users.delete, displayName: "Users: Can delete user", subPermissions: "[]" }
   - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.edit','users.delete']" }
+  - { permissionName: usergroups.create, displayName: "User Groups: Can create new user group", subPermissions: "[]" }
+  - { permissionName: usergroups.read, displayName: "User Groups: Can view user group", subPermissions: "[]" }
+  - { permissionName: usergroups.edit, displayName: "User Groups: Can edit user group", subPermissions: "[]" }
+  - { permissionName: usergroups.delete, displayName: "User Groups: Can delete user group", subPermissions: "[]" }
+  - { permissionName: usergroups, displayName: "Users Groups: All User Groups permissions", subPermissions: "['usergroups.create','usergroups.read','usergroups.edit','usergroups.delete']" }
 mod_auth_users:
   - { username: auth_test1, password: diku }
   - { username: auth_test2, password: diku }
