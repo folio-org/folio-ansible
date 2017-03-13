@@ -81,6 +81,34 @@ mod_circulation_src_home: /opt/mod-circulation-src
 # mod-circulation-docker role
 # also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
 
+# mod-circulation role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_circulation_home: /usr/share/folio/mod-circulation
+mod_circulation_conf: /etc/folio/mod-circulation
+mod_circulation_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# mod-circulation-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# mod-loan-storage role
+# folio_user needs to be a user with access to Docker
+folio_user: okapi
+mod_loan_storage_home: /usr/share/folio/mod-loan-storage
+mod_loan_storage_conf: /etc/folio/mod-loan-storage
+mod_loan_storage_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_loan_storage_db: mod_loan_storage
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
 # mod-metadata role
 # folio_user needs to be a user with access to Docker
 folio_user: okapi
@@ -124,7 +152,7 @@ mod_metadata_db: mod_metadata
 folio_user: okapi
 mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
-mod_users_version: 4.0.0-SNAPSHOT
+mod_users_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 pg_host: "{{ ansible_default_ipv4.address }}"

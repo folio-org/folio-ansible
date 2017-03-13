@@ -1,0 +1,10 @@
+{
+  "id": "3fd2d7aa-a6fe-4794-9d34-837a6bd31a8b",
+  "userId": "04E60914-C4BD-4AD9-9E45-9EFECEDF3BBE",
+  "itemId": "bb5a6689-c008-4c96-8f8f-b666850ee12d",
+  "loanDate": "2017-01-05T12:42:21Z",
+  "returnDate": "2017-01-08T10:25:54Z",
+  "status": {
+    "name": "Closed"
+  }
+}

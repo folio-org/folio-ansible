@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO mod-circulation module to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ mod_circulation_home }}/bin/mod-circulation.sh start
+ExecStop={{ mod_circulation_home }}/bin/mod-circulation.sh stop
+
+[Install]
+WantedBy=multi-user.target

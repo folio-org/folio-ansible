@@ -1,0 +1,4 @@
+---
+- name: Restart mod-circulation
+  become: yes
+  service: name=mod-circulation state=restarted

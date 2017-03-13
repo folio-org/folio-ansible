@@ -1,0 +1,29 @@
+{
+  "id": "circulation",
+  "name": "Circulation Module",
+  "provides": [
+    {
+      "id": "circulation",
+      "version": "0.1",
+      "routingEntries": [
+        {
+          "methods": [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE"
+          ],
+          "path": "/circulation",
+          "type": "request-response",
+          "level": "30"
+        }
+      ]
+    }
+  ],
+  "requires" : [
+    {
+      "id" : "loan-storage",
+      "version" : "0.1"
+    }
+  ]
+}

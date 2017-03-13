@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO mod-loan-storage module to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ mod_loan_storage_home }}/bin/mod-loan-storage.sh start
+ExecStop={{ mod_loan_storage_home }}/bin/mod-loan-storage.sh stop
+
+[Install]
+WantedBy=multi-user.target

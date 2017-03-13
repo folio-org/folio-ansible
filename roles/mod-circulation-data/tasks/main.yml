@@ -1,0 +1,58 @@
+---
+# Role to enable mod-circulation for the sample tenant and load sample data
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- name: Check tenant mod-loan-storage registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/loan-storage"
+    status_code: 200, 404
+  register: tenant_mod_loan_storage
+
+- name: Enable mod-loan-storage module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "loan-storage" }'
+    status_code: 201
+  register: mod_loan_storage_enable
+  changed_when: mod_loan_storage_enable.status == 201
+  when: tenant_mod_loan_storage.status == 404
+
+- name: Check tenant mod-circulation registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/circulation"
+    status_code: 200, 404
+  register: tenant_mod_circulation
+
+- name: Enable mod-circulation module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "circulation" }'
+    status_code: 201
+  register: mod_circulation_enable
+  changed_when: mod_circulation_enable.status == 201
+  when: tenant_mod_circulation.status == 404
+
+# This should really only happen if the data aren't already there
+# 400 error means the data are already there, this is not ideal
+- name: Load circulation
+  uri:
+    url: "{{ okapi_url }}/circulation/loans"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,400
+  register: load_loan
+  ignore_errors: yes
+  changed_when: load_loan.status == 201
+  with_fileglob:
+    - "*.json"
+
