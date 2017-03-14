@@ -11,17 +11,25 @@
 
 - name: Create Okapi postgresql user
   become: yes
-  become_user: postgres
   postgresql_user:
-    name: "{{ okapi_pg_user }}"
-    password: "{{ okapi_pg_password }}"
+    db: postgres
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ okapidb_user }}"
+    password: "{{ okapidb_password }}"
     role_attr_flags: CREATEDB
+    no_password_changes: yes
   when: okapi_storage == "postgres"
 
 - name: Create Okapi db
   become: yes
-  become_user: postgres
-  postgresql_db: name={{ okapi_pg_database }}  owner={{ okapi_pg_user }}
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ okapidb_user }}"
+    login_password: "{{ okapidb_password }}"
+    name: "{{ okapidb_name }}"
+    owner: "{{ okapidb_user }}"
   when: okapi_storage == "postgres"
 
 - name: Configure FOLIO CI apt repository
