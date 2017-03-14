@@ -57,9 +57,9 @@ storage={{ okapi_storage }}
 # Set Postgres parameters.  Ignored unless 'storage="postgres"'
 postgres_host={{ pg_host }}               # default 'localhost'
 postgres_port={{ pg_port }}               # default postgres port
-postgres_user={{ okapi_pg_user }}               # default
-postgres_password={{ okapi_pg_password }} # default
-postgres_database={{ okapi_pg_database }}       # default
+postgres_user={{ okapidb_user }}          # default
+postgres_password={{ okapidb_password }}  # default
+postgres_database={{ okapidb_name }}      # default
 
 # Define Docker URL if we are deploying modules via Docker. 
 dockerurl={{ okapi_dockerurl }}
