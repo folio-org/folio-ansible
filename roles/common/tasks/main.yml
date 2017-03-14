@@ -1,8 +1,11 @@
 ---
 # Common tasks for all roles
-- name: Update apt-cache
+
+- name: Update apt-cache if not updated in last sixty minutes
   become: yes
-  apt: update-cache=yes
+  apt: 
+    update-cache: yes
+    cache_valid_time: 3600
 
 - name: create folio group
   become: yes
@@ -22,3 +25,14 @@
   with_items:
     - git
     - curl
+
+- name: Install postgresql client things on all nodes
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - libpq-dev
+    - python-psycopg2  
+    - postgresql-client
+
