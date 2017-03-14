@@ -18,7 +18,7 @@ maven_version: 3.3.9
 
 # mod-auth role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_auth_home: /usr/share/folio/mod-auth
 mod_auth_conf: /etc/folio/mod-auth
 okapi_port: 9130
@@ -83,7 +83,7 @@ mod_circulation_src_home: /opt/mod-circulation-src
 
 # mod-metadata role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_metadata_home: /usr/share/folio/mod-metadata
 mod_metadata_conf: /etc/folio/mod-metadata
 okapi_port: 9130
@@ -121,7 +121,7 @@ mod_metadata_db: mod_metadata
 
 # mod-users role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
 mod_users_version: 4.0.0-SNAPSHOT
@@ -157,22 +157,26 @@ mod_users_db: mod_users
 
 # okapi role
 okapi_role: cluster
-# 'eth0' is th default ec2 network interface. May be different on other systems
+# 'eth0' is the default ec2 network interface. May be different on other systems
 okapi_interface: eth0
 okapi_cluster_port: 9001
 okapi_cluster_config_file: ""
 okapi_port: 9130
 okapi_port_start: 9131
 okapi_port_end: 9141
-# change to 'postgres' for postgres backend
-okapi_storage: inmemory
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
+
+# change to 'postgres' for postgres backend
+okapi_storage: inmemory
+
 pg_host: localhost
 pg_port: 5432
-okapi_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
-okapi_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
-okapi_pg_database: okapi
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+okapidb_user: okapi
+okapidb_password: okapi25
+okapidb_name: okapi
 okapi_dockerurl: http://localhost:4243
 
 okapi_metrics: 0
@@ -217,6 +221,10 @@ okapi_home: /opt/okapi
 okapi_home: /usr/share/folio/okapi
 folio_user: okapi
 folio_group: okapi
+
+# postgresql role
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
 
 # raml-module-builder role
 raml_module_builder_home: /opt/raml-module-builder

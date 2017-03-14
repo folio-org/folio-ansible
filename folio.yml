@@ -23,6 +23,8 @@
 # Build a Vagrant box to package as a backend system
 - hosts: build_backend
   roles:
+    - common
+    - postgresql
     - okapi
     - mod-users
     - mod-users-data
