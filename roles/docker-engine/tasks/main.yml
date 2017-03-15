@@ -55,7 +55,7 @@
 
 - name: Copy docker-opts.conf for systemd
   become: yes
-  copy: src=docker-opts.conf dest=/etc/systemd/system/docker.service.d/docker-opts.conf
+  template: src=docker-opts.conf.j2 dest=/etc/systemd/system/docker.service.d/docker-opts.conf
   register: docker_opts
 
 - name: systemctl daemon-reload
