@@ -24,10 +24,12 @@ bootstrap_permissions:
   - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\"" }
 mod_users_permissions:
   - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]" }
-  - { permissionName: users.read, displayName: "Users: Can view user profile", subPermissions: "[]" }
+  - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]" }
+  - { permissionName: users.read.basic, displayName: "Users: Can view basic fields in full user profile", subPermissions: "[]" }
+  - { permissionName: users.read.restricted, displayName: "Users: Can view entire full user profile including restricted fields", subPermissions: "[]" }
   - { permissionName: users.edit, displayName: "Users: Can edit user profile", subPermissions: "[]" }
   - { permissionName: users.delete, displayName: "Users: Can delete user", subPermissions: "[]" }
-  - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.edit','users.delete']" }
+  - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.read.basic','users.read.restricted','users.edit','users.delete']" }
 mod_auth_users:
   - { username: auth_test1, password: diku }
   - { username: auth_test2, password: diku }
