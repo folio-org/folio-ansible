@@ -21,7 +21,12 @@ bootstrap_permissions:
   - { id: 5df3f0c6-315f-45ce-a690-f17198c797d9, permissionName: perms.users.delete, displayName: "Permissions: Can remove permissions from a user", subPermissions: "" }
   - { id: 95993363-ee9e-4fad-84db-6c6bba408ef8, permissionName: perms.users.read, displayName: "Permissions: Can view permissions for a user", subPermissions: "" }
   - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, displayName: "Permissions: Can initialize, view, assign, and remove permissions for a user", subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"" }
-  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\"" }
+  - { id: 01c5914c-5376-4f61-9453-0ca43bed183e, permissionName: perms.permsets.create, displayName: "Permission sets: Can create new permission set", subPermissions: "" }
+  - { id: acba4804-f136-46cb-ab14-1b094ea4a3a2, permissionName: perms.permsets.modify, displayName: "Permission sets: Can modify permission set", subPermissions: "" }
+  - { id: dd67c752-96de-403f-bd43-91591608a3da, permissionName: perms.permsets.delete, displayName: "Permission sets: Can delete permission set", subPermissions: ""}
+  - { id: d740c098-607e-4d5c-a840-d1639697bd1f, permissionName: perms.permsets.read, displayName: "Permission sets: Can view permission set", subPermissions: ""}
+  - { id: 3bbc5645-6fd6-48ae-960b-9eb617576702, permissionName: perms.permsets, displayName: "Permission sets: Can create, view, modify, and delete permission sets", subPermissions: "\\\"perms.permsets.create\\\", \\\"perms.permsets.modify\\\", \\\"perms.permsets.delete\\\", \\\"perms.permsets.read\\\"" }
+  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\", \\\"perms.permsets\\\"" }
 mod_users_permissions:
   - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]" }
   - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]" }

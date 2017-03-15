@@ -21,6 +21,10 @@
       "type": "request-response",
       "permissionsRequired": [
         "users.read"
+      ],
+      "permissionsDesired": [
+        "users.read.basic",
+        "users.read.restricted"
       ]
     },
     {
