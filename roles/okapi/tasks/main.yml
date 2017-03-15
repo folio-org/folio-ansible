@@ -10,7 +10,6 @@
     - ssl-cert
 
 - name: Create Okapi postgresql user
-  become: yes
   postgresql_user:
     db: postgres
     login_host: "{{ pg_host }}"
@@ -23,7 +22,6 @@
   when: okapi_storage == "postgres"
 
 - name: Create Okapi db
-  become: yes
   postgresql_db:
     login_host: "{{ pg_host }}"
     login_user: "{{ okapidb_user }}"

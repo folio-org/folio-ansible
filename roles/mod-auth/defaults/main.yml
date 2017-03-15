@@ -1,5 +1,5 @@
 ---
-folio_user: okapi
+folio_user: folio
 mod_auth_home: /usr/share/folio/mod-auth
 mod_auth_conf: /etc/folio/mod-auth
 okapi_port: 9130

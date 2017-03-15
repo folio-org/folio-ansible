@@ -1,5 +1,5 @@
 ---
-folio_user: okapi
+folio_user: folio
 mod_metadata_home: /usr/share/folio/mod-metadata
 mod_metadata_conf: /etc/folio/mod-metadata
 okapi_port: 9130
