@@ -1,7 +1,7 @@
 ---
 # mod-loan-storage role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_loan_storage_home: /usr/share/folio/mod-loan-storage
 mod_loan_storage_conf: /etc/folio/mod-loan-storage
 mod_loan_storage_version: latest

@@ -12,6 +12,7 @@ folio_group: folio
 # docker-engine role
 docker_users:
   - okapi
+folioci: false
 
 # maven-3 role
 maven_version: 3.3.9
@@ -83,7 +84,7 @@ mod_circulation_src_home: /opt/mod-circulation-src
 
 # mod-circulation role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_circulation_home: /usr/share/folio/mod-circulation
 mod_circulation_conf: /etc/folio/mod-circulation
 mod_circulation_version: latest
@@ -96,7 +97,7 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
 # mod-loan-storage role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_loan_storage_home: /usr/share/folio/mod-loan-storage
 mod_loan_storage_conf: /etc/folio/mod-loan-storage
 mod_loan_storage_version: latest

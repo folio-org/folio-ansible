@@ -1,7 +1,7 @@
 ---
 # mod-circulation role
 # folio_user needs to be a user with access to Docker
-folio_user: okapi
+folio_user: folio
 mod_circulation_home: /usr/share/folio/mod-circulation
 mod_circulation_conf: /etc/folio/mod-circulation
 mod_circulation_version: latest
