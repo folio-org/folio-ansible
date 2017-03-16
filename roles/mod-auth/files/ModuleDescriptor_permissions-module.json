@@ -30,7 +30,7 @@
       "path": "/perms/users",
       "level": "30",
       "type": "request-response",
-      "permissionsRequired": [
+      "permissionsDesired": [
         "perms.users.read"
       ]
     },
