@@ -170,6 +170,10 @@ mod_users_src_home: /opt/mod-users-src
 # mod-users-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+patron_groups:
+  - { group: on_campus, desc: On-campus }
+  - { group: off_campus, desc: Off-campus }
+  - { group: other, desc: Other }
 
 # mod-users-demo role
 mod_users_home: /opt/mod-users

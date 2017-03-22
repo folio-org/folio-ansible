@@ -39,3 +39,55 @@
   with_fileglob:
     - User*.json
 
+- name: Get user groups
+  uri:
+    url: "{{ okapi_url }}/groups"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+  register: usergroups
+
+- name: Load groups if needed
+  uri:
+    url: "{{ okapi_url }}/groups"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: '{ "group" : "{{ item.group }}", "desc" : "{{ item.desc }}" }'
+    status_code: 201,400
+  register: load_group
+  ignore_errors: yes
+  changed_when: load_group.status == 201
+  with_items: "{{ patron_groups }}"
+  when: usergroups.json.usergroups == []
+
+- name: Get user groups (again)
+  uri:
+    url: "{{ okapi_url }}/groups"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+  register: usergroups
+
+- name: Get users
+  uri:
+    url: "{{ okapi_url }}/users?limit=100"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+  register: users
+
+# Returns 500 error on duplicate, not ideal
+- name: Associate users with usergroups
+  uri:
+    url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random)._id }}/users/{{ item.id }}"
+    method: PUT
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: text/plain
+    status_code: 204, 500
+  register: group_user
+  changed_when: group_user.status == 204
+  with_items: "{{ users.json.users }}"
