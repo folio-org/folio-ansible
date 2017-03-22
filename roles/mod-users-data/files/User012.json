@@ -1,17 +1,16 @@
 {
    "meta" : {
-      "last_login_date" : "1989-03-31",
-      "creation_date" : "2012-06-02"
+      "creation_date" : "1995-10-31",
+      "last_login_date" : "2002-09-15"
    },
+   "username" : "june",
    "personal" : {
-      "last_name" : "Zboncak",
-      "first_name" : "Antone",
-      "email" : "wallace@fisher-inc.bv"
+      "last_name" : "Wolf",
+      "first_name" : "Hester",
+      "email" : "abbie@robel-kilback.biz"
    },
-   "patron_group" : "on_campus",
    "active" : true,
-   "id" : "E5E5AD3B-543E-4788-9942-D3AEA44901F8",
    "type" : "patron",
-   "username" : "jayson"
+   "id" : "41F94BC6-1345-49BB-A878-58D7354509A5"
 }
 

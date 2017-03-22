@@ -1,17 +1,16 @@
 {
-   "personal" : {
-      "first_name" : "Eladio",
-      "email" : "dayna@zulauf-jast.la",
-      "last_name" : "Oberbrunner"
-   },
-   "meta" : {
-      "creation_date" : "1998-03-15",
-      "last_login_date" : "2000-02-27"
-   },
-   "id" : "73F41A0B-B5BC-4413-875B-3334E0436DD6",
+   "id" : "9B28234A-17B3-4C5E-BB91-DF6FA5FEE500",
    "type" : "patron",
-   "username" : "darrell",
+   "personal" : {
+      "first_name" : "Tierra",
+      "last_name" : "Kirlin",
+      "email" : "bradley@hodkiewicz-bernhard.oh.us"
+   },
    "active" : true,
-   "patron_group" : "on_campus"
+   "username" : "terrell",
+   "meta" : {
+      "last_login_date" : "1991-02-28",
+      "creation_date" : "1974-10-10"
+   }
 }
 

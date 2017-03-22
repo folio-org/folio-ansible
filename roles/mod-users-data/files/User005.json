@@ -1,17 +1,16 @@
 {
-   "personal" : {
-      "email" : "salvatore@hermiston-cruickshank.so",
-      "first_name" : "Brady",
-      "last_name" : "Greenholt"
-   },
    "meta" : {
-      "last_login_date" : "2009-01-19",
-      "creation_date" : "2000-11-08"
+      "creation_date" : "1978-04-14",
+      "last_login_date" : "1972-04-26"
    },
-   "id" : "4B5B95FF-B3DC-4DE2-AA59-F3162916187E",
+   "active" : false,
+   "personal" : {
+      "email" : "walton@daugherty-johns.sk",
+      "last_name" : "Mayert",
+      "first_name" : "Ernie"
+   },
+   "username" : "celine",
    "type" : "patron",
-   "username" : "nellie",
-   "active" : true,
-   "patron_group" : "on_campus"
+   "id" : "9B020F50-BA3D-456C-A290-619D7A3D6F35"
 }
 

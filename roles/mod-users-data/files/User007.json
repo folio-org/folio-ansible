@@ -1,17 +1,16 @@
 {
-   "id" : "04E60914-C4BD-4AD9-9E45-9EFECEDF3BBE",
-   "username" : "misael",
-   "type" : "patron",
-   "active" : true,
-   "patron_group" : "on_campus",
-   "personal" : {
-      "last_name" : "Price",
-      "email" : "autumn@glover-pollich.tz",
-      "first_name" : "Lue"
-   },
    "meta" : {
-      "creation_date" : "1970-10-15",
-      "last_login_date" : "1986-05-12"
-   }
+      "creation_date" : "1977-07-15",
+      "last_login_date" : "1986-12-18"
+   },
+   "personal" : {
+      "email" : "madie@ryan-streich-and-crona.ma.us",
+      "last_name" : "Mayert",
+      "first_name" : "Loyce"
+   },
+   "active" : true,
+   "username" : "waino",
+   "type" : "patron",
+   "id" : "F97BA54B-C1CC-4FEF-A566-710D5597F0BE"
 }
 

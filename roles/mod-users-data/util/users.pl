@@ -21,9 +21,6 @@ for (my $i = 0; $i < $users; $i++) {
               id => uuid(),
               active => (rand(1) > 0.3 ? JSON::true : JSON::false),
               type => 'patron',
-              patron_group => (rand(1) > 0.3 ? 'on_campus' :
-			       rand(1) > 0.3 ? 'off_campus' :
-			       'other'),
               meta => {
                        creation_date => $faker->sqldate(),
                        last_login_date => $faker->sqldate()
