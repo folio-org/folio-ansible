@@ -1,0 +1,137 @@
+---
+# Role to pull the Docker image from folioci and deploy into running Okapi
+
+#########
+# Setup #
+#########
+
+- name: Pull the mod-users-bl Docker image
+  become: yes
+  become_user: "{{ folio_user }}"
+  docker_image: name=folioci/mod-users-bl tag={{ mod_users_bl_version }}
+  register: mod_users_bl_pull
+
+- name: Set up mod-users-bl home directory
+  become: yes
+  file: state=directory path={{ mod_users_bl_home }}/bin
+
+- name: Set up mod-users-bl conf directory
+  become: yes
+  file: state=directory path={{ mod_users_bl_conf }}
+
+- name: Copy module descriptor
+  become: yes
+  copy: src=ModuleDescriptor.json dest={{ mod_users_bl_conf }}/ModuleDescriptor.json
+  register: mod_users_bl_mod_descr_update
+
+- name: Copy deployment descriptor
+  become: yes
+  template: src=DeploymentDescriptor.json.j2 dest={{ mod_users_bl_conf }}/DeploymentDescriptor.json
+  notify:
+    - Restart mod-users-bl
+
+- name: Copy mod-users-bl.conf
+  become: yes
+  template: src=mod-users-bl.conf.j2 dest={{ mod_users_bl_conf }}/mod-users-bl.conf
+  notify:
+    - Restart mod-users-bl
+
+- name: Copy mod-users-bl.env
+  become: yes
+  copy: src=mod-users-bl.env dest=/etc/default/mod-users-bl
+  notify:
+    - Restart mod-users-bl
+
+- name: Copy mod-users-bl.sh
+  become: yes
+  copy: src=mod-users-bl.sh dest={{ mod_users_bl_home }}/bin/mod-users-bl.sh mode=0755
+  notify:
+    - Restart mod-users-bl
+
+- name: Copy mod-users-bl.service file
+  become: yes
+  template: src=mod-users-bl.service.j2 dest=/etc/systemd/system/mod-users-bl.service
+  register: mod_users_bl_service_update
+  notify:
+    - Restart mod-users-bl
+
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+  when: mod_users_bl_service_update.changed
+
+- name: Enable mod-users-bl service
+  become: yes
+  service: name=mod-users-bl enabled=yes
+
+#########################
+# Undeploy if new image #
+#########################
+
+- name: Get tenants
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants"
+    status_code: 200
+  when:
+    - mod_users_bl_pull.changed or mod_users_bl_mod_descr_update.changed
+  register: tenants
+
+- name: Check tenant mod-user registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item.id }}/modules/users-bl"
+    status_code: 200, 404
+  when:
+    - mod_users_bl_pull.changed or mod_users_bl_mod_descr_update.changed
+  with_items: "{{ tenants.json | default([]) }}"
+  register: tenant_mod_users_bl
+
+- name: Unregister mod-users-bl module for tenants if image updated
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/users-bl"
+    method: DELETE
+    status_code: 204
+  when:
+    - mod_users_bl_pull.changed or mod_users_bl_mod_descr_update.changed
+    - item[1].status == 200
+  with_nested:
+    - "{{ tenants.json | default([]) }}"
+    - "{{ tenant_mod_users_bl.results | default([]) }}"
+
+- name: Stop mod-users-bl service if image updated
+  become: yes
+  service: name=mod-users-bl state=stopped
+  when:
+    - mod_users_bl_pull.changed or mod_users_bl_mod_descr_update.changed
+
+- name: Un-register mod-users-bl if image updated
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/users-bl"
+    method: DELETE
+    status_code: 204, 404
+  when: mod_users_bl_pull.changed or mod_users_bl_mod_descr_update.changed
+  register: mod_users_bl_unreg
+  changed_when: "mod_users_bl_unreg.status == 204"
+
+#######################################
+# Register and launch mod-users-bl #
+#######################################
+
+- name: Check mod-users-bl module registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/users-bl"
+    status_code: 200, 404
+  register: mod_users_bl_reg_status
+
+- name: Register mod-users-bl module
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    status_code: 201
+  when: mod_users_bl_reg_status.status == 404
+  register: mod_users_bl_reg
+  changed_when: "mod_users_bl_reg.status == 201"
+  notify: Restart mod-users-bl
+
+- meta: flush_handlers
