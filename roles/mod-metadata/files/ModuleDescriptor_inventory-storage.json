@@ -11,6 +11,10 @@
       "version": "1.0.1"
     },
     {
+      "id": "material-type",
+      "version": "1.0.0"
+    },
+    {
       "id" : "_tenant",
       "version" : "1.0"
     }
@@ -35,6 +39,17 @@
         "DELETE"
       ],
       "path": "/instance-storage",
+      "level": "30",
+      "type": "request-response"
+    },
+    {
+      "methods": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "path": "/material-type",
       "level": "30",
       "type": "request-response"
     }
