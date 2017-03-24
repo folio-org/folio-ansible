@@ -30,7 +30,8 @@
     # - okapi
     # - mod-users
     # - mod-users-data
-    - mod-users-bl
+    # - mod-users-bl
+    - mod-users-bl-data
     # - mod-metadata
     # - mod-metadata-data
     # - mod-loan-storage

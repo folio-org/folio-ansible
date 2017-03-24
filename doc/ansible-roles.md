@@ -101,6 +101,14 @@ system service in a running Okapi instance. Depends on:
 *Note: without a running Okapi instance with mod-users, this
  role will fail*
 
+## mod-users-bl-data
+Sample data for the mod-users-bl business logic module. Depends on:
+- tenant-data
+- mod-users-data
+
+*Note: without a running Okapi instance with mod-users-bl and
+ mod-users installed and enabled, this role will fail.*
+
 ## mod-users-data
 Sample data for the mod-users backend module. Depends on tenant-data.
 

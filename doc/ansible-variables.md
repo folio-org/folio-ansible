@@ -172,6 +172,10 @@ mod_users_bl_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
+# mod-users-bl-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency
