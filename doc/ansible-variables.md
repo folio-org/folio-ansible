@@ -163,6 +163,19 @@ pg_password: "{{ pg_admin_password }}"
 mod_users_db: mod_users
 # {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
+# mod-users-bl role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_users_bl_home: /usr/share/folio/mod-users-bl
+mod_users_bl_conf: /etc/folio/mod-users-bl
+mod_users_bl_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# mod-users-bl-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
 # mod-users-build role
 mod_users_src_home: /opt/mod-users-src
 # {{ folio_user }} and {{ folio_group }} from common dependency

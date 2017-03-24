@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO mod-users-bl module to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ mod_users_bl_home }}/bin/mod-users-bl.sh start
+ExecStop={{ mod_users_bl_home }}/bin/mod-users-bl.sh stop
+
+[Install]
+WantedBy=multi-user.target

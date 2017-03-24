@@ -1,0 +1,22 @@
+---
+# Role to enable mod-users-bl for the sample tenant and load sample data
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- name: Check tenant mod-users-bl registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/users-bl"
+    status_code: 200, 404
+  register: tenant_mod_users_bl
+
+- name: Enable mod-users-bl module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "users-bl" }'
+    status_code: 201
+  register: mod_users_bl_enable
+  changed_when: mod_users_bl_enable.status == 201
+  when: tenant_mod_users_bl.status == 404

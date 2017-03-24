@@ -29,9 +29,7 @@
     - postgresql
     - okapi
     - mod-users
-    - mod-users-data
     - mod-metadata
-    - mod-metadata-data
     - mod-loan-storage
     - mod-circulation
     - mod-circulation-data
@@ -50,15 +48,15 @@
     - postgresql
     - okapi
     - mod-users
-    - mod-users-data
     - mod-metadata
-    - mod-metadata-data
     - mod-loan-storage
     - mod-circulation
     - mod-circulation-data
     - mod-auth
     - mod-auth-data
     - mod-auth-demo-users
+    - mod-users-bl
+    - mod-users-bl-data
 
   tasks:
     - name: Copy vagrant-tidy.sh to /root
