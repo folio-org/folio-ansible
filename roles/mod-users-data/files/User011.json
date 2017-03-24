@@ -1,17 +1,16 @@
 {
-   "meta" : {
-      "last_login_date" : "1975-09-04",
-      "creation_date" : "1989-03-20"
-   },
    "personal" : {
-      "email" : "alexandrea@torp-renner-and-huels.cv",
-      "first_name" : "Kylee",
-      "last_name" : "Price"
+      "last_name" : "Kling",
+      "first_name" : "Savanna",
+      "email" : "esta@mcdermott-gaylord.sk"
    },
-   "patron_group" : "on_campus",
-   "active" : true,
-   "id" : "07D30C33-9C44-4058-A1D3-5FCCD500A446",
+   "username" : "lorena",
+   "active" : false,
+   "id" : "0774F67D-674A-4DEC-8F6E-C87B8418B9DF",
    "type" : "patron",
-   "username" : "cordell"
+   "meta" : {
+      "last_login_date" : "1997-03-24",
+      "creation_date" : "1992-01-18"
+   }
 }
 

@@ -41,6 +41,23 @@
       Accept: application/json
   register: inventory_items
 
+# fails with 500 error if already loaded, not ideal
+- name: Load inventory storage material types
+  uri:
+    url: "{{ okapi_url }}/material-type"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 500
+  ignore_errors: yes
+  register: load_mtype
+  changed_when: load_mtype.status == 201
+  with_fileglob:
+    - mtypes/*.json
+
 - name: Load inventory storage instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
@@ -81,4 +98,3 @@
 - name: Load sample data from MODS ingest
   command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
   when: mods_sample.changed
-

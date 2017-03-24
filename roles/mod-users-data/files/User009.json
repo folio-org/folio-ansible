@@ -1,17 +1,16 @@
 {
-   "active" : true,
-   "patron_group" : "on_campus",
-   "type" : "patron",
-   "username" : "sandra",
-   "id" : "F6001F12-49B7-4B86-8F43-06E878042CD8",
    "meta" : {
-      "creation_date" : "2000-03-08",
-      "last_login_date" : "1971-05-25"
+      "creation_date" : "1972-03-04",
+      "last_login_date" : "1988-07-18"
    },
+   "active" : true,
    "personal" : {
-      "last_name" : "Feest",
-      "email" : "koby@considine-inc.ma",
-      "first_name" : "Julien"
-   }
+      "last_name" : "Wunsch",
+      "first_name" : "Sheila",
+      "email" : "mustafa@stamm-kuhn-and-monahan.pa"
+   },
+   "username" : "amya",
+   "id" : "713EDC3D-1C96-4AF9-A276-819BD66E0149",
+   "type" : "patron"
 }
 

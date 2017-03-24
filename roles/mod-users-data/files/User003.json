@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "active" : false,
-   "type" : "patron",
-   "username" : "filomena",
-   "id" : "56C36EE3-17C4-4B76-8C39-26D0BDD20B07",
    "meta" : {
-      "creation_date" : "2010-03-20",
-      "last_login_date" : "1984-09-16"
+      "last_login_date" : "1976-03-02",
+      "creation_date" : "1991-10-12"
    },
+   "username" : "verner",
    "personal" : {
-      "email" : "keon@gibson-blick.lt",
-      "first_name" : "Avis",
-      "last_name" : "Erdman"
-   }
+      "first_name" : "Darron",
+      "last_name" : "Mayert",
+      "email" : "jeremy@hintz-inc.cz"
+   },
+   "active" : false,
+   "id" : "31CD3EF0-F17F-4B31-9FEE-B4FBC44B61EE",
+   "type" : "patron"
 }
 

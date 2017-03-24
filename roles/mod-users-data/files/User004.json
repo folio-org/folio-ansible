@@ -1,17 +1,16 @@
 {
-   "patron_group" : "on_campus",
-   "active" : true,
-   "username" : "tommie",
-   "type" : "patron",
-   "id" : "31F696CD-9F16-42F6-A246-178291AF654A",
    "meta" : {
-      "last_login_date" : "1988-09-11",
-      "creation_date" : "1991-08-25"
+      "creation_date" : "1983-05-09",
+      "last_login_date" : "1971-04-19"
    },
+   "active" : true,
    "personal" : {
-      "email" : "gwen@legros-daugherty.cf",
-      "first_name" : "Theron",
-      "last_name" : "Will"
-   }
+      "email" : "addison@upton-and-sons.af",
+      "first_name" : "Lily",
+      "last_name" : "Mayert"
+   },
+   "username" : "hermina",
+   "type" : "patron",
+   "id" : "4D47A740-74A1-4FB3-8C78-F81CDD0A37B2"
 }
 

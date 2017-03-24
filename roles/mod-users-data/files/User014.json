@@ -1,17 +1,16 @@
 {
-   "username" : "bridie",
-   "type" : "patron",
-   "id" : "83DF77C7-92E7-4C82-A46C-BF168417CDB3",
-   "patron_group" : "on_campus",
-   "active" : true,
-   "personal" : {
-      "last_name" : "Price",
-      "first_name" : "Hadley",
-      "email" : "leland@franecki-leffler.sr"
-   },
    "meta" : {
-      "creation_date" : "1993-09-19",
-      "last_login_date" : "1987-06-30"
-   }
+      "creation_date" : "1993-04-01",
+      "last_login_date" : "1990-03-15"
+   },
+   "username" : "kaya",
+   "personal" : {
+      "email" : "alexane@wolff-inc.td",
+      "first_name" : "Rosalinda",
+      "last_name" : "Batz"
+   },
+   "active" : true,
+   "id" : "0D861FD5-1074-4506-B1E7-4ADFEF3B3F87",
+   "type" : "patron"
 }
 
