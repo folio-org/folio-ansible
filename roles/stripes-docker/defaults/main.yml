@@ -2,11 +2,11 @@
 
 stripes_modules:
   - { name: "@folio/okapi-console", version: "^0.0.1-test" }
-  - { name: "@folio/users", version: "^0.0.1-test" }
-  - { name: "@folio/items", version: "^0.0.1-test" }
-  - { name: "@folio/scan", version: "^0.0.1" }
+  - { name: "@folio/users", version: "^0.0.2" }
+  - { name: "@folio/items", version: "^0.0.2" }
+  - { name: "@folio/scan", version: "^0.0.2" }
 
-stripes_core_version: "^0.2.0"
+stripes_core_version: "^0.4.0"
 stripes_conf_dir: /etc/folio/stripes
 stripes_okapi_port: 9130
 disable_auth: false
