@@ -41,7 +41,7 @@
       Accept: application/json
   register: inventory_items
 
-# fails with 500 error if already loaded, not ideal
+# fails with 400 error if already loaded, not ideal
 - name: Load inventory storage material types
   uri:
     url: "{{ okapi_url }}/material-type"
@@ -51,7 +51,7 @@
       X-Okapi-Tenant: diku
       Accept: application/json
     body: "{{ lookup('file', item) }}"
-    status_code: 201, 500
+    status_code: 201, 400
   ignore_errors: yes
   register: load_mtype
   changed_when: load_mtype.status == 201

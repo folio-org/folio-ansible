@@ -79,7 +79,7 @@
       Accept: application/json
   register: users
 
-# Returns 500 error on duplicate, not ideal
+# Returns 400 error on duplicate assignment
 - name: Associate users with usergroups
   uri:
     url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random)._id }}/users/{{ item.id }}"
@@ -87,7 +87,8 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: text/plain
-    status_code: 204, 500
+    status_code: 204, 400
+  ignore_errors: yes
   register: group_user
   changed_when: group_user.status == 204
   with_items: "{{ users.json.users }}"
