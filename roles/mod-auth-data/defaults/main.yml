@@ -7,40 +7,43 @@ mod_auth_modules:
   - { index: 2, module: permissions-module }
 mod_auth_admin: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms.permissions\\\", \\\"perms.permsets\\\", \\\"perms.users\\\", \\\"login\\\", \\\"users-bl.read\\\"" }
 bootstrap_permissions:
-  - { id: 8cd22acd-e347-4382-9344-42020f65bb86, permissionName: login.addUser, displayName: "Login: Can create new login user", subPermissions: "", mutable: false }
-  - { id: e8fd127f-19c6-406a-91b2-fbc601edb0ec, permissionName: login.modifyUser, displayName: "Login: Can edit login user profile", subPermissions: "", mutable: false }
-  - { id: 71d2aa6a-c39a-4e3c-b7ad-9548a1c8267d, permissionName: login.readUser, displayName: "Login: Can view login user profile", subPermissions: "", mutable: false }
-  - { id: 6c7a4410-4ec0-46f5-9fcd-754f47a9e5cd, permissionName: login.removeUser, displayName: "Login: Can delete login user", subPermissions: "", mutable: false }
-  - { id: a239a767-3c49-47c4-99e5-5485dc7ac8fd, permissionName: login, displayName: "Login: All Login permissions", subPermissions: "\\\"login.addUser\\\", \\\"login.modifyUser\\\", \\\"login.removeUser\\\", \\\"login.readUser\\\"", mutable: true }
-  - { id: 83613c13-f412-4bc4-86b6-77e084e39921, permissionName: perms.permissions.create, displayName: "Permissions: Can create new permission", subPermissions: "", mutable: false }
-  - { id: 5914e7fd-d1d9-455e-b520-f8435a342671, permissionName: perms.permissions.delete, displayName: "Permissions: Can delete permission", subPermissions: "", mutable: false }
-  - { id: afd0c500-8c01-4140-85d5-11e1461df4d8, permissionName: perms.permissions.read, displayName: "Permissions: Can view permission", subPermissions: "", mutable: false }
-  - { id: 4ec6aadd-f5ba-4e32-9c01-d6636261a274, permissionName: perms.permissions, displayName: "Permissions: Can create, view, and delete permission", subPermissions: "\\\"perms.permissions.read\\\", \\\"perms.permissions.create\\\", \\\"perms.permissions.delete\\\"", mutable: true }
-  - { id: 9b115c7f-5b2b-4a5f-868f-347362e9e544, permissionName: perms.users.create, displayName: "Permissions: Can initialize permissions for a user", subPermissions: "", mutable: false }
-  - { id: dd61cfc2-8a9c-420c-ba74-5400398efa4a, permissionName: perms.users.modify, displayName: "Permissions: Can assign permissions to a user", subPermissions: "", mutable: false }
-  - { id: 5df3f0c6-315f-45ce-a690-f17198c797d9, permissionName: perms.users.delete, displayName: "Permissions: Can remove permissions from a user", subPermissions: "", mutable: false }
-  - { id: 95993363-ee9e-4fad-84db-6c6bba408ef8, permissionName: perms.users.read, displayName: "Permissions: Can view permissions for a user", subPermissions: "", mutable: false }
-  - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, displayName: "Permissions: Can initialize, view, assign, and remove permissions for a user", subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"", mutable: true }
-  - { id: 01c5914c-5376-4f61-9453-0ca43bed183e, permissionName: perms.permsets.create, displayName: "Permission sets: Can create new permission set", subPermissions: "", mutable: true }
-  - { id: acba4804-f136-46cb-ab14-1b094ea4a3a2, permissionName: perms.permsets.modify, displayName: "Permission sets: Can modify permission set", subPermissions: "", mutable: true }
-  - { id: dd67c752-96de-403f-bd43-91591608a3da, permissionName: perms.permsets.delete, displayName: "Permission sets: Can delete permission set", subPermissions: "", mutable: true}
-  - { id: d740c098-607e-4d5c-a840-d1639697bd1f, permissionName: perms.permsets.read, displayName: "Permission sets: Can view permission set", subPermissions: "", mutable: true}
-  - { id: 3bbc5645-6fd6-48ae-960b-9eb617576702, permissionName: perms.permsets, displayName: "Permission sets: Can create, view, modify, and delete permission sets", subPermissions: "\\\"perms.permsets.create\\\", \\\"perms.permsets.modify\\\", \\\"perms.permsets.delete\\\", \\\"perms.permsets.read\\\"", mutable: true }
-  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\", \\\"perms.permsets\\\"", mutable: true }
+  - { id: 8cd22acd-e347-4382-9344-42020f65bb86, permissionName: login.addUser, displayName: "Login: Can create new login user", subPermissions: "", mutable: "false" }
+  - { id: e8fd127f-19c6-406a-91b2-fbc601edb0ec, permissionName: login.modifyUser, displayName: "Login: Can edit login user profile", subPermissions: "", mutable: "false" }
+  - { id: 71d2aa6a-c39a-4e3c-b7ad-9548a1c8267d, permissionName: login.readUser, displayName: "Login: Can view login user profile", subPermissions: "", mutable: "false" }
+  - { id: 6c7a4410-4ec0-46f5-9fcd-754f47a9e5cd, permissionName: login.removeUser, displayName: "Login: Can delete login user", subPermissions: "", mutable: "false" }
+  - { id: a239a767-3c49-47c4-99e5-5485dc7ac8fd, permissionName: login, displayName: "Login: All Login permissions", subPermissions: "\\\"login.addUser\\\", \\\"login.modifyUser\\\", \\\"login.removeUser\\\", \\\"login.readUser\\\"", mutable: "true" }
+  - { id: 83613c13-f412-4bc4-86b6-77e084e39921, permissionName: perms.permissions.create, displayName: "Permissions: Can create new permission", subPermissions: "", mutable: "false" }
+  - { id: 5914e7fd-d1d9-455e-b520-f8435a342671, permissionName: perms.permissions.delete, displayName: "Permissions: Can delete permission", subPermissions: "", mutable: "false" }
+  - { id: afd0c500-8c01-4140-85d5-11e1461df4d8, permissionName: perms.permissions.read, displayName: "Permissions: Can view permission", subPermissions: "", mutable: "false" }
+  - { id: 4ec6aadd-f5ba-4e32-9c01-d6636261a274, permissionName: perms.permissions, displayName: "Permissions: Can create, view, and delete permission", subPermissions: "\\\"perms.permissions.read\\\", \\\"perms.permissions.create\\\", \\\"perms.permissions.delete\\\"", mutable: "true" }
+  - { id: 9b115c7f-5b2b-4a5f-868f-347362e9e544, permissionName: perms.users.create, displayName: "Permissions: Can initialize permissions for a user", subPermissions: "", mutable: "false" }
+  - { id: dd61cfc2-8a9c-420c-ba74-5400398efa4a, permissionName: perms.users.modify, displayName: "Permissions: Can assign permissions to a user", subPermissions: "", mutable: "false" }
+  - { id: 5df3f0c6-315f-45ce-a690-f17198c797d9, permissionName: perms.users.delete, displayName: "Permissions: Can remove permissions from a user", subPermissions: "", mutable: "false" }
+  - { id: 95993363-ee9e-4fad-84db-6c6bba408ef8, permissionName: perms.users.read, displayName: "Permissions: Can view permissions for a user", subPermissions: "", mutable: "false" }
+  - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, displayName: "Permissions: Can initialize, view, assign, and remove permissions for a user", subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"", mutable: "true" }
+  - { id: 01c5914c-5376-4f61-9453-0ca43bed183e, permissionName: perms.permsets.create, displayName: "Permission sets: Can create new permission set", subPermissions: "", mutable: "true" }
+  - { id: acba4804-f136-46cb-ab14-1b094ea4a3a2, permissionName: perms.permsets.modify, displayName: "Permission sets: Can modify permission set", subPermissions: "", mutable: "true" }
+  - { id: dd67c752-96de-403f-bd43-91591608a3da, permissionName: perms.permsets.delete, displayName: "Permission sets: Can delete permission set", subPermissions: "", mutable: "true"}
+  - { id: d740c098-607e-4d5c-a840-d1639697bd1f, permissionName: perms.permsets.read, displayName: "Permission sets: Can view permission set", subPermissions: "", mutable: "true"}
+  - { id: 3bbc5645-6fd6-48ae-960b-9eb617576702, permissionName: perms.permsets, displayName: "Permission sets: Can create, view, modify, and delete permission sets", subPermissions: "\\\"perms.permsets.create\\\", \\\"perms.permsets.modify\\\", \\\"perms.permsets.delete\\\", \\\"perms.permsets.read\\\"", mutable: "true" }
+  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\", \\\"perms.permsets\\\"", mutable: "true" }
 mod_users_permissions:
-    - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]", mutable: false }
-  - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]", mutable: false }
-  - { permissionName: users.read.basic, displayName: "Users: Can view basic fields in full user profile", subPermissions: "[]", mutable: false }
-  - { permissionName: users.read.restricted, displayName: "Users: Can view entire full user profile including restricted fields", subPermissions: "[]", mutable: false }
-  - { permissionName: users.edit, displayName: "Users: Can edit user profile", subPermissions: "[]", mutable: false }
-  - { permissionName: users.delete, displayName: "Users: Can delete user", subPermissions: "[]", mutable: false }
-  - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.read.basic','users.read.restricted','users.edit','users.delete']", mutable: true }
-  - { permissionName: usergroups.create, displayName: "User Groups: Can create new user group", subPermissions: "[]", mutable: false }
-  - { permissionName: usergroups.read, displayName: "User Groups: Can view user group", subPermissions: "[]", mutable: false }
-  - { permissionName: usergroups.edit, displayName: "User Groups: Can edit user group", subPermissions: "[]", mutable: false }
-  - { permissionName: usergroups.delete, displayName: "User Groups: Can delete user group", subPermissions: "[]", mutable: false }
-  - { permissionName: usergroups, displayName: "Users Groups: All User Groups permissions", subPermissions: "['usergroups.create','usergroups.read','usergroups.edit','usergroups.delete']", mutable: true }
-  - { permissionname: users-bl.read, displayName: "Users Business Logic: Can Read", subPermissions: "[]", mutable: false }
+  - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users.read.basic, displayName: "Users: Can view basic fields in full user profile", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users.read.restricted, displayName: "Users: Can view entire full user profile including restricted fields", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users.edit, displayName: "Users: Can edit user profile", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users.delete, displayName: "Users: Can delete user", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.read.basic','users.read.restricted','users.edit','users.delete']", mutable: "true" }
+  - { permissionName: usergroups.create, displayName: "User Groups: Can create new user group", subPermissions: "[]", mutable: "false" }
+  - { permissionName: usergroups.read, displayName: "User Groups: Can view user group", subPermissions: "[]", mutable: "false" }
+  - { permissionName: usergroups.edit, displayName: "User Groups: Can edit user group", subPermissions: "[]", mutable: "false" }
+  - { permissionName: usergroups.delete, displayName: "User Groups: Can delete user group", subPermissions: "[]", mutable: "false" }
+  - { permissionName: usergroups, displayName: "Users Groups: All User Groups permissions", subPermissions: "['usergroups.create','usergroups.read','usergroups.edit','usergroups.delete']", mutable: "true" }
+  - { permissionName: users-bl.read, displayName: "Users Business Logic: Can view user profile", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users-bl.create, displayName: "Users Business Logic: Can create new user", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users-bl.modify, displayName: "Users Business Logic: Can edit user profile", subPermissions: "[]", mutable: "false" }
+  - { permissionName: users-bl, displayName: "Users Business Logic: All Users Business Logic permissions", subPermissions: "['users-bl.read','users-bl.create','users-bl.modify']", mutable: "true" }
 mod_auth_users:
   - { username: auth_test1, password: diku }
   - { username: auth_test2, password: diku }
