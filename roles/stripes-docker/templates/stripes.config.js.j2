@@ -1,7 +1,11 @@
 module.exports = {
+  config: {
   {% if disable_auth %}
-  config: { "disableAuth" : true },
+    "disableAuth" : true,
   {% endif %}
+    logCategories: 'core,connect,path,action,xhr',
+    showPerms: true
+  },
   okapi: {
     "url" : "{{ stripes_okapi_url }}",
     "tenant" : "{{ stripes_tenant }}"
