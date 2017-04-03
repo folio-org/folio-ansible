@@ -2,6 +2,7 @@
 folio_user: folio
 mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
+mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
 mod_users_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"

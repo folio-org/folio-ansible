@@ -10,7 +10,7 @@ pg_user: "{{ pg_admin_user }}"
 pg_password: "{{ pg_admin_password }}"
 mod_auth_db: mod_auth
 mod_auth_modules:
-  - { index: 0, module: authtoken-module, docker_image: folioci/mod-authtoken }
-  - { index: 1, module: login-module, docker_image: folioci/mod-login }
-  - { index: 2, module: permissions-module, docker_image: folioci/mod-permissions }
+  - { index: 0, module: authtoken-module, docker_image: folioci/mod-authtoken, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json" }
+  - { index: 1, module: login-module, docker_image: folioci/mod-login, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json" }
+  - { index: 2, module: permissions-module, docker_image: folioci/mod-permissions, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json" }
 

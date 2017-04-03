@@ -19,10 +19,13 @@
   become: yes
   file: state=directory path={{ mod_users_conf }}
 
-- name: Copy module descriptor
+- name: Copy module descriptor to remote
   become: yes
-  copy: src=ModuleDescriptor.json dest={{ mod_users_conf }}/ModuleDescriptor.json
+  get_url: url={{ mod_users_mod_descriptor }} dest={{ mod_users_conf }}/ModuleDescriptor.json
   register: mod_users_mod_descr_update
+
+- name: Fetch module descriptor from remote
+  fetch: src={{ mod_users_conf }}/ModuleDescriptor.json dest=/tmp
 
 - name: Copy deployment descriptor
   become: yes
@@ -140,7 +143,7 @@
     url: "{{ okapi_url }}/_/proxy/modules"
     method: POST
     body_format: json
-    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
+    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_users_conf ~ '/ModuleDescriptor.json') }}"
     status_code: 201
   when: mod_users_reg_status.status == 404
   register: mod_users_reg

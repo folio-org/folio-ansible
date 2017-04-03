@@ -21,7 +21,7 @@
 
 - name: Copy module descriptor
   become: yes
-  copy: src=ModuleDescriptor.json dest={{ mod_loan_storage_conf }}/ModuleDescriptor.json
+  get_url: url={{ mod_loan_storage_mod_descriptor }} dest={{ mod_loan_storage_conf }}/ModuleDescriptor.json
   register: mod_loan_storage_mod_descr_update
 
 - name: Copy deployment descriptor

@@ -30,10 +30,10 @@ pg_user: "{{ pg_admin_user }}"
 pg_password: "{{ pg_admin_password }}"
 mod_auth_db: mod_auth
 mod_auth_modules:
-  - { index: 0, module: authtoken, docker_image: folioci/mod-authtoken }
-  - { index: 1, module: login, docker_image: folioci/mod-login }
-  - { index: 2, module: permissions, docker_image: folioci/mod-permissions }
-# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+  - { index: 0, module: authtoken-module, docker_image: folioci/mod-authtoken, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json" }
+  - { index: 1, module: login-module, docker_image: folioci/mod-login, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json" }
+  - { index: 2, module: permissions-module, docker_image: folioci/mod-permissions, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json" }
+ {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
 # mod-auth-data role
 okapi_port: 9130
@@ -100,6 +100,7 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_user: folio
 mod_loan_storage_home: /usr/share/folio/mod-loan-storage
 mod_loan_storage_conf: /etc/folio/mod-loan-storage
+mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
 mod_loan_storage_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
@@ -123,8 +124,8 @@ pg_user: "{{ pg_admin_user }}"
 pg_password: "{{ pg_admin_password }}"
 mod_metadata_db: mod_metadata
 mod_metadata_modules:
-  - { index: 0, module: inventory-storage, docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, docker_image: folioci/mod-inventory }
+  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor.json", docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor.json", docker_image: folioci/mod-inventory }
 # {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
 # mod-metadata-build role
@@ -153,6 +154,7 @@ mod_metadata_db: mod_metadata
 folio_user: folio
 mod_users_home: /usr/share/folio/mod-users
 mod_users_conf: /etc/folio/mod-users
+mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
 mod_users_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
