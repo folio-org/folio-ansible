@@ -114,7 +114,7 @@
       Accept: application/json
   register: check_mod_users_perms
 
-- name: Load mod-users permissions
+- name: Load additional permissions
   uri:
     url: "{{ okapi_url }}/perms/permissions"
     method: POST
@@ -133,10 +133,10 @@
     status_code: 201
   register: load_mod_users_perms
   changed_when: load_mod_users_perms.status == 201
-  with_items: "{{ mod_users_permissions }}"
+  with_items: "{{ additional_permissions }}"
   when: check_mod_users_perms.json.totalRecords == 0
 
-- name: Grant mod-users permissions to {{ mod_auth_admin.username }}
+- name: Grant additional permissions to {{ mod_auth_admin.username }}
   uri:
     url: "{{ okapi_url }}/perms/users/{{ mod_auth_admin.username }}/permissions"
     method: POST
@@ -153,6 +153,11 @@
     - users
     - usergroups
     - users-bl
+    - module.trivial.enabled
+    - module.users.enabled
+    - module.items.enabled
+    - module.scan.enabled
+    - module.okapi-console.enabled
 
 - name: Create mod-auth credentials for other users
   uri:

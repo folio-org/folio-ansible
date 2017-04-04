@@ -27,12 +27,7 @@ bootstrap_permissions:
   - { id: d740c098-607e-4d5c-a840-d1639697bd1f, permissionName: perms.permsets.read, displayName: "Permission sets: Can view permission set", subPermissions: "", mutable: "true"}
   - { id: 3bbc5645-6fd6-48ae-960b-9eb617576702, permissionName: perms.permsets, displayName: "Permission sets: Can create, view, modify, and delete permission sets", subPermissions: "\\\"perms.permsets.create\\\", \\\"perms.permsets.modify\\\", \\\"perms.permsets.delete\\\", \\\"perms.permsets.read\\\"", mutable: "true" }
   - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, displayName: "Permissions: All Permissions permissions", subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\", \\\"perms.permsets\\\"", mutable: "true" }
-  - { id: fd730c33-8b58-4781-9267-aaba380c31d2, permissionName: module.trivial.enabled, displayName: "Trivial module is enabled", subPermissions: "", mutable: "false" }
-  - { id: 50a304e3-0cef-4f39-90e0-3538e8495b28, permissionName: module.users.enabled, displayName: "Users module is enabled", subPermissions: "", mutable: "false" }
-  - { id: f5c26cc4-c836-4012-92c6-533cd2f1f79f, permissionName: module.items.enabled, displayName: "Items module is enabled", subPermissions: "", mutable: "false" }
-  - { id: 664d766a-b952-485a-861d-344eaac23f61, permissionName: module.scan.enabled, displayName: "Scan module is enabled", subPermissions: "", mutable: "false" }
-  - { id: f4f564ef-efaa-49f3-a2f3-785e7f9c03b1, permissionName: module.okapi-console.enabled, displayName: "Okapi Console module is enabled", subPermissions: "", mutable: "false" }
-mod_users_permissions:
+additional_permissions:
   - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]", mutable: "false" }
   - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]", mutable: "false" }
   - { permissionName: users.read.basic, displayName: "Users: Can view basic fields in full user profile", subPermissions: "[]", mutable: "false" }
@@ -49,6 +44,11 @@ mod_users_permissions:
   - { permissionName: users-bl.create, displayName: "Users Business Logic: Can create new user", subPermissions: "[]", mutable: "false" }
   - { permissionName: users-bl.modify, displayName: "Users Business Logic: Can edit user profile", subPermissions: "[]", mutable: "false" }
   - { permissionName: users-bl, displayName: "Users Business Logic: All Users Business Logic permissions", subPermissions: "['users-bl.read','users-bl.create','users-bl.modify']", mutable: "true" }
+  - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.users.enabled, displayName: "UI: Users module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.items.enabled, displayName: "UI: Items module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.scan.enabled, displayName: "UI: Scan module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]", mutable: "false" }
 mod_auth_users:
   - { username: auth_test1, password: diku }
   - { username: auth_test2, password: diku }
