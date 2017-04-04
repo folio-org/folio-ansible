@@ -4,6 +4,7 @@
 folio_user: folio
 mod_users_bl_home: /usr/share/folio/mod-users-bl
 mod_users_bl_conf: /etc/folio/mod-users-bl
+mod_users_bl_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
 mod_users_bl_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"

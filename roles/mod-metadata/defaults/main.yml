@@ -10,6 +10,6 @@ pg_user: "{{ pg_admin_user }}"
 pg_password: "{{ pg_admin_password }}"
 mod_metadata_db: mod_metadata
 mod_metadata_modules:
-  - { index: 0, module: inventory-storage, docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, docker_image: folioci/mod-inventory }
+  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory }
   

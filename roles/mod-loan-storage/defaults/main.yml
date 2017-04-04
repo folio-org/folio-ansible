@@ -4,6 +4,7 @@
 folio_user: folio
 mod_loan_storage_home: /usr/share/folio/mod-loan-storage
 mod_loan_storage_conf: /etc/folio/mod-loan-storage
+mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
 mod_loan_storage_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"

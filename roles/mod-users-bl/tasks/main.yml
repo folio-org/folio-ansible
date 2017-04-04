@@ -19,9 +19,9 @@
   become: yes
   file: state=directory path={{ mod_users_bl_conf }}
 
-- name: Copy module descriptor
+- name: Copy module descriptor to remote
   become: yes
-  copy: src=ModuleDescriptor.json dest={{ mod_users_bl_conf }}/ModuleDescriptor.json
+  get_url: url={{ mod_users_bl_mod_descriptor }} dest={{ mod_users_bl_conf }}/ModuleDescriptor.json
   register: mod_users_bl_mod_descr_update
 
 - name: Copy deployment descriptor
@@ -123,15 +123,8 @@
   register: mod_users_bl_reg_status
 
 - name: Register mod-users-bl module
-  uri:
-    url: "{{ okapi_url }}/_/proxy/modules"
-    method: POST
-    body_format: json
-    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
-    status_code: 201
+  shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ mod_users_bl_conf }}/ModuleDescriptor.json -sSf {{ okapi_url }}/_/proxy/modules"
   when: mod_users_bl_reg_status.status == 404
-  register: mod_users_bl_reg
-  changed_when: "mod_users_bl_reg.status == 201"
   notify: Restart mod-users-bl
 
 - meta: flush_handlers
