@@ -25,7 +25,8 @@ used to generate three prebuilt Vagrant boxes, available on
 
 * [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
   -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
-  Stripes, and the Stripes modules trivial, ui-okapi-console,
+  mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
+  Stripes, and the Stripes modules trivial, ui-scan,
   ui-users, and ui-items.
 
 * [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
@@ -35,7 +36,7 @@ used to generate three prebuilt Vagrant boxes, available on
 * [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
   -- a backend FOLIO system with the mod-auth authentication
   subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
-  mod-circulation, and the mod-auth modules. The authorization
+  mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
   subsystem includes three sample users, `diku_admin` (password
   "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
   "diku").
@@ -67,9 +68,10 @@ with its home directory in `/usr/share/folio/okapi`, configuration
 files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
 backend modules are deployed through Okapi using its Docker deployment
 facility. `systemd` service units are used to manage starting and
-stopping backend modules and Stripes. Modules are installed following
+stopping backend modules. Modules are installed following
 the convention of configuration in `/etc/folio` and static files in
-`/usr/share/folio`.
+`/usr/share/folio`. Stripes is installed as a Docker container
+configured to restart on reboot.
 
 Data is persisted for all modules using a PostgreSQL server running on
 the Vagrant box. The Docker engine is also installed, and configured
@@ -97,10 +99,10 @@ stop working.
 ### Updating Docker-based modules
 
     # for a list of images
-    $ sudo docker images
+    $ docker images
     
     # to update mod-users
-    $ sudo docker pull folioci/mod-users
+    $ docker pull folioci/mod-users
 
     # to undeploy and redeploy using the new image
     $ sudo systemctl restart mod-users
@@ -109,11 +111,15 @@ stop working.
 
 To update Stripes or any Stripes components, update the Stripes
 `package.json` file at `/etc/folio/stripes/package.json`, changing the
-version of the component in the `dependencies`. Then `cd` to
-`/usr/share/folio/stripes` and type the following commands:
+version of the component in the `dependencies`. Then rebuild the
+Docker container and restart it:
 
-    $ sudo -u okapi yarn install
-    $ sudo systemctl restart stripes
+    $ sudo docker build -t stripes:latest /etc/folio/stripes
+    $ docker stop stripes_stripes_1
+    $ docker rm stripes_stripes_1
+    $ docker run -d --name stripes_stripes_1 --network stripes-net \
+      --network-alias stripes-serv --restart=always \
+      -p=0.0.0.0:3000:3000 -e STRIPES_HOST=0.0.0.0 stripes
 
 ## Vagrantfile targets
 

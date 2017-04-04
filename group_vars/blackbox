@@ -5,3 +5,4 @@ stripes_okapi_url: http://localhost:9130
 docker_users:
   - folio
   - vagrant
+stripes_host_address: 0.0.0.0

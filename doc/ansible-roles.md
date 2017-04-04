@@ -151,20 +151,14 @@ and Maven 3.
 Installs SDKMAN! from http://sdkman.io
 Depends on common
 
-## stripes
-Installs stripes from the
-[folioci npm repository](https://repository.folio.org). Launches the
-stripes dev server as a system service. Depends on yarn. Includes the
-following Stripes modules:
-- trivial
-- ui-items
-- ui-okapi-console
-- ui-users
+## stripes-docker
+Builds a Docker container with Stripes and the configured modules from
+the
+[folioci npm respository](https://repository.folio.org). Optionally
+creates a container to proxy Stripes using nginx.
 
-*Note: requires a running Okapi with a configured tenant, mod-users,
- and mod-metadata Sample data available in mod-users-data and
- mod-metadata-data*
-
+*Note: requires a running Okapi with a configured tenant and
+ appropriate backend modules*
 
 ## raml-module-builder
 Clones the folio-org/raml-module-builder repository from GitHub,
@@ -250,6 +244,20 @@ common, openjdk-8, maven-3, and postgresql.
 Clones the folio-org/okapi repository from GitHub, builds and launches
 an Okapi server in development mode in a Docker container. Depends on
 docker-engine.
+
+## stripes (*Deprecated*)
+Installs stripes from the
+[folioci npm repository](https://repository.folio.org). Launches the
+stripes dev server as a system service. Depends on yarn. Includes the
+following Stripes modules:
+- trivial
+- ui-items
+- ui-okapi-console
+- ui-users
+
+*Note: requires a running Okapi with a configured tenant, mod-users,
+ and mod-metadata Sample data available in mod-users-data and
+ mod-metadata-data*
 
 ## stripes-core (*Deprecated*)
 Installs stripes from the

@@ -309,6 +309,38 @@ stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
 folio_sample_modules_registry: https://repository.folio.org/repository/npm-folioci/
 
+# stripes-docker role
+stripes_modules:
+  - { name: "@folio/users", version: "^0.0.2" }
+  - { name: "@folio/items", version: "^0.0.2" }
+  - { name: "@folio/scan", version: "^0.0.2" }
+  - { name: "@folio/trivial", version: "^0.0.2-test" }
+
+# disable okapi-console - https://issues.folio.org/browse/STRIPES-264
+#  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
+
+stripes_core_version: "^0.4.0"
+stripes_conf_dir: /etc/folio/stripes
+stripes_okapi_port: 9130
+disable_auth: false
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_tenant: diku
+# host address to map container to. '127.0.0.1' by default  
+stripes_host_address: '127.0.0.1'
+#
+# optional nginx proxy. disabled by default.
+#
+with_nginx: false
+nginx_port: 80
+# can override with ec2_facts 'ansible_ec2_public_hostname' for AWS
+nginx_servername: localhost
+
+#
+# for use by FOLIO CI. disabled by default
+# 
+folioci: false
+npm_authtoken: ''
+
 # tenant-data role
 okapi_url: http://localhost:9130/
 

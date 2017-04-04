@@ -45,6 +45,7 @@
             stripes-net:
               aliases:
                 - stripes-serv
+          restart: always
       networks: 
         stripes-net: 
           external: true
