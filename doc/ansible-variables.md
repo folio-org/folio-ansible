@@ -87,6 +87,7 @@ mod_circulation_src_home: /opt/mod-circulation-src
 folio_user: folio
 mod_circulation_home: /usr/share/folio/mod-circulation
 mod_circulation_conf: /etc/folio/mod-circulation
+mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
 mod_circulation_version: latest
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
@@ -124,8 +125,8 @@ pg_user: "{{ pg_admin_user }}"
 pg_password: "{{ pg_admin_password }}"
 mod_metadata_db: mod_metadata
 mod_metadata_modules:
-  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor.json", docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor.json", docker_image: folioci/mod-inventory }
+  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory }
 # {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
 
 # mod-metadata-build role

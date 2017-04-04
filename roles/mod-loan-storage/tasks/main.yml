@@ -136,15 +136,8 @@
   register: mod_loan_storage_reg_status
 
 - name: Register mod-loan-storage module
-  uri:
-    url: "{{ okapi_url }}/_/proxy/modules"
-    method: POST
-    body_format: json
-    body: "{{ lookup('file', 'ModuleDescriptor.json') }}"
-    status_code: 201
+  shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ mod_loan_storage_conf }}/ModuleDescriptor.json -sSf {{ okapi_url }}/_/proxy/modules"
   when: mod_loan_storage_reg_status.status == 404
-  register: mod_loan_storage_reg
-  changed_when: "mod_loan_storage_reg.status == 201"
   notify: Restart mod-loan-storage
 
 - meta: flush_handlers

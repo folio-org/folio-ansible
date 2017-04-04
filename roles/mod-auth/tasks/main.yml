@@ -26,10 +26,6 @@
   register: mod_auth_mod_descr_update
   with_items: "{{ mod_auth_modules }}"
 
-- name: Fetch module descriptors from remote
-  fetch: src={{ mod_auth_conf }}/ModuleDescriptor_{{ item.module }}.json dest=/tmp
-  with_items: "{{ mod_auth_modules }}"
-
 - name: Copy deployment descriptors
   become: yes
   template: src=DeploymentDescriptor_{{ item.module }}.json.j2 dest={{ mod_auth_conf }}/DeploymentDescriptor_{{ item.module }}.json
@@ -146,16 +142,9 @@
   with_items: "{{ mod_auth_modules }}"
   register: mod_auth_reg_status
 
-- name: Register mod-auth module
-  uri:
-    url: "{{ okapi_url }}/_/proxy/modules"
-    method: POST
-    body_format: json
-    body: "{{ lookup('file', '/tmp/' ~ inventory_hostname ~ '/' ~ mod_auth_conf ~ '/ModuleDescriptor_' ~ item.module ~ '.json') }}"
-    status_code: 201
+- name: Register mod-auth modules
+  shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ mod_auth_conf }}/ModuleDescriptor_{{ item.module }}.json -sSf {{ okapi_url }}/_/proxy/modules"
   when: mod_auth_reg_status.results[item.index].status == 404
-  register: mod_auth_reg
-  changed_when: "mod_auth_reg.status == 201"
   with_items: "{{ mod_auth_modules }}"
   notify: Restart mod-auth
 
