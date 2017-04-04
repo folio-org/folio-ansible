@@ -3,19 +3,19 @@
 # Build a Vagrant box to package as a demo system
 - hosts: build_demo
   roles:
-    # - common
-    # - postgresql
-    # - okapi
-    # - mod-users
-    # - mod-metadata
-    # - mod-loan-storage
-    # - mod-circulation
-    # - mod-circulation-data
-    # - mod-auth
-    # - mod-auth-data
-    # - mod-auth-demo-users
-    # - mod-users-bl
-    # - mod-users-bl-data
+    - common
+    - postgresql
+    - okapi
+    - mod-users
+    - mod-metadata
+    - mod-loan-storage
+    - mod-circulation
+    - mod-circulation-data
+    - mod-auth
+    - mod-auth-data
+    - mod-auth-demo-users
+    - mod-users-bl
+    - mod-users-bl-data
     - stripes-docker
   tasks:
     - name: Copy vagrant-tidy.sh to /root
