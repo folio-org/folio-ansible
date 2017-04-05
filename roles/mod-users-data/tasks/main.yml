@@ -82,7 +82,7 @@
 # Returns 400 error on duplicate assignment
 - name: Associate users with usergroups
   uri:
-    url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random)._id }}/users/{{ item.id }}"
+    url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random).id }}/users/{{ item.id }}"
     method: PUT
     headers:
       X-Okapi-Tenant: diku

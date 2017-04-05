@@ -114,9 +114,10 @@ To update Stripes or any Stripes components, update the Stripes
 version of the component in the `dependencies`. Then rebuild the
 Docker container and restart it:
 
-    $ sudo docker build -t stripes:latest /etc/folio/stripes
     $ docker stop stripes_stripes_1
     $ docker rm stripes_stripes_1
+    $ docker rmi stripes
+    $ sudo docker build -t stripes:latest /etc/folio/stripes
     $ docker run -d --name stripes_stripes_1 --network stripes-net \
       --network-alias stripes-serv --restart=always \
       -p=0.0.0.0:3000:3000 -e STRIPES_HOST=0.0.0.0 stripes
