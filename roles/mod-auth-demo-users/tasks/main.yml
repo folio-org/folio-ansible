@@ -59,7 +59,7 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.item.username }}", "permissions" : [ "users.read", "users-bl.read" ] }'
+    body: '{ "username" : "{{ item.item.username }}" }'
     status_code: 201
   when: item.status == 404
   register: create_perms

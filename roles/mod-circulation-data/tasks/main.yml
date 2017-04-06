@@ -39,7 +39,7 @@
   when: tenant_mod_circulation.status == 404
 
 # This should really only happen if the data aren't already there
-# 400 error means the data are already there, this is not ideal
+# 400 error means the data are already there
 - name: Load circulation
   uri:
     url: "{{ okapi_url }}/circulation/loans"
@@ -51,7 +51,6 @@
     body: "{{ lookup('file', item) }}"
     status_code: 201,400
   register: load_loan
-  ignore_errors: yes
   changed_when: load_loan.status == 201
   with_fileglob:
     - "*.json"

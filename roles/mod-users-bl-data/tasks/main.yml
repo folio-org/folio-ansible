@@ -20,3 +20,20 @@
   register: mod_users_bl_enable
   changed_when: mod_users_bl_enable.status == 201
   when: tenant_mod_users_bl.status == 404
+
+- name: Assign mod-users-bl permissions to other users
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_users_bl_perms
+  changed_when: mod_users_bl_perms.status == 200
+  with_subelements:
+    - "{{ mod_users_bl_permissions }}"
+    - permissions

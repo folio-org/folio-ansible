@@ -21,8 +21,7 @@
   changed_when: mod_users_enable.status == 201
   when: tenant_mod_users.status == 404
 
-# This should really only happen if the users aren't already there
-# 400 error means the user is already there, this is not ideal
+# 422 error means the user is already there
 - name: Load users
   uri:
     url: "{{ okapi_url }}/users"
@@ -32,9 +31,8 @@
       X-Okapi-Tenant: diku
       Accept: application/json
     body: "{{ lookup('file', item) }}"
-    status_code: 201,400
+    status_code: 201,422
   register: load_user
-  ignore_errors: yes
   changed_when: load_user.status == 201
   with_fileglob:
     - User*.json
@@ -56,9 +54,8 @@
       X-Okapi-Tenant: diku
       Accept: application/json
     body: '{ "group" : "{{ item.group }}", "desc" : "{{ item.desc }}" }'
-    status_code: 201,400
+    status_code: 201,422
   register: load_group
-  ignore_errors: yes
   changed_when: load_group.status == 201
   with_items: "{{ patron_groups }}"
   when: usergroups.json.usergroups == []
@@ -79,7 +76,7 @@
       Accept: application/json
   register: users
 
-# Returns 400 error on duplicate assignment
+# Returns 422 error on duplicate assignment
 - name: Associate users with usergroups
   uri:
     url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random).id }}/users/{{ item.id }}"
@@ -87,8 +84,7 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: text/plain
-    status_code: 204, 400
-  ignore_errors: yes
+    status_code: 204, 422
   register: group_user
   changed_when: group_user.status == 204
   with_items: "{{ users.json.users }}"

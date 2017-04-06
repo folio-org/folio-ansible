@@ -7,15 +7,15 @@
     - postgresql
     - okapi
     - mod-users
+    - mod-users-data
     - mod-metadata
     - mod-loan-storage
     - mod-circulation
     - mod-circulation-data
     - mod-auth
-    - mod-auth-data
-    - mod-auth-demo-users
     - mod-users-bl
-    - mod-users-bl-data
+    - mod-users-bl-data 
+    - mod-auth-demo-users
     - stripes-docker
   tasks:
     - name: Copy vagrant-tidy.sh to /root
@@ -51,15 +51,15 @@
     - postgresql
     - okapi
     - mod-users
+    - mod-users-data
     - mod-metadata
     - mod-loan-storage
     - mod-circulation
     - mod-circulation-data
     - mod-auth
-    - mod-auth-data
-    - mod-auth-demo-users
     - mod-users-bl
-    - mod-users-bl-data
+    - mod-users-bl-data 
+    - mod-auth-demo-users
 
   tasks:
     - name: Copy vagrant-tidy.sh to /root
