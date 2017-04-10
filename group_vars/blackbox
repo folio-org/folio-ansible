@@ -1,14 +1,68 @@
 ---
 okapi_role: dev
+
 okapi_storage: postgres
+
+folio_modules:
+  - index: 0
+    name: mod-authtoken
+    module_id: authtoken-module
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json
+
+  - index: 1
+    name: mod-permissions
+    module_id: permissions-module
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json
+
+  - index: 2
+    name: mod-login
+    module_id: login-module
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json
+
+  - index: 3
+    name: mod-users
+    module_id: users-module
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
+
+  - index: 4
+    name: mod-users-bl
+    module_id: users-bl 
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
+
+  - index: 5
+    name: mod-inventory-storage
+    module_id: inventory-storage
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor.json
+
+  - index: 6
+    name: mod-inventory
+    module_id: inventory
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor.json
+
+  - index: 7
+    name: mod-loan-storage
+    module_id: loan-storage
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor.json
+
+  - index: 8
+    name: mod-circulation
+    module_id: circulation
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor.json
+
 stripes_okapi_url: http://localhost:9130
+
 docker_users:
   - folio
   - vagrant
+
 stripes_host_address: 0.0.0.0
+
 mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json.OLD
+
 mod_metadata_modules:
   - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory-storage }
   - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory }
+
 mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
+
 mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
