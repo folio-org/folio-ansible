@@ -49,4 +49,4 @@
     repo: deb "{{ folio_apt_repo_url }}" "{{ item }}"/
     filename: folioci
     state: present
-  with_items: "{{ folio_apt_repos }}
+  with_items: "{{ folio_apt_repos }}"
