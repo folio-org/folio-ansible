@@ -1,3 +1,15 @@
 ---
 folio_user: folio
 folio_group: folio
+
+
+folio_apt_repo_url: https://repository.folio.org/packages/ubuntu
+folio_apt_key_id: 469A4045
+folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archive-key.asc
+
+# there are currently two FOLIO repositories - 'testing' and xenial'
+# 'xenial' contains releases only while 'testing' includes dev
+# snapshots.   Default is to configure just the 'xenial' repo which
+# the most stable.  If you want both, add 'testing' to this list.
+folio_apt_repos: 
+  - xenial
