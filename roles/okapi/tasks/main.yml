@@ -30,16 +30,11 @@
     owner: "{{ okapidb_user }}"
   when: okapi_storage == "postgres"
 
-- name: Configure FOLIO CI apt repository
-  become: yes
-  apt_repository: 
-    repo: deb https://jenkins-aws.indexdata.com/apt-repo binary/
-    filename: folioci
-    state: present
-  
 - name: Install okapi debian package 
   become: yes
-  apt: name=okapi allow_unauthenticated=yes state=latest
+  apt: 
+    name: okapi 
+    state: latest
 
 - name: Enable external hazelcast config if AWS
   set_fact: 
