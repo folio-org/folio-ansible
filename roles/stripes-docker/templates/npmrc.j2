@@ -1,6 +1,6 @@
-{% if folioci %}
-registry=https://repository.folio.org/repository/npm-ci-all
-//repository.folio.org/repository/:_authToken={{ npm_authtoken }}
+{% if npm_proxy %}
+registry=https://{{ folio_npm_base_url }}{{ folio_npm_repo }}
+//{{ folio_npm_base_url }}:_authToken={{ npm_authtoken }}
 {% else %}
-@folio:registry=https://repository.folio.org/repository/npm-folioci
+@folio:registry=https://{{ folio_npm_base_url}}{{ folio_npm_repo }}
 {% endif %}
