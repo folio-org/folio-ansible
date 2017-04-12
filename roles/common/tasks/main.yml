@@ -25,6 +25,8 @@
   with_items:
     - git
     - curl
+    - apt-transport-https
+    - ca-certificates
 
 - name: Install postgresql client things on all nodes
   become: yes
