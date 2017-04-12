@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1980-07-16",
+      "last_login_date" : "1974-08-06"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "coy",
+   "id" : "8675BACF-08BF-4260-B056-83121DFE1FCC",
+   "personal" : {
+      "first_name" : "Vicente",
+      "last_name" : "Labadie",
+      "email" : "aubrey@johnson-inc.cz"
+   }
+}
+

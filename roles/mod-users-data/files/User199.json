@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1983-10-06",
+      "creation_date" : "1997-01-18"
+   },
+   "personal" : {
+      "email" : "jose@bernier-inc.py",
+      "last_name" : "Strosin",
+      "first_name" : "Ryleigh"
+   },
+   "id" : "661D4CD5-C8CF-4FB6-86EE-A19253EC7B84",
+   "username" : "omari",
+   "active" : true
+}
+

@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1995-10-02",
+      "creation_date" : "1977-05-07"
+   },
+   "type" : "patron",
+   "username" : "maurice",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Ankunding",
+      "email" : "foster@jacobs-wisoky.as",
+      "first_name" : "Darron"
+   },
+   "id" : "DCC1A4CF-338F-4A53-9CC8-7BE0D23EB9D4"
+}
+

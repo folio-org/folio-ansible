@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1989-05-30",
+      "last_login_date" : "1990-11-12"
+   },
+   "id" : "EE307A9D-A4E3-4C4F-A95B-389D0348379A",
+   "personal" : {
+      "email" : "ubaldo@crooks-lockman.re",
+      "last_name" : "Mraz",
+      "first_name" : "Milo"
+   },
+   "active" : false,
+   "username" : "sheldon"
+}
+

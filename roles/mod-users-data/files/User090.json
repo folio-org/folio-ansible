@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1975-04-26",
+      "last_login_date" : "1982-04-10"
+   },
+   "personal" : {
+      "first_name" : "Jacinto",
+      "email" : "lucy@walter-llc.cf",
+      "last_name" : "Marks"
+   },
+   "id" : "E81E2978-1C29-47F1-8CC1-B74A2854084B",
+   "username" : "maude",
+   "active" : false
+}
+

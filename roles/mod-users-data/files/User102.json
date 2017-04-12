@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1998-09-01",
+      "creation_date" : "1977-04-23"
+   },
+   "id" : "4D1C85E2-9945-4AF8-8C9F-52F56CF1A7F9",
+   "personal" : {
+      "first_name" : "Lisette",
+      "email" : "michel@wyman-ernser-and-hermiston.lt",
+      "last_name" : "Stracke"
+   },
+   "active" : true,
+   "username" : "alison"
+}
+

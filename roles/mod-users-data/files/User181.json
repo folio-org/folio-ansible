@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1971-02-24",
+      "creation_date" : "1997-04-15"
+   },
+   "id" : "9EBA9E89-BAA1-4BA0-AA22-2B8652B566C0",
+   "personal" : {
+      "email" : "estelle@reilly-streich-and-ankunding.fi",
+      "last_name" : "Kessler",
+      "first_name" : "Susana"
+   },
+   "active" : true,
+   "username" : "aleen"
+}
+

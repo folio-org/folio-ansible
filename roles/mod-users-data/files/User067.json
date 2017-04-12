@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1975-05-04",
+      "creation_date" : "2009-04-20"
+   },
+   "type" : "patron",
+   "username" : "citlalli",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Ivy",
+      "last_name" : "Lowe",
+      "email" : "dallas@nitzsche-and-sons.sh"
+   },
+   "id" : "BD877490-1E23-4AD1-9E4D-8902D02C1370"
+}
+

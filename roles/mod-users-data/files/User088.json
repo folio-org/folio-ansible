@@ -1,0 +1,16 @@
+{
+   "id" : "1E9A818F-2A42-470D-ACB4-FB1BCCB8D70F",
+   "personal" : {
+      "first_name" : "Dudley",
+      "last_name" : "Romaguera",
+      "email" : "river@gutkowski-reinger.kg"
+   },
+   "active" : true,
+   "username" : "modesto",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1999-02-24",
+      "creation_date" : "2008-08-19"
+   }
+}
+

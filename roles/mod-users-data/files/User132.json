@@ -1,0 +1,16 @@
+{
+   "active" : false,
+   "username" : "george",
+   "id" : "F4418F32-E766-4291-93DB-A0540FCF3353",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "ellie@zulauf-and-sons.fr",
+      "first_name" : "Florian"
+   },
+   "meta" : {
+      "last_login_date" : "1970-10-08",
+      "creation_date" : "2000-03-27"
+   },
+   "type" : "patron"
+}
+

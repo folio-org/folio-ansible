@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1977-03-29",
+      "creation_date" : "2013-03-02"
+   },
+   "type" : "patron",
+   "username" : "leora",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Velva",
+      "email" : "adele@kerluke-kohler-and-kessler.vt.us",
+      "last_name" : "Aufderhar"
+   },
+   "id" : "EAA29EEB-0A05-4744-9690-C99D78393FE0"
+}
+

@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2012-08-18",
+      "creation_date" : "1996-03-05"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "savanna",
+   "id" : "C8105B47-093C-44E7-911E-AB8E6D20508E",
+   "personal" : {
+      "email" : "glen@russel-llc.ms",
+      "last_name" : "Langosh",
+      "first_name" : "Christiana"
+   }
+}
+

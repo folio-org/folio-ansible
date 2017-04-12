@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "verla",
+   "id" : "4CEEEBBC-BB71-4ACB-A097-27726318B989",
+   "personal" : {
+      "first_name" : "Dorcas",
+      "last_name" : "Mraz",
+      "email" : "lane@rosenbaum-inc.nd.us"
+   },
+   "meta" : {
+      "last_login_date" : "2001-10-25",
+      "creation_date" : "1984-04-02"
+   },
+   "type" : "patron"
+}
+

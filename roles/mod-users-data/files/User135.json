@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1994-10-19",
+      "creation_date" : "1975-04-29"
+   },
+   "id" : "90F5FB71-A9A7-40E5-A269-BD5AD144D905",
+   "personal" : {
+      "first_name" : "Winston",
+      "last_name" : "Ward",
+      "email" : "blanche@rutherford-schulist-and-hickle.py"
+   },
+   "active" : true,
+   "username" : "judah"
+}
+

@@ -1,0 +1,16 @@
+{
+   "id" : "C44C5909-77BE-4290-ACCD-F0518067F86D",
+   "personal" : {
+      "first_name" : "Imani",
+      "email" : "ottis@goodwin-inc.org",
+      "last_name" : "Hermiston"
+   },
+   "active" : true,
+   "username" : "lauriane",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2004-08-10",
+      "creation_date" : "1981-12-16"
+   }
+}
+

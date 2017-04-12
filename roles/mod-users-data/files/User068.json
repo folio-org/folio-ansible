@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1978-03-20",
+      "creation_date" : "1992-02-23"
+   },
+   "id" : "CC578291-5017-4E63-B2CB-44BF6ED12B3D",
+   "personal" : {
+      "first_name" : "Otilia",
+      "last_name" : "Mraz",
+      "email" : "rachael@nienow-block-and-carter.gt"
+   },
+   "active" : true,
+   "username" : "kiera"
+}
+

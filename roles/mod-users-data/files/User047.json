@@ -1,0 +1,16 @@
+{
+   "username" : "garland",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Sonny",
+      "last_name" : "Feest",
+      "email" : "lincoln@feest-inc.tt"
+   },
+   "id" : "0C1A9F0E-E2B0-4545-A2AF-1CC50ECE87FF",
+   "meta" : {
+      "last_login_date" : "2001-10-25",
+      "creation_date" : "1984-11-30"
+   },
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "id" : "36A33A0E-E3C9-4253-980A-924E6E620F56",
+   "personal" : {
+      "last_name" : "D'Amore",
+      "email" : "wyman@homenick-grant-and-wuckert.aero",
+      "first_name" : "Cornelius"
+   },
+   "active" : false,
+   "username" : "sonia",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1988-05-05",
+      "creation_date" : "1987-12-28"
+   }
+}
+

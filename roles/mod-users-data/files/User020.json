@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1975-10-24",
+      "creation_date" : "2000-10-28"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "alessandra",
+   "id" : "A38448BF-8C36-4472-8C71-6DC1FA8585AD",
+   "personal" : {
+      "email" : "santa@robel-nicolas-and-legros.co.us",
+      "last_name" : "Labadie",
+      "first_name" : "Meredith"
+   }
+}
+

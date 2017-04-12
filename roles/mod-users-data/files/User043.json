@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1978-09-28",
+      "last_login_date" : "1979-08-12"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "makayla",
+   "id" : "3AC32E54-CE57-4ED1-A70B-87E7FA862AD1",
+   "personal" : {
+      "email" : "toney@dickinson-inc.cy",
+      "last_name" : "Parisian",
+      "first_name" : "Vada"
+   }
+}
+

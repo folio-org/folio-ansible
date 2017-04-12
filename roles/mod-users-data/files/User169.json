@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Cronin",
+      "email" : "rhett@dickens-inc.gl",
+      "first_name" : "Kiel"
+   },
+   "id" : "82A7F73E-7D9A-4019-B23E-695D413D0E80",
+   "username" : "lorenz",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1997-01-28",
+      "last_login_date" : "1978-06-27"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "username" : "gertrude",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Sanford",
+      "email" : "kayli@hodkiewicz-hand-and-kuhlman.hr",
+      "first_name" : "Steve"
+   },
+   "id" : "3B382AD1-B72E-4C3F-BCBF-BF9AEA8C0436",
+   "meta" : {
+      "last_login_date" : "1990-10-14",
+      "creation_date" : "2002-07-29"
+   },
+   "type" : "patron"
+}
+

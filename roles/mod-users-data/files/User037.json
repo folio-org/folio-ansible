@@ -1,0 +1,16 @@
+{
+   "id" : "8CC42A5B-A180-4386-B700-116D473336B0",
+   "personal" : {
+      "last_name" : "Ullrich",
+      "email" : "garrett@huels-group.ia.us",
+      "first_name" : "Octavia"
+   },
+   "active" : true,
+   "username" : "elfrieda",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1982-07-02",
+      "last_login_date" : "1987-10-15"
+   }
+}
+

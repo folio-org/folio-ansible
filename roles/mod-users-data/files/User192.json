@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1998-10-04",
+      "creation_date" : "1994-07-14"
+   },
+   "id" : "14A77BCB-DCBC-479D-81E1-46886004148F",
+   "personal" : {
+      "first_name" : "Sophia",
+      "last_name" : "Mraz",
+      "email" : "cristobal@little-group.wy.us"
+   },
+   "active" : true,
+   "username" : "brisa"
+}
+

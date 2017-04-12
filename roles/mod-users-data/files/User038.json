@@ -1,0 +1,16 @@
+{
+   "id" : "5FEA3ADD-C4A5-46EE-A4EB-9C9A68F0CEB9",
+   "personal" : {
+      "first_name" : "Dewayne",
+      "last_name" : "Tremblay",
+      "email" : "velma@kilback-llc.tf"
+   },
+   "active" : true,
+   "username" : "opal",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2003-03-04",
+      "creation_date" : "1993-05-28"
+   }
+}
+

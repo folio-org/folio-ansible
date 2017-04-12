@@ -1,0 +1,16 @@
+{
+   "username" : "torrey",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Ignatius",
+      "last_name" : "Ward",
+      "email" : "stanton@huel-inc.cu"
+   },
+   "id" : "D432FEC1-9173-4366-866E-9C7ADD9CC5D7",
+   "meta" : {
+      "creation_date" : "1987-10-10",
+      "last_login_date" : "1987-04-19"
+   },
+   "type" : "patron"
+}
+

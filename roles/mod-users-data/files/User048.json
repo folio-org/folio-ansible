@@ -1,0 +1,16 @@
+{
+   "username" : "ariane",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Ashlynn",
+      "email" : "malachi@christiansen-turner-and-ondricka.nh.us",
+      "last_name" : "Mraz"
+   },
+   "id" : "AF778236-72F8-44BF-9852-641F0D557FFF",
+   "meta" : {
+      "last_login_date" : "1979-10-30",
+      "creation_date" : "1973-11-27"
+   },
+   "type" : "patron"
+}
+

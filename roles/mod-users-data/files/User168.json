@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1976-01-03",
+      "last_login_date" : "1997-03-29"
+   },
+   "type" : "patron",
+   "username" : "blaise",
+   "active" : true,
+   "personal" : {
+      "email" : "imelda@sauer-hammes.hn",
+      "last_name" : "Mraz",
+      "first_name" : "Sonia"
+   },
+   "id" : "B038A541-3451-4025-814A-EE764E72FF62"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1985-07-28",
+      "last_login_date" : "2001-09-01"
+   },
+   "id" : "576F8C4A-C400-476B-8A2B-33A9F02E2875",
+   "personal" : {
+      "first_name" : "Marcelle",
+      "last_name" : "Conn",
+      "email" : "haleigh@emard-kshlerin.cg"
+   },
+   "active" : true,
+   "username" : "sylvester"
+}
+

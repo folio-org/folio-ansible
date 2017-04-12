@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2001-04-01",
+      "creation_date" : "1982-07-30"
+   },
+   "id" : "0F271DC0-CD92-4B43-9EC3-ADE424ECE85B",
+   "personal" : {
+      "email" : "dangelo@lockman-kunze.ie",
+      "last_name" : "Mraz",
+      "first_name" : "Wilhelmine"
+   },
+   "active" : true,
+   "username" : "joyce"
+}
+

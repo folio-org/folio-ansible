@@ -1,0 +1,16 @@
+{
+   "active" : false,
+   "username" : "cristina",
+   "id" : "2B5CF80C-3D90-4DD8-A207-893F02D604A6",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "russ@huels-group.ie",
+      "first_name" : "Gladyce"
+   },
+   "meta" : {
+      "creation_date" : "1981-04-16",
+      "last_login_date" : "1988-06-19"
+   },
+   "type" : "patron"
+}
+

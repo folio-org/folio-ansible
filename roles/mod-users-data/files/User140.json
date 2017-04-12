@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1984-06-22",
+      "creation_date" : "2009-04-27"
+   },
+   "personal" : {
+      "first_name" : "Tyshawn",
+      "email" : "gay@green-llc.mh",
+      "last_name" : "Auer"
+   },
+   "id" : "37760D29-087C-4450-BE6F-CF6F4E8F9487",
+   "username" : "monica",
+   "active" : false
+}
+

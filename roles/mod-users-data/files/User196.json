@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "kameron",
+   "id" : "4F58C593-E3DC-491C-9A91-AC71C74BB026",
+   "personal" : {
+      "last_name" : "Homenick",
+      "email" : "marcel@wolf-morissette.sl",
+      "first_name" : "Wava"
+   },
+   "meta" : {
+      "last_login_date" : "1974-11-04",
+      "creation_date" : "2000-08-22"
+   },
+   "type" : "patron"
+}
+

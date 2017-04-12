@@ -1,0 +1,16 @@
+{
+   "id" : "2BD6D919-5EC1-4469-9972-79CC783BB215",
+   "personal" : {
+      "first_name" : "Lou",
+      "email" : "kianna@hilpert-rempel-and-west.ps",
+      "last_name" : "Feeney"
+   },
+   "active" : true,
+   "username" : "kenyon",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1984-01-19",
+      "last_login_date" : "2003-08-18"
+   }
+}
+

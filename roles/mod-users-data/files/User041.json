@@ -1,0 +1,16 @@
+{
+   "id" : "D608FB07-99E7-4E3C-AC3B-FC2719F21317",
+   "personal" : {
+      "first_name" : "Rita",
+      "email" : "nayeli@kirlin-and-sons.cs",
+      "last_name" : "Renner"
+   },
+   "active" : false,
+   "username" : "ollie",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1999-10-20",
+      "creation_date" : "1997-11-15"
+   }
+}
+

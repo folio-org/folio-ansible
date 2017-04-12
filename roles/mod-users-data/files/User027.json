@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1972-03-03",
+      "last_login_date" : "1974-07-05"
+   },
+   "id" : "3BDE6772-56C7-4F35-96B4-53641CBABF47",
+   "personal" : {
+      "first_name" : "Shaniya",
+      "email" : "mariana@bednar-and-sons.ml",
+      "last_name" : "Mraz"
+   },
+   "active" : false,
+   "username" : "unique"
+}
+

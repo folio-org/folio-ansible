@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "2016-02-12",
+      "last_login_date" : "1978-06-12"
+   },
+   "type" : "patron",
+   "username" : "agustina",
+   "active" : true,
+   "personal" : {
+      "email" : "mable@cremin-lynch.ao",
+      "last_name" : "Will",
+      "first_name" : "Helene"
+   },
+   "id" : "50FDF831-4952-4093-B421-3130AB088BA9"
+}
+

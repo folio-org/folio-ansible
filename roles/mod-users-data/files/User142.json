@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1973-10-26",
+      "last_login_date" : "1997-01-15"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "erick",
+   "id" : "DA5CB8EC-BFDB-496B-90FD-149A4C4C968E",
+   "personal" : {
+      "last_name" : "Tromp",
+      "email" : "gay@lubowitz-becker-and-jakubowski.ye",
+      "first_name" : "Hester"
+   }
+}
+

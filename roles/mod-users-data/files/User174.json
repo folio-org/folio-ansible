@@ -1,0 +1,16 @@
+{
+   "id" : "53BBC2B8-C8F1-4BA3-8717-E791DEE7A902",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "mustafa@sauer-llc.vn",
+      "first_name" : "Dorothy"
+   },
+   "active" : true,
+   "username" : "ayla",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2000-05-19",
+      "last_login_date" : "1973-05-23"
+   }
+}
+

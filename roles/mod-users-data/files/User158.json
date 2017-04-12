@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "ena",
+   "id" : "4D0A1E75-A8FB-4D59-A8A7-3EF932C49008",
+   "personal" : {
+      "first_name" : "Dale",
+      "last_name" : "Glover",
+      "email" : "parker@olson-erdman.mh"
+   },
+   "meta" : {
+      "last_login_date" : "2001-10-20",
+      "creation_date" : "1971-08-25"
+   },
+   "type" : "patron"
+}
+

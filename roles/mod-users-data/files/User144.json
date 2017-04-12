@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1995-06-07",
+      "creation_date" : "1975-03-20"
+   },
+   "personal" : {
+      "first_name" : "Carolina",
+      "email" : "valentine@frami-turcotte.mz",
+      "last_name" : "Hessel"
+   },
+   "id" : "94E8F142-61DC-448B-A7A0-1FD18FFA8152",
+   "username" : "waldo",
+   "active" : true
+}
+

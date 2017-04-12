@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Rodriguez",
+      "email" : "sherman@schumm-keeling-and-ferry.vt.us",
+      "first_name" : "Brycen"
+   },
+   "id" : "9FD6C758-9962-46A3-B6F2-712863F9DF8C",
+   "username" : "hillary",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1998-04-11",
+      "last_login_date" : "2012-07-28"
+   }
+}
+

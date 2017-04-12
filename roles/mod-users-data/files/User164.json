@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Dejuan",
+      "last_name" : "Mraz",
+      "email" : "baby@brakus-ratke.nc"
+   },
+   "id" : "F565F73D-4709-448D-B2C1-92CD085AD2DC",
+   "username" : "timmothy",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2014-06-28",
+      "creation_date" : "1980-10-21"
+   }
+}
+

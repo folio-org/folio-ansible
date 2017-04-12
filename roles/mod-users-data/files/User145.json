@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1973-04-22",
+      "last_login_date" : "2003-08-26"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "serena",
+   "id" : "E2C0CEA4-F3DD-40AD-BE3D-C4E13B7C12ED",
+   "personal" : {
+      "email" : "rosemary@osinski-gislason-and-kohler.ke",
+      "last_name" : "Ruecker",
+      "first_name" : "Sigmund"
+   }
+}
+

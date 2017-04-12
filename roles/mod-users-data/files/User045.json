@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1996-01-30",
+      "creation_date" : "1974-09-16"
+   },
+   "personal" : {
+      "first_name" : "Vanessa",
+      "email" : "kailyn@jones-and-sons.bv",
+      "last_name" : "Mraz"
+   },
+   "id" : "B791F0C5-144E-4D20-B912-6276E2519C41",
+   "username" : "caesar",
+   "active" : true
+}
+

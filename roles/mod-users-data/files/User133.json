@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2015-05-11",
+      "last_login_date" : "2006-08-10"
+   },
+   "id" : "7A79C343-FD59-42BD-BF13-DC75EA39E45C",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "melvin@johns-schoen-and-rau.mh",
+      "first_name" : "Kylie"
+   },
+   "active" : true,
+   "username" : "deja"
+}
+

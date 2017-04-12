@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Cade",
+      "last_name" : "Pfannerstill",
+      "email" : "demetrius@schamberger-schaefer.id.us"
+   },
+   "id" : "0A8FBC17-7743-40F2-B765-15885070A731",
+   "username" : "jarvis",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1995-10-08",
+      "last_login_date" : "1988-11-12"
+   }
+}
+

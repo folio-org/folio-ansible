@@ -1,0 +1,16 @@
+{
+   "id" : "E847E361-0DA8-46A5-8046-46828C90B467",
+   "personal" : {
+      "email" : "rashawn@hartmann-group.jm",
+      "last_name" : "Pollich",
+      "first_name" : "Brady"
+   },
+   "active" : true,
+   "username" : "isac",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1976-11-19",
+      "last_login_date" : "1981-11-22"
+   }
+}
+

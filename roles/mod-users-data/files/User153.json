@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "letha@effertz-farrell.sb",
+      "last_name" : "Shanahan",
+      "first_name" : "Francisca"
+   },
+   "id" : "1B12D6A7-11D8-43F6-A594-D61FC877DAA5",
+   "username" : "monserrat",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1983-01-16",
+      "last_login_date" : "2016-09-20"
+   }
+}
+

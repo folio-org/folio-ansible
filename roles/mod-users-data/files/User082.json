@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1980-07-05",
+      "last_login_date" : "1974-06-02"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "odessa",
+   "id" : "834E0584-CAE6-4B7A-95B1-D4271525CFF4",
+   "personal" : {
+      "last_name" : "Fay",
+      "email" : "cyril@smitham-mayert.dz",
+      "first_name" : "Robbie"
+   }
+}
+

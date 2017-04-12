@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1970-10-05",
+      "creation_date" : "2006-06-11"
+   },
+   "type" : "patron",
+   "username" : "ashton",
+   "active" : true,
+   "personal" : {
+      "email" : "leonor@grant-cormier-and-kunde.vu",
+      "last_name" : "Borer",
+      "first_name" : "Brock"
+   },
+   "id" : "95249CC7-2560-4BCA-A315-AECAF5A51E16"
+}
+

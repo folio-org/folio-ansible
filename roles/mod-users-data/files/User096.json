@@ -1,0 +1,16 @@
+{
+   "id" : "FAC302DF-D273-4928-9908-A4234EFA5DB3",
+   "personal" : {
+      "first_name" : "Brenden",
+      "last_name" : "Welch",
+      "email" : "corene@spinka-inc.cm"
+   },
+   "active" : false,
+   "username" : "leta",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1986-08-17",
+      "creation_date" : "1985-10-31"
+   }
+}
+

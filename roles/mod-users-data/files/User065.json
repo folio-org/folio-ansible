@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1997-05-24",
+      "last_login_date" : "1973-12-17"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "justyn",
+   "id" : "7DF8E549-21AB-4223-B710-970D12DA6879",
+   "personal" : {
+      "last_name" : "Bradtke",
+      "email" : "dina@schinner-llc.ao",
+      "first_name" : "Ulices"
+   }
+}
+

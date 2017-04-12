@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1992-04-15",
+      "creation_date" : "1991-01-20"
+   },
+   "type" : "patron",
+   "username" : "macey",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Ellsworth",
+      "email" : "jaquan@cassin-smitham-and-hansen.sl",
+      "last_name" : "Block"
+   },
+   "id" : "8F03EE2D-D250-4C7F-A91A-0AC7F1648E95"
+}
+

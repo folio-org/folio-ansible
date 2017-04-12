@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1978-08-22",
+      "last_login_date" : "2010-08-09"
+   },
+   "id" : "EAEDF22F-5F60-4C0F-B409-16F61174F5F8",
+   "personal" : {
+      "first_name" : "Kristopher",
+      "email" : "tomas@reinger-stracke.mz",
+      "last_name" : "Mraz"
+   },
+   "active" : true,
+   "username" : "jimmie"
+}
+

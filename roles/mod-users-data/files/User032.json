@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1974-06-11",
+      "last_login_date" : "1971-10-30"
+   },
+   "id" : "0996C1CB-E6E3-456F-97D1-B1202100F90C",
+   "personal" : {
+      "first_name" : "Rahul",
+      "last_name" : "Ledner",
+      "email" : "theodora@emard-aufderhar-and-jones.ck"
+   },
+   "active" : false,
+   "username" : "sarai"
+}
+

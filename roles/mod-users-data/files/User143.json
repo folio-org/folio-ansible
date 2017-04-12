@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1994-08-09",
+      "last_login_date" : "2001-02-13"
+   },
+   "id" : "A559AF9B-3D32-499A-AFC2-87CC1CB51A82",
+   "personal" : {
+      "first_name" : "Chadd",
+      "email" : "jonas@abernathy-bauch-and-goodwin.sa",
+      "last_name" : "Durgan"
+   },
+   "active" : true,
+   "username" : "salvatore"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1991-01-27",
+      "last_login_date" : "1972-05-26"
+   },
+   "id" : "ED83F59A-54E5-427F-9494-616F02D6A84D",
+   "personal" : {
+      "email" : "michael@rau-rau-and-rippin.sy",
+      "last_name" : "Franecki",
+      "first_name" : "Roselyn"
+   },
+   "active" : false,
+   "username" : "trevor"
+}
+

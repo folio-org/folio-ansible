@@ -1,0 +1,16 @@
+{
+   "username" : "daisy",
+   "active" : false,
+   "personal" : {
+      "last_name" : "Treutel",
+      "email" : "kaitlyn@romaguera-kemmer.ut.us",
+      "first_name" : "Obie"
+   },
+   "id" : "BEAB1365-3771-4C25-BD8A-C39BD8598EEB",
+   "meta" : {
+      "last_login_date" : "1993-01-23",
+      "creation_date" : "1978-03-02"
+   },
+   "type" : "patron"
+}
+

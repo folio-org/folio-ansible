@@ -1,0 +1,16 @@
+{
+   "username" : "eliane",
+   "active" : true,
+   "personal" : {
+      "first_name" : "June",
+      "email" : "jeanne@schiller-turcotte-and-greenfelder.nh.us",
+      "last_name" : "Nolan"
+   },
+   "id" : "009222E4-7FA8-4C5A-9865-53D68BED8E66",
+   "meta" : {
+      "creation_date" : "1998-11-13",
+      "last_login_date" : "1980-04-21"
+   },
+   "type" : "patron"
+}
+

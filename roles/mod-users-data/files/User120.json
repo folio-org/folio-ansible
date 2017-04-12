@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2000-03-31",
+      "creation_date" : "1997-08-14"
+   },
+   "personal" : {
+      "first_name" : "Therese",
+      "email" : "noe@spinka-towne-and-pfannerstill.th",
+      "last_name" : "Mraz"
+   },
+   "id" : "91F28D8B-4EA0-42DF-9922-2DE43B6A978B",
+   "username" : "melvin",
+   "active" : true
+}
+

@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1981-01-23",
+      "creation_date" : "1980-09-13"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "fred",
+   "id" : "06080CD2-97CF-42BC-B01F-FBD3FCE7A5BF",
+   "personal" : {
+      "first_name" : "Elyse",
+      "email" : "chelsea@collins-inc.com",
+      "last_name" : "Runte"
+   }
+}
+

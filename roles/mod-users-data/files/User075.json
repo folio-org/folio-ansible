@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Pouros",
+      "email" : "wilford@jaskolski-becker.ct.us",
+      "first_name" : "Tyson"
+   },
+   "id" : "4EF4BA66-74FC-4977-B682-E19893D53D76",
+   "username" : "rupert",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1989-11-13",
+      "last_login_date" : "2000-06-22"
+   }
+}
+

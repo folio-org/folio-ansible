@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2014-01-16",
+      "creation_date" : "1991-07-02"
+   },
+   "id" : "BFB5CA50-5346-4E41-B73C-F3D30A180B6B",
+   "personal" : {
+      "first_name" : "Josianne",
+      "email" : "tara@mckenzie-mohr.mh",
+      "last_name" : "Mraz"
+   },
+   "active" : false,
+   "username" : "brenna"
+}
+

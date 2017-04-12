@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2000-02-28",
+      "creation_date" : "1990-12-21"
+   },
+   "type" : "patron",
+   "username" : "hector",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Ricky",
+      "email" : "quinton@kirlin-inc.mn.us",
+      "last_name" : "Tromp"
+   },
+   "id" : "4611F6E7-EBBB-4B99-A381-4517EFC51BE8"
+}
+

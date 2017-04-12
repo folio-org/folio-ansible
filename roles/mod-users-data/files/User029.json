@@ -1,0 +1,16 @@
+{
+   "username" : "may",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "davion@smith-and-sons.gy",
+      "first_name" : "Durward"
+   },
+   "id" : "76BF1982-21BD-4E54-8625-3F06372FD2EE",
+   "meta" : {
+      "last_login_date" : "2016-12-02",
+      "creation_date" : "1986-02-19"
+   },
+   "type" : "patron"
+}
+

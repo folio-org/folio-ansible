@@ -1,0 +1,16 @@
+{
+   "id" : "12549DBF-1722-4F4F-B43D-9D21D18581CA",
+   "personal" : {
+      "first_name" : "Darion",
+      "email" : "janet@ohara-wintheiser-and-kemmer.ck",
+      "last_name" : "Langosh"
+   },
+   "active" : false,
+   "username" : "cassandra",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2012-11-03",
+      "creation_date" : "2005-08-31"
+   }
+}
+

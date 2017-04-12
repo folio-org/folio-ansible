@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "german@konopelski-parker-and-sauer.wf",
+      "first_name" : "Enoch"
+   },
+   "id" : "9FD30011-3CF3-4EE1-B336-B43A93DFA915",
+   "username" : "kristy",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1989-08-16",
+      "creation_date" : "1985-08-26"
+   }
+}
+

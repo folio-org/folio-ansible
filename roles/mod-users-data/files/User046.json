@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1977-07-26",
+      "last_login_date" : "2001-02-09"
+   },
+   "id" : "5A265C46-3085-4C03-A0AC-310517B338E1",
+   "personal" : {
+      "first_name" : "Annabelle",
+      "email" : "jaiden@goyette-schumm-and-yundt.tv",
+      "last_name" : "Altenwerth"
+   },
+   "active" : true,
+   "username" : "josiane"
+}
+

@@ -1,0 +1,16 @@
+{
+   "username" : "mitchel",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Dallin",
+      "last_name" : "Rolfson",
+      "email" : "karson@blick-llc.pw"
+   },
+   "id" : "81C5343D-E8CD-4A56-A2B5-9F0EFA9C9E63",
+   "meta" : {
+      "last_login_date" : "2011-04-18",
+      "creation_date" : "1988-07-01"
+   },
+   "type" : "patron"
+}
+

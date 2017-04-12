@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1974-06-20",
+      "last_login_date" : "1987-02-14"
+   },
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "jefferey@kub-wuckert.lk",
+      "first_name" : "Haleigh"
+   },
+   "id" : "DECA7521-028E-45FD-9CCA-A486FF75D2CB",
+   "username" : "silas",
+   "active" : true
+}
+

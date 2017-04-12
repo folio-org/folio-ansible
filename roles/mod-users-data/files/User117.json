@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2001-12-04",
+      "creation_date" : "2008-03-08"
+   },
+   "type" : "patron",
+   "username" : "isaac",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Junior",
+      "last_name" : "Mraz",
+      "email" : "isom@terry-fadel.lc"
+   },
+   "id" : "00E5B189-91A3-43D9-917D-591F42144C65"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2015-06-08",
+      "creation_date" : "1989-11-23"
+   },
+   "id" : "46E5AEE9-C340-42A2-A364-ACC86ECDF72C",
+   "personal" : {
+      "last_name" : "Koepp",
+      "email" : "rod@corkery-jacobi.tm",
+      "first_name" : "Jennyfer"
+   },
+   "active" : true,
+   "username" : "jaylon"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1985-08-08",
+      "creation_date" : "2007-05-09"
+   },
+   "personal" : {
+      "last_name" : "Zulauf",
+      "email" : "cortney@kreiger-okon.hn",
+      "first_name" : "Vivienne"
+   },
+   "id" : "17D0D5FF-A7D9-4BA2-80F4-5D6E4A29F329",
+   "username" : "ransom",
+   "active" : false
+}
+

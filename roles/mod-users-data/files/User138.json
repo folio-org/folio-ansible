@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Gorczany",
+      "email" : "bradley@kuhic-group.va.us",
+      "first_name" : "Letha"
+   },
+   "id" : "8923261D-8D4D-43D0-BA71-2239F542E5F0",
+   "username" : "blake",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1979-09-11",
+      "last_login_date" : "1978-12-22"
+   }
+}
+

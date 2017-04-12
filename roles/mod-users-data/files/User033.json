@@ -1,0 +1,16 @@
+{
+   "username" : "wallace",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Vergie",
+      "last_name" : "Schultz",
+      "email" : "daija@grady-larson-and-gutkowski.dj"
+   },
+   "id" : "83736DA0-0A76-4395-8D1C-FC8E02ABDEAF",
+   "meta" : {
+      "last_login_date" : "1985-06-18",
+      "creation_date" : "2010-08-15"
+   },
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "tatum",
+   "id" : "68C2AD47-C5C6-4D47-9FCD-7A708097DFAB",
+   "personal" : {
+      "last_name" : "Kreiger",
+      "email" : "zachery@smith-and-sons.cl",
+      "first_name" : "Rey"
+   },
+   "meta" : {
+      "last_login_date" : "1987-05-15",
+      "creation_date" : "2002-04-28"
+   },
+   "type" : "patron"
+}
+

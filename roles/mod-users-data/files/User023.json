@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1990-11-12",
+      "creation_date" : "1986-07-27"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "novella",
+   "id" : "67A3B400-C088-4208-AEC0-3E0E796B20E9",
+   "personal" : {
+      "first_name" : "Jody",
+      "last_name" : "Shanahan",
+      "email" : "marguerite@labadie-and-sons.net"
+   }
+}
+

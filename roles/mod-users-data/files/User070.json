@@ -1,0 +1,16 @@
+{
+   "username" : "dominic",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "catherine@reichert-lehner-and-rippin.ri.us",
+      "first_name" : "Clifton"
+   },
+   "id" : "2D83142D-2287-4A46-B117-E004024EA289",
+   "meta" : {
+      "last_login_date" : "1971-06-19",
+      "creation_date" : "1974-11-18"
+   },
+   "type" : "patron"
+}
+

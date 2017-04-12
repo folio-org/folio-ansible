@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1994-06-01",
+      "last_login_date" : "1971-12-13"
+   },
+   "id" : "82CA57C4-3036-437C-85FA-B9740E2CDA9B",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "koby@pollich-turcotte-and-balistreri.tt",
+      "first_name" : "Christiana"
+   },
+   "active" : true,
+   "username" : "patsy"
+}
+

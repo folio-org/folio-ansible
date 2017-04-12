@@ -1,0 +1,16 @@
+{
+   "id" : "C94A36D9-EFD2-48C7-8B11-318E16E77ED0",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "sasha@robel-cassin.yt",
+      "first_name" : "Hoyt"
+   },
+   "active" : true,
+   "username" : "meghan",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1995-01-28",
+      "last_login_date" : "1996-04-30"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "layne",
+   "id" : "B2DD76C7-5B58-42C2-9489-D0821292E6CF",
+   "personal" : {
+      "last_name" : "Yundt",
+      "email" : "dale@little-abshire.sa",
+      "first_name" : "Wilhelmine"
+   },
+   "meta" : {
+      "creation_date" : "1984-12-05",
+      "last_login_date" : "2014-09-25"
+   },
+   "type" : "patron"
+}
+

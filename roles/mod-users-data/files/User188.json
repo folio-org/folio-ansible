@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2014-01-22",
+      "creation_date" : "1984-03-03"
+   },
+   "type" : "patron",
+   "username" : "timmy",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Pedro",
+      "email" : "dereck@tromp-and-sons.bn",
+      "last_name" : "Runolfsson"
+   },
+   "id" : "EA50304B-6AEC-4F4D-A043-86BEAC1EF339"
+}
+

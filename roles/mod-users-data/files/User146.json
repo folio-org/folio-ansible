@@ -1,0 +1,16 @@
+{
+   "username" : "therese",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Dayton",
+      "last_name" : "Mraz",
+      "email" : "arvid@goodwin-and-sons.al"
+   },
+   "id" : "7BC890EB-10B9-4EDF-A9EA-F838305AFFBF",
+   "meta" : {
+      "creation_date" : "1985-09-06",
+      "last_login_date" : "1976-04-10"
+   },
+   "type" : "patron"
+}
+

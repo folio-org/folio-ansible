@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1987-10-25",
+      "last_login_date" : "1979-04-29"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "anissa",
+   "id" : "DA35532F-FFD7-4BE9-9D7C-DD07031C3D60",
+   "personal" : {
+      "first_name" : "Jerrold",
+      "email" : "jamie@feil-cummerata.ng",
+      "last_name" : "Koch"
+   }
+}
+

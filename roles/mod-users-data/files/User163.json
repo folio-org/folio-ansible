@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1973-06-21",
+      "last_login_date" : "1973-03-18"
+   },
+   "personal" : {
+      "email" : "everardo@steuber-llc.ci",
+      "last_name" : "Heaney",
+      "first_name" : "Mia"
+   },
+   "id" : "B6CB7CEE-CE7E-487B-BE99-64604B303B34",
+   "username" : "jayce",
+   "active" : false
+}
+

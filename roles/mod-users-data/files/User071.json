@@ -1,0 +1,16 @@
+{
+   "id" : "A7E72064-FB29-41C5-98CC-686C8B6A9CC4",
+   "personal" : {
+      "last_name" : "Metz",
+      "email" : "jeramy@walsh-bartoletti.la",
+      "first_name" : "Mercedes"
+   },
+   "active" : true,
+   "username" : "sibyl",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2009-03-24",
+      "last_login_date" : "2013-04-29"
+   }
+}
+

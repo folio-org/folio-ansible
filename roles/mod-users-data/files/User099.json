@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1972-10-13",
+      "last_login_date" : "1990-01-03"
+   },
+   "type" : "patron",
+   "username" : "isai",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Maybell",
+      "email" : "roderick@boyer-mayert-and-williamson.tk",
+      "last_name" : "Mayer"
+   },
+   "id" : "E2A60B48-A194-4257-98A7-039B61BDBD9B"
+}
+

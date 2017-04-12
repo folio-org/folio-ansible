@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Lelia",
+      "last_name" : "Lakin",
+      "email" : "roy@wiza-renner-and-swift.gw"
+   },
+   "id" : "1FE9912E-00AB-495A-8D7D-E2C3045EA6BB",
+   "username" : "reanna",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1975-01-01",
+      "last_login_date" : "2005-07-24"
+   }
+}
+

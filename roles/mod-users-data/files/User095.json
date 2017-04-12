@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1992-11-21",
+      "creation_date" : "1973-04-28"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "jerald",
+   "id" : "CD8A400E-AAB1-4557-B2F4-BD1600D19E6E",
+   "personal" : {
+      "first_name" : "Arnaldo",
+      "email" : "natalia@spinka-howell.at",
+      "last_name" : "Mraz"
+   }
+}
+

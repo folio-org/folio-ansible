@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1992-03-23",
+      "creation_date" : "1982-04-05"
+   },
+   "id" : "387375B4-08F9-4623-9F33-D8BFBBAF1EA5",
+   "personal" : {
+      "first_name" : "Reid",
+      "email" : "alba@dicki-prohaska.bf",
+      "last_name" : "Swaniawski"
+   },
+   "active" : true,
+   "username" : "silas"
+}
+

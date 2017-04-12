@@ -1,0 +1,16 @@
+{
+   "username" : "vance",
+   "active" : true,
+   "personal" : {
+      "email" : "beau@hodkiewicz-llc.sa",
+      "last_name" : "Schulist",
+      "first_name" : "Amelia"
+   },
+   "id" : "380C4511-2D76-4D49-BE14-BD2E4B660FB4",
+   "meta" : {
+      "last_login_date" : "2006-06-23",
+      "creation_date" : "1979-04-21"
+   },
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1994-12-30",
+      "creation_date" : "1975-07-04"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "gage",
+   "id" : "5DCDCAB6-C426-450A-80A3-0F2FDFB0BD2E",
+   "personal" : {
+      "email" : "holden@connelly-roob-and-gleichner.sj",
+      "last_name" : "Trantow",
+      "first_name" : "Pablo"
+   }
+}
+

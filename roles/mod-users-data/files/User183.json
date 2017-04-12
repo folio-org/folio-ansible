@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Meda",
+      "last_name" : "Kub",
+      "email" : "veronica@effertz-moen-and-thiel.rw"
+   },
+   "id" : "B86A46B1-DCD1-4B4B-8C30-E05D5418BCCB",
+   "username" : "dovie",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1974-04-02",
+      "creation_date" : "2016-05-10"
+   }
+}
+

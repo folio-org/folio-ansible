@@ -1,0 +1,16 @@
+{
+   "id" : "A82468B3-FE59-49D8-A44A-31D8D5F338D4",
+   "personal" : {
+      "first_name" : "Aracely",
+      "last_name" : "Mraz",
+      "email" : "katelyn@nolan-renner.nd.us"
+   },
+   "active" : true,
+   "username" : "shanelle",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1999-01-19",
+      "last_login_date" : "1972-09-10"
+   }
+}
+

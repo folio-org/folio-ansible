@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "veda@oberbrunner-and-sons.dk",
+      "last_name" : "Steuber",
+      "first_name" : "Dena"
+   },
+   "id" : "D61A46DA-95B9-4151-A390-15D1C1B8F47C",
+   "username" : "romaine",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1989-09-17",
+      "creation_date" : "2002-09-03"
+   }
+}
+

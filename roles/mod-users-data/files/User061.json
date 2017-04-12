@@ -1,0 +1,16 @@
+{
+   "id" : "FC5CF306-ABF3-4D9C-8202-7AAB31C9486F",
+   "personal" : {
+      "email" : "luz@breitenberg-connelly.zw",
+      "last_name" : "Thompson",
+      "first_name" : "Monserrate"
+   },
+   "active" : false,
+   "username" : "bradford",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1983-05-23",
+      "last_login_date" : "1970-06-22"
+   }
+}
+

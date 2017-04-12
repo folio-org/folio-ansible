@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1998-09-21",
+      "last_login_date" : "1983-01-04"
+   },
+   "personal" : {
+      "first_name" : "Freida",
+      "email" : "jeffrey@stanton-inc.aw",
+      "last_name" : "Rempel"
+   },
+   "id" : "6FEA47AC-ABDF-49B7-B255-4A72F3B88329",
+   "username" : "lillie",
+   "active" : true
+}
+

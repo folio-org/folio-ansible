@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "giuseppe",
+   "id" : "DE48603D-DAB4-4335-A37B-7669F0DD3528",
+   "personal" : {
+      "last_name" : "Gorczany",
+      "email" : "virginia@bosco-stracke.nv.us",
+      "first_name" : "Fern"
+   },
+   "meta" : {
+      "creation_date" : "1991-02-25",
+      "last_login_date" : "2014-04-17"
+   },
+   "type" : "patron"
+}
+

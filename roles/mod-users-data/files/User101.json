@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1999-01-05",
+      "creation_date" : "1995-03-19"
+   },
+   "type" : "patron",
+   "username" : "willie",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Jovani",
+      "email" : "alden@goodwin-muller-and-goodwin.np",
+      "last_name" : "Hand"
+   },
+   "id" : "ECC004B6-028E-4AED-AFDA-31AC318CA6A6"
+}
+

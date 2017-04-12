@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2005-02-26",
+      "last_login_date" : "2005-12-23"
+   },
+   "personal" : {
+      "first_name" : "Jedediah",
+      "email" : "citlalli@lesch-funk.mw",
+      "last_name" : "Bartell"
+   },
+   "id" : "1612D6C3-137D-48CF-98C8-744871950325",
+   "username" : "haskell",
+   "active" : true
+}
+

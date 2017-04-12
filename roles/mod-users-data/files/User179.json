@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2016-09-30",
+      "last_login_date" : "2013-09-27"
+   },
+   "personal" : {
+      "first_name" : "Janessa",
+      "last_name" : "Feest",
+      "email" : "lucy@hermiston-dickens-and-breitenberg.si"
+   },
+   "id" : "F8315585-D0FF-4F04-8C75-DF9474C10F66",
+   "username" : "hipolito",
+   "active" : false
+}
+

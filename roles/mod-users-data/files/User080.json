@@ -1,0 +1,16 @@
+{
+   "username" : "reed",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Daryl",
+      "email" : "trinity@johnston-leannon.yu",
+      "last_name" : "Mraz"
+   },
+   "id" : "2A9A7788-5BE7-4D1F-9E43-374BF2C9109F",
+   "meta" : {
+      "creation_date" : "2012-09-08",
+      "last_login_date" : "2002-05-26"
+   },
+   "type" : "patron"
+}
+

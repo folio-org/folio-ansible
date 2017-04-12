@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1997-05-17",
+      "last_login_date" : "1980-01-23"
+   },
+   "type" : "patron",
+   "username" : "nova",
+   "active" : true,
+   "personal" : {
+      "email" : "clifford@hintz-kozey-and-bruen.hm",
+      "last_name" : "Cummings",
+      "first_name" : "Chadd"
+   },
+   "id" : "5D047D3F-6580-44EA-9432-F8075C7AC7A8"
+}
+

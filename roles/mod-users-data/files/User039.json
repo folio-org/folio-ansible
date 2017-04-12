@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "forest@nicolas-wunsch-and-turner.ge",
+      "last_name" : "Mraz",
+      "first_name" : "Landen"
+   },
+   "id" : "97184C72-F9D5-426F-A2C6-8BC11F75E4B4",
+   "username" : "tressa",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1971-11-27",
+      "last_login_date" : "1989-10-20"
+   }
+}
+

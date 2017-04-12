@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2002-05-25",
+      "creation_date" : "1976-11-28"
+   },
+   "personal" : {
+      "email" : "alvena@dare-llc.me.us",
+      "last_name" : "Kirlin",
+      "first_name" : "Efren"
+   },
+   "id" : "45FBC5E2-4347-49A1-8590-03F2FF4E780F",
+   "username" : "tobin",
+   "active" : true
+}
+

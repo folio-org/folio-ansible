@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "lacey",
+   "id" : "E6EB484D-265F-4347-9DF1-169807AAFEB9",
+   "personal" : {
+      "email" : "sofia@casper-and-sons.nc",
+      "last_name" : "Mraz",
+      "first_name" : "Velda"
+   },
+   "meta" : {
+      "last_login_date" : "1976-06-14",
+      "creation_date" : "1997-02-13"
+   },
+   "type" : "patron"
+}
+

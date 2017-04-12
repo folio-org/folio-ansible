@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1975-04-01",
+      "last_login_date" : "1998-05-27"
+   },
+   "personal" : {
+      "first_name" : "Kattie",
+      "email" : "kelvin@bradtke-wuckert.iq",
+      "last_name" : "Bayer"
+   },
+   "id" : "76C34104-D3F1-4BE5-9E5B-7C83069BACC3",
+   "username" : "jamey",
+   "active" : true
+}
+

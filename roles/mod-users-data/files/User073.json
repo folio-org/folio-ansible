@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2015-02-20",
+      "creation_date" : "1970-08-06"
+   },
+   "type" : "patron",
+   "username" : "lorna",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Lindsey",
+      "email" : "devyn@brown-hartmann.sl",
+      "last_name" : "Mraz"
+   },
+   "id" : "D271A2B2-0D11-430A-B5B9-90B1DB33E2D9"
+}
+

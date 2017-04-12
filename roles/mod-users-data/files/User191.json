@@ -1,0 +1,16 @@
+{
+   "id" : "70C4A3DE-CEE5-4F78-B688-0571C73E5210",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "alexie@parker-boyle.tg",
+      "first_name" : "Marcellus"
+   },
+   "active" : false,
+   "username" : "buck",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1987-11-03",
+      "creation_date" : "1974-12-12"
+   }
+}
+

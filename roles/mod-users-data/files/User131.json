@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Presley",
+      "last_name" : "Mraz",
+      "email" : "martin@jast-grant-and-parker.sj"
+   },
+   "id" : "5CDBAB6F-552E-46CD-AA74-323DE17DC20B",
+   "username" : "chauncey",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2016-12-16",
+      "last_login_date" : "1972-05-05"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "id" : "268CCA6A-35A6-4CAE-8295-A1BE977DAE59",
+   "personal" : {
+      "last_name" : "Zboncak",
+      "email" : "bridget@beier-llc.hi.us",
+      "first_name" : "Weldon"
+   },
+   "active" : false,
+   "username" : "raoul",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1993-07-13",
+      "last_login_date" : "1978-09-13"
+   }
+}
+

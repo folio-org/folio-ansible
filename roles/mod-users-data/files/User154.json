@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1977-01-18",
+      "creation_date" : "1991-10-13"
+   },
+   "id" : "8365CAE4-A3CA-4A31-9B37-1D819DC83D14",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "emilie@huel-inc.lb",
+      "first_name" : "Savannah"
+   },
+   "active" : true,
+   "username" : "carleton"
+}
+

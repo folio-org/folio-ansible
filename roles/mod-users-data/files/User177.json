@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1982-07-30",
+      "last_login_date" : "2006-07-16"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "berenice",
+   "id" : "DD2B5AEA-D142-4F21-8B9D-2FB0A32D8EF9",
+   "personal" : {
+      "email" : "lorine@ebert-turner-and-ryan.am",
+      "last_name" : "Wilkinson",
+      "first_name" : "Mazie"
+   }
+}
+

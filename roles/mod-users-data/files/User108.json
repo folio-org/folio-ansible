@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Boris",
+      "last_name" : "Stamm",
+      "email" : "angela@hammes-cormier-and-kutch.gr"
+   },
+   "id" : "9D0E7415-7946-4FA4-A853-4B1065A1CA57",
+   "username" : "emory",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1998-10-07",
+      "last_login_date" : "2015-03-14"
+   }
+}
+

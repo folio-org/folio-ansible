@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1979-03-03",
+      "last_login_date" : "1983-04-18"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "brandi",
+   "id" : "58BF2110-3529-4070-BE70-F900FDF0EE72",
+   "personal" : {
+      "email" : "antonette@vonrueden-stark-and-flatley.ci",
+      "last_name" : "Jewess",
+      "first_name" : "Gayle"
+   }
+}
+

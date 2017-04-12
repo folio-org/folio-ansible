@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2015-12-27",
+      "creation_date" : "1976-03-24"
+   },
+   "type" : "patron",
+   "username" : "marley",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Jared",
+      "email" : "lloyd@johnson-carter-and-aufderhar.om",
+      "last_name" : "Larson"
+   },
+   "id" : "743CC816-42A0-4CB8-A95A-DB92E026A34E"
+}
+

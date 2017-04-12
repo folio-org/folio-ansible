@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1996-05-28",
+      "creation_date" : "2010-05-24"
+   },
+   "id" : "00B1EB00-3164-481F-AC36-503047CB12A2",
+   "personal" : {
+      "first_name" : "Jeanette",
+      "email" : "monica@reichel-cole-and-altenwerth.md.us",
+      "last_name" : "Smith"
+   },
+   "active" : true,
+   "username" : "marcel"
+}
+

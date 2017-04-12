@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1993-03-07",
+      "creation_date" : "1991-09-13"
+   },
+   "personal" : {
+      "email" : "mohamed@beer-douglas.coop",
+      "last_name" : "Jast",
+      "first_name" : "Elmore"
+   },
+   "id" : "5ACB1CEC-7F82-40F0-8B32-BE9EAF673765",
+   "username" : "garnet",
+   "active" : true
+}
+

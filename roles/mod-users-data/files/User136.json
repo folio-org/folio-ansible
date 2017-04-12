@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2015-03-17",
+      "creation_date" : "2001-08-22"
+   },
+   "personal" : {
+      "email" : "laverna@langosh-stamm.uy",
+      "last_name" : "Bauch",
+      "first_name" : "Maximo"
+   },
+   "id" : "97D01A45-8CD7-4238-B67B-556DCD706DFF",
+   "username" : "kole",
+   "active" : true
+}
+

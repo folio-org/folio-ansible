@@ -1,0 +1,16 @@
+{
+   "username" : "jesse",
+   "active" : false,
+   "personal" : {
+      "email" : "hulda@ohara-llc.re",
+      "last_name" : "Mraz",
+      "first_name" : "Kian"
+   },
+   "id" : "55E88DD1-1151-4EE7-A2F5-B90498CD831C",
+   "meta" : {
+      "last_login_date" : "1988-03-31",
+      "creation_date" : "1983-07-14"
+   },
+   "type" : "patron"
+}
+

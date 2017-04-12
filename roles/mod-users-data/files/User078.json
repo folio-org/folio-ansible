@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "2008-03-03",
+      "last_login_date" : "1980-06-29"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "tristin",
+   "id" : "F5991F8E-1339-4001-8190-BF83754A09A8",
+   "personal" : {
+      "email" : "triston@gorczany-inc.ng",
+      "last_name" : "Herman",
+      "first_name" : "Winnifred"
+   }
+}
+

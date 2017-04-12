@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2014-09-14",
+      "last_login_date" : "1996-08-11"
+   },
+   "personal" : {
+      "first_name" : "Giovanni",
+      "email" : "letitia@swift-schaefer.do",
+      "last_name" : "Mraz"
+   },
+   "id" : "39D4C002-9D08-48C5-B65D-BC095090CD13",
+   "username" : "gertrude",
+   "active" : true
+}
+

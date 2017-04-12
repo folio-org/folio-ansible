@@ -1,0 +1,16 @@
+{
+   "id" : "96285C1E-3F75-452C-81FC-A844D808F601",
+   "personal" : {
+      "first_name" : "Monica",
+      "last_name" : "Bashirian",
+      "email" : "reva@wilderman-and-sons.hi.us"
+   },
+   "active" : true,
+   "username" : "buford",
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2006-03-11",
+      "last_login_date" : "2015-05-01"
+   }
+}
+

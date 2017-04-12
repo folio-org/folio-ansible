@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "gwendolyn",
+   "id" : "D3EE8EB7-297D-4038-816F-CF0C32D59A53",
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "lilyan@haag-thiel-and-wilkinson.aw",
+      "first_name" : "Norwood"
+   },
+   "meta" : {
+      "last_login_date" : "2003-11-19",
+      "creation_date" : "1997-08-10"
+   },
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1972-01-11",
+      "last_login_date" : "1993-02-21"
+   },
+   "type" : "patron",
+   "username" : "kaden",
+   "active" : true,
+   "personal" : {
+      "email" : "howard@cummings-roob.yu",
+      "last_name" : "Batz",
+      "first_name" : "Dagmar"
+   },
+   "id" : "1D4482FC-7D27-472B-8ADF-FD6DC26191DD"
+}
+

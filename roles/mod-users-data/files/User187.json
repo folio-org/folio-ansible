@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1981-10-05",
+      "last_login_date" : "1977-02-06"
+   },
+   "type" : "patron",
+   "active" : true,
+   "username" : "marcelo",
+   "id" : "E063E49C-5031-427C-9BAB-5978C5C2B510",
+   "personal" : {
+      "email" : "bradford@gleichner-quitzon-and-olson.nm.us",
+      "last_name" : "Bashirian",
+      "first_name" : "Arnulfo"
+   }
+}
+

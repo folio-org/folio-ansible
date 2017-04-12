@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2015-07-19",
+      "last_login_date" : "1998-11-21"
+   },
+   "id" : "8CB5B03C-4C7D-44E6-8C90-B4DAEFA9E92C",
+   "personal" : {
+      "first_name" : "Vernie",
+      "email" : "bernie@fay-gleason.ug",
+      "last_name" : "Greenfelder"
+   },
+   "active" : true,
+   "username" : "kane"
+}
+

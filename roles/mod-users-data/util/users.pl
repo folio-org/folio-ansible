@@ -11,11 +11,17 @@ if ($ARGV[0]) {
 } else {
   $users = 20;
 }
+my $start;
+if ($ARGV[1]) {
+  $start = $ARGV[1];
+} else {
+  $start = 0;
+}
 
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
 
-for (my $i = 0; $i < $users; $i++) {
+for (my $i = $start; $i < $users + $start; $i++) {
   my $user = {
               username => $faker->username(),
               id => uuid(),

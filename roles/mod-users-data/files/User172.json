@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "username" : "sadye",
+   "id" : "0B279693-3B2D-4D8B-A68A-86A7CDA777F6",
+   "personal" : {
+      "last_name" : "Turcotte",
+      "email" : "delphine@homenick-cormier.gi",
+      "first_name" : "Lesley"
+   },
+   "meta" : {
+      "last_login_date" : "1970-01-28",
+      "creation_date" : "1974-02-20"
+   },
+   "type" : "patron"
+}
+

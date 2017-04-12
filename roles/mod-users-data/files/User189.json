@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2011-03-21",
+      "creation_date" : "1998-06-12"
+   },
+   "type" : "patron",
+   "username" : "rose",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "melany@rippin-frami-and-littel.ci",
+      "first_name" : "Maxime"
+   },
+   "id" : "4CF3AB29-2401-4FDA-9EED-7BA0BE8BBABE"
+}
+

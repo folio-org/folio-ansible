@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1977-08-05",
+      "last_login_date" : "2001-08-05"
+   },
+   "type" : "patron",
+   "username" : "sherwood",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Charlie",
+      "email" : "eloy@ziemann-llc.zw",
+      "last_name" : "O'Hara"
+   },
+   "id" : "DBD0D8D7-0A3E-4DE4-9BF9-67AC7F5B7607"
+}
+

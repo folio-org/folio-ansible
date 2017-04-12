@@ -1,0 +1,16 @@
+{
+   "id" : "C22320B6-5FBA-44B0-BE27-FF675691CF96",
+   "personal" : {
+      "first_name" : "Gertrude",
+      "email" : "citlalli@haag-rice.ok.us",
+      "last_name" : "Dickinson"
+   },
+   "active" : true,
+   "username" : "terry",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1976-07-03",
+      "creation_date" : "2010-01-15"
+   }
+}
+

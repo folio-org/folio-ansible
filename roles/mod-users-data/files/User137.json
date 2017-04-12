@@ -1,0 +1,16 @@
+{
+   "username" : "frederick",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Katrina",
+      "last_name" : "Rice",
+      "email" : "bell@waters-homenick.cl"
+   },
+   "id" : "4EE80E0C-062D-4537-BC4D-74BFE89D84D8",
+   "meta" : {
+      "creation_date" : "2016-05-03",
+      "last_login_date" : "1983-04-24"
+   },
+   "type" : "patron"
+}
+

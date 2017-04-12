@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "lucile@howe-roob.pn",
+      "last_name" : "Mraz",
+      "first_name" : "Louie"
+   },
+   "id" : "821DE7BD-C9E9-4F45-8A4D-D4BBA5B7611E",
+   "username" : "modesto",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1995-05-22",
+      "creation_date" : "1974-12-23"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1978-03-10",
+      "last_login_date" : "2013-10-13"
+   },
+   "id" : "105830FA-7D40-47CE-BA8A-16E6228DAD93",
+   "personal" : {
+      "first_name" : "Katheryn",
+      "last_name" : "Marks",
+      "email" : "kayleigh@roob-hilpert.ca.us"
+   },
+   "active" : false,
+   "username" : "selina"
+}
+

@@ -1,0 +1,16 @@
+{
+   "id" : "336058A3-24CA-44B7-B81B-B9AEE8F7127D",
+   "personal" : {
+      "last_name" : "Boehm",
+      "email" : "fermin@beer-robel.nv.us",
+      "first_name" : "Dean"
+   },
+   "active" : true,
+   "username" : "dasia",
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2005-08-14",
+      "creation_date" : "1990-07-17"
+   }
+}
+

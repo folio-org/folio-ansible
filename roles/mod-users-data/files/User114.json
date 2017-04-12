@@ -1,0 +1,16 @@
+{
+   "username" : "alycia",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Daniella",
+      "last_name" : "Mraz",
+      "email" : "carrie@leffler-schamberger-and-hettinger.cx"
+   },
+   "id" : "7682F0EA-2945-4636-8722-45C48ED04738",
+   "meta" : {
+      "creation_date" : "1999-02-17",
+      "last_login_date" : "1978-05-02"
+   },
+   "type" : "patron"
+}
+

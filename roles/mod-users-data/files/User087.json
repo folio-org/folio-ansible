@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1986-02-15",
+      "last_login_date" : "2008-10-23"
+   },
+   "id" : "AB8DC625-3DA8-477E-8B7F-9B6D67E8498A",
+   "personal" : {
+      "first_name" : "George",
+      "email" : "nigel@hegmann-group.nc.us",
+      "last_name" : "Goodwin"
+   },
+   "active" : true,
+   "username" : "reva"
+}
+

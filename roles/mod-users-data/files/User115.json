@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1976-07-13",
+      "last_login_date" : "2010-02-12"
+   },
+   "type" : "patron",
+   "active" : false,
+   "username" : "vergie",
+   "id" : "CCC06A13-7325-430C-9E27-1241EF34B759",
+   "personal" : {
+      "first_name" : "Dedric",
+      "email" : "bessie@fahey-jast-and-kunze.mv",
+      "last_name" : "Mraz"
+   }
+}
+

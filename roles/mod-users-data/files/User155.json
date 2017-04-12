@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Wintheiser",
+      "email" : "edyth@marvin-morar.eh",
+      "first_name" : "Amparo"
+   },
+   "id" : "7CE4C996-03A0-4515-9AD4-F1036E24AB1F",
+   "username" : "myron",
+   "active" : true,
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "2007-01-24",
+      "last_login_date" : "1998-04-28"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1992-02-26",
+      "last_login_date" : "1978-10-22"
+   },
+   "id" : "A6FEC680-6192-4CA8-B18D-29743D29ED91",
+   "personal" : {
+      "email" : "mara@weissnat-gleason-and-sanford.co.us",
+      "last_name" : "Bernier",
+      "first_name" : "Hobart"
+   },
+   "active" : true,
+   "username" : "august"
+}
+

@@ -1,0 +1,16 @@
+{
+   "username" : "adrienne",
+   "active" : true,
+   "personal" : {
+      "email" : "kelsie@maggio-llc.bt",
+      "last_name" : "Mraz",
+      "first_name" : "Maryam"
+   },
+   "id" : "4C581C61-5F34-4E30-AF9A-1D9A194A57B4",
+   "meta" : {
+      "last_login_date" : "2014-12-23",
+      "creation_date" : "1983-06-05"
+   },
+   "type" : "patron"
+}
+

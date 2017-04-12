@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Spinka",
+      "email" : "arturo@rippin-inc.mi.us",
+      "first_name" : "Zena"
+   },
+   "id" : "B17F0005-CBFE-4CFE-BE1F-6EE37D9F7AE2",
+   "username" : "giuseppe",
+   "active" : false,
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2008-07-02",
+      "creation_date" : "1992-10-18"
+   }
+}
+

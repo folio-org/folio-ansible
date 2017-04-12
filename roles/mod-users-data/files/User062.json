@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1978-01-22",
+      "creation_date" : "2008-02-03"
+   },
+   "type" : "patron",
+   "username" : "holden",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Mraz",
+      "email" : "terry@herman-wolff.tw",
+      "first_name" : "Elouise"
+   },
+   "id" : "96412F64-FF91-4E92-88DB-51A15C1C4500"
+}
+
