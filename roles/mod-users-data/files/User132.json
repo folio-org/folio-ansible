@@ -1,15 +1,15 @@
 {
-   "active" : false,
-   "username" : "george",
-   "id" : "F4418F32-E766-4291-93DB-A0540FCF3353",
-   "personal" : {
-      "last_name" : "Mraz",
-      "email" : "ellie@zulauf-and-sons.fr",
-      "first_name" : "Florian"
-   },
    "meta" : {
-      "last_login_date" : "1970-10-08",
-      "creation_date" : "2000-03-27"
+      "creation_date" : "1999-01-01",
+      "last_login_date" : "2013-03-05"
+   },
+   "id" : "7BACD395-7FB0-40B0-A1D7-EDBF71081BEB",
+   "username" : "houston",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Lexi",
+      "last_name" : "Walsh",
+      "email" : "hilario@casper-group.nz"
    },
    "type" : "patron"
 }

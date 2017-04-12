@@ -1,15 +1,15 @@
 {
-   "username" : "vance",
+   "id" : "9C249ACA-4002-4798-90D2-E0263190A81F",
+   "meta" : {
+      "creation_date" : "1973-05-27",
+      "last_login_date" : "1993-10-31"
+   },
+   "username" : "elinor",
    "active" : true,
    "personal" : {
-      "email" : "beau@hodkiewicz-llc.sa",
-      "last_name" : "Schulist",
-      "first_name" : "Amelia"
-   },
-   "id" : "380C4511-2D76-4D49-BE14-BD2E4B660FB4",
-   "meta" : {
-      "last_login_date" : "2006-06-23",
-      "creation_date" : "1979-04-21"
+      "email" : "dovie@haag-and-sons.mm",
+      "last_name" : "Lockman",
+      "first_name" : "Bobby"
    },
    "type" : "patron"
 }

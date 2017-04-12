@@ -1,16 +1,16 @@
 {
-   "personal" : {
-      "last_name" : "Vandervort",
-      "email" : "bernhard@harvey-waelchi.ml",
-      "first_name" : "Abdiel"
-   },
-   "id" : "934AAABC-FFFF-4115-905D-E1485226167B",
-   "username" : "kianna",
-   "active" : true,
-   "type" : "patron",
+   "id" : "BE5AA1E5-A675-4ECD-829A-45CBB573EF16",
    "meta" : {
-      "creation_date" : "1970-07-13",
-      "last_login_date" : "2016-03-08"
-   }
+      "creation_date" : "1989-12-05",
+      "last_login_date" : "1995-07-19"
+   },
+   "username" : "destini",
+   "active" : true,
+   "personal" : {
+      "email" : "iliana@kreiger-group.vn",
+      "last_name" : "Walter",
+      "first_name" : "Haven"
+   },
+   "type" : "patron"
 }
 

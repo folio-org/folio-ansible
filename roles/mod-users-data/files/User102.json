@@ -1,16 +1,16 @@
 {
-   "type" : "patron",
-   "meta" : {
-      "last_login_date" : "1998-09-01",
-      "creation_date" : "1977-04-23"
-   },
-   "id" : "4D1C85E2-9945-4AF8-8C9F-52F56CF1A7F9",
    "personal" : {
-      "first_name" : "Lisette",
-      "email" : "michel@wyman-ernser-and-hermiston.lt",
-      "last_name" : "Stracke"
+      "first_name" : "Roderick",
+      "last_name" : "Boyer",
+      "email" : "bobby@brown-group.ga.us"
    },
+   "meta" : {
+      "creation_date" : "1987-04-19",
+      "last_login_date" : "1977-09-12"
+   },
+   "id" : "4C51F7EF-6360-40D8-9124-8BF31AE76464",
+   "username" : "jackie",
    "active" : true,
-   "username" : "alison"
+   "type" : "patron"
 }
 

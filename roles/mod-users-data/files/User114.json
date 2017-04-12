@@ -1,16 +1,16 @@
 {
-   "username" : "alycia",
+   "type" : "patron",
    "active" : true,
-   "personal" : {
-      "first_name" : "Daniella",
-      "last_name" : "Mraz",
-      "email" : "carrie@leffler-schamberger-and-hettinger.cx"
-   },
-   "id" : "7682F0EA-2945-4636-8722-45C48ED04738",
+   "username" : "clarissa",
    "meta" : {
-      "creation_date" : "1999-02-17",
-      "last_login_date" : "1978-05-02"
+      "creation_date" : "2007-10-05",
+      "last_login_date" : "2005-02-04"
    },
-   "type" : "patron"
+   "id" : "5CC75805-F26E-454B-9D70-C260BE4E7E12",
+   "personal" : {
+      "first_name" : "Clara",
+      "last_name" : "Grimes",
+      "email" : "malika@fahey-kihn.mh"
+   }
 }
 

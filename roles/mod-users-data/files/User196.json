@@ -1,15 +1,15 @@
 {
-   "active" : true,
-   "username" : "kameron",
-   "id" : "4F58C593-E3DC-491C-9A91-AC71C74BB026",
-   "personal" : {
-      "last_name" : "Homenick",
-      "email" : "marcel@wolf-morissette.sl",
-      "first_name" : "Wava"
-   },
    "meta" : {
-      "last_login_date" : "1974-11-04",
-      "creation_date" : "2000-08-22"
+      "last_login_date" : "1994-12-02",
+      "creation_date" : "1995-07-08"
+   },
+   "id" : "930EA9B5-9E94-499B-B021-DA5D5C9B5279",
+   "username" : "desmond",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Dayana",
+      "email" : "rollin@sanford-hickle-and-watsica.id.us",
+      "last_name" : "Kulas"
    },
    "type" : "patron"
 }

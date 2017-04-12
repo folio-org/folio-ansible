@@ -1,15 +1,15 @@
 {
-   "username" : "ariane",
    "active" : true,
-   "personal" : {
-      "first_name" : "Ashlynn",
-      "email" : "malachi@christiansen-turner-and-ondricka.nh.us",
-      "last_name" : "Mraz"
-   },
-   "id" : "AF778236-72F8-44BF-9852-641F0D557FFF",
+   "id" : "6921800B-3F2F-4CF6-9384-E7129B64DD13",
    "meta" : {
-      "last_login_date" : "1979-10-30",
-      "creation_date" : "1973-11-27"
+      "creation_date" : "2003-12-21",
+      "last_login_date" : "1972-11-02"
+   },
+   "username" : "mckenna",
+   "personal" : {
+      "email" : "raymond@schinner-hagenes-and-dickens.in.us",
+      "last_name" : "Rolfson",
+      "first_name" : "Mike"
    },
    "type" : "patron"
 }

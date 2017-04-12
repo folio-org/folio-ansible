@@ -1,16 +1,16 @@
 {
-   "id" : "C22320B6-5FBA-44B0-BE27-FF675691CF96",
    "personal" : {
-      "first_name" : "Gertrude",
-      "email" : "citlalli@haag-rice.ok.us",
-      "last_name" : "Dickinson"
+      "email" : "ima@zieme-anderson.er",
+      "last_name" : "Ondricka",
+      "first_name" : "Hellen"
    },
    "active" : true,
-   "username" : "terry",
-   "type" : "patron",
    "meta" : {
-      "last_login_date" : "1976-07-03",
-      "creation_date" : "2010-01-15"
-   }
+      "last_login_date" : "1997-12-16",
+      "creation_date" : "2015-11-10"
+   },
+   "username" : "sasha",
+   "id" : "7A4EF7B9-EE4B-49B1-BEB4-78023A77C9F4",
+   "type" : "patron"
 }
 

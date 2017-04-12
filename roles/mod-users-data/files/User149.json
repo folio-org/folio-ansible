@@ -1,15 +1,15 @@
 {
-   "username" : "sallie",
+   "username" : "bettie",
+   "meta" : {
+      "creation_date" : "1980-09-21",
+      "last_login_date" : "1972-03-02"
+   },
+   "id" : "64C1F3CA-C698-44FD-8CBE-3DA6FE004904",
    "active" : true,
    "personal" : {
-      "last_name" : "Mraz",
-      "email" : "victor@zulauf-murphy-and-donnelly.by",
-      "first_name" : "Ofelia"
-   },
-   "id" : "93739C89-3FDA-4ECD-AF17-631412E3498E",
-   "meta" : {
-      "last_login_date" : "1979-11-05",
-      "creation_date" : "2005-11-07"
+      "first_name" : "Kellie",
+      "last_name" : "Schuppe",
+      "email" : "chesley@rippin-gislason-and-crona.um"
    },
    "type" : "patron"
 }

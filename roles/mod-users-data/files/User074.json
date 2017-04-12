@@ -1,16 +1,16 @@
 {
-   "personal" : {
-      "first_name" : "Cade",
-      "last_name" : "Pfannerstill",
-      "email" : "demetrius@schamberger-schaefer.id.us"
-   },
-   "id" : "0A8FBC17-7743-40F2-B765-15885070A731",
-   "username" : "jarvis",
-   "active" : true,
    "type" : "patron",
    "meta" : {
-      "creation_date" : "1995-10-08",
-      "last_login_date" : "1988-11-12"
+      "last_login_date" : "1992-04-10",
+      "creation_date" : "2008-10-07"
+   },
+   "id" : "F2A8B6E2-7B45-4D96-B0D3-6C877D58E310",
+   "username" : "edyth",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Lemke",
+      "email" : "audie@harvey-rutherford-and-botsford.rw",
+      "first_name" : "Trevion"
    }
 }
 

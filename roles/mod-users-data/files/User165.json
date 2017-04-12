@@ -1,16 +1,16 @@
 {
-   "personal" : {
-      "email" : "joelle@dooley-bartell-and-pfeffer.gi",
-      "last_name" : "Lang",
-      "first_name" : "Christa"
-   },
-   "id" : "E419504D-E453-45DB-9C82-7195D380E949",
-   "username" : "cade",
-   "active" : true,
    "type" : "patron",
+   "personal" : {
+      "first_name" : "Martina",
+      "last_name" : "Huel",
+      "email" : "angelica@gottlieb-howe.id"
+   },
+   "id" : "CFBD8DF8-A162-4389-B372-6684F27E6586",
    "meta" : {
-      "last_login_date" : "2012-01-21",
-      "creation_date" : "1994-06-02"
-   }
+      "creation_date" : "2005-02-23",
+      "last_login_date" : "2017-03-14"
+   },
+   "username" : "osbaldo",
+   "active" : true
 }
 
