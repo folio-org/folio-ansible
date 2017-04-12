@@ -1,7 +1,7 @@
 {
   "srvcId" : "permissions-module",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-permissions",
+    "dockerImage" : "{{ mod_auth_modules[2].docker_image }}",
     "env" : [
       { "name" : "db.host", "value" : "{{ pg_host }}" },
       { "name" : "db.port", "value" : "{{ pg_port }}" },

@@ -6,9 +6,13 @@ docker_users:
   - folio
   - vagrant
 stripes_host_address: 0.0.0.0
-mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json.OLD
 mod_metadata_modules:
-  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory }
+  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json", docker_image: "folioci/mod-inventory-storage:3.1.1-SNAPSHOT" }
+  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json", docker_image: "folioci/mod-inventory" }
 mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
 mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
+auth_required: true
+mod_users_version: 6.2.2-SNAPSHOT
+mod_loan_storage_version: 1.0.2-SNAPSHOT
+mod_users_bl_version: 0.1.0-SNAPSHOT
+

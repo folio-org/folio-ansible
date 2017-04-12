@@ -4,3 +4,5 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 mod_metadata_modules:
   - { index: 0, module: inventory-storage }
   - { index: 1, module: inventory }
+auth_required: false
+admin_user: { username: diku_admin, password: admin }

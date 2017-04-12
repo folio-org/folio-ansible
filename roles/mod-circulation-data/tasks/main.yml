@@ -38,8 +38,20 @@
   changed_when: mod_circulation_enable.status == 201
   when: tenant_mod_circulation.status == 404
 
-# This should really only happen if the data aren't already there
-# 400 error means the data are already there
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_circulation_login
+  when: auth_required
+
+# 422 error means the data are already there
 - name: Load circulation
   uri:
     url: "{{ okapi_url }}/circulation/loans"
@@ -48,8 +60,9 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
-    status_code: 201,400
+    status_code: 201,422
   register: load_loan
   changed_when: load_loan.status == 201
   with_fileglob:
