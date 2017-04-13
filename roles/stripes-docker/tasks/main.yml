@@ -6,12 +6,6 @@
     path: "{{ stripes_conf_dir }}"
     state: directory
 
-- name: copy Dockerfile to stripes conf dir
-  become: yes
-  copy: 
-    src: Dockerfile
-    dest: "{{ stripes_conf_dir }}/Dockerfile"
-
 - name: generate templates and copy to build dir
   become: yes
   template: 
@@ -20,8 +14,49 @@
   with_items: 
     - { src: 'stripes.config.js.j2', dest: 'stripes.config.js' }
     - { src: 'package.json.j2', dest: 'package.json' }
-    - { src: 'npmrc.j2', dest: 'npmrc' }
+  when: with_github == false
 
+- name: copy stripes platform files from github project
+  become: yes
+  git: 
+    repo: "{{ stripes_github_project }}"
+    dest: "{{ stripes_conf_dir }}"
+  when: with_github == true
+
+- name: set okapi url in stripes config
+  become: yes
+  replace: 
+    name: "{{ stripes_conf_dir }}/stripes.config.js"
+    regexp: >- 
+       ('url':\s*'?)http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+('.*)$
+    replace: >-
+       \1{{ stripes_okapi_url }}\2
+  when: with_github == true
+
+- name: set tenant in stripes config
+  become: yes
+  replace: 
+    name: "{{ stripes_conf_dir }}/stripes.config.js"
+    regexp: >-
+      ('tenant':\s*'?)[A-Za-z0-9\-]+('.*)$
+    replace: >-
+      \1{{ stripes_tenant }}\2 
+  when: with_github == true
+
+- name: copy Dockerfile to stripes conf dir
+  become: yes
+  copy: 
+    src: Dockerfile
+    dest: "{{ stripes_conf_dir }}/Dockerfile"
+
+- name: copy npmrc configuration 
+  become: yes
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ stripes_conf_dir }}/{{ item.dest }}"
+  with_items:
+    - { src: 'npmrc.j2', dest: 'npmrc' }
+  
 - name: create docker network for stripes
   become: yes
   docker_network: 

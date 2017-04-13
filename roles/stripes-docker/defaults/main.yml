@@ -1,5 +1,11 @@
 ---
 
+# Use a preconfigured gitbub stripes platform
+with_github: true
+stripes_github_project: https://github.com/folio-org/stripes-demo-platform
+
+# OR specify stripes configuration here and configure from ansible templates 
+stripes_core_version: "^0.7.0"
 stripes_modules:
   - { name: "@folio/users", version: "^1.1.0" }
   - { name: "@folio/items", version: "^1.1.0" }
@@ -9,7 +15,8 @@ stripes_modules:
 # disable okapi-console - https://issues.folio.org/browse/STRIPES-264
 #  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
 
-stripes_core_version: "^0.7.0"
+
+# Other relevant vars
 stripes_conf_dir: /etc/folio/stripes
 stripes_okapi_port: 9130
 disable_auth: false
@@ -25,8 +32,12 @@ nginx_port: 80
 # can override with ec2_facts 'ansible_ec2_public_hostname' for AWS
 nginx_servername: localhost
 
+# NPM repository settings
+folio_npm_base_url: repository.folio.org/repository/
+folio_npm_repo: npm-folio
+
 #
-# for use by FOLIO CI. disabled by default
+# Disabled by default
 # 
-folioci: false
+npm_proxy: false
 npm_authtoken: ''
