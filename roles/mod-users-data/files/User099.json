@@ -1,0 +1,16 @@
+{
+   "id" : "D3806071-A55E-48DE-B148-6F5F1A4B616E",
+   "meta" : {
+      "last_login_date" : "1998-05-26",
+      "creation_date" : "1973-06-08"
+   },
+   "username" : "wilma",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Breana",
+      "email" : "guiseppe@walter-greenfelder.mn.us",
+      "last_name" : "D'Amore"
+   },
+   "type" : "patron"
+}
+

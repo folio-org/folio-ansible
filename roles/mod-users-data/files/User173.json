@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Katarina",
+      "last_name" : "Prohaska",
+      "email" : "bruce@graham-llc.museum"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "1970-09-22",
+      "creation_date" : "1992-05-09"
+   },
+   "username" : "susanna",
+   "id" : "4708A1ED-B282-43AB-AEF4-B325F98CB290"
+}
+

@@ -1,0 +1,16 @@
+{
+   "active" : true,
+   "id" : "10E00A69-7C16-4CBF-8455-CEB61DEA225C",
+   "meta" : {
+      "creation_date" : "2006-10-01",
+      "last_login_date" : "1986-01-02"
+   },
+   "username" : "cedrick",
+   "personal" : {
+      "first_name" : "Brittany",
+      "last_name" : "Nader",
+      "email" : "michele@cole-llc.ba"
+   },
+   "type" : "patron"
+}
+

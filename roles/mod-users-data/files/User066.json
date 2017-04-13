@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "lillie@hoeger-hills-and-tromp.hn",
+      "last_name" : "Nader",
+      "first_name" : "Marian"
+   },
+   "meta" : {
+      "creation_date" : "2004-09-08",
+      "last_login_date" : "1972-06-05"
+   },
+   "username" : "fidel",
+   "id" : "428ADC0A-A22F-4950-B94C-3075F1073312",
+   "active" : true
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "2017-02-02",
+      "creation_date" : "2007-06-09"
+   },
+   "username" : "steve",
+   "id" : "8721B87D-E0FC-40ED-A675-92F23609C784",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Zieme",
+      "email" : "moses@powlowski-schaden-and-maggio.ga",
+      "first_name" : "Davonte"
+   }
+}
+

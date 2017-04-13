@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Lelah",
+      "email" : "sunny@wisoky-brown-and-parisian.gr",
+      "last_name" : "Fisher"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "1981-08-12",
+      "creation_date" : "2008-12-23"
+   },
+   "id" : "37241FE4-72FE-418D-A411-5FAA1F5F5E0C",
+   "username" : "hal"
+}
+

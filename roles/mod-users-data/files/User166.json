@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Kaitlyn",
+      "email" : "letha@towne-hahn.ar",
+      "last_name" : "Greenholt"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "1971-09-25",
+      "creation_date" : "2013-12-13"
+   },
+   "username" : "jennyfer",
+   "id" : "A7D2463E-B361-44ED-8739-33ABBFC666F9"
+}
+

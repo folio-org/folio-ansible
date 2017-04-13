@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "kadin@gibson-gusikowski.tn",
+      "last_name" : "Swaniawski",
+      "first_name" : "Clyde"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "1984-01-10",
+      "creation_date" : "1990-03-01"
+   },
+   "username" : "tiana",
+   "id" : "BC692350-D1F4-4314-97DD-1B7967E03D65"
+}
+

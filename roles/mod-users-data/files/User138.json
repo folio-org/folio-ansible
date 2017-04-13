@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "2005-03-22",
+      "creation_date" : "2012-06-08"
+   },
+   "id" : "8E56B419-6ECA-4687-B561-86C1B225D562",
+   "username" : "ethel",
+   "personal" : {
+      "first_name" : "Meta",
+      "email" : "shanon@jones-group.af",
+      "last_name" : "Spinka"
+   }
+}
+

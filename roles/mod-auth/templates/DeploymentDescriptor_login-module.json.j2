@@ -1,7 +1,7 @@
 {
   "srvcId" : "login-module",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-login",
+    "dockerImage" : "{{ mod_auth_modules[1].docker_image }}",
     "env" : [
       { "name" : "db.host", "value" : "{{ pg_host }}" },
       { "name" : "db.port", "value" : "{{ pg_port }}" },

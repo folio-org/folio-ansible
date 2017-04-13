@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Delores",
+      "email" : "earl@flatley-and-sons.ba",
+      "last_name" : "Douglas"
+   },
+   "active" : true,
+   "meta" : {
+      "creation_date" : "1988-09-13",
+      "last_login_date" : "1979-10-05"
+   },
+   "username" : "trevor",
+   "id" : "198DC231-2A42-4390-BAED-EB61B78DF99D",
+   "type" : "patron"
+}
+

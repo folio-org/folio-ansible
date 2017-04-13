@@ -23,6 +23,19 @@
   when: tenant_mod_metadata.results[item.index].status == 404
   with_items: "{{ mod_metadata_modules }}"
 
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_metadata_login
+  when: auth_required
+
 - name: Check for sample instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
@@ -30,6 +43,7 @@
       Content-Type: application/json
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
   register: inventory_instances
 
 - name: Check for sample items
@@ -39,6 +53,7 @@
       Content-Type: application/json
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
   register: inventory_items
 
 # fails with 400 error if already loaded
@@ -50,6 +65,7 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 400
   register: load_mtype
@@ -65,6 +81,7 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201
   register: load_instance
@@ -81,6 +98,7 @@
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201
   register: load_item
@@ -95,5 +113,5 @@
   register: mods_sample
 
 - name: Load sample data from MODS ingest
-  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Toke: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
   when: mods_sample.changed

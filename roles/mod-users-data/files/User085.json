@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "last_name" : "Bahringer",
+      "email" : "colten@stracke-hegmann.ve",
+      "first_name" : "Aurelie"
+   },
+   "username" : "braxton",
+   "meta" : {
+      "last_login_date" : "1990-05-01",
+      "creation_date" : "2015-08-31"
+   },
+   "id" : "2832A5A2-8A13-4BB9-8A2C-3019711B7B07",
+   "active" : false
+}
+

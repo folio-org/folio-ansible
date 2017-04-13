@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Aida",
+      "email" : "vivien@ankunding-keeling.mt.us",
+      "last_name" : "Runolfsdottir"
+   },
+   "meta" : {
+      "creation_date" : "1982-06-15",
+      "last_login_date" : "1980-01-02"
+   },
+   "id" : "4599273F-A3F2-4B02-B9ED-7D7E5351AEF4",
+   "username" : "foster",
+   "active" : false
+}
+

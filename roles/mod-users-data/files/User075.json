@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Viola",
+      "last_name" : "Nader",
+      "email" : "kara@mcdermott-llc.va"
+   },
+   "meta" : {
+      "last_login_date" : "2009-07-16",
+      "creation_date" : "2011-07-06"
+   },
+   "id" : "0C0CFDDC-DB5A-4F51-9373-A3A55BE40A3D",
+   "username" : "aracely",
+   "active" : true,
+   "type" : "patron"
+}
+

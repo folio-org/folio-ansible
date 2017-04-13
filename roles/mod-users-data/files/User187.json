@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "1986-10-12",
+      "creation_date" : "1970-03-20"
+   },
+   "id" : "013D1970-C398-4D49-8349-E42401C5CBC2",
+   "username" : "joanny",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Gino",
+      "last_name" : "Oberbrunner",
+      "email" : "ryleigh@rohan-lueilwitz.no"
+   },
+   "type" : "patron"
+}
+

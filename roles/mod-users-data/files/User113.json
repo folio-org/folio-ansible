@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "last_name" : "Vandervort",
+      "email" : "arden@koss-johnston-and-borer.uy",
+      "first_name" : "Laverne"
+   },
+   "active" : true,
+   "id" : "5EF3B59D-BD58-4918-AD99-E83FFDDE019D",
+   "meta" : {
+      "creation_date" : "1972-05-07",
+      "last_login_date" : "1991-12-13"
+   },
+   "username" : "tillman"
+}
+

@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "last_name" : "Konopelski",
+      "email" : "laurie@gleason-dooley.ac.uk",
+      "first_name" : "Magdalena"
+   },
+   "id" : "B7360A56-F27B-47E5-8A52-80232338B011",
+   "meta" : {
+      "creation_date" : "1978-02-01",
+      "last_login_date" : "2005-03-21"
+   },
+   "username" : "libby",
+   "active" : true,
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "username" : "lavon",
+   "meta" : {
+      "creation_date" : "2011-06-04",
+      "last_login_date" : "1990-12-21"
+   },
+   "id" : "DF244591-0540-4CA8-8672-E17ED24F48D6",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Keeling",
+      "email" : "kareem@harvey-erdman-and-kirlin.cx",
+      "first_name" : "Kip"
+   }
+}
+

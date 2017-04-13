@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : true,
+   "username" : "maudie",
+   "meta" : {
+      "creation_date" : "1982-04-12",
+      "last_login_date" : "2001-06-02"
+   },
+   "id" : "AB40F517-BDDD-4E4F-905A-CBE391949408",
+   "personal" : {
+      "last_name" : "Erdman",
+      "email" : "ronaldo@morissette-group.br",
+      "first_name" : "Yazmin"
+   }
+}
+

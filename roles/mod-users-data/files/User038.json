@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Bria",
+      "email" : "brain@schowalter-llc.mi.us",
+      "last_name" : "Ondricka"
+   },
+   "active" : false,
+   "username" : "daphne",
+   "meta" : {
+      "creation_date" : "1973-03-27",
+      "last_login_date" : "1996-06-10"
+   },
+   "id" : "D2A7624F-7CA4-4B09-AFB6-2B84BF42D91A"
+}
+

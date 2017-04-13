@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "monte@raynor-and-sons.museum",
+      "last_name" : "Dach",
+      "first_name" : "Bobby"
+   },
+   "meta" : {
+      "last_login_date" : "2011-10-16",
+      "creation_date" : "1981-06-25"
+   },
+   "username" : "emma",
+   "id" : "EA7A61CA-5D7A-4F90-8287-44EA59E54376",
+   "active" : true
+}
+

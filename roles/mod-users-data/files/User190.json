@@ -1,0 +1,16 @@
+{
+   "id" : "89D490E7-A056-4570-B013-1B2DA3D2C645",
+   "meta" : {
+      "creation_date" : "1986-04-27",
+      "last_login_date" : "2011-11-06"
+   },
+   "username" : "leonard",
+   "active" : true,
+   "personal" : {
+      "email" : "silas@hane-grady-and-herman.cv",
+      "last_name" : "Mills",
+      "first_name" : "Hector"
+   },
+   "type" : "patron"
+}
+

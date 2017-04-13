@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "theodore@watsica-borer.br",
+      "last_name" : "Lowe",
+      "first_name" : "Esmeralda"
+   },
+   "id" : "D973AEFA-9BC8-482D-994D-76432B412FA5",
+   "meta" : {
+      "creation_date" : "2013-02-03",
+      "last_login_date" : "1976-06-21"
+   },
+   "username" : "lenore",
+   "active" : false
+}
+

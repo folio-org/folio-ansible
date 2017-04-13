@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Laila",
+      "email" : "amely@zemlak-llc.lc",
+      "last_name" : "Beer"
+   },
+   "active" : false,
+   "meta" : {
+      "creation_date" : "1976-11-27",
+      "last_login_date" : "1992-05-08"
+   },
+   "username" : "julien",
+   "id" : "1E217AF1-A475-4E3B-8CD8-B02F7C68CA4E"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : false,
+   "username" : "lottie",
+   "meta" : {
+      "last_login_date" : "1991-06-30",
+      "creation_date" : "1996-12-22"
+   },
+   "id" : "023E4B1C-6F53-4AEA-B86F-F48963DA7F9E",
+   "personal" : {
+      "first_name" : "Melvina",
+      "email" : "rosalind@trantow-group.aero",
+      "last_name" : "Nader"
+   }
+}
+

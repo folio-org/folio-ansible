@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "username" : "willow",
+   "meta" : {
+      "last_login_date" : "2001-09-09",
+      "creation_date" : "2004-12-09"
+   },
+   "id" : "C03E9DAD-2DE9-40D5-BEE1-B192D5360855",
+   "active" : true,
+   "personal" : {
+      "email" : "melvin@hermiston-group.or.us",
+      "last_name" : "Jewess",
+      "first_name" : "Ambrose"
+   }
+}
+

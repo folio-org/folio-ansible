@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "megane@murazik-grady.la.us",
+      "last_name" : "Hyatt",
+      "first_name" : "Tommie"
+   },
+   "meta" : {
+      "creation_date" : "1979-01-20",
+      "last_login_date" : "2011-01-12"
+   },
+   "id" : "40666AC7-BC4E-45E8-BDD7-AF5F61702208",
+   "username" : "zora",
+   "active" : false
+}
+

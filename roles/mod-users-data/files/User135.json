@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "last_name" : "Botsford",
+      "email" : "augusta@ernser-and-sons.ct.us",
+      "first_name" : "Jose"
+   },
+   "username" : "teresa",
+   "meta" : {
+      "last_login_date" : "1982-06-24",
+      "creation_date" : "1990-12-31"
+   },
+   "id" : "6D55CF9B-2A0A-4BFF-812F-C8103CA5E018",
+   "active" : true
+}
+
