@@ -3,51 +3,119 @@ okapi_role: dev
 
 okapi_storage: postgres
 
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+module_database: okapi_modules
+auth_required: true
+
 folio_modules:
   - index: 0
     name: mod-authtoken
     module_id: authtoken-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json
+    image_version: latest
 
   - index: 1
     name: mod-permissions
     module_id: permissions-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json
+    image_version: latest
+    docker_env:
+      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
 
   - index: 2
     name: mod-login
     module_id: login-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json
+    image_version: latest
+    docker_env:
+      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
 
   - index: 3
     name: mod-users
     module_id: users-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
+    image_version: 6.2.2-SNAPSHOT
+    docker_env:
+      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
 
   - index: 4
     name: mod-users-bl
     module_id: users-bl 
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
+    image_version: 0.1.0-SNAPSHOT
 
   - index: 5
     name: mod-inventory-storage
     module_id: inventory-storage
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor.json
+    image_version: 3.1.1-SNAPSHOT
+    docker_env:
+      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
 
   - index: 6
     name: mod-inventory
     module_id: inventory
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor.json
+    image_version: latest
+    docker_env:
+      - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
 
   - index: 7
     name: mod-loan-storage
     module_id: loan-storage
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor.json
+    image_version: 1.0.2-SNAPSHOT
+    docker_env:
+      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
 
   - index: 8
     name: mod-circulation
     module_id: circulation
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor.json
+    image_version: latest
 
 stripes_okapi_url: http://localhost:9130
 
@@ -57,12 +125,3 @@ docker_users:
 
 stripes_host_address: 0.0.0.0
 
-mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json.OLD
-
-mod_metadata_modules:
-  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json", docker_image: folioci/mod-inventory }
-
-mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
-
-mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json

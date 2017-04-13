@@ -6,15 +6,12 @@
     - common
     - postgresql
     - okapi
-    - mod-users
-    - mod-users-data
-    - mod-metadata
-    - mod-loan-storage
-    - mod-circulation
-    - mod-circulation-data
-    - mod-auth
-    - mod-users-bl
+    - okapi-register-modules
+    - okapi-deploy-modules
+    - mod-auth-data
+    - mod-users-data 
     - mod-users-bl-data 
+    - mod-circulation-data 
     - mod-auth-demo-users
     - stripes-docker
   tasks:
@@ -50,15 +47,12 @@
     - common
     - postgresql
     - okapi
-    - mod-users
-    - mod-users-data
-    - mod-metadata
-    - mod-loan-storage
-    - mod-circulation
-    - mod-circulation-data
-    - mod-auth
-    - mod-users-bl
+    - okapi-register-modules
+    - okapi-deploy-modules
+    - mod-auth-data
+    - mod-users-data 
     - mod-users-bl-data 
+    - mod-circulation-data 
     - mod-auth-demo-users
 
   tasks:

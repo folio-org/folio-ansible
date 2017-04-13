@@ -1,0 +1,87 @@
+---
+# Role to deploy modules into running Okapi
+# Modules must be registered (see okapi-register-modules role)
+
+- name: Set up conf directory
+  become: yes
+  file: state=directory path={{ folio_conf }}/deployment-descriptors
+
+- name: Copy deployment descriptors
+  become: yes
+  template: src=DeploymentDescriptor.json.j2 dest={{ folio_conf }}/deployment-descriptors/{{ item.name }}.json
+  with_items: "{{ folio_modules }}"
+  notify:
+    - Restart okapi-deploy
+
+- name: Set up home directory
+  become: yes
+  file: state=directory path={{ okapi_deploy_home }}/bin
+
+- name: Create postgresql user(s)
+  postgresql_user:
+    db: postgres
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ item.pg_user }}"
+    password: "{{ item.pg_password }}"
+    role_attr_flags: CREATEDB,LOGIN
+    no_password_changes: yes
+  when: item.storage is defined and item.storage == "postgres"
+  with_items: "{{ folio_modules }}"
+
+- name: Create db(s)
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ item.pg_user }}"
+    login_password: "{{ item.pg_password }}"
+    name: "{{ item.database }}"
+    owner: "{{ item.pg_user }}"
+  when: item.storage is defined and item.storage == "postgres"
+  with_items: "{{ folio_modules }}"
+  
+- name: Copy okapi-deploy.conf
+  become: yes
+  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf
+  notify:
+    - Restart okapi-deploy
+
+- name: Copy okapi-deploy.env
+  become: yes
+  template: src=okapi-deploy.env.j2 dest=/etc/default/okapi-deploy
+  notify:
+    - Restart okapi-deploy
+
+- name: Copy okapi-deploy.sh
+  become: yes
+  copy: src=okapi-deploy.sh dest={{ okapi_deploy_home }}/bin/okapi-deploy.sh mode=0755
+  notify:
+    - Restart okapi-deploy
+
+- name: Copy okapi-deploy.service file
+  become: yes
+  template: src=okapi-deploy.service.j2 dest=/etc/systemd/system/okapi-deploy.service
+  register: okapi_deploy_service_update
+  notify:
+    - Restart okapi-deploy
+
+- name: systemctl daemon-reload
+  become: yes
+  command: systemctl daemon-reload
+  when: okapi_deploy_service_update.changed
+
+- name: Enable okapi-deploy service
+  become: yes
+  service: name=okapi-deploy enabled=yes
+
+- name: Check module registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
+  with_items: "{{ folio_modules }}"
+
+- meta: flush_handlers
+
+- name: Start okapi-deploy service
+  become: yes
+  service: name=okapi-deploy state=started
+

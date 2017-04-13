@@ -1,0 +1,15 @@
+[Unit]
+Description=Deploy FOLIO modules to Okapi on localhost
+Requires=okapi.service
+After=okapi.service
+PartOf=okapi.service
+
+[Service]
+User={{ folio_user }}
+Type=oneshot
+RemainAfterExit=yes
+ExecStart={{ okapi_deploy_home }}/bin/okapi-deploy.sh start
+ExecStop={{ okapi_deploy_home }}/bin/okapi-deploy.sh stop
+
+[Install]
+WantedBy=multi-user.target
