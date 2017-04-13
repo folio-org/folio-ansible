@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "marjorie@pollich-raynor-and-smith.ag",
+      "last_name" : "Farrell",
+      "first_name" : "Dannie"
+   },
+   "meta" : {
+      "last_login_date" : "2003-08-29",
+      "creation_date" : "1972-07-22"
+   },
+   "username" : "makenzie",
+   "id" : "6CDB1CB1-03B9-4CDD-8109-0A18110C7FFA",
+   "active" : true
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Jana",
+      "email" : "charley@schneider-group.am",
+      "last_name" : "Gleason"
+   },
+   "active" : true,
+   "username" : "shad",
+   "meta" : {
+      "last_login_date" : "2012-05-12",
+      "creation_date" : "1999-02-13"
+   },
+   "id" : "4C896C70-871A-41EB-B5DE-E31F8FC31465"
+}
+

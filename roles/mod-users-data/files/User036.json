@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Albina",
+      "email" : "derrick@okeefe-group.nr",
+      "last_name" : "Bayer"
+   },
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "2017-03-05",
+      "creation_date" : "1973-10-20"
+   },
+   "id" : "737C0382-D336-49AD-8653-2129790F27B4",
+   "username" : "vergie"
+}
+

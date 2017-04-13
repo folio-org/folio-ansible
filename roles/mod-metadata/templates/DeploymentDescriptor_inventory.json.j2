@@ -1,7 +1,7 @@
 {
   "srvcId" : "inventory",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-inventory",
+    "dockerImage" : "{{ mod_metadata_modules[1].docker_image }}",
     "env" : [
       { "name" : "JAVA_OPTS", "value" : "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     ]

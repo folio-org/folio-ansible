@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : false,
+   "id" : "17A857D2-0A54-42A2-85C3-3DD3B4708BC0",
+   "meta" : {
+      "creation_date" : "2009-12-21",
+      "last_login_date" : "1986-01-19"
+   },
+   "username" : "bernie",
+   "personal" : {
+      "first_name" : "Vivian",
+      "email" : "lonzo@little-llc.um",
+      "last_name" : "Ryan"
+   }
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "id" : "E4488696-A588-48C4-9CB9-A0FCC7B0CA14",
+   "meta" : {
+      "creation_date" : "1997-12-05",
+      "last_login_date" : "2011-04-15"
+   },
+   "username" : "jaquelin",
+   "active" : false,
+   "personal" : {
+      "email" : "luella@murray-and-sons.br",
+      "last_name" : "Rolfson",
+      "first_name" : "Cecilia"
+   }
+}
+

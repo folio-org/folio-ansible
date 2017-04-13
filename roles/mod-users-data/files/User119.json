@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "last_name" : "Frami",
+      "email" : "nichole@torp-hand.ak.us",
+      "first_name" : "Vivianne"
+   },
+   "meta" : {
+      "last_login_date" : "2007-02-11",
+      "creation_date" : "2003-11-11"
+   },
+   "id" : "C9C81202-24AA-490C-BD29-63EDCB9DC28E",
+   "username" : "lorine",
+   "active" : true
+}
+

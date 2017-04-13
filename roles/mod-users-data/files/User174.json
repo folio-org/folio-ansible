@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "freddie@hyatt-inc.ve",
+      "last_name" : "Kuhic",
+      "first_name" : "Dayton"
+   },
+   "active" : true,
+   "meta" : {
+      "creation_date" : "2000-04-14",
+      "last_login_date" : "1984-12-17"
+   },
+   "username" : "freddy",
+   "id" : "A258E7C3-C374-4DBF-9E56-66B3C2033963",
+   "type" : "patron"
+}
+

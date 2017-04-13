@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Helga",
+      "email" : "brandy@welch-ullrich-and-will.kn",
+      "last_name" : "Reinger"
+   },
+   "meta" : {
+      "creation_date" : "1991-04-23",
+      "last_login_date" : "2004-07-22"
+   },
+   "username" : "manuel",
+   "id" : "B2A2DC8B-21FC-4622-BA7E-17CB7B1BF120",
+   "active" : true
+}
+

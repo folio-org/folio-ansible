@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Zoey",
+      "last_name" : "Carroll",
+      "email" : "hellen@hegmann-dietrich.hk"
+   },
+   "active" : false,
+   "meta" : {
+      "last_login_date" : "2015-07-22",
+      "creation_date" : "1970-04-17"
+   },
+   "id" : "04179CC7-49E3-4464-8B8F-35F2A0FA1AB5",
+   "username" : "liliana"
+}
+

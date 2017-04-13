@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "username" : "brandi",
+   "meta" : {
+      "last_login_date" : "1992-11-11",
+      "creation_date" : "2012-06-28"
+   },
+   "id" : "4E684754-DFFD-4E9B-95B7-8683FC66F0FF",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Bergstrom",
+      "email" : "carmella@gottlieb-roob-and-trantow.sc.us",
+      "first_name" : "Lilian"
+   }
+}
+

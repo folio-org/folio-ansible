@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : true,
+   "meta" : {
+      "last_login_date" : "1998-04-10",
+      "creation_date" : "1984-06-28"
+   },
+   "username" : "jonathon",
+   "id" : "F963AD71-AEAD-4862-93CD-3B4695C293B4",
+   "personal" : {
+      "last_name" : "Lindgren",
+      "email" : "cassidy@herman-weissnat.ly",
+      "first_name" : "Fritz"
+   }
+}
+

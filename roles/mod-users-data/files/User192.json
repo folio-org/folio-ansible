@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "first_name" : "Twila",
+      "last_name" : "Boehm",
+      "email" : "bailey@parker-inc.cs"
+   },
+   "meta" : {
+      "last_login_date" : "2014-07-04",
+      "creation_date" : "1973-09-27"
+   },
+   "id" : "55DDC605-4C57-4739-91F7-0AC5C11D7C08",
+   "username" : "annetta",
+   "active" : true,
+   "type" : "patron"
+}
+

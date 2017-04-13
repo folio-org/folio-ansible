@@ -1,0 +1,16 @@
+{
+   "active" : false,
+   "meta" : {
+      "last_login_date" : "1995-11-13",
+      "creation_date" : "2012-09-19"
+   },
+   "id" : "2ED9656B-4314-48AE-A771-02CD7F43AE92",
+   "username" : "danyka",
+   "personal" : {
+      "last_name" : "Heaney",
+      "email" : "hilbert@klocko-and-sons.mu",
+      "first_name" : "Athena"
+   },
+   "type" : "patron"
+}
+

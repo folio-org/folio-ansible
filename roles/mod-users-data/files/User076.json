@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "jadon@bednar-inc.tn",
+      "last_name" : "Orn",
+      "first_name" : "Liliane"
+   },
+   "username" : "arnoldo",
+   "meta" : {
+      "creation_date" : "1977-04-13",
+      "last_login_date" : "1970-04-09"
+   },
+   "id" : "E7A3C0A1-22F2-42E1-AA6B-ABE0394CDE66",
+   "active" : true
+}
+

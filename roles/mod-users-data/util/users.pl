@@ -11,13 +11,25 @@ if ($ARGV[0]) {
 } else {
   $users = 20;
 }
+my $start;
+if ($ARGV[1]) {
+  $start = $ARGV[1];
+} else {
+  $start = 0;
+}
 
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
+my %usernames;
 
-for (my $i = 0; $i < $users; $i++) {
+for (my $i = $start; $i < $users + $start; $i++) {
+  my $username = $faker->username();
+  until (!$usernames{$username}) {
+    $username = $faker->username();
+  }
+  $usernames{$username} = 1;
   my $user = {
-              username => $faker->username(),
+              username => $username,
               id => uuid(),
               active => (rand(1) > 0.3 ? JSON::true : JSON::false),
               type => 'patron',
@@ -27,7 +39,7 @@ for (my $i = 0; $i < $users; $i++) {
                       },
               personal => {
                            first_name => $faker->first_name(),
-                           last_name => (rand(1) > 0.3 ?
+                           last_name => (rand(1) > 0.09 ?
 					 $faker->last_name() :
 					 $common_last_name),
                            email => $faker->email()

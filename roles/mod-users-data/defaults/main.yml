@@ -5,4 +5,8 @@ patron_groups:
   - { group: on_campus, desc: On-campus }
   - { group: off_campus, desc: Off-campus }
   - { group: other, desc: Other }
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+admin_permissions:
+  - users.all
 

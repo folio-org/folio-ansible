@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "creation_date" : "1985-07-15",
+      "last_login_date" : "1991-02-18"
+   },
+   "username" : "lambert",
+   "id" : "1B7D9700-DE9A-433B-AC95-355F60C1F3EF",
+   "active" : false,
+   "personal" : {
+      "email" : "ben@altenwerth-stokes.nc",
+      "last_name" : "Nader",
+      "first_name" : "Sidney"
+   }
+}
+

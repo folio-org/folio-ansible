@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Armand",
+      "email" : "lurline@doyle-and-sons.fm",
+      "last_name" : "Hegmann"
+   },
+   "active" : false,
+   "id" : "342235DA-CA38-4B46-825F-20B276BF4EA0",
+   "meta" : {
+      "creation_date" : "2011-09-11",
+      "last_login_date" : "2004-12-01"
+   },
+   "username" : "johnny"
+}
+

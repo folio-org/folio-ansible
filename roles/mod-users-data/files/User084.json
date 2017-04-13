@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "creation_date" : "1998-07-19",
+      "last_login_date" : "1983-05-29"
+   },
+   "username" : "josiah",
+   "id" : "3DE1EA61-29A4-4636-A0EF-05C2FA728C62",
+   "active" : false,
+   "personal" : {
+      "last_name" : "Nader",
+      "email" : "vida@ryan-halvorson.dj",
+      "first_name" : "Giles"
+   },
+   "type" : "patron"
+}
+

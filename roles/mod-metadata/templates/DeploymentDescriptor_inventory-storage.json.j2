@@ -1,7 +1,7 @@
 {
   "srvcId" : "inventory-storage",
   "descriptor" : {
-    "dockerImage" : "folioci/mod-inventory-storage",
+    "dockerImage" : "{{ mod_metadata_modules[0].docker_image }}",
     "env" : [
       { "name" : "db.host", "value" : "{{ pg_host }}" },
       { "name" : "db.port", "value" : "{{ pg_port }}" },

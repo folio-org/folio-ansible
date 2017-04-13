@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "active" : true,
+   "meta" : {
+      "creation_date" : "1979-10-02",
+      "last_login_date" : "1970-05-31"
+   },
+   "id" : "508842F6-A919-4E66-BCA9-3D37FD533C58",
+   "username" : "allan",
+   "personal" : {
+      "first_name" : "Madge",
+      "last_name" : "Walker",
+      "email" : "johanna@kutch-green-and-kub.bv"
+   }
+}
+

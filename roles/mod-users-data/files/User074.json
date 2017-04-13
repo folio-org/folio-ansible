@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "meta" : {
+      "last_login_date" : "1992-04-10",
+      "creation_date" : "2008-10-07"
+   },
+   "id" : "F2A8B6E2-7B45-4D96-B0D3-6C877D58E310",
+   "username" : "edyth",
+   "active" : true,
+   "personal" : {
+      "last_name" : "Lemke",
+      "email" : "audie@harvey-rutherford-and-botsford.rw",
+      "first_name" : "Trevion"
+   }
+}
+

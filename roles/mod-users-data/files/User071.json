@@ -1,0 +1,16 @@
+{
+   "meta" : {
+      "last_login_date" : "2005-09-14",
+      "creation_date" : "1986-05-03"
+   },
+   "id" : "99BC4D77-04DD-47A3-A27D-889E63896F04",
+   "username" : "elta",
+   "active" : false,
+   "personal" : {
+      "first_name" : "Carolanne",
+      "last_name" : "Nader",
+      "email" : "dannie@graham-orn.ar.us"
+   },
+   "type" : "patron"
+}
+

@@ -1,0 +1,16 @@
+{
+   "id" : "3526B21D-2876-4F1D-9D74-7197C612307A",
+   "meta" : {
+      "creation_date" : "2006-01-24",
+      "last_login_date" : "1991-04-08"
+   },
+   "username" : "victor",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Cordell",
+      "last_name" : "Dibbert",
+      "email" : "emmalee@lockman-inc.rw"
+   },
+   "type" : "patron"
+}
+

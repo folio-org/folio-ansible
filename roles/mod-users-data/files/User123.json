@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Ignacio",
+      "last_name" : "Streich",
+      "email" : "stephan@herman-spencer.lc"
+   },
+   "id" : "1C1DFBB7-A141-4AA5-B2CF-E1F7F9414BC1",
+   "meta" : {
+      "last_login_date" : "1989-06-14",
+      "creation_date" : "2004-09-20"
+   },
+   "username" : "collin",
+   "active" : true
+}
+

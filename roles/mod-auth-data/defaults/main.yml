@@ -1,54 +1,44 @@
 ---
 okapi_port: 9130
+
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
 mod_auth_modules:
   - { index: 0, module: permissions-module }
   - { index: 1, module: authtoken-module }
   - { index: 2, module: login-module }
 
-mod_auth_admin: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms.permissions\\\", \\\"perms.users\\\"" }
+admin_user: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms.all\\\"" }
+
 admin_permissions:
-  - perms.permissions
-  - perms.users
-  - login
-  - users
-  - usergroups
+  - perms.all
+  - login.all
   - module.trivial.enabled
   - module.users.enabled
   - module.items.enabled
   - module.scan.enabled
   - module.okapi-console.enabled
+  - module.organization.enabled
 
 # Permissions not defined in backend module descriptors
 additional_permissions:
-  - { permissionName: users.create, displayName: "Users: Can create new user", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users.read, displayName: "Users: Can search users and view brief profiles", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users.read.basic, displayName: "Users: Can view basic fields in full user profile", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users.read.restricted, displayName: "Users: Can view entire full user profile including restricted fields", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users.edit, displayName: "Users: Can edit user profile", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users.delete, displayName: "Users: Can delete user", subPermissions: "[]", mutable: "false" }
-  - { permissionName: users, displayName: "Users: All Users permissions", subPermissions: "['users.create','users.read','users.read.basic','users.read.restricted','users.edit','users.delete']", mutable: "true" }
-  - { permissionName: usergroups.create, displayName: "User Groups: Can create new user group", subPermissions: "[]", mutable: "false" }
-  - { permissionName: usergroups.read, displayName: "User Groups: Can view user group", subPermissions: "[]", mutable: "false" }
-  - { permissionName: usergroups.edit, displayName: "User Groups: Can edit user group", subPermissions: "[]", mutable: "false" }
-  - { permissionName: usergroups.delete, displayName: "User Groups: Can delete user group", subPermissions: "[]", mutable: "false" }
-  - { permissionName: usergroups, displayName: "Users Groups: All User Groups permissions", subPermissions: "['usergroups.create','usergroups.read','usergroups.edit','usergroups.delete']", mutable: "true" }
   - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
   - { permissionName: module.users.enabled, displayName: "UI: Users module is enabled", subPermissions: "[]", mutable: "false" }
   - { permissionName: module.items.enabled, displayName: "UI: Items module is enabled", subPermissions: "[]", mutable: "false" }
   - { permissionName: module.scan.enabled, displayName: "UI: Scan module is enabled", subPermissions: "[]", mutable: "false" }
   - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.organization.enabled, displayName: "UI: Organization module is enabled", subPermissions: "[]", mutable: "false" }
 
 mod_auth_users:
   - username: auth_test1
     password: diku
     permissions:
+      - module.trivial.enabled
       - module.users.enabled
-      - perms.permissions.get
-      - perms.users.get
-      - users.read
-      - usergroups.read
-      
+      - module.items.enabled
+      - module.scan.enabled
+      - module.okapi-console.enabled
+      - module.organization.enabled
   - username: auth_test2
     password: diku
 

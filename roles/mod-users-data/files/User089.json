@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "id" : "96B9E0F0-E112-4417-B80A-BE530ECD1DA0",
+   "meta" : {
+      "creation_date" : "1978-09-06",
+      "last_login_date" : "2010-04-25"
+   },
+   "username" : "cale",
+   "active" : false,
+   "personal" : {
+      "last_name" : "Nader",
+      "email" : "lilly@konopelski-hessel-and-flatley.il",
+      "first_name" : "Jesse"
+   }
+}
+

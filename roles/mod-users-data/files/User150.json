@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "buddy@crona-steuber-and-upton.cd",
+      "last_name" : "Walker",
+      "first_name" : "Alanna"
+   },
+   "meta" : {
+      "creation_date" : "1970-12-25",
+      "last_login_date" : "1987-02-03"
+   },
+   "username" : "lia",
+   "id" : "999E4738-F2BD-4377-B0EA-CBA54555D8A1",
+   "active" : true
+}
+

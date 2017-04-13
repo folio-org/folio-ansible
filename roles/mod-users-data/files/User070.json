@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Berta",
+      "last_name" : "Adams",
+      "email" : "dexter@tillman-ritchie-and-hartmann.gm"
+   },
+   "username" : "cierra",
+   "meta" : {
+      "creation_date" : "2010-04-04",
+      "last_login_date" : "1983-08-06"
+   },
+   "id" : "6A4CE1EF-22D7-4B17-A563-36A229B5B4C5",
+   "active" : true
+}
+

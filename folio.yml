@@ -6,8 +6,12 @@
     - common
     - postgresql
     - okapi
-    - okapi-register-modules
-    - okapi-deploy-modules
+    - mod-users
+    - mod-users-bl 
+    - mod-metadata
+    - mod-loan-storage
+    - mod-circulation
+    - mod-auth
     - mod-auth-data
     - mod-users-data 
     - mod-users-bl-data 

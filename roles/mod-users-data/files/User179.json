@@ -1,0 +1,16 @@
+{
+   "personal" : {
+      "email" : "pete@renner-prohaska.gl",
+      "last_name" : "Reichel",
+      "first_name" : "Max"
+   },
+   "active" : true,
+   "id" : "0E60F2D6-93E6-45AE-922B-02035D39D645",
+   "meta" : {
+      "last_login_date" : "2015-12-17",
+      "creation_date" : "1988-11-05"
+   },
+   "username" : "alexane",
+   "type" : "patron"
+}
+

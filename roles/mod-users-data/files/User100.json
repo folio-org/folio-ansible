@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "carmel@rowe-russel-and-haag.pl",
+      "last_name" : "Fadel",
+      "first_name" : "Luis"
+   },
+   "active" : true,
+   "username" : "brook",
+   "meta" : {
+      "creation_date" : "2004-08-19",
+      "last_login_date" : "2016-12-27"
+   },
+   "id" : "C65DC4F8-2CF7-4EB1-B631-237AABD1BC81"
+}
+

@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Martina",
+      "last_name" : "Huel",
+      "email" : "angelica@gottlieb-howe.id"
+   },
+   "id" : "CFBD8DF8-A162-4389-B372-6684F27E6586",
+   "meta" : {
+      "creation_date" : "2005-02-23",
+      "last_login_date" : "2017-03-14"
+   },
+   "username" : "osbaldo",
+   "active" : true
+}
+

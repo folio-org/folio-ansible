@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "first_name" : "Alf",
+      "email" : "ima@powlowski-cremin-and-bernhard.ny.us",
+      "last_name" : "Witting"
+   },
+   "active" : true,
+   "meta" : {
+      "creation_date" : "1986-08-23",
+      "last_login_date" : "2004-02-06"
+   },
+   "username" : "destinee",
+   "id" : "6A436FA2-BC33-4F69-9735-AE766858C143"
+}
+

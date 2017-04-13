@@ -1,0 +1,16 @@
+{
+   "type" : "patron",
+   "personal" : {
+      "email" : "allison@bruen-and-sons.gq",
+      "last_name" : "O'Kon",
+      "first_name" : "Landen"
+   },
+   "meta" : {
+      "creation_date" : "1987-01-10",
+      "last_login_date" : "1974-03-28"
+   },
+   "username" : "willis",
+   "id" : "F96E8A81-F667-4A87-8124-B4AFCE03A9D9",
+   "active" : true
+}
+

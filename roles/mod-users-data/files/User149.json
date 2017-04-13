@@ -1,0 +1,16 @@
+{
+   "username" : "bettie",
+   "meta" : {
+      "creation_date" : "1980-09-21",
+      "last_login_date" : "1972-03-02"
+   },
+   "id" : "64C1F3CA-C698-44FD-8CBE-3DA6FE004904",
+   "active" : true,
+   "personal" : {
+      "first_name" : "Kellie",
+      "last_name" : "Schuppe",
+      "email" : "chesley@rippin-gislason-and-crona.um"
+   },
+   "type" : "patron"
+}
+
