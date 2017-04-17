@@ -6,12 +6,8 @@
     - common
     - postgresql
     - okapi
-    - mod-users
-    - mod-users-bl 
-    - mod-metadata
-    - mod-loan-storage
-    - mod-circulation
-    - mod-auth
+    - okapi-register-modules
+    - okapi-deploy-modules
     - mod-auth-data
     - mod-users-data 
     - mod-users-bl-data 
@@ -58,7 +54,6 @@
     - mod-users-bl-data 
     - mod-circulation-data 
     - mod-auth-demo-users
-
   tasks:
     - name: Copy vagrant-tidy.sh to /root
       become: yes

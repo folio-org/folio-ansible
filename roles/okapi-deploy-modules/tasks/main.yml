@@ -25,7 +25,7 @@
     login_password: "{{ pg_admin_password }}"
     name: "{{ item.pg_user }}"
     password: "{{ item.pg_password }}"
-    role_attr_flags: CREATEDB,LOGIN
+    role_attr_flags: SUPERUSER
     no_password_changes: yes
   when: item.storage is defined and item.storage == "postgres"
   with_items: "{{ folio_modules }}"
