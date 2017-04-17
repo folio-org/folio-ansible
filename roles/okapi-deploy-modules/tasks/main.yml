@@ -74,10 +74,22 @@
   become: yes
   service: name=okapi-deploy enabled=yes
 
+# Will fail if any modules not registered
 - name: Check module registration
   uri:
     url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
   with_items: "{{ folio_modules }}"
+
+# Notify restart handler if any module not already deployed
+- name: Check module deployment
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
+    status_code: 200, 404
+  with_items: "{{ folio_modules }}"
+  register: module_deployment
+  changed_when: module_deployment.status == 404
+  notify:
+    - Restart okapi-deploy
 
 - meta: flush_handlers
 

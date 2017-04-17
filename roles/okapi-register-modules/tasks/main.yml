@@ -45,8 +45,10 @@
   when:
     - not (item.skipped is defined) or not item.skipped
     - item.status == 200
+  register: tenant_disassociate
+  changed_when: tenant_disassociate.status == 204
   with_items:
-    - "{{ tenant_association.results }}"
+    - "{{ tenant_association.results[::-1] }}"
 
 - name: Check deployment for changed modules
   uri:
@@ -57,7 +59,6 @@
   with_items: "{{ folio_modules }}"
   register: module_deployment
 
-### this needs to be tested!
 - name: Undeploy changed modules
   uri:
     url: "{{ okapi_url }}/_/discovery/modules/{{ item[0].item.module_id }}/{{ item[1].instId }}"
@@ -66,8 +67,10 @@
   when:
     - not (item[0].skipped is defined) or not item[0].skipped
     - item[0].status == 200
+  register: module_undeploy
+  changed_when: module_undeploy.status == 204
   with_subelements:
-    - "{{ module_deployment.results }}"
+    - "{{ module_deployment.results[::-1] }}"
     - json
     - skip_missing: yes
 
@@ -78,7 +81,7 @@
     status_code: 204, 404
   when:
     - mod_descriptor_update.results[{{ item.index }}].changed
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules[::-1] }}"
   register: mod_unreg
   changed_when: "mod_unreg.status == 204"
 
