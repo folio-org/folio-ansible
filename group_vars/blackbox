@@ -74,7 +74,7 @@ folio_modules:
   - index: 5
     name: mod-inventory-storage
     module_id: inventory-storage
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor.json
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json
     image_version: 3.1.1-SNAPSHOT
     docker_env:
       - { name: db.host, value: "{{ pg_host }}" }
@@ -90,7 +90,7 @@ folio_modules:
   - index: 6
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor.json
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json
     image_version: latest
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -98,7 +98,7 @@ folio_modules:
   - index: 7
     name: mod-loan-storage
     module_id: loan-storage
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor.json
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
     image_version: 1.0.2-SNAPSHOT
     docker_env:
       - { name: db.host, value: "{{ pg_host }}" }
@@ -114,7 +114,7 @@ folio_modules:
   - index: 8
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor.json
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
     image_version: latest
 
 stripes_okapi_url: http://localhost:9130
