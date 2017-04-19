@@ -3,6 +3,7 @@
 <!-- ../../okapi/doc/md2toc -l 2 index.md -->
 * [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
 * [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
+* [Replace localhost by hostname on the demo box](#replace-localhost-by-hostname-on-the-demo-box)
 * [Updating FOLIO components on Vagrant boxes](#updating-folio-components-on-vagrant-boxes)
     * [Updating Okapi](#updating-okapi)
     * [Updating Docker-based modules](#updating-docker-based-modules)
@@ -77,6 +78,18 @@ Data is persisted for all modules using a PostgreSQL server running on
 the Vagrant box. The Docker engine is also installed, and configured
 to listen on localhost:4243 of the Vagrant box so that Okapi can use
 it for module deployment.
+
+## Replace localhost by hostname on the demo box
+
+To make the demo box accessible from other machines than the local one
+Stripes needs the hostname of the backend. Configure the hostname
+this way:
+
+    $ vagrant init folio/folio-demo
+    $ vagrant up
+    $ vagrant ssh -c "sudo pico /etc/folio/stripes/stripes.config.js"
+      # now replace localhost by your hostname
+    $ vagrant ssh -c "sudo systemctl restart stripes.service"
 
 ## Updating FOLIO components on Vagrant boxes
 
