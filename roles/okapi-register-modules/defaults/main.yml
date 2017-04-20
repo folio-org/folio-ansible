@@ -1,0 +1,7 @@
+---
+folio_user: folio
+folio_conf: /etc/folio
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+folio_modules: [ ]
+

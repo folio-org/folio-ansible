@@ -9,129 +9,82 @@ These could be overridden with `group_vars` or `host_vars`.
 folio_user: folio
 folio_group: folio
 
+
+folio_apt_repo_url: https://repository.folio.org/packages/ubuntu
+folio_apt_key_id: 469A4045
+folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archive-key.asc
+
+# there are currently two FOLIO repositories - 'testing' and xenial'
+# 'xenial' contains releases only while 'testing' includes dev
+# snapshots.   Default is to configure just the 'xenial' repo which
+# the most stable.  If you want both, add 'testing' to this list.
+folio_apt_repos: 
+  - xenial
+
 # docker-engine role
 docker_users:
-  - okapi
+  - folio
 folioci: false
 
 # maven-3 role
 maven_version: 3.3.9
 
-# mod-auth role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_auth_home: /usr/share/folio/mod-auth
-mod_auth_conf: /etc/folio/mod-auth
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-pg_host: "{{ ansible_default_ipv4.address }}"
-pg_port: 5432
-pg_user: "{{ pg_admin_user }}"
-pg_password: "{{ pg_admin_password }}"
-mod_auth_db: mod_auth
-mod_auth_modules:
-  - { index: 0, module: authtoken-module, docker_image: folioci/mod-authtoken, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json" }
-  - { index: 1, module: login-module, docker_image: folioci/mod-login, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json" }
-  - { index: 2, module: permissions-module, docker_image: folioci/mod-permissions, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json" }
- {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
-
 # mod-auth-data role
 okapi_port: 9130
+
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+
+module_database: okapi_modules
+
 mod_auth_modules:
-  - { index: 0, module: authtoken-module }
-  - { index: 1, module: login-module }
-  - { index: 2, module: permissions-module }
-mod_auth_admin: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms\\\", \\\"login\\\"" }
-bootstrap_permissions:
-  - { id: 8cd22acd-e347-4382-9344-42020f65bb86, permissionName: login.addUser, subPermissions: "" }
-  - { id: e8fd127f-19c6-406a-91b2-fbc601edb0ec, permissionName: login.modifyUser, subPermissions: "" }
-  - { id: 71d2aa6a-c39a-4e3c-b7ad-9548a1c8267d, permissionName: login.readUser, subPermissions: "" }
-  - { id: 6c7a4410-4ec0-46f5-9fcd-754f47a9e5cd, permissionName: login.removeUser, subPermissions: "" }
-  - { id: a239a767-3c49-47c4-99e5-5485dc7ac8fd, permissionName: login, subPermissions: "\\\"login.addUser\\\", \\\"login.modifyUser\\\", \\\"login.removeUser\\\", \\\"login.readUser\\\"" }
-  - { id: 83613c13-f412-4bc4-86b6-77e084e39921, permissionName: perms.permissions.create, subPermissions: "" }
-  - { id: 5914e7fd-d1d9-455e-b520-f8435a342671, permissionName: perms.permissions.delete, subPermissions: "" }
-  - { id: afd0c500-8c01-4140-85d5-11e1461df4d8, permissionName: perms.permissions.read, subPermissions: "" }
-  - { id: 4ec6aadd-f5ba-4e32-9c01-d6636261a274, permissionName: perms.permissions, subPermissions: "\\\"perms.permissions.read\\\", \\\"perms.permissions.create\\\", \\\"perms.permissions.delete\\\"" }
-  - { id: 9b115c7f-5b2b-4a5f-868f-347362e9e544, permissionName: perms.users.create, subPermissions: "" }
-  - { id: dd61cfc2-8a9c-420c-ba74-5400398efa4a, permissionName: perms.users.modify, subPermissions: "" }
-  - { id: 5df3f0c6-315f-45ce-a690-f17198c797d9, permissionName: perms.users.delete, subPermissions: "" }
-  - { id: 95993363-ee9e-4fad-84db-6c6bba408ef8, permissionName: perms.users.read, subPermissions: "" }
-  - { id: 98280690-174f-4251-8138-acea29523e20, permissionName: perms.users, subPermissions: "\\\"perms.users.create\\\", \\\"perms.users.modify\\\", \\\"perms.users.read\\\", \\\"perms.users.delete\\\"" }
-  - { id: 250494e9-275f-4b2c-a0b1-8cf65ea0b5ad, permissionName: perms, subPermissions: "\\\"perms.users\\\", \\\"perms.permissions\\\"" }
+  - { index: 0, module: permissions-module }
+  - { index: 1, module: authtoken-module }
+  - { index: 2, module: login-module }
 
-# mod-auth-demo role
-# {{ mod_auth_home }}, {{ folio_user }}, {{ folio_group }},
-# {{ okapi_url }}, {{ auth_modules }} from mod-auth dependency
+admin_user: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms.all\\\"" }
 
-# mod-auth-src role
-mod_auth_home: /opt/mod-auth
-mod_auth_src_home: /opt/mod-auth-src
-okapi_url: http://localhost:9130/
-auth_modules:
-  - { index: 0, module: login }
-  - { index: 1, module: authtoken }
-  - { index: 2, module: permissions }
-# {{ folio_user }} and {{ folio_group }} from common dependency
-# {{ okapi_home }} from okapi-undeploy dependency 
+admin_permissions:
+  - perms.all
+  - login.all
+  - module.trivial.enabled
+  - module.users.enabled
+  - module.items.enabled
+  - module.scan.enabled
+  - module.okapi-console.enabled
+  - module.organization.enabled
 
+# Permissions not defined in backend module descriptors
+additional_permissions:
+  - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.users.enabled, displayName: "UI: Users module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.items.enabled, displayName: "UI: Items module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.scan.enabled, displayName: "UI: Scan module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.organization.enabled, displayName: "UI: Organization module is enabled", subPermissions: "[]", mutable: "false" }
 
-# mod-circulation-build role
-mod_circulation_src_home: /opt/mod-circulation-src
-
-# mod-circulation-docker role
-# also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
-
-# mod-circulation role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_circulation_home: /usr/share/folio/mod-circulation
-mod_circulation_conf: /etc/folio/mod-circulation
-mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
-mod_circulation_version: latest
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_auth_users:
+  - username: auth_test1
+    password: diku
+    permissions:
+      - module.trivial.enabled
+      - module.users.enabled
+      - module.items.enabled
+      - module.scan.enabled
+      - module.okapi-console.enabled
+      - module.organization.enabled
+  - username: auth_test2
+    password: diku
 
 # mod-circulation-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-
-# mod-loan-storage role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_loan_storage_home: /usr/share/folio/mod-loan-storage
-mod_loan_storage_conf: /etc/folio/mod-loan-storage
-mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
-mod_loan_storage_version: latest
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-pg_host: "{{ ansible_default_ipv4.address }}"
-pg_port: 5432
-pg_user: "{{ pg_admin_user }}"
-pg_password: "{{ pg_admin_password }}"
-mod_loan_storage_db: mod_loan_storage
-# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
-
-# mod-metadata role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_metadata_home: /usr/share/folio/mod-metadata
-mod_metadata_conf: /etc/folio/mod-metadata
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-pg_host: "{{ ansible_default_ipv4.address }}"
-pg_port: 5432
-pg_user: "{{ pg_admin_user }}"
-pg_password: "{{ pg_admin_password }}"
-mod_metadata_db: mod_metadata
-mod_metadata_modules:
-  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory-storage }
-  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory }
-# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
-
-# mod-metadata-build role
-mod_metadata_src_home: /opt/mod-metadata-src
-# {{ folio_user }} and {{ folio_group }} from common dependency
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
 
 # mod-metadata-data role
 okapi_port: 9130
@@ -139,49 +92,17 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 mod_metadata_modules:
   - { index: 0, module: inventory-storage }
   - { index: 1, module: inventory }
-
-# mod-metadata-demo role
-mod_metadata_home: /opt/mod-metadata
-okapi_url: http://localhost:9130/
-mod_metadata_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
-mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
-mod_metadata_db: mod_metadata
-# {{ mod_metadata_src_home }} from mod-metadata-build dependency
-# {{ folio_user }} and {{ folio_group }} from common dependency
-# {{ okapi_home }} from okapi-undeploy dependency 
-
-# mod-users role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_users_home: /usr/share/folio/mod-users
-mod_users_conf: /etc/folio/mod-users
-mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
-mod_users_version: latest
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-pg_host: "{{ ansible_default_ipv4.address }}"
-pg_port: 5432
-pg_user: "{{ pg_admin_user }}"
-pg_password: "{{ pg_admin_password }}"
-mod_users_db: mod_users
-# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
-
-# mod-users-bl role
-# folio_user needs to be a user with access to Docker
-folio_user: folio
-mod_users_bl_home: /usr/share/folio/mod-users-bl
-mod_users_bl_conf: /etc/folio/mod-users-bl
-mod_users_bl_version: latest
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
 
 # mod-users-bl-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-
-# mod-users-build role
-mod_users_src_home: /opt/mod-users-src
-# {{ folio_user }} and {{ folio_group }} from common dependency
+admin_user: { username: diku_admin, password: admin }
+mod_users_bl_permissions:
+  - username: diku_admin
+    permissions:
+      - users-bl.all
 
 # mod-users-data role
 okapi_port: 9130
@@ -190,19 +111,10 @@ patron_groups:
   - { group: on_campus, desc: On-campus }
   - { group: off_campus, desc: Off-campus }
   - { group: other, desc: Other }
-
-# mod-users-demo role
-mod_users_home: /opt/mod-users
-okapi_url: http://localhost:9130/
-mod_users_pg_user: mod_users
-mod_users_pg_password: mod_users25
-mod_users_db: mod_users
-# {{ mod_users_src_home }} from mod-users-build dependency
-# {{ folio_user }} and {{ folio_group }} from common dependency
-# {{ okapi_home }} from okapi-undeploy dependency
-
-# mod-users-docker role
-# also uses {{ mod_users_src_home }} from mod-users-build dependency
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+admin_permissions:
+  - users.all
 
 # okapi role
 okapi_role: cluster
@@ -248,16 +160,25 @@ hazelcast_ec2_tag_key: Group
 hazelcast_ec2_tag_value: Demo
 hazelcast_address: "10.*"
 
-# okapi-demo role
-okapi_src_home: /opt/okapi-src
-okapi_home: /opt/okapi
-okapi_pg_user: okapi
-okapi_pg_password: okapi25
-# {{ folio_user }} and {{ folio_group }} from common dependency
+# okapi-deploy-modules role
+folio_user: folio
+folio_conf: /etc/folio
+okapi_deploy_home: /usr/share/folio/okapi-deploy
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+docker_repo: folioci  
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+folio_modules: [ ]
 
-# okapi-docker role
-okapi_src_home: /opt/okapi-src
-# also uses {{ folio_group }} and {{ folio_user }} from common dependency
+# okapi-register-modules role
+folio_user: folio
+folio_conf: /etc/folio
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+folio_modules: [ ]
 
 # okapi-src role
 okapi_src_home: /opt/okapi-src
@@ -281,6 +202,205 @@ raml_module_builder_home: /opt/raml-module-builder
 # sdkman role
 sdkman_user: folio
 
+# stripes-docker role
+# Use a preconfigured gitbub stripes platform
+with_github: true
+stripes_github_project: https://github.com/folio-org/stripes-demo-platform
+
+# OR specify stripes configuration here and configure from ansible templates 
+stripes_core_version: "^0.7.0"
+stripes_modules:
+  - { name: "@folio/users", version: "^1.1.0" }
+  - { name: "@folio/items", version: "^1.1.0" }
+  - { name: "@folio/scan", version: "^0.2.0" }
+  - { name: "@folio/trivial", version: "^0.0.2-test" }
+
+# disable okapi-console - https://issues.folio.org/browse/STRIPES-264
+#  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
+
+
+# Other relevant vars
+stripes_conf_dir: /etc/folio/stripes
+stripes_okapi_port: 9130
+disable_auth: false
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_tenant: diku
+# host address to map container to. '127.0.0.1' by default  
+stripes_host_address: '127.0.0.1'
+#
+# optional nginx proxy. disabled by default.
+#
+with_nginx: false
+nginx_port: 80
+# can override with ec2_facts 'ansible_ec2_public_hostname' for AWS
+nginx_servername: localhost
+
+# NPM repository settings
+folio_npm_base_url: repository.folio.org/repository/
+folio_npm_repo: npm-folio
+
+#
+# Disabled by default
+# 
+npm_proxy: false
+npm_authtoken: ''
+
+# tenant-data role
+okapi_url: http://localhost:9130/
+```
+
+## Deprecated roles
+```yaml
+---
+# mod-auth role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_auth_home: /usr/share/folio/mod-auth
+mod_auth_conf: /etc/folio/mod-auth
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_auth_db: mod_auth
+mod_auth_modules:
+  - { index: 0, module: authtoken-module, docker_image: folioci/mod-authtoken, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json" }
+  - { index: 1, module: login-module, docker_image: folioci/mod-login, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json" }
+  - { index: 2, module: permissions-module, docker_image: folioci/mod-permissions, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json" }
+ {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
+# mod-auth-demo role
+# {{ mod_auth_home }}, {{ folio_user }}, {{ folio_group }},
+# {{ okapi_url }}, {{ auth_modules }} from mod-auth dependency
+
+# mod-auth-src role
+mod_auth_home: /opt/mod-auth
+mod_auth_src_home: /opt/mod-auth-src
+okapi_url: http://localhost:9130/
+auth_modules:
+  - { index: 0, module: login }
+  - { index: 1, module: authtoken }
+  - { index: 2, module: permissions }
+# {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency 
+
+
+# mod-circulation-build role
+mod_circulation_src_home: /opt/mod-circulation-src
+
+# mod-circulation-docker role
+# also uses {{ mod_circulation_src_home }} from mod-circulation-build dependency
+
+# mod-circulation role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_circulation_home: /usr/share/folio/mod-circulation
+mod_circulation_conf: /etc/folio/mod-circulation
+mod_circulation_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
+mod_circulation_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# mod-loan-storage role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_loan_storage_home: /usr/share/folio/mod-loan-storage
+mod_loan_storage_conf: /etc/folio/mod-loan-storage
+mod_loan_storage_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
+mod_loan_storage_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_loan_storage_db: mod_loan_storage
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
+# mod-metadata role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_metadata_home: /usr/share/folio/mod-metadata
+mod_metadata_conf: /etc/folio/mod-metadata
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_metadata_db: mod_metadata
+mod_metadata_modules:
+  - { index: 0, module: inventory-storage, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory-storage }
+  - { index: 1, module: inventory, mod_descriptor: "https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-v1.0.json", docker_image: folioci/mod-inventory }
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
+# mod-metadata-build role
+mod_metadata_src_home: /opt/mod-metadata-src
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
+# mod-metadata-demo role
+mod_metadata_home: /opt/mod-metadata
+okapi_url: http://localhost:9130/
+mod_metadata_pg_user: "{{ pg_admin_user }}" # from postgresql dependency
+mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
+mod_metadata_db: mod_metadata
+# {{ mod_metadata_src_home }} from mod-metadata-build dependency
+# {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency 
+
+# mod-users role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_users_home: /usr/share/folio/mod-users
+mod_users_conf: /etc/folio/mod-users
+mod_users_mod_descriptor: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
+mod_users_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_user: "{{ pg_admin_user }}"
+pg_password: "{{ pg_admin_password }}"
+mod_users_db: mod_users
+# {{ pg_admin_user }} and {{ pg_admin_password }} from postgresql dependency
+
+# mod-users-bl role
+# folio_user needs to be a user with access to Docker
+folio_user: folio
+mod_users_bl_home: /usr/share/folio/mod-users-bl
+mod_users_bl_conf: /etc/folio/mod-users-bl
+mod_users_bl_version: latest
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# mod-users-build role
+mod_users_src_home: /opt/mod-users-src
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
+# mod-users-demo role
+mod_users_home: /opt/mod-users
+okapi_url: http://localhost:9130/
+mod_users_pg_user: mod_users
+mod_users_pg_password: mod_users25
+mod_users_db: mod_users
+# {{ mod_users_src_home }} from mod-users-build dependency
+# {{ folio_user }} and {{ folio_group }} from common dependency
+# {{ okapi_home }} from okapi-undeploy dependency
+
+# mod-users-docker role
+# also uses {{ mod_users_src_home }} from mod-users-build dependency
+# okapi-demo role
+okapi_src_home: /opt/okapi-src
+okapi_home: /opt/okapi
+okapi_pg_user: okapi
+okapi_pg_password: okapi25
+# {{ folio_user }} and {{ folio_group }} from common dependency
+
+# okapi-docker role
+okapi_src_home: /opt/okapi-src
+# also uses {{ folio_group }} and {{ folio_user }} from common dependency
+
 # stripes role
 stripes_user: okapi
 stripes_group: okapi
@@ -297,7 +417,6 @@ stripes_modules:
   - { name: "@folio/users", version: "^0.0.1-test" }
   - { name: "@folio/items", version: "^0.0.1-test" }
 
-
 # stripes-core role
 stripes_user: okapi
 stripes_group: okapi
@@ -308,41 +427,6 @@ stripes_conf: /etc/folio/stripes
 stripes_tenant: diku
 folio_registry: https://repository.folio.org/repository/npm-folioci/
 folio_sample_modules_registry: https://repository.folio.org/repository/npm-folioci/
-
-# stripes-docker role
-stripes_modules:
-  - { name: "@folio/users", version: "^0.0.2" }
-  - { name: "@folio/items", version: "^0.0.2" }
-  - { name: "@folio/scan", version: "^0.0.2" }
-  - { name: "@folio/trivial", version: "^0.0.2-test" }
-
-# disable okapi-console - https://issues.folio.org/browse/STRIPES-264
-#  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
-
-stripes_core_version: "^0.4.0"
-stripes_conf_dir: /etc/folio/stripes
-stripes_okapi_port: 9130
-disable_auth: false
-stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
-stripes_tenant: diku
-# host address to map container to. '127.0.0.1' by default  
-stripes_host_address: '127.0.0.1'
-#
-# optional nginx proxy. disabled by default.
-#
-with_nginx: false
-nginx_port: 80
-# can override with ec2_facts 'ansible_ec2_public_hostname' for AWS
-nginx_servername: localhost
-
-#
-# for use by FOLIO CI. disabled by default
-# 
-folioci: false
-npm_authtoken: ''
-
-# tenant-data role
-okapi_url: http://localhost:9130/
 
 # ui-okapi-console
 # also uses {{ stripes_home }} and from stripes-core dependency

@@ -3,6 +3,13 @@ okapi_port: 9130
 
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+
+module_database: okapi_modules
+
 mod_auth_modules:
   - { index: 0, module: permissions-module }
   - { index: 1, module: authtoken-module }

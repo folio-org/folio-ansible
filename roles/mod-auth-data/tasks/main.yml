@@ -32,30 +32,29 @@
 # Bootstrap admin user and permissions #
 ########################################
 
+- name: Create .pgpass for Ansible user
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.pgpass"
+    line: "{{ pg_host }}:{{ pg_port }}:*:{{ pg_admin_user }}:{{ pg_admin_password }}"
+    create: yes
+    mode: 0600
+
 - name: Check auth_credentials for diku_admin user
-  become: yes
-  become_user: postgres
-  shell: psql -qtc "select count(*) from diku_login_module.auth_credentials where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" mod_auth
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_login_module.auth_credentials where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
   register: diku_admin_credentials
   changed_when: no
 
 - name: Insert diku_admin user into auth_credentials
-  become: yes
-  become_user: postgres
-  shell: psql -qtc "insert into diku_login_module.auth_credentials (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" mod_auth
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_login_module.auth_credentials (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
   when: diku_admin_credentials.stdout | int == 0
 
 - name: Check permissions_users for diku_admin user
-  become: yes
-  become_user: postgres
-  shell: psql -qtc "select count(*) from diku_permissions_module.permissions_users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" mod_auth
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_permissions_module.permissions_users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
   register: diku_admin_permissions
   changed_when: no
 
 - name: Insert diku_admin user into permissions_users
-  become: yes
-  become_user: postgres
-  shell: psql -qtc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" mod_auth
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
   when: diku_admin_permissions.stdout | int == 0
 
 ###############################################

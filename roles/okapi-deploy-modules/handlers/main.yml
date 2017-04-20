@@ -1,0 +1,4 @@
+---
+- name: Restart okapi-deploy
+  become: yes
+  service: name=okapi-deploy state=restarted

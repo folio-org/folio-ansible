@@ -1,0 +1,103 @@
+---
+# Role to register module descriptors with Okapi, pulling module
+# descriptor from a remote URL (e.g. GitHub repo)
+
+#########
+# Setup #
+#########
+
+- name: Set up conf directory
+  become: yes
+  file: state=directory path={{ folio_conf }}/module-descriptors
+
+- name: Copy module descriptors to remote
+  become: yes
+  get_url: url={{ item.mod_descriptor_url }} dest={{ folio_conf }}/module-descriptors/{{ item.name }}.json force=yes
+  with_items: "{{ folio_modules }}"
+  register: mod_descriptor_update
+
+##################################
+# Undeploy if new mod descriptor #
+##################################
+
+- name: Get tenants
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants"
+    status_code: 200
+  register: tenants
+
+- name: Check tenant association for changed modules
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module_id }}"
+    status_code: 200, 404
+  when:
+    - mod_descriptor_update.results[{{ item[1].index }}].changed
+  with_nested:
+    - "{{ tenants.json }}"
+    - "{{ folio_modules }}"
+  register: tenant_association
+
+- name: Disassociate modules from tenants if mod descriptor updated
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ item.item[0].id }}/modules/{{ item.item[1].module_id }}"
+    method: DELETE
+    status_code: 204
+  when:
+    - not (item.skipped is defined) or not item.skipped
+    - item.status == 200
+  register: tenant_disassociate
+  changed_when: tenant_disassociate.status == 204
+  with_items:
+    - "{{ tenant_association.results[::-1] }}"
+
+- name: Check deployment for changed modules
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
+    status_code: 200, 404
+  when:
+    - mod_descriptor_update.results[{{ item.index }}].changed
+  with_items: "{{ folio_modules }}"
+  register: module_deployment
+
+- name: Undeploy changed modules
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ item[0].item.module_id }}/{{ item[1].instId }}"
+    method: DELETE
+    status_code: 204
+  when:
+    - not (item[0].skipped is defined) or not item[0].skipped
+    - item[0].status == 200
+  register: module_undeploy
+  changed_when: module_undeploy.status == 204
+  with_subelements:
+    - "{{ module_deployment.results[::-1] }}"
+    - json
+    - skip_missing: yes
+
+- name: Un-register changed modules
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
+    method: DELETE
+    status_code: 204, 404
+  when:
+    - mod_descriptor_update.results[{{ item.index }}].changed
+  with_items: "{{ folio_modules[::-1] }}"
+  register: mod_unreg
+  changed_when: "mod_unreg.status == 204"
+
+####################
+# Register modules #
+####################
+
+- name: Check module registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
+    status_code: 200, 404
+  with_items: "{{ folio_modules }}"
+  register: mod_reg_status
+
+- name: Register modules
+  shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ folio_conf }}/module-descriptors/{{ item.name }}.json -sSf {{ okapi_url }}/_/proxy/modules"
+  when: mod_reg_status.results[{{ item.index }}].status == 404
+  with_items: "{{ folio_modules }}"
+

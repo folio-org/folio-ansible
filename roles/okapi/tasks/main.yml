@@ -72,3 +72,7 @@
   notify: okapi restart
 
 - meta: flush_handlers
+
+- name: Make sure Okapi is started
+  become: yes
+  service: name=okapi state=started

@@ -1,0 +1,12 @@
+{
+  "srvcId" : "{{ item.module_id }}",
+  "descriptor" : {
+    "dockerImage" : "{{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ item.image_version }}"{% if item.docker_env is defined %},
+    "env" : [
+    {% for env_var in item.docker_env %}
+      { "name" : "{{ env_var.name }}", "value" : "{{ env_var.value }}" }{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]
+    {% endif %}
+  }
+}
