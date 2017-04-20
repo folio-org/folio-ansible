@@ -5,7 +5,6 @@ okapi_storage: postgres
 
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
-pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 module_database: okapi_modules
 auth_required: true
@@ -15,15 +14,17 @@ folio_modules:
     name: mod-authtoken
     module_id: authtoken-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json
+    image_repository: folioci
     image_version: latest
 
   - index: 1
     name: mod-permissions
     module_id: permissions-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json
+    image_repository: folioci
     image_version: latest
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -37,9 +38,10 @@ folio_modules:
     name: mod-login
     module_id: login-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json
+    image_repository: folioci
     image_version: latest
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -52,10 +54,11 @@ folio_modules:
   - index: 3
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/master/ModuleDescriptor.json
+    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/a9f92906252310fb748612be5a39107de57eff80/ModuleDescriptor.json
     image_version: 6.2.2-SNAPSHOT
+    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -70,14 +73,16 @@ folio_modules:
     module_id: users-bl 
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
     image_version: 0.1.0-SNAPSHOT
+    image_repository: folioci
 
   - index: 5
     name: mod-inventory-storage
     module_id: inventory-storage
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory-storage/ModuleDescriptor-1.0.json
-    image_version: 3.1.1-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory-storage/ModuleDescriptor-1.0.json
+    image_version: v3.1.0
+    image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -90,18 +95,20 @@ folio_modules:
   - index: 6
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-metadata/master/inventory/ModuleDescriptor-1.0.json
-    image_version: latest
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory/ModuleDescriptor-1.0.json
+    image_version: v3.1.0
+    image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
 
   - index: 7
-    name: mod-loan-storage
+    name: mod-circulation-storage
     module_id: loan-storage
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-loan-storage/master/ModuleDescriptor-1.0.json
-    image_version: 1.0.2-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-loan-storage/v1.0.3/ModuleDescriptor-1.0.json
+    image_version: v1.0.3
+    image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -114,8 +121,9 @@ folio_modules:
   - index: 8
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-circulation/master/ModuleDescriptor-1.0.json
-    image_version: latest
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v1.0.0/ModuleDescriptor-1.0.json
+    image_version: v1.0.0
+    image_repository: folioorg
 
 stripes_okapi_url: http://localhost:9130
 
