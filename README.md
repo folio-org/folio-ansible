@@ -40,15 +40,12 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/folio-demo
     $ vagrant up
 
-Other Vagrant boxes available are `folio/folio-backend` and
-`folio/folio-backend-auth`.
+There is also a `folio/folio-backend-auth` Vagrant box available,
+which contains Okapi and a set of backend modules, suitable for
+frontend development.
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
 forwarded to `localhost:9130`.
-
-To test this, fetch a list of users:
-
-    $ curl -w '\n' -H 'X-Okapi-Tenant:diku' -D- http://localhost:9130/users
 
 For the `demo` system, the Stripes port and user interface will be
 forwarded to `localhost:3000`. You should see the Stripes user interface

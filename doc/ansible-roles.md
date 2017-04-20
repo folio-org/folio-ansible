@@ -1,26 +1,20 @@
 # Ansible roles in this repository
 
-*All roles targeted for Debian 8 (Jessie)*
+*All roles targeted for Debian 8 (Jessie)/Ubuntu Xenial*
+
+## ansible
+Installs Ansible from the Ansible repository
 
 ## common
 Runs `apt-cache update`, creates the folio user and group, installs
-git and curl from apt.
+git, curl, and the postgresql client from apt. Configures the FOLIO
+apt repository.
 
 ## docker-engine
 Installs the Docker engine from the Docker repository.
 
 ## maven-3
 Installs Apache Maven 3 from the Apache archive.
-
-## mod-auth
-Loads the Docker images for the authtoken, login, and permissions
-modules from Docker Hub, registers and deploys as a system service in
-a running Okapi instance, with persistent storage. Depends on:
-- postgresql
-- docker-engine
-- okapi-undeploy
-
-*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-auth-data
 Hooks up mod-auth modules for the sample tenant, loads sample users
@@ -36,17 +30,8 @@ exist in the mod-auth modules. Temporary fix until there is a business
 logic module that handles both users and authn/z. Depends on
 mod-auth-data.
 
-*Note: without a running Okapi instance with mod-users, this role will
- fail*
-
-## mod-circulation
-Loads the Docker image from Docker Hub, registers and deploys as a
-system service in a running Okapi instance. Depends on:
-- docker-engine
-- okapi-undeploy
-
-*Note: without a running Okapi instance with mod-loan-storage, this
- role will fail*
+*Note: without a running Okapi instance with mod-auth and mod-users,
+ this role will fail*
 
 ## mod-circulation-data
 Sample data for the mod-circulation business logic module. Depends on:
@@ -57,49 +42,12 @@ Sample data for the mod-circulation business logic module. Depends on:
 *Note: without a running Okapi instance with mod-circulation and
  mod-loan-storage installed and enabled, this role will fail.*
 
-## mod-loan-storage
-Loads the Docker image from Docker Hub, registers and deploys as a
-system service in a running Okapi instance, with persistent
-storage. Depends on:
-- postgresql
-- docker-engine
-- okapi-undeploy
-
-## mod-metadata
-Loads the Docker images for the inventory-storage and inventory
-modules from Docker Hub, registers and deploys as a system service in
-a running Okapi instance, with persistent storage. Depends on:
-- postgresql
-- docker-engine
-- okapi-undeploy
-
-*Note: without a running Okapi instance, this role will fail.*
-
 ## mod-metadata-data
 Sample data for the mod-metadata backend modules. Depends on
 tenant-data and common.
 
 *Note: without a running Okapi instance with inventory and
 inventory-storage installed and enabled, this role will fail.*
-
-## mod-users
-Loads the Docker image from Docker Hub, registers and deploys as a
-system service in a running Okapi instance, with persistent
-storage. Depends on:
-- postgresql
-- docker-engine
-- okapi-undeploy
-
-*Note: without a running Okapi instance, this role will fail.*
-
-## mod-users-bl
-Loads the Docker image from Docker Hub, registers and deploys as a
-system service in a running Okapi instance. Depends on:
-- docker-engine
-- okapi-undeploy
-
-*Note: without a running Okapi instance with mod-users, this
- role will fail*
 
 ## mod-users-bl-data
 Sample data for the mod-users-bl business logic module. Depends on:
@@ -128,6 +76,25 @@ Installs a more recent PostgreSQL from the PostgreSQL repository.
 ## okapi
 Installs Okapi from apt as a system service with persistent
 storage. Depends on openjdk-8 and postgresql.
+
+## okapi-deploy-modules
+Installs an okapi-deploy service on the target, configured by the
+`folio_modules` variable. See
+[../group_vars/blackbox](../group_vars/blackbox) for a working set of
+module defaults. The service posts deployment descriptors to a running
+Okapi instance.
+
+*Note: This role depends on a running Okapi instance. Modules defined
+ in the `folio_modules` variable must be registered with Okapi (see
+ okapi-register-modules role below).*
+
+## okapi-register-modules
+Posts module descriptors to a running Okapi, configured by the
+`folio_modules` variable. See
+[../group_vars/blackbox](../group_vars/blackbox) for a working set of
+module defaults.
+
+*Note: This role depends on a running Okapi instance.*
 
 ## okapi-src
 Clones the folio-org/okapi repository from GitHub, builds the JAR
@@ -182,6 +149,16 @@ deploys the modules. Depends on:
 
 *Note: without a running Okapi instance, this role will fail.*
 
+## mod-auth (*Deprecated*)
+Loads the Docker images for the authtoken, login, and permissions
+modules from Docker Hub, registers and deploys as a system service in
+a running Okapi instance, with persistent storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
+
 ## mod-auth-demo (*Deprecated*)
 Hooks up mod-auth with mod-users, loads sample permissions data for
 the sample tenant (diku). Depends on mod-auth, mod-users-demo,
@@ -193,6 +170,15 @@ retrieve-module). Depends on mod-auth and nodejs.
 
 *Note: without a running Okapi instance, this role will fail.*
 
+## mod-circulation (*Deprecated*)
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance. Depends on:
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance with mod-loan-storage, this
+ role will fail*
+
 ## mod-circulation-build (*Deprecated*)
 Clones and builds the source from folio-org/mod-circulation on
 GitHub. Depends on common, openjdk-8, and maven-3.
@@ -201,6 +187,24 @@ GitHub. Depends on common, openjdk-8, and maven-3.
 Builds the Docker image for mod-circulation and launches it via
 Okapi. Depends on mod-circulation-build, docker-engine, and
 okapi-docker or okapi-src.
+
+## mod-loan-storage (*Deprecated*)
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance, with persistent
+storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
+## mod-metadata (*Deprecated*)
+Loads the Docker images for the inventory-storage and inventory
+modules from Docker Hub, registers and deploys as a system service in
+a running Okapi instance, with persistent storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
 
 ## mod-metadata-build (*Deprecated*)
 Clones and builds the source from folio-org/mod-metadata on
@@ -217,6 +221,25 @@ a running Okapi instance. Depends on:
 - okapi-undeploy
 
 *Note: without a running Okapi instance, this role will fail.*
+
+## mod-users (*Deprecated*)
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance, with persistent
+storage. Depends on:
+- postgresql
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance, this role will fail.*
+
+## mod-users-bl (*Deprecated*)
+Loads the Docker image from Docker Hub, registers and deploys as a
+system service in a running Okapi instance. Depends on:
+- docker-engine
+- okapi-undeploy
+
+*Note: without a running Okapi instance with mod-users, this
+ role will fail*
 
 ## mod-users-build (*Deprecated*)
 Clones and builds the source from folio-org/mod-users on

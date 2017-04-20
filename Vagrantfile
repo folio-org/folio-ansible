@@ -11,10 +11,11 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
-  config.vm.define "backend", autostart: false do |backend|
-    backend.vm.box = "folio/folio-backend"
-    backend.vm.synced_folder ".", "/vagrant", disabled: true
-    backend.vm.network "forwarded_port", guest: 9130, host: 9130
+  config.vm.define "demo", autostart: false do |demo|
+    demo.vm.box = "folio/folio-demo"
+    demo.vm.synced_folder ".", "/vagrant", disabled: true
+    demo.vm.network "forwarded_port", guest: 9130, host: 9130
+    demo.vm.network "forwarded_port", guest: 3000, host: 3000
   end
 
   config.vm.define "backend_auth", autostart: false do |backend_auth|
@@ -23,27 +24,21 @@ Vagrant.configure(2) do |config|
     backend_auth.vm.network "forwarded_port", guest: 9130, host: 9130
   end
 
-  config.vm.define "demo", autostart: false do |demo|
-    demo.vm.box = "folio/folio-demo"
-    demo.vm.synced_folder ".", "/vagrant", disabled: true
-    demo.vm.network "forwarded_port", guest: 9130, host: 9130
-    demo.vm.network "forwarded_port", guest: 3000, host: 3000
-  end
-
   config.vm.define "curriculum", autostart: false do |curriculum|
     curriculum.vm.box = "folio/curriculum"
     curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
     curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
   end
 
-  config.vm.define "build_backend", autostart: false do |build_backend|
-    build_backend.vm.box = "debian/jessie64"
-    build_backend.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_backend.vm.synced_folder ".", "/vagrant", disabled: true
-    build_backend.vm.provision "ansible" do |ansible|
+  config.vm.define "build_demo", autostart: false do |build_demo|
+    build_demo.vm.box = "debian/jessie64"
+    build_demo.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_demo.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_demo.vm.synced_folder ".", "/vagrant", disabled: true
+    build_demo.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
-        "blackbox" => ["build_backend"]
+        "blackbox" => ["build_demo"]
       }
     end
   end
@@ -56,19 +51,6 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "blackbox" => ["build_backend_auth"]
-      }
-    end
-  end
-
-  config.vm.define "build_demo", autostart: false do |build_demo|
-    build_demo.vm.box = "debian/jessie64"
-    build_demo.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_demo.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_demo.vm.synced_folder ".", "/vagrant", disabled: true
-    build_demo.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "blackbox" => ["build_demo"]
       }
     end
   end

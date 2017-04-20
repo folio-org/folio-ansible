@@ -20,7 +20,7 @@
 ## Prebuilt Vagrant boxes
 
 The Vagrantfile and Ansible playbooks and roles in this project are
-used to generate three prebuilt Vagrant boxes, available on
+used to generate four prebuilt Vagrant boxes, available on
 [Hashicorp Atlas](https://atlas.hashicorp.com/folio):
 
 * [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
@@ -28,10 +28,6 @@ used to generate three prebuilt Vagrant boxes, available on
   mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
   Stripes, and the Stripes modules trivial, ui-scan,
   ui-users, and ui-items.
-
-* [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
-  -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
-  modules, mod-loan-storage, and mod-circulation
 
 * [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
   -- a backend FOLIO system with the mod-auth authentication
@@ -45,6 +41,11 @@ used to generate three prebuilt Vagrant boxes, available on
   -- a box built to support the
   [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
   with prerequisites installed.
+
+* [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
+  -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
+  modules, mod-loan-storage, and mod-circulation. *This box is no
+  longer maintained.*
 
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
@@ -67,8 +68,8 @@ production. Okapi is installed using a Debian installation package,
 with its home directory in `/usr/share/folio/okapi`, configuration
 files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
 backend modules are deployed through Okapi using its Docker deployment
-facility. `systemd` service units are used to manage starting and
-stopping backend modules. Modules are installed following
+facility. The `okapi-deploy` systemd service unit is used to manage
+starting and stopping backend modules. Modules are installed following
 the convention of configuration in `/etc/folio` and static files in
 `/usr/share/folio`. Stripes is installed as a Docker container
 configured to restart on reboot.
@@ -93,19 +94,22 @@ stop working.
 
 ### Updating Okapi
 
+    $ sudo systemctl stop okapi-deploy
     $ sudo apt-get update
     $ sudo apt-get install okapi
+    $ sudo systemctl start okapi-deploy
 
 ### Updating Docker-based modules
 
     # for a list of images
     $ docker images
     
-    # to update mod-users
-    $ docker pull folioci/mod-users
+    # to update a module, edit its deployment descriptor and update
+    # the version specified e.g.:
+    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
 
     # to undeploy and redeploy using the new image
-    $ sudo systemctl restart mod-users
+    $ sudo systemctl restart okapi-deploy
 
 ### Updating Stripes
 
@@ -124,22 +128,18 @@ Docker container and restart it:
 
 ## Vagrantfile targets
 
-The Vagrantfile in this project contains eight target definitions:
+The Vagrantfile in this project contains six target definitions:
 
-1. `backend` -- This target pulls the folio/folio-backend Vagrant box
-   hosted on Atlas.
+1. `demo` -- This target pulls the folio/folio-demo Vagrant box hosted
+   on Atlas.
 2. `backend_auth` -- This target pulls the folio/folio-backend-auth
    Vagrant box hosted on Atlas.
-3. `demo` -- This target pulls the folio/folio-demo Vagrant box hosted
-   on Atlas.
-4. `curriculum` -- This target pulls the folio/curriculum Vagrant box
+3. `curriculum` -- This target pulls the folio/curriculum Vagrant box
    hosted on Atlas.
-5. `build_backend` -- a target to build the `backend` box for
-   packaging.
-6. `build_backend_auth` -- a target to build the `backend_auth` box
+4. `build_demo` -- a target to build the `demo` box for packaging.  
+5. `build_backend_auth` -- a target to build the `backend_auth` box
    for packaging.
-7. `build_demo` -- a target to build the `demo` box for packaging.
-8. `build_curriculum` -- a target to build the `curriculum` box for
+6. `build_curriculum` -- a target to build the `curriculum` box for
    packaging.
 
 ## Troubleshooting/Known Issues
@@ -161,23 +161,21 @@ Backend modules on the prebuilt boxes are deployed by Okapi as Docker
 containers. To view the logs:
 
 1. Log into the box using `vagrant ssh`.
-2. Get the container name of the module you want to check with `sudo
-docker ps`.
-3. Look at the log with `sudo docker logs <container_name>`. You can
+2. Get the container name of the module you want to check with `docker ps`.
+3. Look at the log with `docker logs <container_name>`. You can
    follow the log by adding the `--follow` paramenter to the `docker
    logs` command.
 
 ### Viewing the stripes log on the `demo` box
 
-On the `demo` box, stripes is deployed as a system service using
-systemd. You can view the log by logging into the box with
-`vagrant ssh demo`, then:
+On the `demo` box, stripes is deployed as a Docker container.  You can
+view the log by logging into the box with `vagrant ssh`, then:
 
-    $ sudo journalctl -u stripes
+    $ docker logs stripes_stripes_1
 
 To follow the log:
 
-    $ sudo journalctl -u stripes -f
+    $ docker logs stripes_stripes_1 --follow
 
 ### Some recent Vagrant versions have non-working `curl`
 
