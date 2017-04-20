@@ -23,14 +23,14 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 ## System Requirements
 
 For Vagrant deployment:
-* [Vagrant](https://www.vagrantup.com)
+* [Vagrant](https://www.vagrantup.com); for Windows use 1.9.2 or \>= 1.9.4.
 * [VirtualBox](https://www.virtualbox.org)
 
 For Ansible provisioning (to build a dev VM, or to build the demo or
 backend system from scratch)
 * [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.2
 
-This installation has been tested on macOS "Sierra" and Ubuntu 16.04.
+This installation has been tested on macOS "Sierra", Ubuntu 16.04, and Windows 10.
 
 ## Quick Start
 
