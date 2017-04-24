@@ -6,3 +6,6 @@ mod_metadata_modules:
   - { index: 1, module: inventory }
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
+admin_permissions:
+  - inventory-storage.all
+  - inventory.all

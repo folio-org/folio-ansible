@@ -78,7 +78,7 @@ folio_modules:
   - index: 5
     name: mod-inventory-storage
     module_id: inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory-storage/ModuleDescriptor-1.0.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory-storage/ModuleDescriptor.json
     image_version: v3.1.0
     image_repository: folioorg
     docker_env:
@@ -95,7 +95,7 @@ folio_modules:
   - index: 6
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory/ModuleDescriptor-1.0.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory/ModuleDescriptor.json
     image_version: v3.1.0
     image_repository: folioorg
     docker_env:
@@ -104,7 +104,7 @@ folio_modules:
   - index: 7
     name: mod-circulation-storage
     module_id: loan-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-loan-storage/v1.0.3/ModuleDescriptor-1.0.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-loan-storage/v1.0.3/ModuleDescriptor.json
     image_version: v1.0.3
     image_repository: folioorg
     docker_env:
@@ -121,7 +121,7 @@ folio_modules:
   - index: 8
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v1.0.0/ModuleDescriptor-1.0.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v1.0.0/ModuleDescriptor-1.2.json
     image_version: v1.0.0
     image_repository: folioorg
 
