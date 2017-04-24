@@ -40,6 +40,8 @@ folio_modules:
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json
     image_repository: folioci
     image_version: latest
+    docker_cmd:
+      - "verify.user=true"
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }

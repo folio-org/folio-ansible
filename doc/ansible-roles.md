@@ -20,8 +20,8 @@ Installs Apache Maven 3 from the Apache archive.
 Hooks up mod-auth modules for the sample tenant, loads sample users
 and auth data. Depends on tenant-data.
 
-*Note: without a running Okapi instance with mod-users, this role will
- fail*
+*Note: without a running Okapi instance with mod-auth and mod-users,
+ this role will fail*
 
 ## mod-auth-demo-users
 Creates shim users in mod-auth login and permissions modules for all
@@ -58,7 +58,9 @@ Sample data for the mod-users-bl business logic module. Depends on:
  mod-users installed and enabled, this role will fail.*
 
 ## mod-users-data
-Sample data for the mod-users backend module. Depends on tenant-data.
+Sample data for the mod-users backend module. Depends on
+tenant-data. If mod-auth modules are enabled, must run _after_
+mod-auth-data role, or permissions will not be correctly initialized.
 
 *Note: without a running Okapi instance with mod-users installed and
 enabled, this role will fail.*

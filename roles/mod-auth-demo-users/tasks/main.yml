@@ -3,6 +3,18 @@
 # for all users in mod-users
 # Just a temporary workaround to make the demo look nice
 
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_auth_login
+
 - name: Get users
   uri:
     url: "{{ okapi_url }}/users?limit=100"
