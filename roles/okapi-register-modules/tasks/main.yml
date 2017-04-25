@@ -1,6 +1,10 @@
 ---
 # Role to register module descriptors with Okapi, pulling module
 # descriptor from a remote URL (e.g. GitHub repo)
+#
+
+# wait a few seconds to make sure okapi is up
+- wait_for: timeout=5
 
 #########
 # Setup #
