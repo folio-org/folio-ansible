@@ -54,6 +54,23 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
 
   - index: 3
+    name: mod-configuration
+    module_id: configuration
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/90c7da0699455fc49a29ac4910d116fc46b1fe22/ModuleDescriptor.json
+    image_repository: folioci
+    image_version: 0.0.9-SNAPSHOT
+    docker_env:
+      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    
+  - index: 4
     name: mod-users
     module_id: users-module
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/a9f92906252310fb748612be5a39107de57eff80/ModuleDescriptor.json
@@ -70,14 +87,14 @@ folio_modules:
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
 
-  - index: 4
+  - index: 5
     name: mod-users-bl
     module_id: users-bl 
     mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
     image_version: 0.1.0-SNAPSHOT
     image_repository: folioci
 
-  - index: 5
+  - index: 6
     name: mod-inventory-storage
     module_id: inventory-storage
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory-storage/ModuleDescriptor.json
@@ -94,7 +111,7 @@ folio_modules:
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
 
-  - index: 6
+  - index: 7
     name: mod-inventory
     module_id: inventory
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory/ModuleDescriptor.json
@@ -103,7 +120,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
 
-  - index: 7
+  - index: 8
     name: mod-circulation-storage
     module_id: loan-storage
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-loan-storage/v1.0.3/ModuleDescriptor.json
@@ -120,7 +137,7 @@ folio_modules:
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
 
-  - index: 8
+  - index: 9
     name: mod-circulation
     module_id: circulation
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v1.0.0/ModuleDescriptor-1.2.json

@@ -42,6 +42,12 @@ Sample data for the mod-circulation business logic module. Depends on:
 *Note: without a running Okapi instance with mod-circulation and
  mod-loan-storage installed and enabled, this role will fail.*
 
+## mod-configuration-data
+Hooks up mod-configuration for the sample tenant. Depends on
+tenant-data.
+
+*Note: without a running Okapi instance, this role will fail*
+
 ## mod-metadata-data
 Sample data for the mod-metadata backend modules. Depends on
 tenant-data and common.
