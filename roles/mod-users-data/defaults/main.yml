@@ -7,6 +7,3 @@ patron_groups:
   - { group: other, desc: Other }
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
-admin_permissions:
-  - users.all
-

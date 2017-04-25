@@ -51,6 +51,7 @@ admin_user: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA2749
 admin_permissions:
   - perms.all
   - login.all
+  - users.all
   - module.trivial.enabled
   - module.users.enabled
   - module.items.enabled
@@ -113,8 +114,6 @@ patron_groups:
   - { group: other, desc: Other }
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
-admin_permissions:
-  - users.all
 
 # okapi role
 okapi_role: cluster

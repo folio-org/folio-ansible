@@ -57,6 +57,15 @@
   shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
   when: diku_admin_permissions.stdout | int == 0
 
+- name: Check mod-users for diku_admin user
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_mod_users.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: diku_admin_mod_users
+  changed_when: no
+
+- name: Insert diku_admin user into mod_users
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_mod_users.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user.id }}\",\"active\":true}')" {{ module_database }}
+  when: diku_admin_mod_users.stdout | int == 0
+  
 ###############################################
 # Create other mod_auth permissions and users #
 ###############################################
@@ -108,6 +117,23 @@
   register: other_users_admin_perms
   changed_when: other_users_admin_perms.status == 200
   with_items: "{{ admin_permissions }}"
+
+# 422 error means the user is already there  
+- name: Load users
+  uri:
+    url: "{{ okapi_url }}/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,422
+  register: load_user
+  changed_when: load_user.status == 201
+  with_fileglob:
+    - "*.json"
 
 - name: Create mod-auth credentials for other users
   uri:
