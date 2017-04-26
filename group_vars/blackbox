@@ -106,7 +106,7 @@ folio_modules:
   - index: 7
     name: mod-circulation-storage
     module_id: loan-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-loan-storage/v1.0.3/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v1.0.3/ModuleDescriptor.json
     image_version: v1.0.3
     image_repository: folioorg
     docker_env:
