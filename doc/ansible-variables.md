@@ -46,7 +46,15 @@ mod_auth_modules:
   - { index: 1, module: authtoken-module }
   - { index: 2, module: login-module }
 
-admin_user: { username: diku_admin, password: admin, hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E, salt: 483A7C864569B90C24A0A6151139FF0B95005B16, permissions: "\\\"perms.all\\\"" }
+admin_user:
+  username: diku_admin
+  password: admin
+  hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E
+  salt: 483A7C864569B90C24A0A6151139FF0B95005B16
+  permissions: "\\\"perms.all\\\""
+  id: 1ad737b0-d847-11e6-bf26-cec0c932ce01
+  first_name: DIKU
+  last_name: ADMINISTRATOR
 
 admin_permissions:
   - perms.all

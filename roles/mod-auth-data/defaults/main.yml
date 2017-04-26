@@ -23,6 +23,8 @@ admin_user:
   salt: 483A7C864569B90C24A0A6151139FF0B95005B16
   permissions: "\\\"perms.all\\\""
   id: 1ad737b0-d847-11e6-bf26-cec0c932ce01
+  first_name: DIKU
+  last_name: ADMINISTRATOR
 
 admin_permissions:
   - perms.all
