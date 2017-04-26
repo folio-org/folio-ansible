@@ -87,6 +87,12 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
 
+# mod-configuration-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+
 # mod-metadata-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
