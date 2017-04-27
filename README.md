@@ -43,7 +43,10 @@ create a new directory, `cd` into it, and try:
 
 There is also a `folio/folio-backend-auth` Vagrant box available,
 which contains Okapi and a set of backend modules, suitable for
-frontend development.
+frontend development. See the
+[Change-log](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
+for details of the various releases, including which versions of the
+backend modules they provide.
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
 forwarded to `localhost:9130`.
