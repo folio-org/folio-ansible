@@ -13,16 +13,16 @@ folio_modules:
   - index: 0
     name: mod-authtoken
     module_id: authtoken-module
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/authtoken_module/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/3c05f01a30f792b32be607e8f6de46299e840ca3/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
+    image_version: 0.4.0-SNAPSHOT
 
   - index: 1
     name: mod-permissions
     module_id: permissions-module
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/permissions_module/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/fba5a95c43a255fe96d766f6e6c9fce9ede539dd/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
+    image_version: 2.4.1-SNAPSHOT
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -37,9 +37,9 @@ folio_modules:
   - index: 2
     name: mod-login
     module_id: login-module
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-auth/master/login_module/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/9c5010b65d386bd2f46c3afa1844e989f446e407/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
+    image_version: 2.2.2-SNAPSHOT
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -73,7 +73,7 @@ folio_modules:
   - index: 4
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users/a9f92906252310fb748612be5a39107de57eff80/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/a9f92906252310fb748612be5a39107de57eff80/ModuleDescriptor.json
     image_version: 6.2.2-SNAPSHOT
     image_repository: folioci
     docker_env:
@@ -90,8 +90,8 @@ folio_modules:
   - index: 5
     name: mod-users-bl
     module_id: users-bl 
-    mod_descriptor_url: https://raw.githubusercontent.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
-    image_version: 0.1.0-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/be35eb363714ffdfb5a24975c97cc657d71ac958/ModuleDescriptor.json
+    image_version: 0.1.1-SNAPSHOT
     image_repository: folioci
 
   - index: 6
