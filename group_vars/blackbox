@@ -90,8 +90,8 @@ folio_modules:
   - index: 5
     name: mod-users-bl
     module_id: users-bl 
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/be35eb363714ffdfb5a24975c97cc657d71ac958/ModuleDescriptor.json
-    image_version: 0.1.1-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/4a37e76375b7bf227554dcde670f6338cc88140a/ModuleDescriptor.json
+    image_version: 0.1.2-SNAPSHOT
     image_repository: folioci
 
   - index: 6
