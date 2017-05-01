@@ -72,10 +72,10 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
   register: inventory_items
 
-# fails with 400 error if already loaded
+# fails with 422 error if already loaded
 - name: Load inventory storage material types
   uri:
-    url: "{{ okapi_url }}/material-type"
+    url: "{{ okapi_url }}/material-types"
     method: POST
     body_format: json
     headers:
@@ -83,11 +83,27 @@
       Accept: application/json
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
-    status_code: 201, 400
+    status_code: 201, 422
   register: load_mtype
   changed_when: load_mtype.status == 201
   with_fileglob:
     - mtypes/*.json
+
+- name: Load inventory storage loan types
+  uri:
+    url: "{{ okapi_url }}/loan-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_ltype
+  changed_when: load_ltype.status == 201
+  with_fileglob:
+    - loantypes/*.json
 
 - name: Load inventory storage instances
   uri:
@@ -129,5 +145,5 @@
   register: mods_sample
 
 - name: Load sample data from MODS ingest
-  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Toke: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Token: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
   when: mods_sample.changed

@@ -3,9 +3,7 @@
   "instanceId": "cf23adf0-61ba-4887-bf82-956c4aae2260",
   "title": "Temeraire",
   "barcode": "653285216743",
-  "materialType": {
-    "name": "Book"
-  },
+  "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
   "status": {
     "name": "Checked Out"
   },
