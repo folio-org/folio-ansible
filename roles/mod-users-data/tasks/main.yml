@@ -40,6 +40,23 @@
   register: mod_users_login
   when: auth_required and tenant_mod_authtoken.status == 200
 
+# 422 error means the group is already there
+- name: Load groups
+  uri:
+    url: "{{ okapi_url }}/groups"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,422
+  register: load_group
+  changed_when: load_group.status == 201
+  with_fileglob:
+    - groups/*.json
+
 # 422 error means the user is already there
 - name: Load users
   uri:
@@ -55,7 +72,7 @@
   register: load_user
   changed_when: load_user.status == 201
   with_fileglob:
-    - "*.json"
+    - users/*.json
 
 - name: Get user groups
   uri:
@@ -66,50 +83,51 @@
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
   register: usergroups
 
-- name: Load groups if needed
-  uri:
-    url: "{{ okapi_url }}/groups"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    body: '{ "group" : "{{ item.group }}", "desc" : "{{ item.desc }}" }'
-    status_code: 201,422
-  register: load_group
-  changed_when: load_group.status == 201
-  with_items: "{{ patron_groups }}"
-  when: usergroups.json.usergroups == []
-
-- name: Get user groups (again)
-  uri:
-    url: "{{ okapi_url }}/groups"
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: usergroups
-
-- name: Get users
+# Get users up to 300
+- name: Get 1st 100 users
   uri:
     url: "{{ okapi_url }}/users?limit=100"
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: users
+  register: users1
 
-# Returns 422 error on duplicate assignment
+- name: Get 2nd 100 users
+  uri:
+    url: "{{ okapi_url }}/users?offset=100&limit=100"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: users2
+  when: users1.json.total_records > 100
+
+- name: Get 3rd 100 users
+  uri:
+    url: "{{ okapi_url }}/users?offset=200&limit=100"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: users3
+  when: users1.json.total_records > 200
+
+- name: Merge user lists
+  set_fact: users="{{ users1.json.users|union(users2.json.users|default([]))|union(users3.json.users|default([])) }}"
+
 - name: Associate users with usergroups
   uri:
-    url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random).id }}/users/{{ item.id }}"
+    url: "{{ okapi_url }}/users/{{ item.id }}"
     method: PUT
+    body_format: json 
     headers:
       X-Okapi-Tenant: diku
       Accept: text/plain
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    status_code: 204, 422
+    body: "{{ item|combine({'patron_group':(usergroups.json.usergroups|random).id}) }}"
+    status_code: 204
+  when: item.patron_group is not defined
   register: group_user
   changed_when: group_user.status == 204
-  with_items: "{{ users.json.users }}"
+  with_items: "{{ users }}"

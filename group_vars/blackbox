@@ -73,8 +73,8 @@ folio_modules:
   - index: 4
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/a9f92906252310fb748612be5a39107de57eff80/ModuleDescriptor.json
-    image_version: 6.2.2-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/4252e71b940b20ad07ab9d5bf66387c49285c61a/ModuleDescriptor.json
+    image_version: 7.0.0-SNAPSHOT
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
