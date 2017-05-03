@@ -57,23 +57,7 @@
   with_fileglob:
     - groups/*.json
 
-# 422 error means the user is already there
-- name: Load users
-  uri:
-    url: "{{ okapi_url }}/users"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
-    status_code: 201,422
-  register: load_user
-  changed_when: load_user.status == 201
-  with_fileglob:
-    - users/*.json
-
+# need to get groups UUIDs for user generation
 - name: Get user groups
   uri:
     url: "{{ okapi_url }}/groups"
@@ -83,51 +67,45 @@
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
   register: usergroups
 
-# Get users up to 300
-- name: Get 1st 100 users
+- name: Install prereqs for user generation from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - libjson-xs-perl
+    - libdata-faker-perl
+    - libuuid-perl
+
+- name: Copy gen-folio-users utility
+  become: yes
+  copy: src=gen-folio-users dest=/usr/local/bin/gen-folio-users mode=0755
+
+- name: Generate user files
+  become: yes
+  shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }}
+  args:
+    creates: /etc/.folio-users_ansible
+
+- name: Get filenames
+  shell: ls /etc/.folio-users_ansible
+  register: userfiles
+
+- name: Slurp user files
+  slurp: src=/etc/.folio-users_ansible/{{ item }}
+  with_items: "{{ userfiles.stdout_lines }}"
+  register: userfiles_content
+
+# 422 error means the user is already there  
+- name: Load users
   uri:
-    url: "{{ okapi_url }}/users?limit=100"
+    url: "{{ okapi_url }}/users"
+    method: POST
+    body_format: json
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: users1
-
-- name: Get 2nd 100 users
-  uri:
-    url: "{{ okapi_url }}/users?offset=100&limit=100"
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: users2
-  when: users1.json.total_records > 100
-
-- name: Get 3rd 100 users
-  uri:
-    url: "{{ okapi_url }}/users?offset=200&limit=100"
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: users3
-  when: users1.json.total_records > 200
-
-- name: Merge user lists
-  set_fact: users="{{ users1.json.users|union(users2.json.users|default([]))|union(users3.json.users|default([])) }}"
-
-- name: Associate users with usergroups
-  uri:
-    url: "{{ okapi_url }}/users/{{ item.id }}"
-    method: PUT
-    body_format: json 
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: text/plain
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    body: "{{ item|combine({'patron_group':(usergroups.json.usergroups|random).id}) }}"
-    status_code: 204
-  when: item.patron_group is not defined
-  register: group_user
-  changed_when: group_user.status == 204
-  with_items: "{{ users }}"
+    body: "{{ item.content|b64decode }}"
+    status_code: 201,422
+  register: load_user
+  changed_when: load_user.status == 201
+  with_items: "{{ userfiles_content.results }}"

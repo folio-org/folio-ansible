@@ -144,6 +144,8 @@ folio_modules:
     image_version: v2.0.0
     image_repository: folioorg
 
+num_users: 200
+
 stripes_okapi_url: http://localhost:9130
 
 docker_users:

@@ -1,28 +1,30 @@
+#!/usr/bin/perl
 # build a users collection with fake data
 use strict;
 use warnings;
 use Data::Faker;
-use UUID qw /uuid/;
+use UUID;
 use JSON;
+use Getopt::Long;
 
-my $users;
-if ($ARGV[0]) {
-  $users = $ARGV[0];
-} else {
-  $users = 20;
-}
-my $start;
-if ($ARGV[1]) {
-  $start = $ARGV[1];
-} else {
-  $start = 0;
-}
+# Command line options --users --start --group
+# --group can be specified multiple times, or comma delimited
+my $users = 20;
+my $start = 0;
+my @groups = ();
+GetOptions ("users=i" => \$users,
+            "start=i" => \$start,
+            "group=s" => \@groups);
+@groups = split(/,/,join(',',@groups));
 
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
 my %usernames;
 
 for (my $i = $start; $i < $users + $start; $i++) {
+  my ($uuid,$id);
+  UUID::generate($uuid);
+  UUID::unparse($uuid,$id);
   my $username = $faker->username();
   until (!$usernames{$username}) {
     $username = $faker->username();
@@ -30,7 +32,7 @@ for (my $i = $start; $i < $users + $start; $i++) {
   $usernames{$username} = 1;
   my $user = {
               username => $username,
-              id => uuid(),
+              id => $id,
               active => (rand(1) > 0.3 ? JSON::true : JSON::false),
               type => 'patron',
               meta => {
@@ -42,10 +44,14 @@ for (my $i = $start; $i < $users + $start; $i++) {
                            last_name => (rand(1) > 0.09 ?
 					 $faker->last_name() :
 					 $common_last_name),
-                           email => $faker->email()
+                           email => $faker->email(),
+                           phone => $faker->phone_number()
                           }
              };
-  open(OUT,">User" . sprintf("%03d",$i) . ".json");
+  if (@groups) {
+    $$user{'patron_group'} = $groups[rand(@groups)];
+  }
+  open(OUT,">User" . sprintf("%03d",$i) . ".json") or die "Can't open output file: $!\n";
   print OUT to_json($user, { pretty => 1 }) . "\n";
   close(OUT);
 }
