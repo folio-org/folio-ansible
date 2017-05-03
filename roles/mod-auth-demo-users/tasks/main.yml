@@ -48,17 +48,6 @@
 - name: Merge user lists
   set_fact: users="{{ users1.json.users|union(users2.json.users|default([]))|union(users3.json.users|default([])) }}"
 
-- name: Check for login users
-  uri:
-    url: "{{ okapi_url }}/authn/credentials/{{ item.username }}"
-    headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
-      Accept: application/json
-    status_code: 200, 404
-  register: mod_login_users
-  with_items: "{{ users }}"
-
 - name: Create login users 
   uri:
     url: "{{ okapi_url }}/authn/credentials"
@@ -68,22 +57,10 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.item.username }}", "password" : "{{ item.item.username }}" }'
-    status_code: 201
-  when: item.status == 404
+    body: '{ "username" : "{{ item.username }}", "password" : "{{ item.username }}" }'
+    status_code: 201,422
   register: create_creds
   changed_when: create_creds.status == 201
-  with_items: "{{ mod_login_users.results }}"
-
-- name: Check for perms users
-  uri:
-    url: "{{ okapi_url }}/perms/users/{{ item.username }}"
-    headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
-      Accept: application/json
-    status_code: 200, 404
-  register: mod_permissions_users
   with_items: "{{ users }}"
 
 - name: Create perms users 
@@ -95,9 +72,8 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.item.username }}" }'
-    status_code: 201
-  when: item.status == 404
+    body: '{ "username" : "{{ item.username }}" }'
+    status_code: 201,422
   register: create_perms
   changed_when: create_perms.status == 201
-  with_items: "{{ mod_permissions_users.results }}"
+  with_items: "{{ users }}"
