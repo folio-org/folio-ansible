@@ -67,6 +67,37 @@
   with_items: "{{ admin_permissions }}"
   when: auth_required
 
+- name: Get users for loans
+  uri:
+    url: "{{ okapi_url }}/users?query=active%3D%3Dtrue%20and%20type%3D%3Dpatron&limit=4"
+    headers:
+      Accept: application/json
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token|default('token') }}"
+  register: loan_users
+
+- name: Create loan records directory
+  become: yes
+  file: dest=/etc/.folio-loans_ansible state=directory
+
+- name: Copy loan records with userIds
+  become: yes
+  template: src={{ item }} dest=/etc/.folio-loans_ansible/{{ item }}
+  with_items:
+    - bridget-jones-baby-item.json
+    - girl-on-the-train-item.json
+    - interesting-times-item.json
+    - nod-item.json
+
+- name: Slurp loan files
+  slurp: src=/etc/.folio-loans_ansible/{{ item }}
+  with_items:
+    - bridget-jones-baby-item.json
+    - girl-on-the-train-item.json
+    - interesting-times-item.json
+    - nod-item.json
+  register: loanfiles_content
+
 # 422 error means the data are already there
 - name: Load circulation
   uri:
@@ -77,10 +108,8 @@
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
+    body: "{{ item.content|b64decode }}"
     status_code: 201,422
   register: load_loan
   changed_when: load_loan.status == 201
-  with_fileglob:
-    - "*.json"
-
+  with_items: "{{ loanfiles_content.results }}"
