@@ -20,6 +20,14 @@ GetOptions ("users=i" => \$users,
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
 my %usernames;
+my %barcodes;
+my @contacts = (
+                { value => 'EMAIL', desc => 'Email' },
+                { value => 'MAIL', desc => 'Mail (Primary Address)' },
+                { value => 'TEXT', desc => 'Text message' },
+                { value => 'PHONE', desc => 'Phone' },
+                { value => 'MOBILE', desc => 'Mobile phone' }
+               );
 
 for (my $i = $start; $i < $users + $start; $i++) {
   my ($uuid,$id);
@@ -30,26 +38,40 @@ for (my $i = $start; $i < $users + $start; $i++) {
     $username = $faker->username();
   }
   $usernames{$username} = 1;
+  my $barcode = sprintf("%d",rand(1e+15));
+  until (!$barcodes{$barcode}) {
+    $barcode = sprintf("%d",rand(1e+15));
+  }
+  $barcodes{$barcode} = 1;
   my $user = {
               username => $username,
               id => $id,
+              barcode => $barcode,
               active => (rand(1) > 0.3 ? JSON::true : JSON::false),
               type => 'patron',
-              meta => {
-                       creation_date => $faker->sqldate(),
-                       last_login_date => $faker->sqldate()
-                      },
               personal => {
-                           first_name => $faker->first_name(),
-                           last_name => (rand(1) > 0.09 ?
+                           lastName => (rand(1) > 0.09 ?
 					 $faker->last_name() :
 					 $common_last_name),
+                           firstName => $faker->first_name(),
                            email => $faker->email(),
-                           phone => $faker->phone_number()
-                          }
+                           phone => $faker->phone_number(),
+                           dateOfBirth => $faker->sqldate(),
+                           preferredContact => $contacts[int(rand(5))]
+                          },
+              openDate => $faker->sqldate(),
+              enrollmentDate => $faker->sqldate(),
+              expirationDate => $faker->sqldate(),
+              lastUpdateDate => $faker->sqldate()
              };
   if (@groups) {
-    $$user{'patron_group'} = $groups[rand(@groups)];
+    $$user{'patronGroup'} = $groups[rand(@groups)];
+  }
+  if (rand(1) > 0.3) {
+    $$user{'personal'}{'middleName'} = $faker->first_name();
+  }
+  if (rand(1) > 0.3) {
+    $$user{'personal'}{'mobilePhone'} = $faker->phone_number();
   }
   open(OUT,">User" . sprintf("%03d",$i) . ".json") or die "Can't open output file: $!\n";
   print OUT to_json($user, { pretty => 1 }) . "\n";

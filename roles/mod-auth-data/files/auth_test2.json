@@ -3,13 +3,9 @@
    "username" : "auth_test2",
    "active" : false,
    "personal" : {
-      "first_name" : "Allison",
-      "last_name" : "Conroy",
+      "firstName" : "Allison",
+      "lastName" : "Conroy",
       "email" : "vita@schroeder-emard-and-weissnat.pro"
-   },
-   "meta" : {
-      "last_login_date" : "1990-11-04",
-      "creation_date" : "2009-01-04"
    },
    "id" : "17B39C4D-FFAE-4D62-A75D-1B22F45A081E"
 }

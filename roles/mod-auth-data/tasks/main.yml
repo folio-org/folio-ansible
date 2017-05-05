@@ -63,7 +63,7 @@
   changed_when: no
 
 - name: Insert diku_admin user into mod_users
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_mod_users.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user.id }}\",\"active\":true,\"personal\":{\"last_name\":\"{{ admin_user.last_name }}\",\"first_name\":\"{{ admin_user.first_name }}\"}}')" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_mod_users.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user.id }}\",\"active\":true,\"personal\":{\"lastName\":\"{{ admin_user.last_name }}\",\"firstName\":\"{{ admin_user.first_name }}\"}}')" {{ module_database }}
   when: diku_admin_mod_users.stdout | int == 0
   
 ###############################################
