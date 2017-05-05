@@ -97,8 +97,8 @@ folio_modules:
   - index: 6
     name: mod-inventory-storage
     module_id: inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory-storage/ModuleDescriptor.json
-    image_version: v3.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v4.1.0/inventory-storage/ModuleDescriptor.json
+    image_version: v4.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
@@ -114,8 +114,8 @@ folio_modules:
   - index: 7
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v3.1.0/inventory/ModuleDescriptor.json
-    image_version: v3.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v4.1.0/inventory/ModuleDescriptor.json
+    image_version: v4.1.0
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -140,8 +140,8 @@ folio_modules:
   - index: 9
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v1.0.0/ModuleDescriptor-1.2.json
-    image_version: v1.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v2.0.0/ModuleDescriptor.json
+    image_version: v2.0.0
     image_repository: folioorg
 
 stripes_okapi_url: http://localhost:9130

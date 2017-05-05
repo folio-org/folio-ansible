@@ -3,9 +3,7 @@
   "instanceId": "f31a36de-fcf8-44f9-87ef-a55d06ad21ae",
   "title": "The Girl on the Train",
   "barcode": "765475420716",
-  "materialType": {
-    "name": "DVD"
-  },
+  "materialTypeId": "5ee11d91-f7e8-481d-b079-65d708582ccc",
   "status": {
     "name": "Available"
   },

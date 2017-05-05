@@ -3,9 +3,7 @@
   "instanceId": "6506b79b-7702-48b2-9774-a1c538fdd34e",
   "title": "Nod",
   "barcode": "697685458679",
-  "materialType": {
-    "name": "Book"
-  },
+  "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
   "status": {
     "name": "Checked Out"
   },

@@ -34,7 +34,7 @@
     - mod-auth-data
     - mod-configuration-data
     - mod-users-data 
-    - mod-users-bl-data 
+    - mod-users-bl-data
     - mod-circulation-data 
     - mod-auth-demo-users
   tasks:
