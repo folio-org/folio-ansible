@@ -97,8 +97,8 @@ folio_modules:
   - index: 6
     name: mod-inventory-storage
     module_id: inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v4.1.0/inventory-storage/ModuleDescriptor.json
-    image_version: v4.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v4.2.0/ModuleDescriptor.json
+    image_version: v4.2.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
@@ -114,8 +114,8 @@ folio_modules:
   - index: 7
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-metadata/v4.1.0/inventory/ModuleDescriptor.json
-    image_version: v4.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v4.3.0/ModuleDescriptor.json
+    image_version: v4.3.0
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }

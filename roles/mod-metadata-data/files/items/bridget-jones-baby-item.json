@@ -4,6 +4,8 @@
   "title": "Bridget Jones's Baby",
   "barcode": "453987605438",
   "materialTypeId": "5ee11d91-f7e8-481d-b079-65d708582ccc",
+  "permanentLoanTypeId": "2b94c631-fca9-a892-c730-03ee529ffe27",
+  "temporaryLoanTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0e",
   "status": {
     "name": "Checked Out"
   },
