@@ -13,16 +13,17 @@ folio_modules:
   - index: 0
     name: mod-authtoken
     module_id: authtoken-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/3c05f01a30f792b32be607e8f6de46299e840ca3/ModuleDescriptor.json
-    image_repository: folioci
-    image_version: 0.4.0-SNAPSHOT
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.4.0/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v0.4.0
 
   - index: 1
     name: mod-permissions
     module_id: permissions-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/f24ca78c4e5ac3525e2f02e5d304d0bb94f5116a/ModuleDescriptor.json
-    image_repository: folioci
-    image_version: 2.4.1-SNAPSHOT
+    # Have to use a snapshot mod descriptor for now
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/4486fbb7c0c6ba59df766756d6a4c149ec525bd8/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v3.0.0
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -37,9 +38,10 @@ folio_modules:
   - index: 2
     name: mod-login
     module_id: login-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/88846047c42dde05d9631ccabf9cf9d7d49157a1/ModuleDescriptor.json
-    image_repository: folioci
-    image_version: 2.2.2-SNAPSHOT
+    # Have to use a snapshot mod descriptor for now
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/aef9bdfd0554a9b39cd5a6e3f094b733c155c285/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v3.0.0
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -56,9 +58,9 @@ folio_modules:
   - index: 3
     name: mod-configuration
     module_id: configuration
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/480ac5e3191482fb97fb2cbd8a79b2f7785962e1/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/07f458d022abe488093cc7fb5527957438877bdb/ModuleDescriptor.json
     image_repository: folioci
-    image_version: 0.0.9-SNAPSHOT
+    image_version: 0.1.0-SNAPSHOT
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -73,9 +75,9 @@ folio_modules:
   - index: 4
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/93d84c7a28bfdc739d52c30aae1fc080d72cda6d/ModuleDescriptor.json
-    image_version: 8.0.0-SNAPSHOT
-    image_repository: folioci
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v9.0.0/ModuleDescriptor.json
+    image_version: v9.0.0
+    image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -90,9 +92,9 @@ folio_modules:
   - index: 5
     name: mod-users-bl
     module_id: users-bl 
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/c8b54b1c2f4c4c0ccafe90630106f3b807706385/ModuleDescriptor.json
-    image_version: 0.3.0-SNAPSHOT
-    image_repository: folioci
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v0.4.0/ModuleDescriptor.json
+    image_version: v0.4.0
+    image_repository: folioorg
 
   - index: 6
     name: mod-inventory-storage
@@ -153,4 +155,3 @@ docker_users:
   - vagrant
 
 stripes_host_address: 0.0.0.0
-
