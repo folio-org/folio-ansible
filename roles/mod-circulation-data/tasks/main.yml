@@ -4,22 +4,22 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=10
 
-- name: Check tenant mod-loan-storage registration
+- name: Check tenant mod-circulation-storage registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/loan-storage"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ circulation_storage_id }}"
     status_code: 200, 404
-  register: tenant_mod_loan_storage
+  register: tenant_mod_circulation_storage
 
-- name: Enable mod-loan-storage module for tenant
+- name: Enable mod-circulation-storage module for tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "loan-storage" }'
+    body: '{ "id" : "{{ circulation_storage_id }}" }'
     status_code: 201
-  register: mod_loan_storage_enable
-  changed_when: mod_loan_storage_enable.status == 201
-  when: tenant_mod_loan_storage.status == 404
+  register: mod_circulation_storage_enable
+  changed_when: mod_circulation_storage_enable.status == 201
+  when: tenant_mod_circulation_storage.status == 404
 
 - name: Check tenant mod-circulation registration
   uri:
