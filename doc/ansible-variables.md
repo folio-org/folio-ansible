@@ -122,12 +122,9 @@ mod_users_bl_permissions:
 # mod-users-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-patron_groups:
-  - { group: on_campus, desc: On-campus }
-  - { group: off_campus, desc: Off-campus }
-  - { group: other, desc: Other }
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
+num_users: 20
 
 # okapi role
 okapi_role: cluster

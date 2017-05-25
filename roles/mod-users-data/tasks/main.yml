@@ -40,10 +40,10 @@
   register: mod_users_login
   when: auth_required and tenant_mod_authtoken.status == 200
 
-# 422 error means the user is already there
-- name: Load users
+# 422 error means the group is already there
+- name: Load groups
   uri:
-    url: "{{ okapi_url }}/users"
+    url: "{{ okapi_url }}/groups"
     method: POST
     body_format: json
     headers:
@@ -52,11 +52,12 @@
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201,422
-  register: load_user
-  changed_when: load_user.status == 201
+  register: load_group
+  changed_when: load_group.status == 201
   with_fileglob:
-    - "*.json"
+    - groups/*.json
 
+# need to get groups UUIDs for user generation
 - name: Get user groups
   uri:
     url: "{{ okapi_url }}/groups"
@@ -66,50 +67,45 @@
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
   register: usergroups
 
-- name: Load groups if needed
+- name: Install prereqs for user generation from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - libjson-xs-perl
+    - libdata-faker-perl
+    - libuuid-perl
+
+- name: Copy gen-folio-users utility
+  become: yes
+  copy: src=gen-folio-users dest=/usr/local/bin/gen-folio-users mode=0755
+
+- name: Generate user files
+  become: yes
+  shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }}
+  args:
+    creates: /etc/.folio-users_ansible
+
+- name: Get filenames
+  shell: ls /etc/.folio-users_ansible
+  register: userfiles
+
+- name: Slurp user files
+  slurp: src=/etc/.folio-users_ansible/{{ item }}
+  with_items: "{{ userfiles.stdout_lines }}"
+  register: userfiles_content
+
+# 422 error means the user is already there  
+- name: Load users
   uri:
-    url: "{{ okapi_url }}/groups"
+    url: "{{ okapi_url }}/users"
     method: POST
     body_format: json
     headers:
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    body: '{ "group" : "{{ item.group }}", "desc" : "{{ item.desc }}" }'
+    body: "{{ item.content|b64decode }}"
     status_code: 201,422
-  register: load_group
-  changed_when: load_group.status == 201
-  with_items: "{{ patron_groups }}"
-  when: usergroups.json.usergroups == []
-
-- name: Get user groups (again)
-  uri:
-    url: "{{ okapi_url }}/groups"
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: usergroups
-
-- name: Get users
-  uri:
-    url: "{{ okapi_url }}/users?limit=100"
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-  register: users
-
-# Returns 422 error on duplicate assignment
-- name: Associate users with usergroups
-  uri:
-    url: "{{ okapi_url }}/groups/{{ (usergroups.json.usergroups|random).id }}/users/{{ item.id }}"
-    method: PUT
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: text/plain
-      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
-    status_code: 204, 422
-  register: group_user
-  changed_when: group_user.status == 204
-  with_items: "{{ users.json.users }}"
+  register: load_user
+  changed_when: load_user.status == 201
+  with_items: "{{ userfiles_content.results }}"
