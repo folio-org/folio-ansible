@@ -1,14 +1,4 @@
 ---
-okapi_role: dev
-
-okapi_storage: postgres
-
-pg_admin_user: folio_admin
-pg_admin_password: folio_admin
-pg_port: 5432
-module_database: okapi_modules
-auth_required: true
-
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -25,7 +15,7 @@ folio_modules:
     image_repository: folioorg
     image_version: v3.0.0
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -45,7 +35,7 @@ folio_modules:
     docker_cmd:
       - "verify.user=true"
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -62,7 +52,7 @@ folio_modules:
     image_repository: folioci
     image_version: 0.1.0-SNAPSHOT
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -79,7 +69,7 @@ folio_modules:
     image_version: v9.0.0
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -103,7 +93,7 @@ folio_modules:
     image_version: v4.2.0
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -129,7 +119,7 @@ folio_modules:
     image_version: v1.0.3
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
+      - { name: db.host, value: "{{ pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -145,13 +135,3 @@ folio_modules:
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v2.0.0/ModuleDescriptor.json
     image_version: v2.0.0
     image_repository: folioorg
-
-num_users: 200
-
-stripes_okapi_url: http://localhost:9130
-
-docker_users:
-  - folio
-  - vagrant
-
-stripes_host_address: 0.0.0.0

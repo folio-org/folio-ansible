@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
-# Build a Vagrant box to package as a demo system
-- hosts: build_demo
+# Provision a host with a stable FOLIO system
+- hosts: stable
   roles:
     - common
     - postgresql
@@ -23,8 +23,8 @@
     - debug:
         msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
 
-# Build a Vagrant box as a backend system with mod-auth
-- hosts: build_backend_auth
+# Provision a host with HEAD-of-master versions of all FOLIO modules
+- hosts: testing
   roles:
     - common
     - postgresql

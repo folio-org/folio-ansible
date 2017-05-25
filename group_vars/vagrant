@@ -1,0 +1,15 @@
+---
+okapi_role: dev
+okapi_storage: postgres
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_port: 5432
+module_database: okapi_modules
+auth_required: true
+num_users: 200
+stripes_okapi_url: http://localhost:9130
+docker_users:
+  - folio
+  - vagrant
+stripes_host_address: 0.0.0.0
