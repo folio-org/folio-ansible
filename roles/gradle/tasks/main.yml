@@ -1,0 +1,30 @@
+---
+
+# Role to install Gradle
+
+- name: Download Gradle distribution
+  become: yes
+  unarchive:
+    src: https://downloads.gradle.org/distributions/gradle-{{ gradle_version }}-bin.zip
+    dest: /usr/local
+    remote_src: True
+    creates: /usr/local/gradle-{{ gradle_version }}/bin/gradle
+
+- name: Link gradle dir to /usr/local/gradle
+  become: yes
+  file: src=/usr/local/gradle-{{ gradle_version }} dest=/usr/local/gradle state=link
+
+- name: Link gradle to /usr/local/bin
+  become: yes
+  file: src=/usr/local/gradle/bin/gradle dest=/usr/local/bin/gradle state=link
+  
+- name: Configure ldconfig
+  become: yes
+  shell: echo '/usr/local/gradle/lib' > /etc/ld.so.conf.d/gradle.conf
+  args:
+    creates: /etc/ld.so.conf.d/gradle.conf
+
+- name: Update ldconfig
+  become: yes
+  command: /sbin/ldconfig
+  
