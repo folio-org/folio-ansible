@@ -116,7 +116,7 @@ stop working.
 
     # for a list of images
     $ docker images
-    
+
     # to update a module, edit its deployment descriptor and update
     # the version specified e.g.:
     $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
@@ -149,7 +149,7 @@ The Vagrantfile in this project contains six target definitions:
    Vagrant box hosted on Atlas.
 3. `curriculum` -- This target pulls the folio/curriculum Vagrant box
    hosted on Atlas.
-4. `build_demo` -- a target to build the `demo` box for packaging.  
+4. `build_demo` -- a target to build the `demo` box for packaging.
 5. `build_backend_auth` -- a target to build the `backend_auth` box
    for packaging.
 6. `build_curriculum` -- a target to build the `curriculum` box for
@@ -189,6 +189,14 @@ view the log by logging into the box with `vagrant ssh`, then:
 To follow the log:
 
     $ docker logs stripes_stripes_1 --follow
+
+### Launching Vagrant on Windows
+
+If launching Vagrant from a Windows Command Prompt, be sure to use _Run As Administrator..._
+when opening the Command Prompt itself (cmd.exe).
+If you are seeing the error _"EPROTO: protocol error, symlink"_, the likely cause is that
+Vagrant was not launched with administrator privileges.
+See issue [STRIPES-344](https://issues.folio.org/browse/STRIPES-344) for details.
 
 ### Some recent Vagrant versions have non-working `curl`
 
