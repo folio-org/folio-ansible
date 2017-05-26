@@ -10,8 +10,6 @@
     status_code: 200, 404
   register: tenant_mod_configuration
 
-- debug: var=tenant_mod_configuration
-
 - name: Enable mod-configuration module for tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
