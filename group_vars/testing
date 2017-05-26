@@ -15,7 +15,7 @@ folio_modules:
     image_repository: folioci
     image_version: latest
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -34,7 +34,7 @@ folio_modules:
     docker_cmd:
       - "verify.user=true"
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -51,7 +51,7 @@ folio_modules:
     image_repository: folioci
     image_version: latest
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -68,7 +68,7 @@ folio_modules:
     image_version: latest
     image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -92,7 +92,7 @@ folio_modules:
     image_version: latest
     image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -118,7 +118,7 @@ folio_modules:
     image_version: latest
     image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }

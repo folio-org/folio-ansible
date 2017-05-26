@@ -15,7 +15,7 @@ folio_modules:
     image_repository: folioorg
     image_version: v3.0.0
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -35,7 +35,7 @@ folio_modules:
     docker_cmd:
       - "verify.user=true"
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -52,7 +52,7 @@ folio_modules:
     image_repository: folioci
     image_version: 0.1.0-SNAPSHOT
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -69,7 +69,7 @@ folio_modules:
     image_version: v9.0.0
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -93,7 +93,7 @@ folio_modules:
     image_version: v4.2.0
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
@@ -119,7 +119,7 @@ folio_modules:
     image_version: v1.0.3
     image_repository: folioorg
     docker_env:
-      - { name: db.host, value: "{{ pg_host }}" }
+      - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }

@@ -1,7 +1,7 @@
 ---
 okapi_role: dev
 okapi_storage: postgres
-pg_host: "{{ ansible_default_ipv4.address }}"
+module_pg_host: "{{ ansible_default_ipv4.address }}"
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_port: 5432
