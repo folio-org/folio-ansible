@@ -14,6 +14,7 @@
     * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backendauth-or-demo-box)
     * [Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box](#viewing-backend-module-logs-on-the-backend-backendauth-or-demo-box)
     * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
+    * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
 * [Additional information](#additional-information)
