@@ -1,5 +1,24 @@
 # Ansible roles in this repository
 
+The [main playbook](../folio.yml) and [Vagrantfile](../Vagrantfile) in
+this repository are targeted to build FOLIO systems using Ansible
+against a Debian Jessie or Ubuntu Xenial host. The Ansible inventory
+is designed to support a few groups as follows:
+
+* `folio` -- targets hosts for building a full FOLIO system
+* `build_curriculum` -- targets hosts for building a system to support
+  the FOLIO developer curriculum
+* `vagrant` -- targets hosts built as stand-alone Vagrant systems
+* `stable` -- targets hosts that run a curated "stable" FOLIO
+  installation
+* `testing` -- targets hosts that run a FOLIO installation based on
+  the HEAD of the master branch of the FOLIO component modules
+
+There are Ansible variables files in the `group_vars` directory with
+settings for the `vagrant`, `stable`, and `testing` groups.
+
+The folio.yml playbook uses the following roles:
+
 *All roles targeted for Debian 8 (Jessie)/Ubuntu Xenial*
 
 ## ansible

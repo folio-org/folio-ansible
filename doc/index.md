@@ -11,9 +11,9 @@
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
-    * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backendauth-or-demo-box)
-    * [Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box](#viewing-backend-module-logs-on-the-backend-backendauth-or-demo-box)
-    * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
+    * [Viewing the Okapi log](#viewing-the-okapi-log)
+    * [Viewing backend module logs](#viewing-backend-module-logs)
+    * [Viewing the Stripes log](#viewing-the-stripes-log)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
 * [Additional information](#additional-information)
@@ -21,22 +21,16 @@
 ## Prebuilt Vagrant boxes
 
 The Vagrantfile and Ansible playbooks and roles in this project are
-used to generate four prebuilt Vagrant boxes, available on
+used to generate prebuilt Vagrant boxes, available on
 [Hashicorp Atlas](https://atlas.hashicorp.com/folio):
 
-* [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
-  -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
-  mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
-  Stripes, and the Stripes modules trivial, ui-scan,
-  ui-users, and ui-items.
+* [folio/stable](https://atlas.hashicorp.com/folio/boxes/stable) -- a
+  full-stack FOLIO system with stable releases of front- and
+  backend modules. All components should interoperate correctly.
 
-* [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
-  -- a backend FOLIO system with the mod-auth authentication
-  subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
-  mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
-  subsystem includes three sample users, `diku_admin` (password
-  "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
-  "diku").
+* [folio/testing](https://atlas.hashicorp.com/folio/boxes/testing) --
+  a full-stack FOLIO system, with the very latest releases of front- and
+  backend modules. Absolutely _not_ guaranteed to interoperate correctly.
 
 * [folio/curriculum](https://atlas.hashicorp.com/folio/boxes/curriculum)
   -- a box built to support the
@@ -48,13 +42,27 @@ used to generate four prebuilt Vagrant boxes, available on
   modules, mod-loan-storage, and mod-circulation. *This box is no
   longer maintained.*
 
+* [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
+  -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
+  mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
+  Stripes, and the Stripes modules trivial, ui-scan, ui-users, and
+  ui-items. *This box is no longer maintained.*
+
+* [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
+  -- a backend FOLIO system with the mod-auth authentication
+  subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
+  mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
+  subsystem includes three sample users, `diku_admin` (password
+  "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
+  "diku"). *This box is no longer maintained.*
+
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
 
 To try out any of these boxes, create an empty directory, `cd` into
 it, and initialize a Vagrantfile, e.g.:
 
-    $ vagrant init --minimal folio/folio-demo
+    $ vagrant init --minimal folio/stable
 
 If you have downloaded a previous version of the box, you will also
 need to update it with `vagrant box update`. Then you can launch the
@@ -86,7 +94,7 @@ To make the demo box accessible from other machines than the local one
 Stripes needs the hostname of the backend. Configure the hostname
 this way:
 
-    $ vagrant init folio/folio-demo
+    $ vagrant init folio/stable
     $ vagrant up
     $ vagrant ssh -c "sudo pico /etc/folio/stripes/stripes.config.js"
       # now replace localhost by your hostname
@@ -143,14 +151,14 @@ Docker container and restart it:
 
 The Vagrantfile in this project contains six target definitions:
 
-1. `demo` -- This target pulls the folio/folio-demo Vagrant box hosted
+1. `stable` -- This target pulls the folio/stable Vagrant box hosted
    on Atlas.
-2. `backend_auth` -- This target pulls the folio/folio-backend-auth
+2. `testing` -- This target pulls the folio/testing
    Vagrant box hosted on Atlas.
 3. `curriculum` -- This target pulls the folio/curriculum Vagrant box
    hosted on Atlas.
-4. `build_demo` -- a target to build the `demo` box for packaging.  
-5. `build_backend_auth` -- a target to build the `backend_auth` box
+4. `build_stable` -- a target to build the `stable` box for packaging.
+5. `build_testing` -- a target to build the `testing` box
    for packaging.
 6. `build_curriculum` -- a target to build the `curriculum` box for
    packaging.
@@ -164,11 +172,11 @@ All the Vagrant boxes defined in the Vagrantfile forward port 9130
 forwarding so that you can run multiple boxes at the same time, edit
 the Vagrantfile in the root directory of the project.
 
-### Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box
+### Viewing the Okapi log
 
 The Okapi logfile is at `/var/log/folio/okapi/okapi.log`.
 
-### Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box
+### Viewing backend module logs
 
 Backend modules on the prebuilt boxes are deployed by Okapi as Docker
 containers. To view the logs:
@@ -176,12 +184,12 @@ containers. To view the logs:
 1. Log into the box using `vagrant ssh`.
 2. Get the container name of the module you want to check with `docker ps`.
 3. Look at the log with `docker logs <container_name>`. You can
-   follow the log by adding the `--follow` paramenter to the `docker
+   follow the log by adding the `--follow` parameter to the `docker
    logs` command.
 
-### Viewing the stripes log on the `demo` box
+### Viewing the Stripes log
 
-On the `demo` box, stripes is deployed as a Docker container.  You can
+Stripes is deployed as a Docker container.  You can
 view the log by logging into the box with `vagrant ssh`, then:
 
     $ docker logs stripes_stripes_1
