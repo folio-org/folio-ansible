@@ -1,4 +1,5 @@
 ---
+# Variables for building backend
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -135,3 +136,18 @@ folio_modules:
     image_repository: folioci
 
 circulation_storage_id: circulation-storage
+
+# Variables for building UI
+with_github: false
+stripes_core_version: latest
+stripes_components_version: latest
+stripes_modules:
+  - { name: "@folio/trivial", version: "latest" }
+  - { name: "@folio/users", version: "latest" }
+  - { name: "@folio/items", version: "latest" }
+  - { name: "@folio/scan", version: "latest" }
+  - { name: "@folio/organization", version: "latest" }
+  - { name: "@folio/developer", version: "latest" }
+  - { name: "@folio/plugin-markdown-editor", version: "latest" }
+  - { name: "@folio/plugin-markdown-better", version: "latest" }
+folio_npm_repo: npm-folioci
