@@ -20,10 +20,9 @@ folio_modules:
   - index: 1
     name: mod-permissions
     module_id: permissions-module
-    # Have to use a snapshot mod descriptor for now
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/4486fbb7c0c6ba59df766756d6a4c149ec525bd8/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.0/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v3.0.0
+    image_version: v4.0.0
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -58,9 +57,9 @@ folio_modules:
   - index: 3
     name: mod-configuration
     module_id: configuration
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/07f458d022abe488093cc7fb5527957438877bdb/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/f5d34c82051f3c8f6d7b0de8a16b1135d8bd4c85/ModuleDescriptor.json
     image_repository: folioci
-    image_version: 0.1.0-SNAPSHOT
+    image_version: 0.2.0-SNAPSHOT
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -75,8 +74,8 @@ folio_modules:
   - index: 4
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v9.0.0/ModuleDescriptor.json
-    image_version: v9.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v10.1.1/ModuleDescriptor.json
+    image_version: v10.1.1
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ ansible_default_ipv4.address }}" }
@@ -92,8 +91,8 @@ folio_modules:
   - index: 5
     name: mod-users-bl
     module_id: users-bl 
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v0.4.0/ModuleDescriptor.json
-    image_version: v0.4.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v0.6.0/ModuleDescriptor.json
+    image_version: v0.6.0
     image_repository: folioorg
 
   - index: 6
@@ -116,8 +115,8 @@ folio_modules:
   - index: 7
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v4.3.0/ModuleDescriptor.json
-    image_version: v4.3.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v4.4.0/ModuleDescriptor.json
+    image_version: v4.4.0
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -142,8 +141,8 @@ folio_modules:
   - index: 9
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v2.0.0/ModuleDescriptor.json
-    image_version: v2.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v2.1.0/ModuleDescriptor.json
+    image_version: v2.1.0
     image_repository: folioorg
 
 num_users: 200

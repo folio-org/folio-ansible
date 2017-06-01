@@ -96,7 +96,8 @@
         'permissionName' : '{{ item.permissionName }}',
         'displayName' : '{{ item.displayName }}',
         'subPermissions' : {{ item.subPermissions }},
-        'mutable' : {{ item.mutable }}
+        'mutable' : {{ item.mutable }},
+        'visible' : {{ item.visible|default(false) }}
       }
     status_code: 201,422
   register: load_mod_users_perms
