@@ -142,7 +142,8 @@ folio_modules:
   - index: 9
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v2.1.0/ModuleDescriptor.json
+    # hotfix mod descriptor for now
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/312ddc922f0ba7bc1b32da4a551101f612d834cf/ModuleDescriptor.json
     image_version: v2.1.0
     image_repository: folioorg
 
