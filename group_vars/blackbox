@@ -115,7 +115,8 @@ folio_modules:
   - index: 7
     name: mod-inventory
     module_id: inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v4.4.0/ModuleDescriptor.json
+    # hotfix mod descriptor for now
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/67f06bd5c14841643a394468669ed8478be6f238/ModuleDescriptor.json
     image_version: v4.4.0
     image_repository: folioorg
     docker_env:
