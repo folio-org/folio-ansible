@@ -57,7 +57,7 @@ folio_modules:
   - index: 3
     name: mod-configuration
     module_id: configuration
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/f5d34c82051f3c8f6d7b0de8a16b1135d8bd4c85/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/b35d82670a40b5c557538096d6625b608b57c926/ModuleDescriptor.json
     image_repository: folioci
     image_version: 0.2.0-SNAPSHOT
     docker_env:
