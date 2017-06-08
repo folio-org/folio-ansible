@@ -89,6 +89,7 @@
   with_fileglob:
     - mtypes/*.json
 
+# fails with 400 if already loaded
 - name: Load inventory storage loan types
   uri:
     url: "{{ okapi_url }}/loan-types"
@@ -99,7 +100,7 @@
       Accept: application/json
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
-    status_code: 201, 422
+    status_code: 201, 400
   register: load_ltype
   changed_when: load_ltype.status == 201
   with_fileglob:

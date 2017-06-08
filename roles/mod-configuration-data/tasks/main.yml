@@ -6,7 +6,7 @@
 
 - name: Check tenant mod-configuration registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/mod-configuration"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/configuration"
     status_code: 200, 404
   register: tenant_mod_configuration
 
