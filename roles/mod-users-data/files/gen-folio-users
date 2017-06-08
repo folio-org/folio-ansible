@@ -21,13 +21,23 @@ my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
 my %usernames;
 my %barcodes;
-my @contacts = (
-                { value => 'EMAIL', desc => 'Email' },
-                { value => 'MAIL', desc => 'Mail (Primary Address)' },
-                { value => 'TEXT', desc => 'Text message' },
-                { value => 'PHONE', desc => 'Phone' },
-                { value => 'MOBILE', desc => 'Mobile phone' }
-               );
+
+# possible values for contactTypeId:
+# 001 = Mail
+# 002 = Email
+# 003 = Text message
+# 004 = Phone
+# 005 = Mobile phone
+my @contacts = qw(001 002 003 004 005);
+
+# possible values for addressTypeId
+# 001 = Claim
+# 002 = Home
+# 003 = Order
+# 004 = Payment
+# 005 = Returns
+# 006 = Work
+my @address_types = qw(002 006);
 
 for (my $i = $start; $i < $users + $start; $i++) {
   my ($uuid,$id);
@@ -42,6 +52,7 @@ for (my $i = $start; $i < $users + $start; $i++) {
   until (!$barcodes{$barcode}) {
     $barcode = sprintf("%d",rand(1e+15));
   }
+  my $address = 
   $barcodes{$barcode} = 1;
   my $user = {
               username => $username,
@@ -57,7 +68,18 @@ for (my $i = $start; $i < $users + $start; $i++) {
                            email => $faker->email(),
                            phone => $faker->phone_number(),
                            dateOfBirth => $faker->sqldate(),
-                           preferredContact => $contacts[int(rand(5))]
+                           preferredContactTypeId => $contacts[int(rand(5))],
+                           addresses => [
+                                         {
+                                          countryId => 'US',
+                                          addressLine1 => $faker->street_address(),
+                                          city => $faker->city(),
+                                          region => $faker->us_state_abbr(),
+                                          postalCode => $faker->us_zip_code(),
+                                          addressTypeId => $address_types[int(rand(2))],
+                                          primaryAddress => JSON::true
+                                         }
+                                        ]
                           },
               openDate => $faker->sqldate(),
               enrollmentDate => $faker->sqldate(),
