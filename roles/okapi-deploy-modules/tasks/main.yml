@@ -9,6 +9,12 @@
   become: yes
   file: state=directory path={{ folio_conf }}/deployment-descriptors
 
+- name: Pull Docker images
+  become: yes
+  docker_image: name={{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ item.image_version|default("latest") }}
+  when: item.okapi_docker_pull|default("true") == "false"
+  with_items: "{{ folio_modules }}"
+
 - name: Copy deployment descriptors
   become: yes
   template: src=DeploymentDescriptor.json.j2 dest={{ folio_conf }}/deployment-descriptors/{{ item.name }}.json

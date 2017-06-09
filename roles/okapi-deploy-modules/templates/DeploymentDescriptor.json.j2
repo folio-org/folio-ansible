@@ -1,7 +1,7 @@
 {
   "srvcId" : "{{ item.module_id }}",
   "descriptor" : {
-    "dockerImage" : "{{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ item.image_version }}"{% if item.docker_cmd is defined %},
+    "dockerImage" : "{{ item.image_repository|default(docker_repo) }}/{{ item.name }}{% if item.image_version is defined %}:{{ item.image_version }}{% endif %}"{% if item.docker_cmd is defined %},
     "dockerCMD" : [
     {% for docker_cmd in item.docker_cmd %}
       "{{ docker_cmd }}"{% if not loop.last %},{% endif %}
@@ -11,7 +11,8 @@
     {% for env_var in item.docker_env %}
       { "name" : "{{ env_var.name }}", "value" : "{{ env_var.value }}" }{% if not loop.last %},{% endif %}
     {% endfor %}
-    ]
+    ]{% endif %}{% if item.okapi_docker_pull is defined %},
+    "dockerPull" : {{ item.okapi_docker_pull }}
     {% endif %}
   }
 }

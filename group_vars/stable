@@ -6,6 +6,7 @@ folio_modules:
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.4.0/ModuleDescriptor.json
     image_repository: folioorg
     image_version: v0.4.0
+    okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
@@ -23,6 +24,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 2
     name: mod-login
@@ -43,6 +45,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 3
     name: mod-configuration
@@ -60,6 +63,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
     
   - index: 4
     name: mod-users
@@ -77,6 +81,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 5
     name: mod-users-bl
@@ -84,6 +89,7 @@ folio_modules:
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v1.0.2/ModuleDescriptor.json
     image_version: v1.0.2
     image_repository: folioorg
+    okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
@@ -101,6 +107,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 7
     name: mod-inventory
@@ -111,6 +118,7 @@ folio_modules:
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+    okapi_docker_pull: "false"
 
   - index: 8
     name: mod-circulation-storage
@@ -128,6 +136,7 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 9
     name: mod-circulation
@@ -136,3 +145,4 @@ folio_modules:
     mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/312ddc922f0ba7bc1b32da4a551101f612d834cf/ModuleDescriptor.json
     image_version: v2.1.0
     image_repository: folioorg
+    okapi_docker_pull: "false"

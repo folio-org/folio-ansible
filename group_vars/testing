@@ -6,14 +6,13 @@ folio_modules:
     module_id: authtoken-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-authtoken/master/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
+    okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
     module_id: permissions-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-permissions/master/ModuleDescriptor.json 
     image_repository: folioci
-    image_version: latest
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -24,13 +23,13 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 2
     name: mod-login
     module_id: login-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-login/master/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -43,13 +42,13 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 3
     name: mod-configuration
     module_id: configuration
     mod_descriptor_url: https://rawgit.com/folio-org/mod-configuration/master/ModuleDescriptor.json
     image_repository: folioci
-    image_version: latest
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -60,12 +59,12 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
     
   - index: 4
     name: mod-users
     module_id: users-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-users/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -77,19 +76,19 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 5
     name: mod-users-bl
     module_id: users-bl 
     mod_descriptor_url: https://rawgit.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
+    okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
     module_id: inventory-storage
     mod_descriptor_url: https://rawgit.com/folio-org/mod-inventory-storage/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -101,21 +100,21 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 7
     name: mod-inventory
     module_id: inventory
     mod_descriptor_url: https://rawgit.com/folio-org/mod-inventory/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+    okapi_docker_pull: "false"
 
   - index: 8
     name: mod-circulation-storage
     module_id: circulation-storage
     mod_descriptor_url: https://rawgit.com/folio-org/mod-circulation-storage/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -127,13 +126,14 @@ folio_modules:
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
 
   - index: 9
     name: mod-circulation
     module_id: circulation
     mod_descriptor_url: https://rawgit.com/folio-org/mod-circulation/master/ModuleDescriptor.json
-    image_version: latest
     image_repository: folioci
+    okapi_docker_pull: "false"
 
 circulation_storage_id: circulation-storage
 
