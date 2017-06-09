@@ -124,7 +124,7 @@ stop working.
 
     # for a list of images
     $ docker images
-    
+
     # to update a module, edit its deployment descriptor and update
     # the version specified e.g.:
     $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
@@ -197,6 +197,14 @@ view the log by logging into the box with `vagrant ssh`, then:
 To follow the log:
 
     $ docker logs stripes_stripes_1 --follow
+
+### Launching Vagrant on Windows
+
+If launching Vagrant from a Windows Command Prompt, be sure to use _Run As Administrator..._
+when opening the Command Prompt itself (cmd.exe).
+If you are seeing the error _"EPROTO: protocol error, symlink"_, the likely cause is that
+Vagrant was not launched with administrator privileges.
+See issue [STRIPES-344](https://issues.folio.org/browse/STRIPES-344) for details.
 
 ### Some recent Vagrant versions have non-working `curl`
 

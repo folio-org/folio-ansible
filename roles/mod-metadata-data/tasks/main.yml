@@ -89,7 +89,7 @@
   with_fileglob:
     - mtypes/*.json
 
-# Returns 400 error on duplicate
+# fails with 400 if already loaded
 - name: Load inventory storage loan types
   uri:
     url: "{{ okapi_url }}/loan-types"

@@ -1,6 +1,9 @@
 ---
 # Role to deploy modules into running Okapi
 # Modules must be registered (see okapi-register-modules role)
+#
+# wait a few seconds to make sure okapi is fully running
+- wait_for: timeout=10
 
 - name: Set up conf directory
   become: yes

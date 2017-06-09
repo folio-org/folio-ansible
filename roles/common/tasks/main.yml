@@ -27,6 +27,7 @@
     - curl
     - apt-transport-https
     - ca-certificates
+    - unzip
 
 - name: Install postgresql client things on all nodes
   become: yes
@@ -52,3 +53,4 @@
     filename: folioci
     state: present
   with_items: "{{ folio_apt_repos }}"
+
