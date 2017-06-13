@@ -14,6 +14,7 @@
     * [Viewing the Okapi log on the `backend`, `backend_auth`, or `demo` box](#viewing-the-okapi-log-on-the-backend-backendauth-or-demo-box)
     * [Viewing backend module logs on the `backend`, `backend_auth`, or `demo` box](#viewing-backend-module-logs-on-the-backend-backendauth-or-demo-box)
     * [Viewing the stripes log on the `demo` box](#viewing-the-stripes-log-on-the-demo-box)
+    * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
     * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
@@ -57,9 +58,12 @@ it, and initialize a Vagrantfile, e.g.:
 
     $ vagrant init --minimal folio/folio-demo
 
-If you have downloaded a previous version of the box, you will also
-need to update it with `vagrant box update`. Then you can launch the
-Vagrant box with `vagrant up`. Okapi will be listening on localhost
+If you have downloaded a previous version of the box, then from
+time-to-time it will need to be updated with `vagrant box update`
+(followed by `vagrant destroy` to disable the old default machine).
+The Vagrant box can then be launched with `vagrant up`.
+
+Okapi will be listening on localhost
 port 9130, and the Stripes development server will be on localhost
 port 3000 (on the demo box only).
 
@@ -177,7 +181,7 @@ containers. To view the logs:
 1. Log into the box using `vagrant ssh`.
 2. Get the container name of the module you want to check with `docker ps`.
 3. Look at the log with `docker logs <container_name>`. You can
-   follow the log by adding the `--follow` paramenter to the `docker
+   follow the log by adding the `--follow` parameter to the `docker
    logs` command.
 
 ### Viewing the stripes log on the `demo` box
@@ -190,6 +194,30 @@ view the log by logging into the box with `vagrant ssh`, then:
 To follow the log:
 
     $ docker logs stripes_stripes_1 --follow
+
+### Authentication failure after vagrant box update
+
+After starting 'vagrant up' it may advise that a newer version of the box is available.
+So do `vagrant halt; vagrant box update; vagrant destroy; vagrant up`.
+If the 'vagrant destroy' step is missed, then after doing 'vagrant up' it may report:
+
+```
+   ...
+   default: SSH username: vagrant
+   default: SSH auth method: private key
+   default: Warning: Authentication failure. Retrying...
+   default: Warning: Authentication failure. Retrying...
+   ... (repeated)
+```
+
+So interrupt it, and then do `vagrant destroy` before starting up the new box:
+
+```
+Ctrl-C
+vagrant halt
+vagrant destroy
+vagrant up
+```
 
 ### Launching Vagrant on Windows
 
