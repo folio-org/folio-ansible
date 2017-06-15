@@ -25,6 +25,9 @@
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token | default('token') }}"
   register: users1
 
+- name: Copy users to variable
+  set_fact: users={{ users1.json.users }}
+
 - name: Get 2nd 100 users
   uri:
     url: "{{ okapi_url }}/users?offset=100&limit=100"
@@ -33,6 +36,10 @@
       Accept: application/json
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token | default('token') }}"
   register: users2
+  when: users1.json.total_records > 100
+
+- name: Merge users into list
+  set_fact: users={{ users|union(users2.json.users) }}
   when: users1.json.total_records > 100
 
 - name: Get 3rd 100 users
@@ -45,8 +52,12 @@
   register: users3
   when: users1.json.total_records > 200
 
-- name: Merge user lists
-  set_fact: users="{{ users1.json.users|union(users2.json.users|default([]))|union(users3.json.users|default([])) }}"
+- name: Merge users into list
+  set_fact: users={{ users|union(users3.json.users) }}
+  when: users1.json.total_records > 200
+
+# - name: Merge user lists
+#   set_fact: users="{{ users1.json.users|union(users2.json.users|default([]))|union(users3.json.users|default([])) }}"
 
 - name: Create login users 
   uri:
