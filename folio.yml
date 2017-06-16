@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
-# Provision a host as a full-stack FOLIO system
-- hosts: folio
+# Provision a host as a backend FOLIO system
+- hosts: folio-backend
   roles:
     - common
     - postgresql
@@ -14,14 +14,11 @@
     - mod-users-bl-data 
     - mod-circulation-data 
     - mod-auth-demo-users
-    - stripes-docker
-  tasks:
-    - name: Copy vagrant-tidy.sh to /root
-      become: yes
-      copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
 
-    - debug:
-        msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
+# Provision a host as a Stripes server
+- hosts: stripes
+  roles:
+    - stripes-docker 
 
 # Provision a host to support FOLIO Developer Curriculum
 - hosts: build_curriculum
@@ -49,11 +46,4 @@
 
     - name: Clone curriculum repository
       git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum
-
-    - name: Copy vagrant-tidy.sh to /root
-      become: yes
-      copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
-
-    - debug:
-        msg: To create a Vagrant box from this VM, you want to run the vagrant-tidy.sh script, then use vagrant package
 

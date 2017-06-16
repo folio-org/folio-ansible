@@ -41,7 +41,8 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_stable"],
         "stable" => ["build_stable"],
-        "folio" => ["build_stable"]
+        "folio-backend" => ["build_stable"],
+        "stripes" => ["build_stable"]
       }
     end
   end
@@ -56,7 +57,8 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_testing"],
         "testing" => ["build_testing"],
-        "folio" => ["build_testing"]
+        "folio-backend" => ["build_testing"],
+        "stripes" => ["build_testing"]
       }
     end
   end
