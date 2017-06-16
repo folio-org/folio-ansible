@@ -5,16 +5,20 @@ with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
 
 # OR specify stripes configuration here and configure from ansible templates 
-stripes_core_version: "^0.7.0"
+stripes_core_version: "^1.7.0"
+stripes_components_version: "^0.9.0"
 stripes_modules:
-  - { name: "@folio/users", version: "^1.1.0" }
-  - { name: "@folio/items", version: "^1.1.0" }
-  - { name: "@folio/scan", version: "^0.2.0" }
+  - { name: "@folio/users", version: "^2.0.0" }
+  - { name: "@folio/items", version: "^1.3.0" }
+  - { name: "@folio/scan", version: "^0.4.0" }
   - { name: "@folio/trivial", version: "^0.0.2-test" }
+  - { name: "@folio/organization", version: "^0.4.0" }
+  - { name: "@folio/developer", version: "^0.1.0" }
+  - { name: "@folio/plugin-markdown-editor", version: "^0.2.0" }
+  - { name: "@folio/plugin-markdown-better", version: "^0.2.0" }
 
 # disable okapi-console - https://issues.folio.org/browse/STRIPES-264
 #  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
-
 
 # Other relevant vars
 stripes_conf_dir: /etc/folio/stripes

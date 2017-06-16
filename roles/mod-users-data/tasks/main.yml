@@ -88,13 +88,15 @@
 - name: Get filenames
   shell: ls /etc/.folio-users_ansible
   register: userfiles
+  changed_when: false
 
 - name: Slurp user files
   slurp: src=/etc/.folio-users_ansible/{{ item }}
   with_items: "{{ userfiles.stdout_lines }}"
   register: userfiles_content
 
-# 422 error means the user is already there  
+# 422 error may mean the user is already there
+# Or it may mean the user structure is invalid
 - name: Load users
   uri:
     url: "{{ okapi_url }}/users"
@@ -108,4 +110,6 @@
     status_code: 201,422
   register: load_user
   changed_when: load_user.status == 201
+  failed_when: "load_user.status == 422 and (load_user.json.errors.0.message is not defined or load_user.json.errors.0.message != 'User with this id already exists')"
   with_items: "{{ userfiles_content.results }}"
+

@@ -54,3 +54,6 @@
     state: present
   with_items: "{{ folio_apt_repos }}"
 
+- name: Copy vagrant-tidy.sh to /root
+  become: yes
+  copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700

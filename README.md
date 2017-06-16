@@ -38,22 +38,21 @@ Windows 10. Note that Windows cannot serve as an Ansible control host.
 If all you want to do is try out a prepackaged FOLIO demo Vagrant box,
 create a new directory, `cd` into it, and try:
 
-    $ vagrant init folio/folio-demo
+    $ vagrant init folio/stable
     $ vagrant up
 
-There is also a `folio/folio-backend-auth` Vagrant box available,
-which contains Okapi and a set of backend modules, suitable for
-frontend development. See the
-[Change-log](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
-for details of the various releases, including which versions of the
-backend modules they provide.
+There is also a `folio/testing` Vagrant box available,
+which contains the most recent versions of all components, absolutely
+_not_ guaranteed to work together. The Atlas pages for each box,
+[folio/stable](https://atlas.hashicorp.com/folio/boxes/stable) and
+[folio/testing](https://atlas.hashicorp.com/folio/boxes/testing), have
+detailed release notes, including which versions of the backend and
+frontend modules the boxes provide.
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
-forwarded to `localhost:9130`.
-
-For the `demo` system, the Stripes port and user interface will be
-forwarded to `localhost:3000`. You should see the Stripes user interface
-at `http://localhost:3000`.
+forwarded to `localhost:9130` and the Stripes port and user interface
+will be forwarded to `localhost:3000`. You should see the Stripes user
+interface at `http://localhost:3000`.
 
 For more information, see [Vagrant VMs and Ansible roles](doc/index.md).
 
