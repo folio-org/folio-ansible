@@ -70,8 +70,8 @@ folio_modules:
   - index: 4
     name: mod-users
     module_id: users-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v11.0.0/ModuleDescriptor.json
-    image_version: v11.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v12.0.0/ModuleDescriptor.json
+    image_version: v12.0.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }

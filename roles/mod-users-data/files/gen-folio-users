@@ -81,10 +81,10 @@ for (my $i = $start; $i < $users + $start; $i++) {
                                          }
                                         ]
                           },
-              openDate => $faker->sqldate(),
+              createdDate => $faker->sqldate(),
               enrollmentDate => $faker->sqldate(),
               expirationDate => $faker->sqldate(),
-              lastUpdateDate => $faker->sqldate()
+              updatedDate => $faker->sqldate()
              };
   if (@groups) {
     $$user{'patronGroup'} = $groups[rand(@groups)];
