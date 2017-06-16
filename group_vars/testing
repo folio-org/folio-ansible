@@ -1,5 +1,6 @@
 ---
 # Variables for building backend
+auth_required: true
 folio_modules:
   - index: 0
     name: mod-authtoken

@@ -1,4 +1,6 @@
 ---
+# Variables for building backend
+auth_required: true
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -146,3 +148,5 @@ folio_modules:
     image_version: v2.1.0
     image_repository: folioorg
     okapi_docker_pull: "false"
+
+# UI build will use folio-demo-platform per defaults in stripes-docker role
