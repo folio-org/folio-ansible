@@ -14,6 +14,8 @@
     * [Viewing the Okapi log](#viewing-the-okapi-log)
     * [Viewing backend module logs](#viewing-backend-module-logs)
     * [Viewing the Stripes log](#viewing-the-stripes-log)
+    * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
+    * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
     * [VERR_SVM_DISABLED](#verrsvmdisabled)
 * [Additional information](#additional-information)
@@ -64,9 +66,12 @@ it, and initialize a Vagrantfile, e.g.:
 
     $ vagrant init --minimal folio/stable
 
-If you have downloaded a previous version of the box, you will also
-need to update it with `vagrant box update`. Then you can launch the
-Vagrant box with `vagrant up`. Okapi will be listening on localhost
+If you have downloaded a previous version of the box, then from
+time-to-time it will need to be updated with `vagrant box update`
+(followed by `vagrant destroy` to disable the old default machine).
+The Vagrant box can then be launched with `vagrant up`.
+
+Okapi will be listening on localhost
 port 9130, and the Stripes development server will be on localhost
 port 3000 (on the demo box only).
 
@@ -197,6 +202,30 @@ view the log by logging into the box with `vagrant ssh`, then:
 To follow the log:
 
     $ docker logs stripes_stripes_1 --follow
+
+### Authentication failure after vagrant box update
+
+After starting 'vagrant up' it may advise that a newer version of the box is available.
+So do `vagrant halt; vagrant box update; vagrant destroy; vagrant up`.
+If the 'vagrant destroy' step is missed, then after doing 'vagrant up' it may report:
+
+```
+   ...
+   default: SSH username: vagrant
+   default: SSH auth method: private key
+   default: Warning: Authentication failure. Retrying...
+   default: Warning: Authentication failure. Retrying...
+   ... (repeated)
+```
+
+So interrupt it, and then do `vagrant destroy` before starting up the new box:
+
+```
+Ctrl-C
+vagrant halt
+vagrant destroy
+vagrant up
+```
 
 ### Launching Vagrant on Windows
 

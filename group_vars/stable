@@ -13,9 +13,9 @@ folio_modules:
   - index: 1
     name: mod-permissions
     module_id: permissions-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.0/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.1/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v4.0.0
+    image_version: v4.0.1
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
