@@ -238,7 +238,7 @@ Machine Mode or AMD-V. Good luck!
 
 ## Additional information
 
-* [Ansible roles](ansible-roles.md) and
+* [Ansible groups](ansible-groups.md), [Ansible roles](ansible-roles.md) and
   [Ansible variables](ansible-variables.md) used in this project
 * [Vagrant documentation](https://www.vagrantup.com/docs/)
 * [Ansible documentation](http://docs.ansible.com/ansible/index.html)
