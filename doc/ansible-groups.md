@@ -8,7 +8,7 @@ groups in the folio.yml file and in the group_vars directory:
   system, including Okapi, storage modules, and business-logic
   modules.
 
-* stripes: for hosts on which you which to build a run a Stripes
+* stripes: for hosts on which you want to build and run a Stripes
   webpack server
 
 ## In group_vars
