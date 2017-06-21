@@ -1,16 +1,16 @@
 #!/bin/bash
-cat - << EOWARNING
-WARNING: This script will fill up your left over disk space.
+# cat - << EOWARNING
+# WARNING: This script will fill up your left over disk space.
 
-DO NOT RUN THIS WHEN YOUR VIRTUAL HD IS RAW!!!!!!
+# DO NOT RUN THIS WHEN YOUR VIRTUAL HD IS RAW!!!!!!
 
-You should NOT do this on a running system.
-This is purely for making vagrant boxes damn small.
+# You should NOT do this on a running system.
+# This is purely for making vagrant boxes damn small.
 
-Press Ctrl+C within the next 10 seconds if you want to abort!!
+# Press Ctrl+C within the next 10 seconds if you want to abort!!
 
-EOWARNING
-sleep 10;
+# EOWARNING
+# sleep 10;
 
 # Remove APT cache
 apt-get clean -y
