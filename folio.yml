@@ -18,7 +18,12 @@
 # Provision a host as a Stripes server
 - hosts: stripes
   roles:
-    - stripes-docker 
+    - stripes-docker
+
+# Roles for building Vagrant boxes
+- hosts: vagrant
+  roles:
+    - vagrant-tidy
 
 # Provision a host to support FOLIO Developer Curriculum
 - hosts: build_curriculum

@@ -5,3 +5,7 @@
 /mod-circulation-src
 /mod-users-src
 /raml-module-builder
+/packer/.vagrant
+/packer/*.ov*
+*.box
+

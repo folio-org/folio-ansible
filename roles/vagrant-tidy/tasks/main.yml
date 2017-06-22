@@ -1,0 +1,19 @@
+---
+# Role to tidy up a Vagrant box for packaging
+# Note that vagrant-tidy.sh destroys all free disk space!
+- name: Copy vagrant-tidy.sh to /root
+  become: yes
+  copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
+
+- name: Stop services
+  become: yes
+  service: name={{ item }} state=stopped
+  with_items:
+    - okapi-deploy
+    - okapi
+    - docker
+    - postgresql
+
+- name: Run vagrant-tidy.sh
+  become: yes
+  command: /root/vagrant-tidy.sh
