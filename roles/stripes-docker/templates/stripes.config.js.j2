@@ -3,7 +3,8 @@ module.exports = {
   {% if disable_auth %}
     "disableAuth" : true,
   {% endif %}
-    logCategories: 'core,connect,path,action,xhr',
+    logCategories: 'core,path,action,xhr',
+    logPrefix: '--',
     showPerms: false
   },
   okapi: {
