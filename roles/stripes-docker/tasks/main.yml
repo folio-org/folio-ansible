@@ -6,6 +6,10 @@
     path: "{{ stripes_conf_dir }}"
     state: directory
 
+- name: Create directory for module descriptors
+  become: yes
+  file: path={{ stripes_conf_dir }}/module-descriptors state=directory
+
 - name: generate templates and copy to build dir
   become: yes
   template: 
@@ -15,6 +19,7 @@
     - { src: 'stripes.config.js.j2', dest: 'stripes.config.js' }
     - { src: 'package.json.j2', dest: 'package.json' }
   when: with_github == false
+  notify: Rebuild stripes
 
 - name: copy stripes platform files from github project
   become: yes
@@ -22,6 +27,7 @@
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
   when: with_github == true
+  notify: Rebuild stripes
 
 - name: set okapi url in stripes config
   become: yes
@@ -32,6 +38,7 @@
     replace: >-
        \1{{ stripes_okapi_url }}\2
   when: with_github == true
+  #notify: Rebuild container
 
 - name: set tenant in stripes config
   become: yes
@@ -42,12 +49,13 @@
     replace: >-
       \1{{ stripes_tenant }}\2 
   when: with_github == true
+  #notify: Rebuild container
 
-- name: copy Dockerfile to stripes conf dir
+- name: Move to Node.js 6.X lts
   become: yes
-  copy: 
-    src: Dockerfile
-    dest: "{{ stripes_conf_dir }}/Dockerfile"
+  shell: n lts && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
+  args:
+    creates: "{{ stripes_conf_dir }}/.set_nodedefault_ansible"
 
 - name: copy npmrc configuration 
   become: yes
@@ -55,41 +63,15 @@
     src: "{{ item.src }}"
     dest: "{{ stripes_conf_dir }}/{{ item.dest }}"
   with_items:
-    - { src: 'npmrc.j2', dest: 'npmrc' }
-  
-- name: create docker network for stripes
-  become: yes
-  docker_network: 
-    name: stripes-net
+    - { src: 'npmrc.j2', dest: '.npmrc' }
+  notify: "Rebuild stripes"
 
-- name: build and start stripes docker container
-  become: yes
-  docker_service:
-    project_name: stripes
-    definition: 
-      version: '2'
-      services: 
-        stripes:
-          build: "{{ stripes_conf_dir }}"
-          image: stripes
-          environment: 
-            - STRIPES_HOST=0.0.0.0
-          ports: 
-            - "{{ stripes_host_address }}:3000:3000"
-          networks:  
-            stripes-net:
-              aliases:
-                - stripes-serv
-          restart: always
-      networks: 
-        stripes-net: 
-          external: true
-    state: present
-  register: stripes_container_status
+- name: Ensure modules are registered
+  command: /bin/true
+  notify: "Register modules"
 
-- debug: 
-    var: stripes_container_status
-
-  # set up nginx proxy if with_nginx is 'true'.       
+# set up nginx proxy if with_nginx is 'true'.       
 - include: nginx.yml
   when: with_nginx == true
+
+- meta: flush_handlers 

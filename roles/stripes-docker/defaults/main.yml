@@ -1,6 +1,6 @@
 ---
 
-# Use a preconfigured gitbub stripes platform
+# Use a preconfigured github stripes platform
 with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
 

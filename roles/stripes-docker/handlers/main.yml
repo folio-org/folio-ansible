@@ -1,0 +1,123 @@
+---
+# Handlers for rebuilding stripes
+- name: Build stripes
+  become: yes
+  shell: "yarn install && yarn build -- output"
+  args:
+    chdir: "{{ stripes_conf_dir }}"
+  listen: "Rebuild stripes"
+  #notify: "Rebuild container"
+
+- name: get package.json
+  slurp: src={{ stripes_conf_dir }}/package.json
+  register: platform_raw
+  listen: "Rebuild stripes"
+
+- set_fact: platform={{ platform_raw.content|b64decode|from_json }}
+  listen: "Rebuild stripes"
+
+- name: Generate module descriptors
+  become: yes
+  shell: node {{ stripes_conf_dir }}/node_modules/@folio/stripes-core/util/package2md.js {{ stripes_conf_dir }}/node_modules/{{ item.key }}/package.json > {{ stripes_conf_dir }}/module-descriptors/{{ item.key.split('/')[1] }}.json
+  when: item.key.split('/')[0] == '@folio' and item.key != '@folio/stripes-components' and item.key != '@folio/stripes-core'
+  with_dict: "{{ platform.dependencies }}"
+  listen: "Rebuild stripes"
+
+- name: Get module descriptor filenames
+  shell: ls {{ stripes_conf_dir }}/module-descriptors
+  register: mod_descrs
+  changed_when: false
+  listen: "Register modules"
+
+- name: Slurp module descriptors
+  slurp: src={{ stripes_conf_dir }}/module-descriptors/{{ item }}
+  with_items: "{{ mod_descrs.stdout_lines }}"
+  register: mod_descrs_raw
+  listen: "Register modules"
+
+- set_fact: mod_descrs=[]
+  listen: "Register modules"
+
+- set_fact:
+    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
+  with_items: "{{ mod_descrs_raw.results }}"
+  listen: "Register modules"
+
+- name: Check module registration
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/modules/{{ item.id }}"
+    status_code: 200, 404
+  with_items: "{{ mod_descrs }}"
+  register: mod_reg_status
+  listen: "Register modules"
+
+- name: Register modules with Okapi
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ item.1|to_json }}"
+    status_code: 201
+  when: mod_reg_status.results[item.0].status == 404
+  register: mod_register
+  changed_when: mod_register.status == 201
+  with_indexed_items: "{{ mod_descrs }}"
+  listen: "Register modules"
+
+- name: Check tenant-module association
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/item.id"
+    status_code: 200, 404
+  with_items: "{{ mod_descrs }}"
+  register: tenant_modules
+  listen: "Register modules"
+
+- name: Enable modules for tenant
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.1.id }}" }'
+    status_code: 201
+  when: tenant_modules.results[item.0].status == 404
+  register: tenant_assoc
+  changed_when: tenant_assoc == 201
+  with_indexed_items: "{{ mod_descrs }}"
+  listen: "Register modules"
+
+# Handlers for rebuilding the Docker container
+# - name: copy Dockerfile to stripes conf dir
+#   become: yes
+#   copy: 
+#     src: Dockerfile
+#     dest: "{{ stripes_conf_dir }}/Dockerfile"
+
+# - name: create docker network for stripes
+#   become: yes
+#   docker_network: 
+#     name: stripes-net
+
+# - name: build and start stripes docker container
+#   become: yes
+#   docker_service:
+#     project_name: stripes
+#     definition: 
+#       version: '2'
+#       services: 
+#         stripes:
+#           build: "{{ stripes_conf_dir }}"
+#           image: stripes
+#           environment: 
+#             - STRIPES_HOST=0.0.0.0
+#           ports: 
+#             - "{{ stripes_host_address }}:3000:3000"
+#           networks:  
+#             stripes-net:
+#               aliases:
+#                 - stripes-serv
+#           restart: always
+#       networks: 
+#         stripes-net: 
+#           external: true
+#     state: present
+#   register: stripes_container_status
