@@ -137,6 +137,7 @@ folio_modules:
     okapi_docker_pull: "false"
 
 circulation_storage_id: circulation-storage
+total_records_key: totalRecords
 
 # Variables for building UI
 with_github: false
