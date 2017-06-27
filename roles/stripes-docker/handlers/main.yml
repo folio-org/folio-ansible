@@ -22,6 +22,34 @@
   with_dict: "{{ platform.dependencies }}"
   listen: "Rebuild stripes"
 
+- name: build and start stripes docker container
+  become: yes
+  docker_service:
+    project_name: stripes
+    definition: 
+      version: '2'
+      services: 
+        stripes:
+          build: "{{ stripes_conf_dir }}"
+          image: stripes
+          ports: 
+            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
+          networks:  
+            stripes-net:
+              aliases:
+                - stripes-serv
+          restart: always
+      networks: 
+        stripes-net: 
+          external: true
+    state: present
+  register: stripes_container_status
+  listen: "Build container"
+
+- debug:
+    var: stripes_container_status
+  listen: "Build container"
+
 - name: Get module descriptor filenames
   shell: ls {{ stripes_conf_dir }}/module-descriptors
   register: mod_descrs

@@ -6,10 +6,6 @@
     path: "{{ stripes_conf_dir }}"
     state: directory
 
-- name: Create directory for module descriptors
-  become: yes
-  file: path={{ stripes_conf_dir }}/module-descriptors state=directory
-
 - name: generate templates and copy to build dir
   become: yes
   template: 
@@ -50,6 +46,10 @@
   when: with_github == true
   #notify: Rebuild container
 
+- name: Create directory for module descriptors
+  become: yes
+  file: path={{ stripes_conf_dir }}/module-descriptors state=directory
+
 - name: Move to Node.js 6.X lts
   become: yes
   shell: n lts && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
@@ -65,11 +65,6 @@
     - { src: 'npmrc.j2', dest: '.npmrc' }
   notify: "Rebuild stripes"
 
-- name: Ensure modules are registered
-  command: /bin/true
-  when: okapi_register_modules == true
-  notify: "Register modules"
-
 - name: create docker network for stripes
   become: yes
   docker_network: 
@@ -81,31 +76,14 @@
     src: Dockerfile
     dest: "{{ stripes_conf_dir }}/Dockerfile"
 
-- name: build and start stripes docker container
-  become: yes
-  docker_service:
-    project_name: stripes
-    definition: 
-      version: '2'
-      services: 
-        stripes:
-          build: "{{ stripes_conf_dir }}"
-          image: stripes
-          ports: 
-            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
-          networks:  
-            stripes-net:
-              aliases:
-                - stripes-serv
-          restart: always
-      networks: 
-        stripes-net: 
-          external: true
-    state: present
-  register: stripes_container_status
+- name: Ensure container is up and running
+  command: /bin/true
+  notify: "Build container"
 
-- debug:
-    var: stripes_container_status
+- name: Ensure modules are registered
+  command: /bin/true
+  when: okapi_register_modules == true
+  notify: "Register modules"
 
 # set up nginx proxy if with_nginx_proxy is 'true'.       
 - include: nginx_proxy.yml
