@@ -1,6 +1,6 @@
 ---
 
-- name: create docker build dir
+- name: create build dir
   become: yes
   file: 
     path: "{{ stripes_conf_dir }}"
@@ -38,7 +38,6 @@
     replace: >-
        \1{{ stripes_okapi_url }}\2
   when: with_github == true
-  #notify: Rebuild container
 
 - name: set tenant in stripes config
   become: yes
@@ -68,10 +67,48 @@
 
 - name: Ensure modules are registered
   command: /bin/true
+  when: okapi_register_modules == true
   notify: "Register modules"
 
-# set up nginx proxy if with_nginx is 'true'.       
-- include: nginx.yml
-  when: with_nginx == true
+- name: create docker network for stripes
+  become: yes
+  docker_network: 
+    name: stripes-net
+
+- name: copy Dockerfile to docker build dir
+  become: yes
+  copy: 
+    src: Dockerfile
+    dest: "{{ stripes_conf_dir }}/Dockerfile"
+
+- name: build and start stripes docker container
+  become: yes
+  docker_service:
+    project_name: stripes
+    definition: 
+      version: '2'
+      services: 
+        stripes:
+          build: "{{ stripes_conf_dir }}"
+          image: stripes
+          ports: 
+            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
+          networks:  
+            stripes-net:
+              aliases:
+                - stripes-serv
+          restart: always
+      networks: 
+        stripes-net: 
+          external: true
+    state: present
+  register: stripes_container_status
+
+- debug:
+    var: stripes_container_status
+
+# set up nginx proxy if with_nginx_proxy is 'true'.       
+- include: nginx_proxy.yml
+  when: with_nginx_proxy == true
 
 - meta: flush_handlers 

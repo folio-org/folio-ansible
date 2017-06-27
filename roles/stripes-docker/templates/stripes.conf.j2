@@ -5,7 +5,7 @@ upstream stripes {
 server {
 
     listen   80;
-    server_name  {{ nginx_servername }};
+    server_name  {{ nginx_proxy_servername }};
 
     root   /usr/share/nginx/html;
 
