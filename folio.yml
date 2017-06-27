@@ -20,10 +20,10 @@
   roles:
     - stripes-docker
 
-# Roles for building Vagrant boxes
-# - hosts: vagrant
-#   roles:
-#     - vagrant-tidy
+# Roles for packaging
+- hosts: packer
+  roles:
+    - vagrant-tidy
 
 # Provision a host to support FOLIO Developer Curriculum
 - hosts: build_curriculum

@@ -34,7 +34,8 @@
         "stable",
         "vagrant",
         "folio-backend",
-        "stripes"
+        "stripes",
+        "packer"
       ],
       "only": ["stable"]
     },
@@ -45,7 +46,8 @@
         "testing",
         "vagrant",
         "folio-backend",
-        "stripes"
+        "stripes",
+        "packer"
       ],
       "only": ["testing"]
     }
