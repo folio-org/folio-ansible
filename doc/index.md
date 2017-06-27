@@ -10,7 +10,7 @@
     * [Updating Stripes](#updating-stripes)
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
-    * [Vagrant "forwarded port to 9130 is already in use"](#vagrant-forwarded-port-to-9130-is-already-in-use)
+    * [Vagrant "forwarded port is already in use"](#vagrant-forwarded-port-is-already-in-use)
     * [Viewing the Okapi log](#viewing-the-okapi-log)
     * [Viewing backend module logs](#viewing-backend-module-logs)
     * [Viewing the Stripes log](#viewing-the-stripes-log)
@@ -170,12 +170,19 @@ The Vagrantfile in this project contains six target definitions:
 
 ## Troubleshooting/Known Issues
 
-### Vagrant "forwarded port to 9130 is already in use"
+### Vagrant "forwarded port is already in use"
 
-All the Vagrant boxes defined in the Vagrantfile forward port 9130
-(Okapi) on the guest VM to port 9130 on the host. To change the port
-forwarding so that you can run multiple boxes at the same time, edit
-the Vagrantfile in the root directory of the project.
+The prebuilt Vagrant boxes come with a packaged Vagrantfile that forwards port 9130
+(Okapi) and port 3000 (stripes) on the guest VM to the same ports on
+the host. This can cause conflicts with running services on the host
+machine. To change the port forwarding settings, edit your Vagrantfile
+to add the line(s):
+
+    config.vm.network "forwarded_port", guest: 3000, host: 3000, disabled: true
+    config.vm.network "forwarded_port", guest: 9130, host: 9130, disabled: true
+
+And then add lines to forward the Okapi and/or stripes ports to
+whichever ports you prefer.
 
 ### Viewing the Okapi log
 

@@ -1,0 +1,3 @@
+---
+# Record key for mod-users total records, default "total_records"
+total_records_key: total_records

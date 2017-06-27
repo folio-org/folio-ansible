@@ -89,6 +89,10 @@ mod_auth_users:
   - username: auth_test2
     password: diku
 
+# mod-auth-demo-users role
+# Record key for mod-users total records, default "total_records"
+total_records_key: total_records
+
 # mod-circulation-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
