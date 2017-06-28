@@ -68,7 +68,8 @@
       "groups": [
         "testing",
         "vagrant",
-        "folio-backend"
+        "folio-backend",
+        "packer"
       ],
       "only": ["testing-backend"]
     }
