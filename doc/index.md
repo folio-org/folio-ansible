@@ -24,33 +24,38 @@
 
 The Vagrantfile and Ansible playbooks and roles in this project are
 used to generate prebuilt Vagrant boxes, available on
-[Hashicorp Atlas](https://atlas.hashicorp.com/folio):
+[Vagrant Cloud](https://app.vagrantup.com/folio):
 
-* [folio/stable](https://atlas.hashicorp.com/folio/boxes/stable) -- a
+* [folio/stable](https://app.vagrantup.com/folio/boxes/stable) -- a
   full-stack FOLIO system with stable releases of front- and
   backend modules. All components should interoperate correctly.
 
-* [folio/testing](https://atlas.hashicorp.com/folio/boxes/testing) --
+* [folio/testing](https://app.vagrantup.com/folio/boxes/testing) --
   a full-stack FOLIO system, with the very latest releases of front- and
-  backend modules. Absolutely _not_ guaranteed to interoperate correctly.
+  backend modules. Absolutely _not_ guaranteed to interoperate
+  correctly.
 
-* [folio/curriculum](https://atlas.hashicorp.com/folio/boxes/curriculum)
+* [folio/testing-backend](https://app.vagrantup.com/folio/boxes/testing-backend)
+  -- a backend FOLIO system, with the very latest releases of backend
+  modules. Absolutely _not_ guaranteed to interoperate correctly.
+
+* [folio/curriculum](https://app.vagrantup.com/folio/boxes/curriculum)
   -- a box built to support the
   [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
   with prerequisites installed.
 
-* [folio/folio-backend](https://atlas.hashicorp.com/folio/boxes/folio-backend)
+* [folio/folio-backend](https://app.vagrantup.com/folio/boxes/folio-backend)
   -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
   modules, mod-loan-storage, and mod-circulation. *This box is no
   longer maintained.*
 
-* [folio/folio-demo](https://atlas.hashicorp.com/folio/boxes/folio-demo)
+* [folio/folio-demo](https://app.vagrantup.com/folio/boxes/folio-demo)
   -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
   mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
   Stripes, and the Stripes modules trivial, ui-scan, ui-users, and
   ui-items. *This box is no longer maintained.*
 
-* [folio/folio-backend-auth](https://atlas.hashicorp.com/folio/boxes/folio-backend-auth)
+* [folio/folio-backend-auth](https://app.vagrantup.com/folio/boxes/folio-backend-auth)
   -- a backend FOLIO system with the mod-auth authentication
   subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
   mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
@@ -157,11 +162,13 @@ Docker container and restart it:
 The Vagrantfile in this project contains six target definitions:
 
 1. `stable` -- This target pulls the folio/stable Vagrant box hosted
-   on Atlas.
+   on Vagrant Cloud.
 2. `testing` -- This target pulls the folio/testing
-   Vagrant box hosted on Atlas.
+   Vagrant box hosted on Vagrant Cloud.
+3. `testing-backend` -- This target pulls the folio/testing-backend
+   Vagrant box hosted on Vagrant Cloud.
 3. `curriculum` -- This target pulls the folio/curriculum Vagrant box
-   hosted on Atlas.
+   hosted on Vagrant Cloud.
 4. `build_stable` -- a target to build the `stable` box for packaging.
 5. `build_testing` -- a target to build the `testing` box
    for packaging.

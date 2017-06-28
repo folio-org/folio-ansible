@@ -25,6 +25,12 @@ Vagrant.configure(2) do |config|
     testing.vm.network "forwarded_port", guest: 3000, host: 3000
   end
 
+  config.vm.define "testing-backend", autostart: false do |testing_backend|
+    testing_backend.vm.box = "folio/testing-backend"
+    testing_backend.vm.synced_folder ".", "/vagrant", disabled: true
+    testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+  end
+
   config.vm.define "curriculum", autostart: false do |curriculum|
     curriculum.vm.box = "folio/curriculum"
     curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -59,6 +65,20 @@ Vagrant.configure(2) do |config|
         "testing" => ["build_testing"],
         "folio-backend" => ["build_testing"],
         "stripes" => ["build_testing"]
+      }
+    end
+  end
+
+  config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
+    build_testing_backend.vm.box = "debian/jessie64"
+    build_testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_backend.vm.synced_folder ".", "/vagrant", disabled: true
+    build_testing_backend.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_testing_backend"],
+        "testing" => ["build_testing_backend"],
+        "folio-backend" => ["build_testing_backend"]
       }
     end
   end
