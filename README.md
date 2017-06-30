@@ -41,13 +41,12 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/stable
     $ vagrant up
 
-There is also a `folio/testing` Vagrant box available,
-which contains the most recent versions of all components, absolutely
-_not_ guaranteed to work together. The Atlas pages for each box,
-[folio/stable](https://atlas.hashicorp.com/folio/boxes/stable) and
-[folio/testing](https://atlas.hashicorp.com/folio/boxes/testing), have
+There are also `folio/testing` and `folio/testing-backend` Vagrant boxes available,
+which contain the most recent versions of all components, absolutely
+_not_ guaranteed to work together. The Vagrant Cloud page for
+[folio/stable](https://app.vagrantup.com/folio/boxes/stable) has
 detailed release notes, including which versions of the backend and
-frontend modules the boxes provide.
+frontend modules are provided.
 
 For all Vagrant boxes, the Okapi port on the VM (9130) will be
 forwarded to `localhost:9130` and the Stripes port and user interface

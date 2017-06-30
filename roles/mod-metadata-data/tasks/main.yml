@@ -145,6 +145,15 @@
   copy: src=multiple-mods-records.xml dest=/etc/.mod-metadata-mods_ansible.xml
   register: mods_sample
 
+- name: Copy larger sample
+  become: yes
+  copy: src=many_mods.xml dest=/etc/.mod-metadata-mods-large_ansible.xml
+  register: mods_larger
+
 - name: Load sample data from MODS ingest
   command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Token: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
   when: mods_sample.changed
+
+- name: Load larger sample data from MODS ingest
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Token: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods-large_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  when: mods_larger.changed
