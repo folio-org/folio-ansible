@@ -6,6 +6,7 @@ WORKDIR $STRIPES_HOME
 
 COPY package.json ${STRIPES_HOME}/package.json
 COPY stripes.config.js ${STRIPES_HOME}/stripes.config.js
+COPY build-module-descriptors.js ${STRIPES_HOME}/build-module-descriptors.js
 COPY npmrc  ${STRIPES_HOME}/.npmrc
 
 RUN groupadd folio && \
