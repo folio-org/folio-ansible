@@ -17,11 +17,18 @@
   when: with_github == false
   notify: Rebuild stripes
 
+- name: copy build-module-descriptors script
+  become: yes
+  copy: src=build-module-descriptors.js dest={{ stripes_conf_dir }}/build-module-descriptors.js
+  when: with_github == false
+  notify: Register modules
+
 - name: copy stripes platform files from github project
   become: yes
   git: 
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
+    update: no
   when: with_github == true
   notify: Rebuild stripes
 
@@ -46,9 +53,9 @@
   when: with_github == true
   #notify: Rebuild container
 
-- name: Create directory for module descriptors
-  become: yes
-  file: path={{ stripes_conf_dir }}/module-descriptors state=directory
+# - name: Create directory for module descriptors
+#   become: yes
+#   file: path={{ stripes_conf_dir }}/module-descriptors state=directory
 
 - name: Move to Node.js 6.X lts
   become: yes

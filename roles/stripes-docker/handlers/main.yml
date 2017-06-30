@@ -15,12 +15,12 @@
 - set_fact: platform={{ platform_raw.content|b64decode|from_json }}
   listen: "Rebuild stripes"
 
-- name: Generate module descriptors
-  become: yes
-  shell: node {{ stripes_conf_dir }}/node_modules/@folio/stripes-core/util/package2md.js {{ stripes_conf_dir }}/node_modules/{{ item.key }}/package.json > {{ stripes_conf_dir }}/module-descriptors/{{ item.key.split('/')[1] }}.json
-  when: item.key.split('/')[0] == '@folio' and item.key != '@folio/stripes-components' and item.key != '@folio/stripes-core'
-  with_dict: "{{ platform.dependencies }}"
-  listen: "Rebuild stripes"
+# - name: Generate module descriptors
+#   become: yes
+#   shell: node {{ stripes_conf_dir }}/node_modules/@folio/stripes-core/util/package2md.js {{ stripes_conf_dir }}/node_modules/{{ item.key }}/package.json > {{ stripes_conf_dir }}/module-descriptors/{{ item.key.split('/')[1] }}.json
+#   when: item.key.split('/')[0] == '@folio' and item.key != '@folio/stripes-components' and item.key != '@folio/stripes-core'
+#   with_dict: "{{ platform.dependencies }}"
+#   listen: "Rebuild stripes"
 
 - name: build and start stripes docker container
   become: yes
@@ -51,13 +51,13 @@
   listen: "Build container"
 
 - name: Get module descriptor filenames
-  shell: ls {{ stripes_conf_dir }}/module-descriptors
+  shell: ls {{ stripes_conf_dir }}/ModuleDescriptors
   register: mod_descrs
   changed_when: false
   listen: "Register modules"
 
 - name: Slurp module descriptors
-  slurp: src={{ stripes_conf_dir }}/module-descriptors/{{ item }}
+  slurp: src={{ stripes_conf_dir }}/ModuleDescriptors/{{ item }}
   with_items: "{{ mod_descrs.stdout_lines }}"
   register: mod_descrs_raw
   listen: "Register modules"
