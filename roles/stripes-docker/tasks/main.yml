@@ -16,6 +16,11 @@
     - { src: 'package.json.j2', dest: 'package.json' }
   when: with_github == false
 
+- name: copy build-module-descriptors script
+  become: yes
+  copy: src=build-module-descriptors.js dest={{ stripes_conf_dir }}/build-module-descriptors.js
+  when: with_github == false
+
 - name: copy stripes platform files from github project
   become: yes
   git: 
