@@ -1,54 +1,23 @@
 ---
 # Handlers for rebuilding stripes
+- name: Tear down old container
+  docker_container: name=stripes_stripes_1 state=absent
+  listen:
+    - Rebuild stripes
+    - Rebuild container
+
+- name: Remove old Docker image
+  docker_image: name=stripes state=absent
+  listen:
+    - Rebuild stripes
+    - Rebuild container
+
 - name: Build stripes
   become: yes
   shell: "yarn install && yarn build -- output"
   args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
-
-- name: get package.json
-  slurp: src={{ stripes_conf_dir }}/package.json
-  register: platform_raw
-  listen: "Rebuild stripes"
-
-- set_fact: platform={{ platform_raw.content|b64decode|from_json }}
-  listen: "Rebuild stripes"
-
-# - name: Generate module descriptors
-#   become: yes
-#   shell: node {{ stripes_conf_dir }}/node_modules/@folio/stripes-core/util/package2md.js {{ stripes_conf_dir }}/node_modules/{{ item.key }}/package.json > {{ stripes_conf_dir }}/module-descriptors/{{ item.key.split('/')[1] }}.json
-#   when: item.key.split('/')[0] == '@folio' and item.key != '@folio/stripes-components' and item.key != '@folio/stripes-core'
-#   with_dict: "{{ platform.dependencies }}"
-#   listen: "Rebuild stripes"
-
-- name: build and start stripes docker container
-  become: yes
-  docker_service:
-    project_name: stripes
-    definition: 
-      version: '2'
-      services: 
-        stripes:
-          build: "{{ stripes_conf_dir }}"
-          image: stripes
-          ports: 
-            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
-          networks:  
-            stripes-net:
-              aliases:
-                - stripes-serv
-          restart: always
-      networks: 
-        stripes-net: 
-          external: true
-    state: present
-  register: stripes_container_status
-  listen: "Build container"
-
-- debug:
-    var: stripes_container_status
-  listen: "Build container"
 
 - name: Get module descriptor filenames
   shell: ls {{ stripes_conf_dir }}/ModuleDescriptors
@@ -111,3 +80,32 @@
   changed_when: tenant_assoc == 201
   with_indexed_items: "{{ mod_descrs }}"
   listen: "Register modules"
+
+- name: build and start stripes docker container
+  become: yes
+  docker_service:
+    project_name: stripes
+    definition: 
+      version: '2'
+      services: 
+        stripes:
+          build: "{{ stripes_conf_dir }}"
+          image: stripes
+          ports: 
+            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
+          networks:  
+            stripes-net:
+              aliases:
+                - stripes-serv
+          restart: always
+      networks: 
+        stripes-net: 
+          external: true
+    state: present
+  register: stripes_container_status
+  listen: "Build container"
+
+- debug:
+    var: stripes_container_status
+  listen: "Build container"
+

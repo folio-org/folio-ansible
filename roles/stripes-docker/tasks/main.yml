@@ -17,11 +17,11 @@
   when: with_github == false
   notify: Rebuild stripes
 
-- name: copy build-module-descriptors script
+- name: copy build-module-descriptors.js to build dir
   become: yes
-  copy: src=build-module-descriptors.js dest={{ stripes_conf_dir }}/build-module-descriptors.js
+  copy: src=build-module-descriptors.js dest={{ stripes_conf_dir}}/build-module-descriptors.js
   when: with_github == false
-  notify: Register modules
+  notify: Rebuild stripes
 
 - name: copy stripes platform files from github project
   become: yes
@@ -41,6 +41,7 @@
     replace: >-
        \1{{ stripes_okapi_url }}\2
   when: with_github == true
+  notify: Rebuild stripes
 
 - name: set tenant in stripes config
   become: yes
@@ -51,11 +52,7 @@
     replace: >-
       \1{{ stripes_tenant }}\2 
   when: with_github == true
-  #notify: Rebuild container
-
-# - name: Create directory for module descriptors
-#   become: yes
-#   file: path={{ stripes_conf_dir }}/module-descriptors state=directory
+  notify: Rebuild stripes
 
 - name: Move to Node.js 6.X lts
   become: yes
@@ -72,6 +69,14 @@
     - { src: 'npmrc.j2', dest: '.npmrc' }
   notify: "Rebuild stripes"
 
+- name: copy yarnrc configuration
+  become: yes
+  template:
+    src: yarnrc.j2
+    dest: "{{ stripes_conf_dir }}/.yarnrc"
+  when: npm_proxy == true
+  notify: Rebuild stripes
+
 - name: create docker network for stripes
   become: yes
   docker_network: 
@@ -82,18 +87,15 @@
   copy: 
     src: Dockerfile
     dest: "{{ stripes_conf_dir }}/Dockerfile"
-
-- name: Ensure container is up and running
-  command: /bin/true
-  notify: "Build container"
+  notify: Rebuild container
 
 - name: Ensure modules are registered
   command: /bin/true
   when: okapi_register_modules == true
   notify: "Register modules"
 
-# set up nginx proxy if with_nginx_proxy is 'true'.       
-- include: nginx_proxy.yml
-  when: with_nginx_proxy == true
+- name: Ensure container is up and running
+  command: /bin/true
+  notify: "Build container"
 
 - meta: flush_handlers 
