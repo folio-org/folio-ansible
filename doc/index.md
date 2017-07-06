@@ -100,7 +100,7 @@ it for module deployment.
 
 ## Replace localhost by hostname on the demo box
 
-To make the demo box accessible from other machines than the local one
+To make the demo box accessible from machines other than the local one,
 Stripes needs the hostname of the backend. Configure the hostname
 this way:
 
