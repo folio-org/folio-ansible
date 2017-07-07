@@ -67,6 +67,47 @@
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
   register: usergroups
 
+# There is no unique constraint, so duplicate address type records can be loaded willy-nilly
+# So need to check if they are already there
+# need to get address type UUIDs for user generation
+- name: Get address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: addresstypes
+  when: load_addresstypes == true
+
+- name: Load address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201
+  register: load_group
+  changed_when: load_group.status == 201
+  when: load_addresstypes == true and addresstypes.json.totalRecords == 0
+  with_fileglob:
+    - addresstypes/*.json
+
+# need to get address type UUIDs for user generation
+- name: Get address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes?query=addressType%3DHome+or+addressType%3DWork"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: addresstypes
+  when: load_addresstypes == true
+
 - name: Install prereqs for user generation from apt
   become: yes
   apt: name={{ item }} state=present
@@ -79,11 +120,19 @@
   become: yes
   copy: src=gen-folio-users dest=/usr/local/bin/gen-folio-users mode=0755
 
-- name: Generate user files
+- name: Generate user files with address types
+  become: yes
+  shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }} --addresstype={{ addresstypes.json.addressTypes|map(attribute='id')|join(',') }}
+  args:
+    creates: /etc/.folio-users_ansible
+  when: load_addresstypes == true
+
+- name: Generate user files with legacy address types
   become: yes
   shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }}
   args:
     creates: /etc/.folio-users_ansible
+  when: load_addresstypes == false
 
 - name: Get filenames
   shell: ls /etc/.folio-users_ansible

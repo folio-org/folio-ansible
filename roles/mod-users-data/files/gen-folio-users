@@ -7,15 +7,19 @@ use UUID;
 use JSON;
 use Getopt::Long;
 
-# Command line options --users --start --group
-# --group can be specified multiple times, or comma delimited
+# Command line options --users --start --group --addresstype
+# --group, --addresstype can be specified multiple times, or comma delimited
+# If --addresstype is not provided, use legacy addressTypeId
 my $users = 20;
 my $start = 0;
 my @groups = ();
+my @address_types = ();
 GetOptions ("users=i" => \$users,
             "start=i" => \$start,
-            "group=s" => \@groups);
+            "group=s" => \@groups,
+            "addresstype=s" => \@address_types);
 @groups = split(/,/,join(',',@groups));
+@address_types = split(/,/,join(',',@address_types));
 
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
@@ -37,7 +41,9 @@ my @contacts = qw(001 002 003 004 005);
 # 004 = Payment
 # 005 = Returns
 # 006 = Work
-my @address_types = qw(002 006);
+unless (@address_types) {
+  @address_types = qw(002 006);
+}
 
 for (my $i = $start; $i < $users + $start; $i++) {
   my ($uuid,$id);
@@ -76,7 +82,7 @@ for (my $i = $start; $i < $users + $start; $i++) {
                                           city => $faker->city(),
                                           region => $faker->us_state_abbr(),
                                           postalCode => $faker->us_zip_code(),
-                                          addressTypeId => $address_types[int(rand(2))],
+                                          addressTypeId => $address_types[int(rand(@address_types))],
                                           primaryAddress => JSON::true
                                          }
                                         ]

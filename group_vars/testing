@@ -138,6 +138,7 @@ folio_modules:
 
 circulation_storage_id: circulation-storage
 total_records_key: totalRecords
+load_addresstypes: true
 
 # Variables for building UI
 with_github: false
