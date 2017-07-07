@@ -153,4 +153,3 @@ stripes_modules:
   - { name: "@folio/plugin-markdown-editor", version: "latest" }
   - { name: "@folio/plugin-markdown-better", version: "latest" }
 folio_npm_repo: npm-folioci
-okapi_register_modules: true
