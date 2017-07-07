@@ -1,12 +1,14 @@
 ---
 # Handlers for rebuilding stripes
 - name: Tear down old container
+  become: yes
   docker_container: name=stripes_stripes_1 state=absent
   listen:
     - Rebuild stripes
     - Rebuild container
 
 - name: Remove old Docker image
+  become: yes
   docker_image: name=stripes state=absent
   listen:
     - Rebuild stripes
