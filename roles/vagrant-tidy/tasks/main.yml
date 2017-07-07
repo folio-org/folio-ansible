@@ -14,6 +14,11 @@
     - docker
     - postgresql
 
+# packer sticks this in here?
+- name: Remove guest additions ISO, if there
+  become: yes
+  command: rm -rf /vagrant/VBoxGuestAdditions.iso
+
 - name: Run vagrant-tidy.sh
   become: yes
   command: /root/vagrant-tidy.sh
