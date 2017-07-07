@@ -1,0 +1,150 @@
+---
+# Variables for building backend
+auth_required: true
+circulation_storage_id: circulation-storage
+total_records_key: totalRecords
+
+folio_modules:
+  - index: 0
+    name: mod-authtoken
+    module_id: authtoken-module
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.4.0/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v0.4.0
+    okapi_docker_pull: "false"
+
+  - index: 1
+    name: mod-permissions
+    module_id: permissions-module
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.2/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v4.0.2
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 2
+    name: mod-login
+    module_id: login-module
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.0.2/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v3.0.2
+    docker_cmd:
+      - "verify.user=true"
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 3
+    name: mod-configuration
+    module_id: configuration
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/v2.0.0/ModuleDescriptor.json
+    image_repository: folioorg
+    image_version: v2.0.0
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+    
+  - index: 4
+    name: mod-users
+    module_id: users-module
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v13.0.1/ModuleDescriptor.json
+    image_version: v13.0.1
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 5
+    name: mod-users-bl
+    module_id: users-bl 
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v1.0.4/ModuleDescriptor.json
+    image_version: v1.0.4
+    image_repository: folioorg
+    okapi_docker_pull: "false"
+
+  - index: 6
+    name: mod-inventory-storage
+    module_id: inventory-storage
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.0.0/ModuleDescriptor.json
+    image_version: v5.0.0
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 7
+    name: mod-inventory
+    module_id: inventory
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.0.0/ModuleDescriptor.json
+    image_version: v5.0.0
+    image_repository: folioorg
+    docker_env:
+      - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+    okapi_docker_pull: "false"
+
+  - index: 8
+    name: mod-circulation-storage
+    module_id: circulation-storage
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v2.0.0/ModuleDescriptor.json
+    image_version: v2.0.0
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 9
+    name: mod-circulation
+    module_id: circulation
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v3.0.0/ModuleDescriptor.json
+    image_version: v3.0.0
+    image_repository: folioorg
+    okapi_docker_pull: "false"

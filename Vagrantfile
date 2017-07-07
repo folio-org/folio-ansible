@@ -18,6 +18,12 @@ Vagrant.configure(2) do |config|
     stable.vm.network "forwarded_port", guest: 3000, host: 3000
   end
 
+  config.vm.define "stable-backend", autostart: false do |stable_backend|
+    stable_backend.vm.box = "folio/stable-backend"
+    stable_backend.vm.synced_folder ".", "/vagrant", disabled: true
+    stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+  end
+
   config.vm.define "testing", autostart: false do |testing|
     testing.vm.box = "folio/testing"
     testing.vm.synced_folder ".", "/vagrant", disabled: true
@@ -49,6 +55,20 @@ Vagrant.configure(2) do |config|
         "stable" => ["build_stable"],
         "folio-backend" => ["build_stable"],
         "stripes" => ["build_stable"]
+      }
+    end
+  end
+
+  config.vm.define "build_stable_backend", autostart: false do |build_stable_backend|
+    build_stable_backend.vm.box = "debian/jessie64"
+    build_stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_stable_backend.vm.synced_folder ".", "/vagrant", disabled: true
+    build_stable_backend.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_stable_backend"],
+        "stable-backend" => ["build_stable_backend"],
+        "folio-backend" => ["build_stable_backend"]
       }
     end
   end
