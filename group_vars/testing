@@ -153,4 +153,5 @@ stripes_modules:
   - { name: "@folio/developer", version: "latest" }
   - { name: "@folio/plugin-markdown-editor", version: "latest" }
   - { name: "@folio/plugin-markdown-better", version: "latest" }
+  - { name: "@folio/plugin-find-user", version: "latest" }
 folio_npm_repo: npm-folioci
