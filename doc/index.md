@@ -146,16 +146,21 @@ stop working.
 
 To update Stripes or any Stripes components, update the Stripes
 `package.json` file at `/etc/folio/stripes/package.json`, changing the
-version of the component in the `dependencies`. Then rebuild the
-Docker container and restart it:
+version of the component in the `dependencies`. If you want to change
+the npm repository for FOLIO libraries, you should also update
+`/etc/folio/stripes/.npmrc`. Then rebuild the yarn platform and
+Docker container and restart it (run commands in the
+`/etc/folio/stripes` directory):
 
+    $ sudo yarn upgrade
+    $ sudo yarn build -- output
     $ docker stop stripes_stripes_1
     $ docker rm stripes_stripes_1
     $ docker rmi stripes
     $ sudo docker build -t stripes:latest /etc/folio/stripes
     $ docker run -d --name stripes_stripes_1 --network stripes-net \
       --network-alias stripes-serv --restart=always \
-      -p=0.0.0.0:3000:3000 -e STRIPES_HOST=0.0.0.0 stripes
+      -p=0.0.0.0:3000:80 stripes
 
 ## Vagrantfile targets
 
