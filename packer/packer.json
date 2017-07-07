@@ -7,18 +7,32 @@
     "ovf_md5": "009de373c05a50c9dc308c04a76703e0",
     "cloud_token": "",
     "stable_version": "1.0.0",
-    "testing_version": "2.0.0-testing",
-    "testing_backend_version": "2.0.0-testing",
-    "stable_box_tag": "",
-    "testing_box_tag": "",
-    "testing_backend_box_tag": "",
     "stable_version_descr": "",
+    "stable_box_tag": "",
+    "stable_backend_version": "2.0.0",
+    "stable_backend_version_descr": "",
+    "stable_backend_box_tag": "",
+    "testing_version": "2.0.0-testing",
     "testing_version_descr": "Admin login: diku_admin/admin\n\nTesting version of the FOLIO demo platform, representing the most recent commits for all components. For details see http://localhost:3000/about after `vagrant up`.",
-    "testing_backend_version_descr": "Admin login: diku_admin/admin\n\nTesting version of the backend FOLIO demo platform, representing the most recent commits for all components. For details see http://localhost:9130/_/discovery/modules after `vagrant up`."
+    "testing_box_tag": "",
+    "testing_backend_version": "2.0.0-testing",
+    "testing_backend_version_descr": "Admin login: diku_admin/admin\n\nTesting version of the backend FOLIO demo platform, representing the most recent commits for all components. For details see http://localhost:9130/_/discovery/modules after `vagrant up`.",
+    "testing_backend_box_tag": "",
   },
   "builders": [
     {
       "name": "stable",
+      "type": "virtualbox-ovf",
+      "headless": true,
+      "source_path": "{{ user `ovf_path` }}",
+      "checksum": "{{ user `ovf_md5` }}",
+      "checksum_type": "md5",
+      "ssh_username": "vagrant",
+      "ssh_private_key_file": "packer/vagrant_key.txt",
+      "shutdown_command": "echo 'packer' | sudo -S shutdown -P now"
+    },
+    {
+      "name": "stable-backend",
       "type": "virtualbox-ovf",
       "headless": true,
       "source_path": "{{ user `ovf_path` }}",
@@ -68,6 +82,17 @@
       "type": "ansible",
       "playbook_file": "./folio.yml",
       "groups": [
+        "stable-backend",
+        "vagrant",
+        "folio-backend",
+        "packer"
+      ],
+      "only": ["stable-backend"]
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./folio.yml",
+      "groups": [
         "testing",
         "vagrant",
         "folio-backend",
@@ -105,6 +130,19 @@
         "version": "{{ user `stable_version`}}",
         "version_description": "{{ user `stable_version_descr` }}",
         "only": ["stable"]
+      },
+      {
+        "type": "vagrant",
+        "vagrantfile_template": "Vagrantfile.backend",
+        "only": ["stable-backend"]
+      },
+      {
+        "type": "vagrant-cloud",
+        "box_tag": "{{ user `stable_backend_box_tag` }}",
+        "access_token": "{{ user `cloud_token`}}",
+        "version": "{{ user `stable_backend_version`}}",
+        "version_description": "{{ user `stable_backend_version_descr` }}",
+        "only": ["stable-backend"]
       },
       {
         "type": "vagrant",
