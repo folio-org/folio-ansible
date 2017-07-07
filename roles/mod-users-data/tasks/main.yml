@@ -12,7 +12,7 @@
 
 - name: Check tenant mod-user registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/users-module"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_users_id }}"
     status_code: 200, 404
   register: tenant_mod_users
 
@@ -21,7 +21,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "users-module" }'
+    body: '{ "id" : "{{ mod_users_id }}" }'
     status_code: 201
   register: mod_users_enable
   changed_when: mod_users_enable.status == 201

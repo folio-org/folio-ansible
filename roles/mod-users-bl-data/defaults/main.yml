@@ -7,3 +7,4 @@ mod_users_bl_permissions:
   - username: diku_admin
     permissions:
       - users-bl.all
+mod_users_bl_id: users-bl
