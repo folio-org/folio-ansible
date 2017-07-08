@@ -41,6 +41,11 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/stable
     $ vagrant up
 
+Or, if you want to try a prepackated FOLIO backend Vagrant box, try:
+
+    $ vagrant init folio/stable-backend
+    $ vagrant up
+
 There are also `folio/testing` and `folio/testing-backend` Vagrant boxes available,
 which contain the most recent versions of all components, absolutely
 _not_ guaranteed to work together. The Vagrant Cloud page for
