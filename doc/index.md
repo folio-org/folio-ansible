@@ -30,6 +30,10 @@ used to generate prebuilt Vagrant boxes, available on
   full-stack FOLIO system with stable releases of front- and
   backend modules. All components should interoperate correctly.
 
+* [folio/stable-backend](https://app.vagrantup.com/folio/boxes/stable-backend)
+  -- a backend FOLIO system with stable releases of backend modules. All
+  components should interoperate correctly. 
+
 * [folio/testing](https://app.vagrantup.com/folio/boxes/testing) --
   a full-stack FOLIO system, with the very latest releases of front- and
   backend modules. Absolutely _not_ guaranteed to interoperate
@@ -168,16 +172,20 @@ The Vagrantfile in this project contains six target definitions:
 
 1. `stable` -- This target pulls the folio/stable Vagrant box hosted
    on Vagrant Cloud.
-2. `testing` -- This target pulls the folio/testing
+2. `stable-backend` -- This target pulls the folio/stable-backend
    Vagrant box hosted on Vagrant Cloud.
-3. `testing-backend` -- This target pulls the folio/testing-backend
+3. `testing` -- This target pulls the folio/testing
    Vagrant box hosted on Vagrant Cloud.
-3. `curriculum` -- This target pulls the folio/curriculum Vagrant box
+4. `testing-backend` -- This target pulls the folio/testing-backend
+   Vagrant box hosted on Vagrant Cloud.
+5. `curriculum` -- This target pulls the folio/curriculum Vagrant box
    hosted on Vagrant Cloud.
-4. `build_stable` -- a target to build the `stable` box for packaging.
-5. `build_testing` -- a target to build the `testing` box
+6. `build_stable` -- a target to build the `stable` box for packaging.
+7. `build_stable_backend` -- a target to build the `stable-backend`
+   box for packaging.
+8. `build_testing` -- a target to build the `testing` box
    for packaging.
-6. `build_curriculum` -- a target to build the `curriculum` box for
+9. `build_curriculum` -- a target to build the `curriculum` box for
    packaging.
 
 ## Troubleshooting/Known Issues
