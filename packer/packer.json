@@ -17,7 +17,7 @@
     "testing_box_tag": "",
     "testing_backend_version": "2.0.0-testing",
     "testing_backend_version_descr": "Admin login: diku_admin/admin\n\nTesting version of the backend FOLIO demo platform, representing the most recent commits for all components. For details see http://localhost:9130/_/discovery/modules after `vagrant up`.",
-    "testing_backend_box_tag": "",
+    "testing_backend_box_tag": ""
   },
   "builders": [
     {
