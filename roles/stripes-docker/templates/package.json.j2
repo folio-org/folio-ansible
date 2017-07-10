@@ -3,7 +3,7 @@
     "build": "stripes build stripes.config.js",
     "stripes": "stripes",
     "start": "stripes dev stripes.config.js",
-    "postinstall": "node ./build-module-descriptors.js"
+    "postinstall": "node ./build-module-descriptors.js{% if stripes_strict_md == true %} --strict{% endif %}"
   },
   "dependencies": {
     {% for module in stripes_modules %}

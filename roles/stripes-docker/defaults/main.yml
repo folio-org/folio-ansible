@@ -22,6 +22,8 @@ stripes_modules:
 
 # Register module descriptors with Okapi, default false
 okapi_register_modules: false
+# Generate strict module descriptors (with requirements), default false
+stripes_strict_md: false
 
 # Other relevant vars
 stripes_conf_dir: /etc/folio/stripes
