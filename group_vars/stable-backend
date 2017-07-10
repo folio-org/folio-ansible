@@ -126,8 +126,8 @@ folio_modules:
   - index: 8
     name: mod-circulation-storage
     module_id: circulation-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v2.0.0/ModuleDescriptor.json
-    image_version: v2.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v2.1.0/ModuleDescriptor.json
+    image_version: v2.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
