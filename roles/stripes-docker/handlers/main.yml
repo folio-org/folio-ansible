@@ -79,7 +79,7 @@
     status_code: 201
   when: tenant_modules.results[item.0].status == 404
   register: tenant_assoc
-  changed_when: tenant_assoc == 201
+  changed_when: tenant_assoc.status == 201
   with_indexed_items: "{{ mod_descrs }}"
   listen: "Register modules"
 
