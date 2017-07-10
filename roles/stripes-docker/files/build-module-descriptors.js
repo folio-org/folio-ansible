@@ -1,38 +1,35 @@
-#!/usr/bin/node
-
-// Reads the package.json of a Stripes module, and writes out a
-// corresponding ModuleDescriptor.md
-// e.g. node package2md.js ../../ui-users/package.json
-
 const fs = require('fs');
+const childProcess = require('child_process');
 
-const argv1 = process.argv[1].replace(/.*\//, '');
+const argv0 = process.argv[1];
+const indir = 'node_modules/@folio';
+const outdir = 'ModuleDescriptors';
 
-let strict = false;
-if (process.argv[2] === '--strict') {
-  process.argv.shift();
-  strict = true;
+console.log('* build-module-descriptors');
+if (!fs.existsSync(outdir)) {
+  fs.mkdirSync(outdir);
 }
 
-const filename = process.argv[2];
-if (!filename) {
-  console.log(`Usage: ${argv1} <package-file>`);
-  process.exit(1);
-}
-
-fs.readFile(filename, 'utf8', (err, data) => {
+fs.readdir(indir, (err, filenames) => {
   if (err) {
-    return console.log(`${argv1}: cannot read file '${filename}': ${err}`);
+    console.log(`${argv0}: cannot scan '${err.path}': ${err.message}`);
+    process.exit(1);
   }
 
-  const json = JSON.parse(data);
-  const interfaces = json.stripes.okapiInterfaces || [];
-  const md = {
-    id: `${json.name.replace(/^@/, '').replace('/', '_')}-${json.version}`,
-    name: json.description,
-    permissionSets: json.stripes.permissionSets || [],
-  };
-  if (strict) md.requires = Object.keys(interfaces).map(key => ({ id: key, version: interfaces[key] }));
+  const sortedFilenames = filenames.sort();
+  for (let i = 0; i < sortedFilenames.length; i++) {
+    const filename = sortedFilenames[i];
+    if (filename.startsWith('stripes-')) continue;
+    console.log(`processing '${filename}'`);
 
-  console.log(JSON.stringify(md, undefined, 2));
+    const cmd = `node ${indir}/stripes-core/util/package2md.js ${indir}/${filename}/package.json > ${outdir}/${filename}.json`;
+    try {
+      const buffer = childProcess.execSync(cmd);
+      const output = buffer.toString();
+      if (output) console.log(`'${cmd}' produced unexpected output: '${output}'`);
+    } catch (exception) {
+      console.log(`${argv0}: cannot run '${cmd}':`, exception);
+      process.exit(2);
+    }
+  }
 });
