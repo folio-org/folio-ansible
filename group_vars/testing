@@ -156,4 +156,5 @@ stripes_modules:
   - { name: "@folio/plugin-markdown-editor", version: "latest" }
   - { name: "@folio/plugin-markdown-better", version: "latest" }
   - { name: "@folio/plugin-find-user", version: "latest" }
+okapi_register_modules: true
 folio_npm_repo: npm-folioci
