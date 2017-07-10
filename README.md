@@ -41,7 +41,7 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/stable
     $ vagrant up
 
-Or, if you want to try a prepackated FOLIO backend Vagrant box, try:
+Or, if you want to try a prepackaged FOLIO backend Vagrant box, try:
 
     $ vagrant init folio/stable-backend
     $ vagrant up
