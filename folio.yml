@@ -15,6 +15,12 @@
     - mod-circulation-data 
     - mod-auth-demo-users
 
+# Provision a host with a Stripes build
+# Post module descriptors to Okapi
+- hosts: stripes-build
+  roles:
+    - stripes-build
+
 # Provision a host as a Stripes server
 - hosts: stripes
   roles:

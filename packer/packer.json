@@ -108,6 +108,7 @@
         "testing",
         "vagrant",
         "folio-backend",
+        "stripes-build",
         "packer"
       ],
       "only": ["testing-backend"]

@@ -4,84 +4,13 @@
   become: yes
   docker_container: name=stripes_stripes_1 state=absent
   listen:
-    - Rebuild stripes
     - Rebuild container
 
 - name: Remove old Docker image
   become: yes
   docker_image: name=stripes state=absent
   listen:
-    - Rebuild stripes
     - Rebuild container
-
-- name: Build stripes
-  become: yes
-  shell: "yarn install && yarn build -- output"
-  args:
-    chdir: "{{ stripes_conf_dir }}"
-  listen: "Rebuild stripes"
-
-- name: Get module descriptor filenames
-  shell: ls {{ stripes_conf_dir }}/ModuleDescriptors
-  register: mod_descrs
-  changed_when: false
-  listen: "Register modules"
-
-- name: Slurp module descriptors
-  slurp: src={{ stripes_conf_dir }}/ModuleDescriptors/{{ item }}
-  with_items: "{{ mod_descrs.stdout_lines }}"
-  register: mod_descrs_raw
-  listen: "Register modules"
-
-- set_fact: mod_descrs=[]
-  listen: "Register modules"
-
-- set_fact:
-    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
-  with_items: "{{ mod_descrs_raw.results }}"
-  listen: "Register modules"
-
-- name: Check module registration
-  uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/modules/{{ item.id }}"
-    status_code: 200, 404
-  with_items: "{{ mod_descrs }}"
-  register: mod_reg_status
-  listen: "Register modules"
-
-- name: Register modules with Okapi
-  uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/modules"
-    method: POST
-    body_format: json
-    body: "{{ item.1|to_json }}"
-    status_code: 201
-  when: mod_reg_status.results[item.0].status == 404
-  register: mod_register
-  changed_when: mod_register.status == 201
-  with_indexed_items: "{{ mod_descrs }}"
-  listen: "Register modules"
-
-- name: Check tenant-module association
-  uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
-    status_code: 200, 404
-  with_items: "{{ mod_descrs }}"
-  register: tenant_modules
-  listen: "Register modules"
-
-- name: Enable modules for tenant
-  uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
-    method: POST
-    body_format: json
-    body: '{ "id" : "{{ item.1.id }}" }'
-    status_code: 201
-  when: tenant_modules.results[item.0].status == 404
-  register: tenant_assoc
-  changed_when: tenant_assoc.status == 201
-  with_indexed_items: "{{ mod_descrs }}"
-  listen: "Register modules"
 
 - name: build and start stripes docker container
   become: yes
