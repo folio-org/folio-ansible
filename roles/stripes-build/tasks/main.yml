@@ -42,6 +42,15 @@
   when: with_github == true
   notify: Rebuild stripes
 
+- name: Force build of mod descriptors from github without strict flag
+  become: yes
+  replace:
+    name: "{{ stripes_conf_dir }}/package.json"
+    regexp: '(^\s*\"postinstall\"\s*:.*)\s+--strict(\").*$'
+    replace: '\1\2'
+  when: with_github == true and stripes_strict_md == false
+  notify: Rebuild stripes
+
 - name: set tenant in stripes config
   become: yes
   replace: 

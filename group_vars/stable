@@ -149,4 +149,4 @@ folio_modules:
     image_repository: folioorg
     okapi_docker_pull: "false"
 
-# UI build will use folio-demo-platform per defaults in stripes-docker role
+# UI build will use stripes-demo-platform per defaults in stripes-docker role

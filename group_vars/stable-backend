@@ -148,3 +148,6 @@ folio_modules:
     image_version: v3.0.0
     image_repository: folioorg
     okapi_docker_pull: "false"
+
+# UI build will use stripes-demo-platform per defaults in stripes-docker role
+okapi_register_modules: true
