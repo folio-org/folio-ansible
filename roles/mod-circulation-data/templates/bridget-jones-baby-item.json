@@ -3,6 +3,7 @@
   "userId": "{{ loan_users.json.users.0.id }}",
   "itemId": "1b6d3338-186e-4e35-9e75-1b886b0da53e",
   "loanDate": "2017-03-05T18:32:31Z",
+  {% if loan_action == true %}"action": "checkedout",{% endif %}
   "status": {
     "name": "Open"
   }

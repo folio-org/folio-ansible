@@ -2,6 +2,7 @@
 # Variables for building testing/testing-backend
 auth_required: true
 circulation_storage_id: circulation-storage
+loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
 mod_users_id: mod-users-14.0.0
