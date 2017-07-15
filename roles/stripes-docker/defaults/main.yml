@@ -6,3 +6,4 @@ stripes_host_address: '127.0.0.1'
 # Port to serve stripes container, default 80
 stripes_port: 80
 stripes_rebuild: false
+nginx_servername: localhost

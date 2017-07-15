@@ -5,6 +5,7 @@
   file: 
     path: "{{ stripes_conf_dir }}"
     state: directory
+
 - name: generate templates and copy to build dir
   become: yes
   template: 

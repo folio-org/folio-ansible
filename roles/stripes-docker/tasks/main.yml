@@ -6,10 +6,10 @@
     path: "{{ stripes_conf_dir }}"
     state: directory
 
-- name: create docker network for stripes
+- name: Template nginx conf to build dir
   become: yes
-  docker_network: 
-    name: stripes-net
+  template: src=nginx.conf.j2 dest={{ stripes_conf_dir }}/nginx.conf
+  notify: Rebuild container
 
 - name: copy Dockerfile to docker build dir
   become: yes
@@ -17,6 +17,11 @@
     src: Dockerfile
     dest: "{{ stripes_conf_dir }}/Dockerfile"
   notify: Rebuild container
+
+- name: create docker network for stripes
+  become: yes
+  docker_network: 
+    name: stripes-net
 
 - name: Rebuild container on stripes rebuild
   command: /bin/true
