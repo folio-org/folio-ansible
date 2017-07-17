@@ -1,6 +1,13 @@
 ---
 # Variables for building backend
 auth_required: true
+circulation_storage_id: circulation-storage
+loan_action: true
+total_records_key: totalRecords
+load_addresstypes: true
+mod_users_id: mod-users-14.0.0
+mod_users_bl_id: mod-users-bl-2.0.0
+
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -68,9 +75,9 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    module_id: users-module
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v13.0.1/ModuleDescriptor.json
-    image_version: v13.0.1
+    module_id: "{{ mod_users_id }}"
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.0.0/ModuleDescriptor.json
+    image_version: v14.0.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -86,9 +93,9 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    module_id: users-bl 
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v1.0.4/ModuleDescriptor.json
-    image_version: v1.0.4
+    module_id: "{{ mod_users_bl_id }}"
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.0/ModuleDescriptor.json
+    image_version: v2.0.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
@@ -122,9 +129,9 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    module_id: loan-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v2.1.0/ModuleDescriptor.json
-    image_version: v2.1.0
+    module_id: "{{ circulation_storage_id }}"
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.0.0/ModuleDescriptor.json
+    image_version: v3.0.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -141,9 +148,11 @@ folio_modules:
   - index: 9
     name: mod-circulation
     module_id: circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v3.0.0/ModuleDescriptor.json
-    image_version: v3.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.0.0/ModuleDescriptor.json
+    image_version: v4.0.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
+okapi_register_modules: true
+stripes_strict_md: true
