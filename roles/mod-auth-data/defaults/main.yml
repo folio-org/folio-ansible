@@ -37,14 +37,13 @@ admin_permissions:
   - module.users.enabled
   - module.items.enabled
   - module.scan.enabled
-  - module.okapi-console.enabled
+  - module.requests.enabled
   - module.organization.enabled
+  - module.settings.enabled
 
 # Permissions not defined in backend module descriptors
 additional_permissions:
   - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.organization.enabled, displayName: "UI: Organization module is enabled", subPermissions: "[]", mutable: "false" }
 
 mod_auth_users:
   - username: auth_test1
@@ -54,8 +53,10 @@ mod_auth_users:
       - module.users.enabled
       - module.items.enabled
       - module.scan.enabled
+      - module.requests.enabled
       - module.okapi-console.enabled
       - module.organization.enabled
+      - module.settings.enabled
   - username: auth_test2
     password: diku
 
