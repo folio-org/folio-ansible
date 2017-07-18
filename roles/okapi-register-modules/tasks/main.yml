@@ -20,6 +20,24 @@
   with_items: "{{ folio_modules }}"
   register: mod_descriptor_update
 
+- name: Slurp module descriptors into memory
+  slurp: src={{ folio_conf }}/module-descriptors/{{ item.name }}.json
+  with_items: "{{ folio_modules }}"
+  register: mod_descrs_raw
+
+- set_fact: mod_descrs=[]
+
+- set_fact:
+    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
+  with_items: "{{ mod_descrs_raw.results }}"
+
+- set_fact: folio_modules_withid=[]
+
+- set_fact:
+    folio_modules_withid: "{{ folio_modules_withid }} + [ {{ folio_modules[item.0]|combine({'module_id':item.1.id}) }} ]"
+  with_indexed_items:
+    - "{{ mod_descrs }}"
+
 ##################################
 # Undeploy if new mod descriptor #
 ##################################
@@ -38,7 +56,7 @@
     - mod_descriptor_update.results[{{ item[1].index }}].changed
   with_nested:
     - "{{ tenants.json }}"
-    - "{{ folio_modules }}"
+    - "{{ folio_modules_withid }}"
   register: tenant_association
 
 - name: Disassociate modules from tenants if mod descriptor updated
@@ -60,7 +78,7 @@
     status_code: 200, 404
   when:
     - mod_descriptor_update.results[{{ item.index }}].changed
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
   register: module_deployment
 
 - name: Undeploy changed modules
@@ -85,7 +103,7 @@
     status_code: 204, 404
   when:
     - mod_descriptor_update.results[{{ item.index }}].changed
-  with_items: "{{ folio_modules[::-1] }}"
+  with_items: "{{ folio_modules_withid[::-1] }}"
   register: mod_unreg
   changed_when: "mod_unreg.status == 204"
 
@@ -97,11 +115,11 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
     status_code: 200, 404
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
   register: mod_reg_status
 
 - name: Register modules
   shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ folio_conf }}/module-descriptors/{{ item.name }}.json -sSf {{ okapi_url }}/_/proxy/modules"
   when: mod_reg_status.results[{{ item.index }}].status == 404
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
 

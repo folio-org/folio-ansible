@@ -2,6 +2,7 @@
 # Role to deploy modules into running Okapi
 # Modules must be registered (see okapi-register-modules role)
 #
+
 # wait a few seconds to make sure okapi is fully running
 - wait_for: timeout=10
 
@@ -18,7 +19,7 @@
 - name: Copy deployment descriptors
   become: yes
   template: src=DeploymentDescriptor.json.j2 dest={{ folio_conf }}/deployment-descriptors/{{ item.name }}.json
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
   notify:
     - Restart okapi-deploy
 
@@ -87,14 +88,14 @@
 - name: Check module registration
   uri:
     url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
 
 # Notify restart handler if any module not already deployed
 - name: Check module deployment
   uri:
     url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
     status_code: 200, 404
-  with_items: "{{ folio_modules }}"
+  with_items: "{{ folio_modules_withid }}"
   register: module_deployment
   changed_when: module_deployment.status == 404
   notify:

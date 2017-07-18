@@ -4,9 +4,12 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=10
 
+- set_fact:
+    mod_configuration_module: "{{ okapi_modules|selectattr('id','match','^'+mod_configuration_prefix+'(-[0-9].*)?$')|list }}"
+
 - name: Check tenant mod-configuration registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/configuration"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_configuration_module.0.id }}"
     status_code: 200, 404
   register: tenant_mod_configuration
 
@@ -15,7 +18,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "configuration" }'
+    body: '{ "id" : "{{ mod_configuration_module.0.id }}" }'
     status_code: 201
   register: mod_configuration_enable
   changed_when: mod_configuration_enable.status == 201

@@ -4,9 +4,15 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=10
 
+- set_fact: mod_metadata_modules=[]
+
+- set_fact:
+    mod_metadata_modules: "{{ mod_metadata_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
+  with_items: "{{ mod_metadata_prefixes }}"
+
 - name: Check tenant registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.module }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.id }}"
     status_code: 200, 404
   register: tenant_mod_metadata
   with_items: "{{ mod_metadata_modules }}"
@@ -16,12 +22,12 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ item.module }}" }'
+    body: '{ "id" : "{{ item.1.id }}" }'
     status_code: 201
   register: mod_metadata_enable
   changed_when: mod_metadata_enable.status == 201
-  when: tenant_mod_metadata.results[item.index].status == 404
-  with_items: "{{ mod_metadata_modules }}"
+  when: tenant_mod_metadata.results[item.0].status == 404
+  with_indexed_items: "{{ mod_metadata_modules }}"
 
 - name: Login as {{ admin_user.username }}
   uri:
