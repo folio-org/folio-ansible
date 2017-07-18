@@ -12,11 +12,12 @@ module_database: okapi_modules
 
 mod_users_id: users-module
 
-mod_auth_modules:
-  - { index: 0, module: permissions-module }
-  - { index: 1, module: authtoken-module }
-  - { index: 2, module: login-module }
-  - { index: 3, module: "{{ mod_users_id }}" }
+# Prefixes for module ids
+mod_auth_prefixes:
+  - permissions-module
+  - authtoken-module
+  - login-module
+  - mod-users
 
 admin_user:
   username: diku_admin

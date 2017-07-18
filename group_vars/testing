@@ -1,24 +1,19 @@
 ---
 # Variables for building testing/testing-backend
 auth_required: true
-circulation_storage_id: circulation-storage
 loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
-mod_users_id: mod-users-14.0.0
-mod_users_bl_id: mod-users-bl-2.0.0
 
 folio_modules:
   - index: 0
     name: mod-authtoken
-    module_id: authtoken-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-authtoken/master/ModuleDescriptor.json
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    module_id: permissions-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-permissions/master/ModuleDescriptor.json 
     image_repository: folioci
     docker_env:
@@ -35,7 +30,6 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    module_id: login-module
     mod_descriptor_url: https://rawgit.com/folio-org/mod-login/master/ModuleDescriptor.json
     image_repository: folioci
     docker_cmd:
@@ -54,7 +48,6 @@ folio_modules:
 
   - index: 3
     name: mod-configuration
-    module_id: configuration
     mod_descriptor_url: https://rawgit.com/folio-org/mod-configuration/master/ModuleDescriptor.json
     image_repository: folioci
     docker_env:
@@ -71,7 +64,6 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    module_id: "{{ mod_users_id }}"
     mod_descriptor_url: https://rawgit.com/folio-org/mod-users/master/ModuleDescriptor.json
     image_repository: folioci
     docker_env:
@@ -88,14 +80,12 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    module_id: "{{ mod_users_bl_id }}"
     mod_descriptor_url: https://rawgit.com/folio-org/mod-users-bl/master/ModuleDescriptor.json
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
-    module_id: inventory-storage
     mod_descriptor_url: https://rawgit.com/folio-org/mod-inventory-storage/master/ModuleDescriptor.json
     image_repository: folioci
     docker_env:
@@ -112,7 +102,6 @@ folio_modules:
 
   - index: 7
     name: mod-inventory
-    module_id: inventory
     mod_descriptor_url: https://rawgit.com/folio-org/mod-inventory/master/ModuleDescriptor.json
     image_repository: folioci
     docker_env:
@@ -121,7 +110,6 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    module_id: "{{ circulation_storage_id }}"
     mod_descriptor_url: https://rawgit.com/folio-org/mod-circulation-storage/master/ModuleDescriptor.json
     image_repository: folioci
     docker_env:
@@ -138,7 +126,6 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    module_id: circulation
     mod_descriptor_url: https://rawgit.com/folio-org/mod-circulation/master/ModuleDescriptor.json
     image_repository: folioci
     okapi_docker_pull: "false"

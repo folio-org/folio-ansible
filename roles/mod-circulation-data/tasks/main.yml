@@ -4,39 +4,30 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=10
 
-- name: Check tenant mod-circulation-storage registration
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ circulation_storage_id }}"
-    status_code: 200, 404
-  register: tenant_mod_circulation_storage
+- set_fact: mod_circulation_modules=[]
 
-- name: Enable mod-circulation-storage module for tenant
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
-    method: POST
-    body_format: json
-    body: '{ "id" : "{{ circulation_storage_id }}" }'
-    status_code: 201
-  register: mod_circulation_storage_enable
-  changed_when: mod_circulation_storage_enable.status == 201
-  when: tenant_mod_circulation_storage.status == 404
+- set_fact:
+    mod_circulation_modules: "{{ mod_circulation_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
+  with_items: "{{ mod_circulation_prefixes }}"
 
-- name: Check tenant mod-circulation registration
+- name: Check tenant registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/circulation"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.id }}"
     status_code: 200, 404
   register: tenant_mod_circulation
+  with_items: "{{ mod_circulation_modules }}"
 
-- name: Enable mod-circulation module for tenant
+- name: Enable mod-circulation modules for tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "circulation" }'
+    body: '{ "id" : "{{ item.1.id }}" }'
     status_code: 201
   register: mod_circulation_enable
   changed_when: mod_circulation_enable.status == 201
-  when: tenant_mod_circulation.status == 404
+  when: tenant_mod_circulation.results[item.0].status == 404
+  with_indexed_items: "{{ mod_circulation_modules }}"
 
 - name: Login as {{ admin_user.username }}
   uri:

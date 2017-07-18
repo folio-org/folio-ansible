@@ -1,0 +1,9 @@
+---
+# Role to get available modules registered with Okapi
+- name: Get modules
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules"
+  register: okapi_modules_req
+
+- set_fact: okapi_modules={{ okapi_modules_req.json }}
+

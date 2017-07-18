@@ -4,15 +4,21 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=10
 
+- set_fact:
+    mod_authtoken_module: "{{ okapi_modules|selectattr('id','match','^'+mod_authtoken_prefix+'(-[0-9].*)?$')|list }}"
+
+- set_fact:
+    mod_users_module: "{{ okapi_modules|selectattr('id','match','^'+mod_users_prefix+'(-[0-9].*)?$')|list }}"
+
 - name: Check tenant mod-authtoken registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/authtoken-module"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_authtoken_module.0.id }}"
     status_code: 200, 404
   register: tenant_mod_authtoken
 
 - name: Check tenant mod-user registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_users_id }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_users_module.0.id }}"
     status_code: 200, 404
   register: tenant_mod_users
 
@@ -21,7 +27,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ mod_users_id }}" }'
+    body: '{ "id" : "{{ mod_users_module.0.id }}" }'
     status_code: 201
   register: mod_users_enable
   changed_when: mod_users_enable.status == 201

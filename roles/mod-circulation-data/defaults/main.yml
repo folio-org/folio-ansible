@@ -1,10 +1,12 @@
 ---
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_circulation_prefixes:
+  - circulation-storage
+  - circulation
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
-circulation_storage_id: loan-storage
 loan_action: false
 admin_permissions:
-  - "{{ circulation_storage_id }}.all"
+  - circulation-storage.all
   - circulation.all
