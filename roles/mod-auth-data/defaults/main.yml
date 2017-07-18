@@ -39,11 +39,10 @@ admin_permissions:
   - module.scan.enabled
   - module.requests.enabled
   - module.organization.enabled
-  - module.settings.enabled
+  - settings.enabled
 
-# Permissions not defined in backend module descriptors
-additional_permissions:
-  - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
+# Permissions not defined in module descriptors
+additional_permissions: []
 
 mod_auth_users:
   - username: auth_test1
