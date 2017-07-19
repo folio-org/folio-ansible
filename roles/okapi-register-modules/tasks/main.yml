@@ -102,6 +102,7 @@
     method: DELETE
     status_code: 204, 404
   when:
+    - folio_modules_withid|bool
     - mod_descriptor_update.results[{{ item.index }}].changed
   with_items: "{{ folio_modules_withid[::-1] }}"
   register: mod_unreg

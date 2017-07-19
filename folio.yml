@@ -7,6 +7,10 @@
     - postgresql
     - okapi
     - okapi-deploy-modules
+
+# Provision a host with the sample tenant and data
+- hosts: folio-sample-data
+  roles:
     - mod-auth-data
     - mod-configuration-data
     - mod-users-data 

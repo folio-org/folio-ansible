@@ -54,6 +54,7 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_stable"],
         "stable" => ["build_stable"],
         "folio-backend" => ["build_stable"],
+        "folio-sample-data" => ["build_stable"],
         "stripes" => ["build_stable"]
       }
     end
@@ -69,6 +70,7 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_stable_backend"],
         "stable-backend" => ["build_stable_backend"],
         "folio-backend" => ["build_stable_backend"],
+        "folio-sample-data" => ["build_stable_backend"],
         "stripes-build" => ["build_stable_backend"]
       }
     end
@@ -85,6 +87,7 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_testing"],
         "testing" => ["build_testing"],
         "folio-backend" => ["build_testing"],
+        "folio-sample-data" => ["build_testing"],
         "stripes" => ["build_testing"]
       }
     end
@@ -100,6 +103,7 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_testing_backend"],
         "testing" => ["build_testing_backend"],
         "folio-backend" => ["build_testing_backend"],
+        "folio-sample-data" => ["build_testing"],
         "stripes-build" => ["build_testing_backend"]
       }
     end
@@ -112,6 +116,20 @@ Vagrant.configure(2) do |config|
     build_curriculum.vm.synced_folder ".", "/vagrant", disabled: true
     build_curriculum.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+    end
+  end
+
+  config.vm.define "build_minimal", autostart: false do |build_minimal|
+    build_minimal.vm.box = "debian/jessie64"
+    build_minimal.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_minimal.vm.synced_folder ".", "/vagrant", disabled: true
+    build_minimal.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_minimal"],
+        "minimal" => ["build_minimal"],
+        "folio-backend" => ["build_minimal"]
+      }
     end
   end
 end
