@@ -147,3 +147,7 @@ stripes_modules:
   - { name: "@folio/plugin-find-user", version: "latest" }
 okapi_register_modules: true
 folio_npm_repo: npm-folioci
+
+# Variables for CI building
+version: 3.0.0
+version_descr: "Admin login: diku_admin/admin\n\nTesting version of the FOLIO demo platform, representing the most recent commits for all components. For details see http://localhost:3000/about after `vagrant up`."
