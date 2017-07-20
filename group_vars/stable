@@ -143,3 +143,11 @@ folio_modules:
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
 okapi_register_modules: true
 stripes_strict_md: true
+
+# Metadata for CI build
+version: 2.1.0
+version_descr: |
+  Admin login: diku_admin/admin
+
+  Changes from 2.0.0:
+  * Update @folio/stripes-core to 2.3.1 (addresses 400 errors caused by invalid tokens)

@@ -1,5 +1,6 @@
 ---
-version: 0.1.0
+# Metadata for CI build
+version: 1.0.0
 version_descr: |
   Very minimal FOLIO system with just Okapi
 
