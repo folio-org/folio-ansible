@@ -8,9 +8,9 @@ load_addresstypes: true
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.4.0/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.5.0/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v0.4.0
+    image_version: v0.5.0
     okapi_docker_pull: "false"
 
   - index: 1
@@ -145,9 +145,9 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 2.1.0
+version: 2.2.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes from 2.0.0:
-  * Update @folio/stripes-core to 2.3.1 (addresses 400 errors caused by invalid tokens)
+  Changes from 2.2.0:
+  * Update mod-auth-token to 0.5.0 (Expand permission sets provided as modulePermissions to modules)
