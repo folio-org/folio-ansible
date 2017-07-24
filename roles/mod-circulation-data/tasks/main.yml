@@ -60,7 +60,7 @@
 
 - name: Get users for loans
   uri:
-    url: "{{ okapi_url }}/users?query=active%3D%3Dtrue%20and%20type%3D%3Dpatron&limit=4"
+    url: "{{ okapi_url }}/users?query=active%3D%22true%22%20and%20type%3D%3Dpatron%20sortby%20personal.lastName%20personal.firstName&limit=4"
     headers:
       Accept: application/json
       X-Okapi-Tenant: diku
