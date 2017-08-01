@@ -8,16 +8,16 @@ load_addresstypes: true
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.5.0/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.6.1/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v0.5.0
+    image_version: v0.6.1
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.2/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.4/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v4.0.2
+    image_version: v4.0.4
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -32,9 +32,9 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.0.2/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.1.0/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v3.0.2
+    image_version: v3.1.0
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -68,8 +68,8 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.0.0/ModuleDescriptor.json
-    image_version: v14.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.1.0/ModuleDescriptor.json
+    image_version: v14.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -118,8 +118,8 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.0.0/ModuleDescriptor.json
-    image_version: v3.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.1.0/ModuleDescriptor.json
+    image_version: v3.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -135,8 +135,8 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.0.0/ModuleDescriptor.json
-    image_version: v4.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.1.0/ModuleDescriptor.json
+    image_version: v4.1.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
@@ -145,9 +145,16 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 2.1.0
+version: 2.2.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes from v2.0.0:
-  * Update mod-auth-token to 0.5.0 (Expand permission sets provided as modulePermissions to modules)
+  Changes from v2.1.0:
+  * Update Okapi to v1.8.1 (internal module, okapi.supertenant)
+  * Update mod-authtoken to v0.6.1 (support for X-Okapi headers)
+  * Update mod-permissions to v4.0.4  
+  * Update mod-login to v3.1.0 (improvements to token generation)
+  * Update mod-users to v14.1.0 (cross-table queries and joins)
+  * Update mod-circulation-storage to v3.1.0 (add dueDate and renewalCount properties)
+  * Update mod-circulation to v4.1.0 (add dueDate property)
+  * Updated sample data for circulation (dueDate, renewalCount)
