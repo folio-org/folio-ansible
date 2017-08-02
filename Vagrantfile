@@ -103,7 +103,7 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_testing_backend"],
         "testing" => ["build_testing_backend"],
         "folio-backend" => ["build_testing_backend"],
-        "folio-sample-data" => ["build_testing"],
+        "folio-sample-data" => ["build_testing_backend"],
         "stripes-build" => ["build_testing_backend"]
       }
     end
