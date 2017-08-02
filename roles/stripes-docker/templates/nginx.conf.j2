@@ -1,10 +1,14 @@
 server {
   listen 80;
   server_name {{ nginx_servername }};
-  # Always serve index.html for any request
+  # Serve index.html for any request not found
   location / {
     # Set path
     root /usr/share/nginx/html;
+    include mime.types;
+    types {
+      text/plain lock;
+    }
     try_files $uri /index.html;
   }
 }
