@@ -1,0 +1,9 @@
+{
+  "id": "f1f7a710-84e6-4965-ab68-afec194d3cd3",
+  "requestType": "Hold",
+  "requestDate": "2017-01-18T09:23:45Z",
+  "requesterId": "{{ loan_users.json.users.0.id }}",
+  "itemId": "bb5a6689-c008-4c96-8f8f-b666850ee12d",
+  "fulfilmentPreference": "Hold Shelf",
+  "holdShelfExpirationDate": "2017-01-20"
+}

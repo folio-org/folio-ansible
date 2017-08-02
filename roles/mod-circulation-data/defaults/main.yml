@@ -7,6 +7,7 @@ mod_circulation_prefixes:
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
 loan_action: false
+load_requests: false
 admin_permissions:
   - circulation-storage.all
   - circulation.all

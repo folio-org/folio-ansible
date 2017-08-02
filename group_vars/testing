@@ -4,6 +4,7 @@ auth_required: true
 loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
+load_requests: true
 
 folio_modules:
   - index: 0
