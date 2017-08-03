@@ -124,6 +124,7 @@
 - name: Create request records directory
   become: yes
   file: dest=/etc/.folio-circ_ansible/requests state=directory
+  when: load_requests == true
 
 - name: Copy request records with userIds
   become: yes
@@ -131,6 +132,7 @@
   with_items:
     - requests/interesting-times.json
     - requests/nod.json
+  when: load_requests == true
 
 - name: Slurp request files
   slurp: src=/etc/.folio-circ_ansible/requests/{{ item }}
@@ -138,6 +140,7 @@
     - interesting-times.json
     - nod.json
   register: requestfiles_content
+  when: load_requests == true
 
 # 422 error means the data are already there
 - name: Load requests
@@ -154,3 +157,4 @@
   register: load_request
   changed_when: load_request.status == 201
   with_items: "{{ requestfiles_content.results }}"
+  when: load_requests == true
