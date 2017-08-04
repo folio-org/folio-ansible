@@ -8,16 +8,16 @@ load_addresstypes: true
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.5.0/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.6.1/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v0.5.0
+    image_version: v0.6.1
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.2/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.4/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v4.0.2
+    image_version: v4.0.4
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -32,9 +32,9 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.0.2/ModuleDescriptor.json
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.1.0/ModuleDescriptor.json
     image_repository: folioorg
-    image_version: v3.0.2
+    image_version: v3.1.0
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -68,8 +68,8 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.0.0/ModuleDescriptor.json
-    image_version: v14.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.1.0/ModuleDescriptor.json
+    image_version: v14.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -85,15 +85,15 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.0/ModuleDescriptor.json
-    image_version: v2.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.1/ModuleDescriptor.json
+    image_version: v2.0.1
     image_repository: folioorg
     okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.0.0/ModuleDescriptor.json
-    image_version: v5.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.1.0/ModuleDescriptor.json
+    image_version: v5.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -109,8 +109,8 @@ folio_modules:
 
   - index: 7
     name: mod-inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.0.0/ModuleDescriptor.json
-    image_version: v5.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.1.0/ModuleDescriptor.json
+    image_version: v5.1.0
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -118,8 +118,8 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.0.0/ModuleDescriptor.json
-    image_version: v3.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.1.0/ModuleDescriptor.json
+    image_version: v3.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -135,8 +135,8 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.0.0/ModuleDescriptor.json
-    image_version: v4.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.1.0/ModuleDescriptor.json
+    image_version: v4.1.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
@@ -145,9 +145,32 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 2.2.0
+version: 3.0.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes from 2.2.0:
-  * Update mod-auth-token to 0.5.0 (Expand permission sets provided as modulePermissions to modules)
+  Software versions:
+  * Okapi 1.9.0
+  * mod-authtoken 0.6.1
+  * mod-permissions 4.0.4
+  * mod-login 3.1.0
+  * mod-configuration 2.0.0
+  * mod-users 14.1.0
+  * mod-users-bl 2.0.1
+  * mod-inventory-storage 5.1.0
+  * mod-inventory 5.1.0
+  * mod-circulation-storage 3.1.0
+  * mod-circulation 4.1.0
+  * @folio/stripes-core 2.4.0
+  * @folio/stripes-components 1.4.0
+  * @folio/trivial 1.0.0
+  * @folio/users 2.9.0
+  * @folio/items 1.8.0
+  * @folio/scan 1.2.0
+  * @folio/requests 0.0.1
+  * @folio/organization 2.1.0
+  * @folio/developer 1.2.0
+  * @folio/plugin-markdown-editor 0.2.0
+  * @folio/plugin-markdown-better 0.2.0
+  * @folio/plugin-find-user 1.0.0
+

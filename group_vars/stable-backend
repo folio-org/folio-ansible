@@ -85,15 +85,15 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.0/ModuleDescriptor.json
-    image_version: v2.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.1/ModuleDescriptor.json
+    image_version: v2.0.1
     image_repository: folioorg
     okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.0.0/ModuleDescriptor.json
-    image_version: v5.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.1.0/ModuleDescriptor.json
+    image_version: v5.1.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -109,8 +109,8 @@ folio_modules:
 
   - index: 7
     name: mod-inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.0.0/ModuleDescriptor.json
-    image_version: v5.0.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.1.0/ModuleDescriptor.json
+    image_version: v5.1.0
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -145,16 +145,19 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 2.2.0
+version: 3.0.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes from v2.1.0:
-  * Update Okapi to v1.8.1 (internal module, okapi.supertenant)
-  * Update mod-authtoken to v0.6.1 (support for X-Okapi headers)
-  * Update mod-permissions to v4.0.4  
-  * Update mod-login to v3.1.0 (improvements to token generation)
-  * Update mod-users to v14.1.0 (cross-table queries and joins)
-  * Update mod-circulation-storage to v3.1.0 (add dueDate and renewalCount properties)
-  * Update mod-circulation to v4.1.0 (add dueDate property)
-  * Updated sample data for circulation (dueDate, renewalCount)
+  Software versions:
+  * Okapi 1.9.0
+  * mod-authtoken 0.6.1
+  * mod-permissions 4.0.4
+  * mod-login 3.1.0
+  * mod-configuration 2.0.0
+  * mod-users 14.1.0
+  * mod-users-bl 2.0.1
+  * mod-inventory-storage 5.1.0
+  * mod-inventory 5.1.0
+  * mod-circulation-storage 3.1.0
+  * mod-circulation 4.1.0
