@@ -6,6 +6,6 @@ mod_metadata_prefixes:
   - inventory
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
-admin_permissions:
+metadata_admin_permissions:
   - inventory-storage.all
   - inventory.all

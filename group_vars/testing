@@ -5,6 +5,18 @@ loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
 load_requests: true
+admin_permissions:
+  - perms.all
+  - login.all
+  - users.all
+  - module.trivial.enabled
+  - module.users.enabled
+  - module.items.enabled
+  - module.checkin.enabled
+  - module.checkout.enabled
+  - module.requests.enabled
+  - module.organization.enabled
+  - settings.enabled
 
 folio_modules:
   - index: 0
@@ -139,7 +151,8 @@ stripes_modules:
   - { name: "@folio/trivial", version: "latest" }
   - { name: "@folio/users", version: "latest" }
   - { name: "@folio/items", version: "latest" }
-  - { name: "@folio/scan", version: "latest" }
+  - { name: "@folio/checkout", version: "latest" }
+  - { name: "@folio/checkin", version: "latest" }
   - { name: "@folio/requests", version: "latest" }
   - { name: "@folio/organization", version: "latest" }
   - { name: "@folio/developer", version: "latest" }
@@ -150,4 +163,4 @@ okapi_register_modules: true
 folio_npm_repo: npm-folioci
 
 # Metadata for CI build
-version: 3.0.0
+version: 4.0.0

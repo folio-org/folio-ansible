@@ -8,6 +8,6 @@ auth_required: false
 admin_user: { username: diku_admin, password: admin }
 loan_action: false
 load_requests: false
-admin_permissions:
+circulation_admin_permissions:
   - circulation-storage.all
   - circulation.all
