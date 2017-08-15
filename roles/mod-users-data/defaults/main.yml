@@ -7,4 +7,3 @@ auth_required: false
 admin_user: { username: diku_admin, password: admin }
 num_users: 20
 load_addresstypes: false
-mod_users_id: users-module

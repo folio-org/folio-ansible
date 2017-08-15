@@ -24,6 +24,7 @@ mod_auth_prefixes:
   - mod-users
 mod_login_schema: diku_mod_login
 mod_permissions_schema: diku_mod_permissions
+mod_authtoken_prefix: mod-authtoken
 
 folio_modules:
   - index: 0
