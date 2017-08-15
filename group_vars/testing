@@ -5,18 +5,6 @@ loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
 load_requests: true
-admin_permissions:
-  - perms.all
-  - login.all
-  - users.all
-  - module.trivial.enabled
-  - module.users.enabled
-  - module.items.enabled
-  - module.checkin.enabled
-  - module.checkout.enabled
-  - module.requests.enabled
-  - module.organization.enabled
-  - settings.enabled
 mod_auth_prefixes:
   - mod-permissions
   - mod-authtoken

@@ -40,6 +40,8 @@ admin_permissions:
   - module.trivial.enabled
   - module.users.enabled
   - module.items.enabled
+  - module.checkin.enabled
+  - module.checkout.enabled
   - module.scan.enabled
   - module.requests.enabled
   - module.organization.enabled
