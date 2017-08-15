@@ -135,8 +135,8 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.1.0/ModuleDescriptor.json
-    image_version: v4.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.2.0/ModuleDescriptor.json
+    image_version: v4.2.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
@@ -145,32 +145,11 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.0.0
+version: 3.1.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Software versions:
-  * Okapi 1.9.0
-  * mod-authtoken 0.6.1
-  * mod-permissions 4.0.4
-  * mod-login 3.1.0
-  * mod-configuration 2.0.0
-  * mod-users 14.1.0
-  * mod-users-bl 2.0.1
-  * mod-inventory-storage 5.1.0
-  * mod-inventory 5.1.0
-  * mod-circulation-storage 3.1.0
-  * mod-circulation 4.1.0
-  * @folio/stripes-core 2.4.0
-  * @folio/stripes-components 1.4.0
-  * @folio/trivial 1.0.0
-  * @folio/users 2.9.0
-  * @folio/items 1.8.0
-  * @folio/scan 1.2.0
-  * @folio/requests 0.0.1
-  * @folio/organization 2.1.0
-  * @folio/developer 1.2.0
-  * @folio/plugin-markdown-editor 0.2.0
-  * @folio/plugin-markdown-better 0.2.0
-  * @folio/plugin-find-user 1.0.0
-
+  Changes since v3.0.0:
+  * Update mod-circulation to v4.2.0
+  * Replace ui-scan application with ui-checkout v0.0.1 and ui-checkin v0.0.1
+  * Update stripes-core to v2.5.1
