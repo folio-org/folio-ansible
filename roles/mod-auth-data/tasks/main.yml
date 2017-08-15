@@ -46,30 +46,30 @@
     mode: 0600
 
 - name: Check auth_credentials for diku_admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_login_module.auth_credentials where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_login_schema }}.auth_credentials where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
   register: diku_admin_credentials
   changed_when: no
 
 - name: Insert diku_admin user into auth_credentials
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_login_module.auth_credentials (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
   when: diku_admin_credentials.stdout | int == 0
 
 - name: Check permissions_users for diku_admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_permissions_module.permissions_users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_permissions_schema }}.permissions_users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
   register: diku_admin_permissions
   changed_when: no
 
 - name: Insert diku_admin user into permissions_users
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_permissions_module.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_permissions_schema }}.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
   when: diku_admin_permissions.stdout | int == 0
 
 - name: Check mod-users for diku_admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from diku_mod_users.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_users_schema }}.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
   register: diku_admin_mod_users
   changed_when: no
 
 - name: Insert diku_admin user into mod_users
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into diku_mod_users.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user.id }}\",\"active\":true,\"personal\":{\"lastName\":\"{{ admin_user.last_name }}\",\"firstName\":\"{{ admin_user.first_name }}\",\"email\":\"{{ admin_user.email }}\"}}')" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_users_schema }}.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user.id }}\",\"active\":true,\"personal\":{\"lastName\":\"{{ admin_user.last_name }}\",\"firstName\":\"{{ admin_user.first_name }}\",\"email\":\"{{ admin_user.email }}\"}}')" {{ module_database }}
   when: diku_admin_mod_users.stdout | int == 0
   
 ###############################################

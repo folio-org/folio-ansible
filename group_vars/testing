@@ -17,6 +17,13 @@ admin_permissions:
   - module.requests.enabled
   - module.organization.enabled
   - settings.enabled
+mod_auth_prefixes:
+  - mod-permissions
+  - authtoken-module
+  - mod-login
+  - mod-users
+mod_login_schema: diku_mod_login
+mod_permissions_schema: diku_mod_permissions
 
 folio_modules:
   - index: 0

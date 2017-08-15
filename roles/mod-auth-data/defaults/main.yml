@@ -10,14 +10,17 @@ pg_port: 5432
 
 module_database: okapi_modules
 
-mod_users_id: users-module
-
 # Prefixes for module ids
 mod_auth_prefixes:
   - permissions-module
   - authtoken-module
   - login-module
   - mod-users
+
+# Schema names for db
+mod_permissions_schema: diku_permissions_module
+mod_login_schema: diku_login_module
+mod_users_schema: diku_mod_users
 
 admin_user:
   username: diku_admin
