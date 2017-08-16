@@ -1,6 +1,7 @@
 server {
   listen 80;
   server_name {{ nginx_servername }};
+  charset utf-8;
   # Serve index.html for any request not found
   location / {
     # Set path
