@@ -1,5 +1,6 @@
 ---
 # Variables for building testing/testing-backend
+okapi_port_end: 9150
 auth_required: true
 loan_action: true
 total_records_key: totalRecords
@@ -138,6 +139,22 @@ folio_modules:
     name: mod-circulation
     mod_descriptor_url: https://rawgit.com/folio-org/mod-circulation/master/ModuleDescriptor.json
     image_repository: folioci
+    okapi_docker_pull: "false"
+
+  - index: 10
+    name: mod-notes
+    mod_descriptor_url: https://rawgit.com/folio-org/mod-notes/master/ModuleDescriptor.json
+    image_repository: folioci
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
 # Variables for building UI

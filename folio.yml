@@ -15,7 +15,8 @@
     - mod-configuration-data
     - mod-users-data 
     - mod-users-bl-data
-    - mod-circulation-data 
+    - mod-circulation-data
+    - mod-notes-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build

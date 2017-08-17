@@ -1,0 +1,56 @@
+---
+# Role to enable mod-notes for the sample tenant
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- set_fact:
+    mod_notes_module: "{{ okapi_modules|selectattr('id','match','^'+mod_notes_prefix+'(-[0-9].*)?$')|list }}"
+
+- name: Check tenant mod-notes registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_notes_module.0.id }}"
+    status_code: 200, 404
+  register: tenant_mod_notes
+
+- name: Enable mod-notes module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_notes_module.0.id }}" }'
+    status_code: 201
+  register: mod_notes_enable
+  changed_when: mod_notes_enable.status == 201
+  when: tenant_mod_notes.status == 404
+
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_notes_login
+  when: auth_required
+
+- name: Assign mod-notes permissions to other users
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_notes_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_notes_perms
+  changed_when: mod_notes_perms.status == 200
+  with_subelements:
+    - "{{ mod_notes_permissions }}"
+    - permissions
+  when: auth_required

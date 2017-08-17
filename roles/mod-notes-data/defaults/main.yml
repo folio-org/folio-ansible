@@ -1,0 +1,11 @@
+---
+# mod-notes-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_notes_prefix: mod-notes
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+mod_notes_permissions:
+  - username: diku_admin
+    permissions:
+      - notes.all
