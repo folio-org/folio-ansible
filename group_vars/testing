@@ -1,6 +1,5 @@
 ---
 # Variables for building testing/testing-backend
-okapi_port_end: 9150
 auth_required: true
 loan_action: true
 total_records_key: totalRecords
