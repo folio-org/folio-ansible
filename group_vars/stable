@@ -68,8 +68,8 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.1.0/ModuleDescriptor.json
-    image_version: v14.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.1.1/ModuleDescriptor.json
+    image_version: v14.1.1
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -118,8 +118,8 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.1.0/ModuleDescriptor.json
-    image_version: v3.1.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.2.0/ModuleDescriptor.json
+    image_version: v3.2.0
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -135,8 +135,8 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.2.0/ModuleDescriptor.json
-    image_version: v4.2.0
+    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.3.0/ModuleDescriptor.json
+    image_version: v4.3.0
     image_repository: folioorg
     okapi_docker_pull: "false"
 
@@ -145,11 +145,12 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.1.0
+version: 3.2.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.0.0:
-  * Update mod-circulation to v4.2.0
-  * Replace ui-scan application with ui-checkout v0.0.1 and ui-checkin v0.0.1
-  * Update stripes-core to v2.5.1
+  Changes since v3.1.0:
+  * Update mod-users to v14.1.1
+  * Update mod-circulation-storage to v3.2.0
+  * Update mod-circulation to v4.3.0
+  * Update stripes-core to v2.6.0
