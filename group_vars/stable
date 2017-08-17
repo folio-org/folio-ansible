@@ -145,12 +145,9 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.2.0
+version: 3.2.1
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.1.0:
-  * Update mod-users to v14.1.1
-  * Update mod-circulation-storage to v3.2.0
-  * Update mod-circulation to v4.3.0
-  * Update stripes-core to v2.6.0
+  Changes since v3.2.0:
+  * Update stripes-core to v2.6.1
