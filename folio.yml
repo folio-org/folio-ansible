@@ -31,6 +31,10 @@
     - stripes-docker
 
 # Roles for packaging
+- hosts: vagrant
+  roles:
+    - maven-3
+
 - hosts: packer
   roles:
     - vagrant-tidy
