@@ -1,7 +1,7 @@
 {
   "srvcId" : "{{ item.module_id }}",
   "descriptor" : {
-    "dockerImage" : "{{ item.image_repository|default(docker_repo) }}/{{ item.name }}{% if item.image_version is defined %}:{{ item.image_version }}{% endif %}"{% if item.docker_cmd is defined %},
+    "dockerImage" : "{{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{% if item.version is not defined or item.version == 'latest' %}latest{% else %}v{{ item.version }}{% endif %}"{% if item.docker_cmd is defined %},
     "dockerCMD" : [
     {% for docker_cmd in item.docker_cmd %}
       "{{ docker_cmd }}"{% if not loop.last %},{% endif %}

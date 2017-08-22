@@ -8,16 +8,18 @@ load_addresstypes: true
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-authtoken/v0.6.1/ModuleDescriptor.json
+    module_id: authtoken-module
+    version: 0.6.1
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
-    image_version: v0.6.1
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-permissions/v4.0.4/ModuleDescriptor.json
+    module_id: permissions-module
+    version: 4.0.4
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
-    image_version: v4.0.4
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -32,9 +34,10 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.1.0/ModuleDescriptor.json
+    module_id: login-module
+    version: 3.1.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
-    image_version: v3.1.0
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -51,9 +54,10 @@ folio_modules:
 
   - index: 3
     name: mod-configuration
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-configuration/v2.0.0/ModuleDescriptor.json
+    module_id: configuration
+    version: 2.0.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
-    image_version: v2.0.0
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
       - { name: db.port, value: "{{ pg_port }}" }
@@ -68,8 +72,8 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users/v14.1.1/ModuleDescriptor.json
-    image_version: v14.1.1
+    version: 14.1.1
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -85,15 +89,16 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-users-bl/v2.0.1/ModuleDescriptor.json
-    image_version: v2.0.1
+    version: 2.0.1
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     okapi_docker_pull: "false"
 
   - index: 6
     name: mod-inventory-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory-storage/v5.1.0/ModuleDescriptor.json
-    image_version: v5.1.0
+    module_id: inventory-storage
+    version: 5.1.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -109,8 +114,9 @@ folio_modules:
 
   - index: 7
     name: mod-inventory
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-inventory/v5.1.0/ModuleDescriptor.json
-    image_version: v5.1.0
+    module_id: inventory
+    version: 5.1.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -118,8 +124,9 @@ folio_modules:
 
   - index: 8
     name: mod-circulation-storage
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation-storage/v3.2.0/ModuleDescriptor.json
-    image_version: v3.2.0
+    module_id: circulation-storage
+    version: 3.2.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -135,8 +142,9 @@ folio_modules:
 
   - index: 9
     name: mod-circulation
-    mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-circulation/v4.3.0/ModuleDescriptor.json
-    image_version: v4.3.0
+    module_id: circulation
+    version: 4.3.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     okapi_docker_pull: "false"
 

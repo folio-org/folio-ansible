@@ -14,11 +14,18 @@
   become: yes
   file: state=directory path={{ folio_conf }}/module-descriptors
 
-- name: Copy module descriptors to remote
+- name: Copy module descriptors to remote by URL
   become: yes
   get_url: url={{ item.mod_descriptor_url }} dest={{ folio_conf }}/module-descriptors/{{ item.name }}.json force=yes
+  when: item.mod_descriptor_url is defined
   with_items: "{{ folio_modules }}"
-  register: mod_descriptor_update
+  register: mod_descriptor_url_update
+
+- set_fact: mod_descriptor_repo_update=[]
+  
+- name: Copy module descriptors to remote from repository
+  include: get-mod-descr.yml module={{ item }}
+  with_items: "{{ folio_modules }}"
 
 - name: Slurp module descriptors into memory
   slurp: src={{ folio_conf }}/module-descriptors/{{ item.name }}.json
@@ -53,7 +60,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module_id }}"
     status_code: 200, 404
   when:
-    - mod_descriptor_update.results[{{ item[1].index }}].changed
+    - mod_descriptor_url_update.results[{{ item[1].index }}].changed or mod_descriptor_repo_update[{{ item[1].index }}].changed
   with_nested:
     - "{{ tenants.json }}"
     - "{{ folio_modules_withid }}"
@@ -77,7 +84,7 @@
     url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
     status_code: 200, 404
   when:
-    - mod_descriptor_update.results[{{ item.index }}].changed
+    - mod_descriptor_url_update.results[{{ item.index }}].changed or mod_descriptor_repo_update[{{ item.index }}].changed
   with_items: "{{ folio_modules_withid }}"
   register: module_deployment
 
@@ -123,4 +130,3 @@
   shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ folio_conf }}/module-descriptors/{{ item.name }}.json -sSf {{ okapi_url }}/_/proxy/modules"
   when: mod_reg_status.results[{{ item.index }}].status == 404
   with_items: "{{ folio_modules_withid }}"
-

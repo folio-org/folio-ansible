@@ -12,7 +12,7 @@
 
 - name: Pull Docker images
   become: yes
-  docker_image: name={{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ item.image_version|default("latest") }}
+  docker_image: name={{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ 'latest' if item.version is not defined or item.version == 'latest' else 'v' + item.version }}
   when: item.okapi_docker_pull|default("true") == "false"
   with_items: "{{ folio_modules }}"
 
