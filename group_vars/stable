@@ -72,7 +72,7 @@ folio_modules:
     
   - index: 4
     name: mod-users
-    version: 14.1.1
+    version: 14.2.0
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
@@ -89,7 +89,7 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    version: 2.0.1
+    version: 2.0.2
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     okapi_docker_pull: "false"
@@ -148,14 +148,37 @@ folio_modules:
     image_repository: folioorg
     okapi_docker_pull: "false"
 
+  - index: 10
+    name: mod-notes
+    version: 0.2.0
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
 okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.4.0
+version: 3.5.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.3.0:
-  * Update ui-checkout/ui-checkin to v1.0.0
+  Changes since v3.4.0:
+  * Update mod-users to v14.2.0 (support proxy users)
+  * Update mod-users-bl to v2.0.2 (support proxy users)
+  * Add mod-notes v0.2.0
+  * Update stripes-components to v1.5.0
+  * Update ui-items to v1.9.0
+  * Add ui-circulation v1.0.0
+
