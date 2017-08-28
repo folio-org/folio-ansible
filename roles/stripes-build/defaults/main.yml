@@ -15,6 +15,7 @@ stripes_modules:
   - { name: "@folio/developer", version: "latest" }
   - { name: "@folio/plugin-markdown-editor", version: "latest" }
   - { name: "@folio/plugin-markdown-better", version: "latest" }
+  - { name: "@folio/plugin-find-user", version: "latest" }
 
 # disable okapi-console - https://issues.folio.org/browse/STRIPES-264
 #  - { name: "@folio/okapi-console", version: "^0.0.1-test" }
