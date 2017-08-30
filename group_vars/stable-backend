@@ -187,13 +187,10 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.5.0
+version: 3.6.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.4.0
-  * Update mod-users to v14.2.0 (support proxy users)
-  * Update mod-users-bl to v2.0.2 (support proxy users)
-  * Add mod-notes v0.2.0
-  * Update mod descriptor for ui-items to v1.9.0
-  * Add mod descriptor for ui-circulation v1.0.0
+  Changes since v3.5.0:
+  * Update Okapi to v1.10.0
+  * Add mod-notify v0.1.1
