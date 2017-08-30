@@ -46,6 +46,7 @@ admin_permissions:
   - module.requests.enabled
   - module.organization.enabled
   - settings.enabled
+  - ui-users.editpermsets 
 
 # Permissions not defined in module descriptors
 additional_permissions: []
