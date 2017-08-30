@@ -165,20 +165,33 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
+  - index: 11
+    name: mod-notify
+    version: 0.1.1
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
 okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.5.0
+version: 3.6.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.4.0:
-  * Update mod-users to v14.2.0 (support proxy users)
-  * Update mod-users-bl to v2.0.2 (support proxy users)
-  * Add mod-notes v0.2.0
-  * Update stripes-components to v1.5.0
-  * Update ui-items to v1.9.0
-  * Add ui-circulation v1.0.0
+  Changes since v3.5.0:
+  * Update Okapi to v1.10.0
+  * Add mod-notify v0.1.1
 

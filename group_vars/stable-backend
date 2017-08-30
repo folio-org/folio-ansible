@@ -165,6 +165,23 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
+  - index: 11
+    name: mod-notify
+    version: 0.1.1
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    image_repository: folioorg
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
 okapi_register_modules: true
 stripes_strict_md: true
