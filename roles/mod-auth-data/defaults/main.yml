@@ -51,6 +51,8 @@ admin_permissions:
   - settings.loan-policies.all
   - settings.loan-types.all
   - settings.material-types.all
+  - settings.usergroups.all
+  - settings.addresstypes.all
 
 # Permissions not defined in module descriptors
 additional_permissions: []
