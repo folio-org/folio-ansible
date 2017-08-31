@@ -46,7 +46,9 @@ admin_permissions:
   - module.requests.enabled
   - module.organization.enabled
   - settings.enabled
-  - ui-users.editpermsets 
+  - ui-users.editpermsets
+  - settings.loan-rules.all
+  - settings.loan-policies.all
 
 # Permissions not defined in module descriptors
 additional_permissions: []
