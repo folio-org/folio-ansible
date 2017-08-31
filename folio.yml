@@ -15,6 +15,7 @@
     - mod-configuration-data
     - mod-users-data 
     - mod-users-bl-data
+    - mod-login-saml-data
     - mod-circulation-data
     - mod-notes-data
     - mod-notify-data

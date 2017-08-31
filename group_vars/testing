@@ -95,6 +95,12 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 6
+    name: mod-login-saml
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    image_repository: folioci
+    okapi_docker_pull: "false"
+
+  - index: 7
     name: mod-inventory-storage
     module_id: inventory-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
@@ -111,7 +117,7 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 7
+  - index: 8
     name: mod-inventory
     module_id: inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
@@ -120,7 +126,7 @@ folio_modules:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     okapi_docker_pull: "false"
 
-  - index: 8
+  - index: 9
     name: mod-circulation-storage
     module_id: circulation-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
@@ -137,14 +143,14 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 9
+  - index: 10
     name: mod-circulation
     module_id: circulation
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     okapi_docker_pull: "false"
 
-  - index: 10
+  - index: 11
     name: mod-notes
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
@@ -160,7 +166,7 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 11
+  - index: 12
     name: mod-notify
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci

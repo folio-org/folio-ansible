@@ -1,0 +1,11 @@
+---
+# mod-login-saml-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: false
+mod_login_saml_prefix: mod-login-saml
+admin_user: { username: diku_admin, password: admin }
+mod_login_saml_permissions:
+  - username: diku_admin
+    permissions: []
+
