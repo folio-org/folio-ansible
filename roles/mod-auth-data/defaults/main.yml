@@ -53,6 +53,10 @@ admin_permissions:
   - settings.material-types.all
   - settings.usergroups.all
   - settings.addresstypes.all
+  - ui-organization.settings.key-bindings
+  - ui-organization.settings.locale
+  - ui-organization.settings.plugins
+  - ui-organization.settings.sso
 
 # Permissions not defined in module descriptors
 additional_permissions: []
