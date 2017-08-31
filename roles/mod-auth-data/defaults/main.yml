@@ -49,6 +49,8 @@ admin_permissions:
   - ui-users.editpermsets
   - settings.loan-rules.all
   - settings.loan-policies.all
+  - settings.loan-types.all
+  - settings.material-types.all
 
 # Permissions not defined in module descriptors
 additional_permissions: []
