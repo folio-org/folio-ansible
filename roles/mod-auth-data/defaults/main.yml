@@ -46,13 +46,14 @@ admin_permissions:
   - module.requests.enabled
   - module.organization.enabled
   - settings.enabled
-  - ui-users.editpermsets
+  - settings.developer.enabled
   - settings.loan-rules.all
   - settings.loan-policies.all
   - settings.loan-types.all
   - settings.material-types.all
   - settings.usergroups.all
   - settings.addresstypes.all
+  - ui-users.editpermsets 
   - ui-organization.settings.key-bindings
   - ui-organization.settings.locale
   - ui-organization.settings.plugins
