@@ -46,7 +46,7 @@ admin_permissions:
   - module.requests.enabled
   - module.organization.enabled
   - settings.enabled
-  - settings.checkin.enabled
+  - settings.checkout.enabled
   - settings.developer.enabled
   - settings.loan-rules.all
   - settings.loan-policies.all
