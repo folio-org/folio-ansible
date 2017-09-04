@@ -4,6 +4,8 @@ auth_required: true
 total_records_key: totalRecords
 loan_action: true
 load_addresstypes: true
+additional_permissions:
+  - { permissionName: module.requests.enabled, displayName: "UI: Requests module is enabled", subPermissions: [], mutable: false }
 
 folio_modules:
   - index: 0
@@ -115,7 +117,7 @@ folio_modules:
   - index: 7
     name: mod-inventory
     module_id: inventory
-    version: 5.1.0
+    version: 5.1.1
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     docker_env:
@@ -143,7 +145,7 @@ folio_modules:
   - index: 9
     name: mod-circulation
     module_id: circulation
-    version: 4.3.0
+    version: 4.4.0
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioorg
     okapi_docker_pull: "false"
@@ -187,10 +189,21 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 3.6.0
+version: 4.1.0
 version_descr: |
   Admin login: diku_admin/admin
 
-  Changes since v3.5.0:
-  * Update Okapi to v1.10.0
-  * Add mod-notify v0.1.1
+  Software installed:
+  Okapi v1.10.0
+  mod-authtoken v0.6.1
+  mod-permissions v4.0.4
+  mod-login v3.1.0
+  mod-configuration v2.0.0
+  mod-users v14.2.0
+  mod-users-bl v2.0.2
+  mod-inventory-storage v5.1.0
+  mod-inventory v5.1.1
+  mod-circulation-storage v3.2.0
+  mod-circulation v4.4.0
+  mod-notes v0.2.0
+  mod-notify v0.1.1
