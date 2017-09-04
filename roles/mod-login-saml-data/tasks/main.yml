@@ -7,6 +7,10 @@
 - set_fact:
     mod_login_saml_module: "{{ okapi_modules|selectattr('id','match','^'+mod_login_saml_prefix+'(-[0-9].*)?$')|list }}"
 
+- set_fact:
+    mod_login_saml_module:
+      - id: "{{ mod_login_saml_prefix }}-NONE"
+  when: mod_login_saml_module|length > 0 
 
 - name: Check mod-login-saml deployment
   uri:
