@@ -189,7 +189,7 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 4.1.0
+version: 4.0.0
 version_descr: |
   Admin login: diku_admin/admin
 

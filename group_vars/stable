@@ -189,7 +189,7 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 4.1.0
+version: 4.0.0
 version_descr: |
   Admin login: diku_admin/admin
 
@@ -207,7 +207,7 @@ version_descr: |
   mod-circulation v4.4.0
   mod-notes v0.2.0
   mod-notify v0.1.1
-  ui-users v2.10.0
+  ui-users v2.10.1
   ui-items v1.11.0
   ui-checkout v1.1.2
   ui-checkin v1.1.1
