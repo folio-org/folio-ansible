@@ -4,8 +4,6 @@ auth_required: true
 total_records_key: totalRecords
 loan_action: true
 load_addresstypes: true
-additional_permissions:
-  - { permissionName: module.requests.enabled, displayName: "UI: Requests module is enabled", subPermissions: [], mutable: false }
 
 folio_modules:
   - index: 0
@@ -189,21 +187,9 @@ okapi_register_modules: true
 stripes_strict_md: true
 
 # Metadata for CI build
-version: 4.0.0
+version: 4.0.1
 version_descr: |
   Admin login: diku_admin/admin
 
-  Software installed:
-  Okapi v1.10.0
-  mod-authtoken v0.6.1
-  mod-permissions v4.0.4
-  mod-login v3.1.0
-  mod-configuration v2.0.0
-  mod-users v14.2.0
-  mod-users-bl v2.0.2
-  mod-inventory-storage v5.1.0
-  mod-inventory v5.1.1
-  mod-circulation-storage v3.2.0
-  mod-circulation v4.4.0
-  mod-notes v0.2.0
-  mod-notify v0.1.1
+  Changes since v4.0.0:
+  * Remove module descriptor and permissions for ui-requests.

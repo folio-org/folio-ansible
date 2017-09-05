@@ -4,8 +4,6 @@ auth_required: true
 loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
-additional_permissions:
-  - { permissionName: module.requests.enabled, displayName: "UI: Requests module is enabled", subPermissions: [], mutable: false }
 
 folio_modules:
   - index: 0
@@ -194,28 +192,27 @@ version_descr: |
   Admin login: diku_admin/admin
 
   Software installed:
-  Okapi v1.10.0
-  mod-authtoken v0.6.1
-  mod-permissions v4.0.4
-  mod-login v3.1.0
-  mod-configuration v2.0.0
-  mod-users v14.2.0
-  mod-users-bl v2.0.2
-  mod-inventory-storage v5.1.0
-  mod-inventory v5.1.1
-  mod-circulation-storage v3.2.0
-  mod-circulation v4.4.0
-  mod-notes v0.2.0
-  mod-notify v0.1.1
-  ui-users v2.10.1
-  ui-items v1.11.0
-  ui-checkout v1.1.2
-  ui-checkin v1.1.1
-  ui-requests v0.0.1
-  ui-circulation v1.1.1
-  ui-organization v2.2.0
-  ui-developer v1.3.0
-  ui-plugin-example v0.2.0
-  ui-plugin-find-user v1.0.0
-  stripes-components v1.7.0
-  stripes-core v2.7.0
+  * Okapi v1.10.0
+  * mod-authtoken v0.6.1
+  * mod-permissions v4.0.4
+  * mod-login v3.1.0
+  * mod-configuration v2.0.0
+  * mod-users v14.2.0
+  * mod-users-bl v2.0.2
+  * mod-inventory-storage v5.1.0
+  * mod-inventory v5.1.1
+  * mod-circulation-storage v3.2.0
+  * mod-circulation v4.4.0
+  * mod-notes v0.2.0
+  * mod-notify v0.1.1
+  * ui-users v2.10.1
+  * ui-items v1.11.0
+  * ui-checkout v1.1.2
+  * ui-checkin v1.1.1
+  * ui-circulation v1.1.1
+  * ui-organization v2.2.0
+  * ui-developer v1.3.0
+  * ui-plugin-example v0.2.0
+  * ui-plugin-find-user v1.0.0
+  * stripes-components v1.7.0
+  * stripes-core v2.7.0
