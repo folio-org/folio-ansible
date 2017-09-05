@@ -203,4 +203,4 @@ okapi_register_modules: true
 folio_npm_repo: npm-folioci
 
 # Metadata for CI build
-version: 4.0.0
+version: 5.0.0
