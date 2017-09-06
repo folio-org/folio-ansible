@@ -17,6 +17,9 @@ mod_configuration_prefix: mod-configuration
 mod_metadata_prefixes:
   - mod-inventory-storage
   - mod-inventory
+mod_circulation_prefixes:
+  - mod-circulation-storage
+  - mod-circulation
 
 folio_modules:
   - index: 0
@@ -129,7 +132,6 @@ folio_modules:
 
   - index: 9
     name: mod-circulation-storage
-    module_id: circulation-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     docker_env:
@@ -146,7 +148,6 @@ folio_modules:
 
   - index: 10
     name: mod-circulation
-    module_id: circulation
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     okapi_docker_pull: "false"
