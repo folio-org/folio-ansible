@@ -46,6 +46,7 @@ admin_permissions:
   - module.scan.enabled
   - module.requests.enabled
   - module.organization.enabled
+  - module.notes.enabled
   - settings.enabled
   - settings.checkout.enabled
   - settings.developer.enabled
