@@ -27,6 +27,7 @@ admin_user:
   password: admin
   hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E
   salt: 483A7C864569B90C24A0A6151139FF0B95005B16
+  perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
   permissions: "\\\"perms.all\\\""
   id: 1ad737b0-d847-11e6-bf26-cec0c932ce01
   first_name: DIKU
@@ -67,6 +68,8 @@ additional_permissions: []
 
 mod_auth_users:
   - username: auth_test1
+    id: 77136CF1-FF93-4C45-B7B5-187BCB711745
+    perms_user_id: e12e46e4-9293-4f75-99ab-181633ab9530
     password: diku
     permissions:
       - module.trivial.enabled
@@ -78,5 +81,7 @@ mod_auth_users:
       - module.organization.enabled
       - module.settings.enabled
   - username: auth_test2
+    id: 17B39C4D-FFAE-4D62-A75D-1B22F45A081E
+    perms_user_id: f0977134-cd1a-4e0d-978e-9cad29e9a98a
     password: diku
 
