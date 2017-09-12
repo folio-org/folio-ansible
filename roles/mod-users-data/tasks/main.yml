@@ -46,6 +46,24 @@
   register: mod_users_login
   when: auth_required and tenant_mod_authtoken.status == 200
 
+- name: Assign mod-users permissions to other users
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_users_perms
+  changed_when: mod_users_perms.status == 200
+  with_subelements:
+    - "{{ mod_users_permissions }}"
+    - permissions
+  when: auth_required
+
 # 422 error means the group is already there
 - name: Load groups
   uri:
