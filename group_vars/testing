@@ -96,7 +96,7 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_url: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     okapi_docker_pull: "false"
 
