@@ -24,13 +24,17 @@ mod_circulation_prefixes:
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    version: 0.6.2-SNAPSHOT.45
+    docker_tag: 0.6.2-SNAPSHOT
+    mod_descriptor_url: http://folio-registry.aws.indexdata.com:9130/_/proxy/modules/mod-authtoken-0.6.2-SNAPSHOT.45
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    version: 4.0.5-SNAPSHOT.48
+    docker_tag: 4.0.5-SNAPSHOT
+    mod_descriptor_url: http://folio-registry.aws.indexdata.com:9130/_/proxy/modules/mod-permissions-4.0.5-SNAPSHOT.48
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -46,7 +50,9 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    version: 3.1.1-SNAPSHOT.44
+    docker_tag: 3.1.1-SNAPSHOT
+    mod_descriptor_url: http://folio-registry.aws.indexdata.com:9130/_/proxy/modules/mod-login-3.1.1-SNAPSHOT.44
     image_repository: folioci
     docker_cmd:
       - "verify.user=true"
@@ -96,7 +102,9 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    version: 2.0.3-SNAPSHOT.86
+    docker_tag: 2.0.3-SNAPSHOT
+    mod_descriptor_url: http://folio-registry.aws.indexdata.com:9130/_/proxy/modules/mod-users-bl-2.0.3-SNAPSHOT.86
     image_repository: folioci
     okapi_docker_pull: "false"
 
