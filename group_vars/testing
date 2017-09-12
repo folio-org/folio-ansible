@@ -198,7 +198,7 @@ stripes_core_version: latest
 stripes_components_version: latest
 stripes_modules:
   - { name: "@folio/trivial", version: "latest" }
-  - { name: "@folio/users", version: "latest" }
+  - { name: "@folio/users", version: "2.10.100511" }
   - { name: "@folio/instances", version: "latest" }
   - { name: "@folio/items", version: "latest" }
   - { name: "@folio/checkout", version: "latest" }
