@@ -80,7 +80,7 @@
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
       Accept: application/json
-    body: '{ "username" : "{{ item.username }}" }'
+    body: '{ "userId" : "{{ item.id }}" }'
     status_code: 201,422
   register: create_perms
   changed_when: create_perms.status == 201

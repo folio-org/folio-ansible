@@ -7,3 +7,8 @@ auth_required: false
 admin_user: { username: diku_admin, password: admin }
 num_users: 20
 load_addresstypes: false
+mod_users_permissions:
+  - username: diku_admin
+    perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
+    permissions:
+      - users.all

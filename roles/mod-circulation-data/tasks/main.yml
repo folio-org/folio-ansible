@@ -44,7 +44,7 @@
 
 - name: Grant additional permissions to {{ admin_user.username }}
   uri:
-    url: "{{ okapi_url }}/perms/users/{{ admin_user.username }}/permissions"
+    url: "{{ okapi_url }}/perms/users/{{ admin_user.perms_user_id }}/permissions"
     method: POST
     body_format: json
     headers:

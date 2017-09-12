@@ -6,5 +6,6 @@ mod_users_bl_prefix: mod-users-bl
 admin_user: { username: diku_admin, password: admin }
 mod_users_bl_permissions:
   - username: diku_admin
+    perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
     permissions:
       - users-bl.all

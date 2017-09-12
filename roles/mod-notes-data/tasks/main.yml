@@ -39,7 +39,7 @@
 
 - name: Assign mod-notes permissions to other users
   uri:
-    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
     method: POST
     body_format: json
     headers:
