@@ -41,6 +41,9 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/stable
     $ vagrant up
 
+Now you can open [http://localhost:3000](http://localhost:3000).
+Admin login: diku\_admin/admin
+
 Or, if you want to try a prepackaged FOLIO backend Vagrant box, try:
 
     $ vagrant init folio/stable-backend
