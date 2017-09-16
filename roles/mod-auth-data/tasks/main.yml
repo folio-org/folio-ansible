@@ -3,7 +3,7 @@
 #
 
 # wait a few seconds to make sure modules are spun up
-- wait_for: timeout=10
+- wait_for: timeout=20
 
 #########
 # Setup #
