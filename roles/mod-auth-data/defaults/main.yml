@@ -57,11 +57,18 @@ admin_permissions:
   - settings.material-types.all
   - settings.usergroups.all
   - settings.addresstypes.all
-  - ui-users.editpermsets 
+  - ui-circulation.settings.loan-policies
+  - ui-circulation.settings.loan-rules
+  - ui-items.settings.material-types
+  - ui-items.settings.loan-types
   - ui-organization.settings.key-bindings
   - ui-organization.settings.locale
   - ui-organization.settings.plugins
   - ui-organization.settings.sso
+  - ui-users.editpermsets 
+  - ui-users.settings.usergroups
+  - ui-users.settings.addresstypes
+  - ui-users.settings.permsets
 
 # Permissions not defined in module descriptors
 additional_permissions: []
