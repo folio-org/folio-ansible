@@ -110,9 +110,8 @@ this way:
 
     $ vagrant init folio/stable
     $ vagrant up
-    $ vagrant ssh -c "sudo pico /etc/folio/stripes/stripes.config.js"
-      # now replace localhost by your hostname
-    $ vagrant ssh -c "sudo systemctl restart stripes.service"
+    $ vagrant ssh -c "sudo sed -i -e 's!http://localhost:9130!http://example.com:9130!g' /etc/folio/stripes/stripes.config.js"
+    $ vagrant ssh -c "/etc/folio/stripes/build-run"
 
 ## Updating FOLIO components on Vagrant boxes
 
@@ -153,18 +152,11 @@ To update Stripes or any Stripes components, update the Stripes
 version of the component in the `dependencies`. If you want to change
 the npm repository for FOLIO libraries, you should also update
 `/etc/folio/stripes/.npmrc`. Then rebuild the yarn platform and
-Docker container and restart it (run commands in the
-`/etc/folio/stripes` directory):
+Docker container and restart it:
 
+    $ cd /etc/folio/stripes
     $ sudo yarn upgrade
-    $ sudo yarn build -- output
-    $ docker stop stripes_stripes_1
-    $ docker rm stripes_stripes_1
-    $ docker rmi stripes
-    $ sudo docker build -t stripes:latest /etc/folio/stripes
-    $ docker run -d --name stripes_stripes_1 --network stripes-net \
-      --network-alias stripes-serv --restart=always \
-      -p=0.0.0.0:3000:80 stripes
+    $ ./build-run
 
 ## Vagrantfile targets
 
