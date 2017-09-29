@@ -13,9 +13,17 @@
 
 - name: copy Dockerfile to docker build dir
   become: yes
-  copy: 
+  copy:
     src: Dockerfile
     dest: "{{ stripes_conf_dir }}/Dockerfile"
+  notify: Rebuild container
+
+- name: copy build-run to build dir
+  become: yes
+  copy:
+    src: build-run
+    dest: "{{ stripes_conf_dir }}/build-run"
+    mode: 0755
   notify: Rebuild container
 
 - name: create docker network for stripes

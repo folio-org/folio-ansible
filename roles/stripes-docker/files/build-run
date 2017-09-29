@@ -1,0 +1,9 @@
+cd /etc/folio/stripes/
+sudo yarn build -- output
+docker stop stripes_stripes_1
+docker rm stripes_stripes_1
+docker rmi stripes
+sudo docker build -t stripes:latest /etc/folio/stripes
+docker run -d --name stripes_stripes_1 --network stripes-net \
+  --network-alias stripes-serv --restart=always \
+  -p=0.0.0.0:3000:80 stripes
