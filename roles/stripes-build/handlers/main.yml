@@ -1,7 +1,13 @@
 ---
+- name: Remove yarn.lock from platform
+  become: yes
+  file: path={{ stripes_conf_dir }}/yarn.lock state=absent
+  when: with_github == true and platform_remove_lock == true
+  listen: "Rebuild stripes"
+
 - name: Build stripes
   become: yes
-  shell: "yarn install && yarn build -- output"
+  shell: "yarn install && yarn build output"
   args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
