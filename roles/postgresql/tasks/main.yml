@@ -24,8 +24,8 @@
   become: yes
   apt: name={{ item }} state=present
   with_items:
-    - postgresql
-    - postgresql-contrib
+    - postgresql-9.6
+    - postgresql-contrib-9.6
 
 - name: Configure postgresql to listen on all interfaces
   become: yes
