@@ -1,0 +1,19 @@
+{
+  "id": "f1f7a710-84e6-4965-ab68-afec194d3cd3",
+  "requestType": "Hold",
+  "requestDate": "2017-05-18T17:06:45Z",
+  "requesterId": "{{ loan_users.json.users.4.id }}",
+  "itemId": "1b6d3338-186e-4e35-9e75-1b886b0da53e",
+  "fulfilmentPreference": "Hold Shelf",
+  "holdShelfExpirationDate": "2017-05-20",
+  "item": {
+    "title": "Bridget Jones's Baby",
+    "barcode": "453987605438"
+  },
+  "requester": {
+    "lastName": "{{ loan_users.json.users.4.personal.lastName }}",
+    "firstName": "{{ loan_users.json.users.4.personal.firstName }}",
+    "middleName": "{{ loan_users.json.users.4.personal.middleName }}",
+    "barcode": "{{ loan_users.json.users.4.barcode }}"
+  }  
+}

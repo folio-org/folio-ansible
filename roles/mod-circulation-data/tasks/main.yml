@@ -76,7 +76,7 @@
 
 - name: Get users for loans
   uri:
-    url: "{{ okapi_url }}/users?query=active%3D%22true%22%20and%20type%3D%3Dpatron%20sortby%20personal.lastName%20personal.firstName&limit=4"
+    url: "{{ okapi_url }}/users?query=active%3D%22true%22%20and%20type%3D%3Dpatron%20sortby%20personal.lastName%20personal.firstName&limit=6"
     headers:
       Accept: application/json
       X-Okapi-Tenant: diku
@@ -95,6 +95,8 @@
     - loans/girl-on-the-train-item.json
     - loans/interesting-times-item.json
     - loans/nod-item.json
+    - loans/girl-on-the-train-item-2.json
+    - loans/interesting-times-item-2.json
 
 - name: Slurp loan files
   slurp: src=/etc/.folio-circ_ansible/loans/{{ item }}
@@ -103,6 +105,8 @@
     - girl-on-the-train-item.json
     - interesting-times-item.json
     - nod-item.json
+    - girl-on-the-train-item-2.json
+    - interesting-times-item-2.json
   register: loanfiles_content
 
 # 422 (or 500?) error means the data are already there
@@ -130,6 +134,8 @@
   become: yes
   template: src={{ item }} dest=/etc/.folio-circ_ansible/{{ item }}
   with_items:
+    - requests/bridget-jones-baby.json
+    - requests/girl-on-the-train.json
     - requests/interesting-times.json
     - requests/nod.json
   when: load_requests == true
@@ -137,6 +143,8 @@
 - name: Slurp request files
   slurp: src=/etc/.folio-circ_ansible/requests/{{ item }}
   with_items:
+    - bridget-jones-baby.json
+    - girl-on-the-train.json
     - interesting-times.json
     - nod.json
   register: requestfiles_content
