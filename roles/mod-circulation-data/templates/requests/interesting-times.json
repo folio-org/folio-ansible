@@ -13,7 +13,7 @@
   "requester": {
     "lastName": "{{ loan_users.json.users.0.personal.lastName }}",
     "firstName": "{{ loan_users.json.users.0.personal.firstName }}",
-    "middleName": "{{ loan_users.json.users.0.personal.middleName }}",
+    "middleName": "{{ loan_users.json.users.0.personal.middleName | default('') }}",
     "barcode": "{{ loan_users.json.users.0.barcode }}"
   }  
 }
