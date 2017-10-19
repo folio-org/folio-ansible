@@ -77,7 +77,7 @@ folio_modules:
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
-    
+
   - index: 4
     name: mod-users
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
@@ -153,7 +153,7 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 11
-    name: mod-notes
+    name: mod-notify
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     docker_env:
@@ -169,7 +169,7 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 12
-    name: mod-notify
+    name: mod-notes
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
     image_repository: folioci
     docker_env:
