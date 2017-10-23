@@ -18,7 +18,6 @@
     - mod-login-saml-data
     - mod-circulation-data
     - mod-notes-data
-    - mod-notify-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
