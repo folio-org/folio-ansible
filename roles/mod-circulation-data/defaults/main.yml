@@ -11,3 +11,4 @@ load_requests: false
 circulation_admin_permissions:
   - circulation-storage.all
   - circulation.all
+auth_by_username: false

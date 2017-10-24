@@ -92,3 +92,4 @@ mod_auth_users:
     perms_user_id: f0977134-cd1a-4e0d-978e-9cad29e9a98a
     password: diku
 
+auth_by_username: false

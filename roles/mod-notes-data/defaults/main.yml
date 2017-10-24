@@ -10,3 +10,4 @@ mod_notes_permissions:
     perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
     permissions:
       - notes.all
+auth_by_username: false

@@ -45,7 +45,25 @@
   register: mod_notify_login
   when: mod_notify_deploy.status == 200 and auth_required
 
-- name: Assign mod-notify permissions to other users
+- name: Assign mod-notify permissions to other users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_notify_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_notify_perms
+  changed_when: mod_notify_perms.status == 200
+  with_subelements:
+    - "{{ mod_notify_permissions }}"
+    - permissions
+  when: mod_notify_deploy.status == 200 and auth_required and auth_by_username
+
+- name: Assign mod-notify permissions to other users (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
     method: POST
@@ -61,4 +79,4 @@
   with_subelements:
     - "{{ mod_notify_permissions }}"
     - permissions
-  when: mod_notify_deploy.status == 200 and auth_required
+  when: mod_notify_deploy.status == 200 and auth_required and not auth_by_username

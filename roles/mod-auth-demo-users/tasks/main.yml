@@ -71,7 +71,23 @@
   changed_when: create_creds.status == 201
   with_items: "{{ users }}"
 
-- name: Create perms users 
+- name: Create perms users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}" }'
+    status_code: 201,422
+  register: create_perms
+  changed_when: create_perms.status == 201
+  with_items: "{{ users }}"
+  when: auth_by_username
+
+- name: Create perms users (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users"
     method: POST
@@ -85,3 +101,4 @@
   register: create_perms
   changed_when: create_perms.status == 201
   with_items: "{{ users }}"
+  when: not auth_by_username

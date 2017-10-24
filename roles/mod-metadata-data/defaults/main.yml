@@ -9,3 +9,4 @@ admin_user: { username: diku_admin, password: admin, perms_user_id: 2408ae64-56a
 metadata_admin_permissions:
   - inventory-storage.all
   - inventory.all
+auth_by_username: false

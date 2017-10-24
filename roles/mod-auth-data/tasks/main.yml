@@ -45,23 +45,45 @@
     create: yes
     mode: 0600
 
-- name: Check auth_credentials for diku_admin user
+- name: Check auth_credentials for diku_admin user (auth by username)
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_login_schema }}.auth_credentials where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: diku_admin_credentials_username
+  changed_when: no
+  when: auth_by_username
+
+- name: Check auth_credentials for diku_admin user (auth by id)
   shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_login_schema }}.auth_credentials where jsonb @> '{\"userId\":\"{{ admin_user.id }}\"}'" {{ module_database }}
-  register: diku_admin_credentials
+  register: diku_admin_credentials_id
   changed_when: no
+  when: not auth_by_username
 
-- name: Insert diku_admin user into auth_credentials
+- name: Insert diku_admin user into auth_credentials (auth by username)
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
+  when: auth_by_username and (diku_admin_credentials_username.stdout | int == 0)
+ 
+- name: Insert diku_admin user into auth_credentials (auth by id)
   shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (jsonb) values ('{\"userId\":\"{{ admin_user.id }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
-  when: diku_admin_credentials.stdout | int == 0
+  when: not auth_by_username and (diku_admin_credentials_id.stdout | int == 0)
 
-- name: Check permissions_users for diku_admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_permissions_schema }}.permissions_users where jsonb @> '{\"userId\":\"{{ admin_user.id }}\"}'" {{ module_database }}
-  register: diku_admin_permissions
+- name: Check permissions_users for diku_admin user (auth by username)
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_permissions_schema }}.permissions_users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: diku_admin_permissions_username
   changed_when: no
+  when: auth_by_username
 
-- name: Insert diku_admin user into permissions_users
+- name: Check permissions_users for diku_admin user (auth by id)
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_permissions_schema }}.permissions_users where jsonb @> '{\"userId\":\"{{ admin_user.id }}\"}'" {{ module_database }}
+  register: diku_admin_permissions_id
+  changed_when: no
+  when: not auth_by_username
+
+- name: Insert diku_admin user into permissions_users (auth by username)
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_permissions_schema }}.permissions_users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
+  when: auth_by_username and (diku_admin_permissions_username.stdout | int == 0)
+
+- name: Insert diku_admin user into permissions_users (auth by id)
   shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_permissions_schema }}.permissions_users (jsonb) values ('{\"id\":\"{{ admin_user.perms_user_id }}\",\"userId\":\"{{ admin_user.id }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
-  when: diku_admin_permissions.stdout | int == 0
+  when: not auth_by_username and (diku_admin_permissions_id.stdout | int == 0)
 
 - name: Check mod-users for diku_admin user
   shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select count(*) from {{ mod_users_schema }}.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
@@ -110,7 +132,23 @@
   changed_when: load_mod_users_perms.status == 201
   with_items: "{{ additional_permissions }}"
 
-- name: Grant additional permissions to {{ admin_user.username }}
+- name: Grant additional permissions to {{ admin_user.username }} (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ admin_user.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item }}" }'
+    status_code: 200,422
+  register: other_users_admin_perms
+  changed_when: other_users_admin_perms.status == 200
+  with_items: "{{ admin_permissions }}"
+  when: auth_by_username
+
+- name: Grant additional permissions to {{ admin_user.username }} (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users/{{ admin_user.perms_user_id }}/permissions"
     method: POST
@@ -124,6 +162,7 @@
   register: other_users_admin_perms
   changed_when: other_users_admin_perms.status == 200
   with_items: "{{ admin_permissions }}"
+  when: not auth_by_username
 
 # 422 error means the user is already there  
 - name: Load users
@@ -142,7 +181,23 @@
   with_fileglob:
     - "*.json"
 
-- name: Create mod-auth credentials for other users
+- name: Create mod-auth credentials for other users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}", "password" : "{{ item.password }}" }'
+    status_code: 201,422
+  register: create_creds
+  changed_when: create_creds.status == 201
+  with_items: "{{ mod_auth_users }}"
+  when: auth_by_username
+
+- name: Create mod-auth credentials for other users (auth by id)
   uri:
     url: "{{ okapi_url }}/authn/credentials"
     method: POST
@@ -156,8 +211,25 @@
   register: create_creds
   changed_when: create_creds.status == 201
   with_items: "{{ mod_auth_users }}"
+  when: not auth_by_username
 
-- name: Create other perms users 
+- name: Create other perms users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "username" : "{{ item.username }}" }'
+    status_code: 201,422
+  register: create_perms
+  changed_when: create_perms.status == 201
+  with_items: "{{ mod_auth_users }}"
+  when: auth_by_username
+
+- name: Create other perms users (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users"
     method: POST
@@ -171,8 +243,28 @@
   register: create_perms
   changed_when: create_perms.status == 201
   with_items: "{{ mod_auth_users }}"
+  when: not auth_by_username
 
-- name: Grant additional permissions to other users
+- name: Grant additional permissions to other users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_users_admin_perms
+  changed_when: mod_users_admin_perms.status == 200
+  with_subelements:
+    - "{{ mod_auth_users }}"
+    - permissions
+    - skip_missing: true
+  when: auth_by_username
+
+- name: Grant additional permissions to other users (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
     method: POST
@@ -189,3 +281,4 @@
     - "{{ mod_auth_users }}"
     - permissions
     - skip_missing: true
+  when: not auth_by_username

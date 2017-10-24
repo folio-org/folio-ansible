@@ -9,4 +9,5 @@ mod_login_saml_permissions:
   - username: diku_admin
     perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
     permissions: []
+auth_by_username: false
 

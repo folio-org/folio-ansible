@@ -37,7 +37,25 @@
   register: mod_configuration_login
   when: auth_required
 
-- name: Assign mod-configuration permissions to other users
+- name: Assign mod-configuration permissions to other users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_configuration_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_configuration_perms
+  changed_when: mod_configuration_perms.status == 200
+  with_subelements:
+    - "{{ mod_configuration_permissions }}"
+    - permissions
+  when: auth_required and auth_by_username
+
+- name: Assign mod-configuration permissions to other users (auth by id)
   uri:
     url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
     method: POST
@@ -53,4 +71,4 @@
   with_subelements:
     - "{{ mod_configuration_permissions }}"
     - permissions
-  when: auth_required
+  when: auth_required and not auth_by_username
