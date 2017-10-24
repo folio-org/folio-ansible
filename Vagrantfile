@@ -44,10 +44,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_stable", autostart: false do |build_stable|
-    build_stable.vm.box = "debian/jessie64"
+    build_stable.vm.box = "debian/contrib-jessie64"
     build_stable.vm.network "forwarded_port", guest: 9130, host: 9130
     build_stable.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_stable.vm.synced_folder ".", "/vagrant", disabled: true
     build_stable.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -61,9 +60,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_stable_backend", autostart: false do |build_stable_backend|
-    build_stable_backend.vm.box = "debian/jessie64"
+    build_stable_backend.vm.box = "debian/contrib-jessie64"
     build_stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_stable_backend.vm.synced_folder ".", "/vagrant", disabled: true
     build_stable_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -77,10 +75,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing", autostart: false do |build_testing|
-    build_testing.vm.box = "debian/jessie64"
+    build_testing.vm.box = "debian/contrib-jessie64"
     build_testing.vm.network "forwarded_port", guest: 9130, host: 9130
     build_testing.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_testing.vm.synced_folder ".", "/vagrant", disabled: true
     build_testing.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -94,9 +91,8 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
-    build_testing_backend.vm.box = "debian/jessie64"
+    build_testing_backend.vm.box = "debian/contrib-jessie64"
     build_testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_testing_backend.vm.synced_folder ".", "/vagrant", disabled: true
     build_testing_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -120,7 +116,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_minimal", autostart: false do |build_minimal|
-    build_minimal.vm.box = "debian/jessie64"
+    build_minimal.vm.box = "debian/contrib-jessie64"
     build_minimal.vm.network "forwarded_port", guest: 9130, host: 9130
     build_minimal.vm.synced_folder ".", "/vagrant", disabled: true
     build_minimal.vm.provision "ansible" do |ansible|
