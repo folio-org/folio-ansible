@@ -16,3 +16,14 @@
   when: diku_status.status == 404
   register: diku_tenant
   changed_when: "diku_tenant.status == 201"
+
+- name: Enable Okapi internal module for tenant
+  uri:
+    url: "{{ okapi_url }}_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id": "okapi" }'
+    status_code: 201
+  register: diku_enable_okapi
+  changed_when: "diku_enable_okapi.status == 201"
+  when: enable_okapi
