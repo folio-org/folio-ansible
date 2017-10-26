@@ -105,24 +105,34 @@
 
 - name: Copy loan records with userIds
   become: yes
-  template: src={{ item }} dest=/etc/.folio-circ_ansible/{{ item }}
+  template: src=loans/{{ item }} dest=/etc/.folio-circ_ansible/loans/{{ item }}
   with_items:
-    - loans/bridget-jones-baby-item.json
-    - loans/girl-on-the-train-item.json
-    - loans/interesting-times-item.json
-    - loans/nod-item.json
-    - loans/girl-on-the-train-item-2.json
-    - loans/interesting-times-item-2.json
+    - bridget-jones-baby-item.json
+    - girl-on-the-train-item.json
+    - girl-on-the-train-item-2.json
+    - girl-on-the-train-item-3.json
+    - interesting-times-item.json
+    - interesting-times-item-2.json 
+    - interesting-times-item-3.json 
+    - nod-item.json
+    - nod-item-2.json
+    - temeraire-item.json
+    - temeraire2-item.json
 
 - name: Slurp loan files
   slurp: src=/etc/.folio-circ_ansible/loans/{{ item }}
   with_items:
     - bridget-jones-baby-item.json
     - girl-on-the-train-item.json
-    - interesting-times-item.json
-    - nod-item.json
     - girl-on-the-train-item-2.json
-    - interesting-times-item-2.json
+    - girl-on-the-train-item-3.json
+    - interesting-times-item.json
+    - interesting-times-item-2.json 
+    - interesting-times-item-3.json 
+    - nod-item.json
+    - nod-item-2.json
+    - temeraire-item.json
+    - temeraire2-item.json
   register: loanfiles_content
 
 # 422 (or 500?) error means the data are already there
