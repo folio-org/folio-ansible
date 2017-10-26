@@ -7,8 +7,10 @@
   "permanentLoanTypeId": "2b94c631-fca9-a892-c730-03ee529ffe27",
   "status": {
     "name": "Available"
-  },
+  },{% if shelf_locations %}
+  "permanentLocationId": "fcd64ce1-6995-48f0-840e-89ffa2288371",
+  "temporaryLocationId": "53cf956f-c1df-410b-8bea-27f712cca7c0"{% else %}
   "location": {
     "name": "Annex Library"
-  }
+  }{% endif %}
 }

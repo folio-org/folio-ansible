@@ -20,6 +20,7 @@ mod_metadata_prefixes:
 mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
+shelf_locations: true
 
 folio_modules:
   - index: 0

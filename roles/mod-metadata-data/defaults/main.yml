@@ -10,3 +10,4 @@ metadata_admin_permissions:
   - inventory-storage.all
   - inventory.all
 auth_by_username: false
+shelf_locations: false

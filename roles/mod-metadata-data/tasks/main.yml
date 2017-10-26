@@ -128,6 +128,24 @@
   with_fileglob:
     - loantypes/*.json
 
+# fails with 422 error if already loaded
+- name: Load inventory storage shelf locations
+  uri:
+    url: "{{ okapi_url }}/shelf-locations"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_shelfloc
+  changed_when: load_shelfloc.status == 201
+  with_fileglob:
+    - shelf-locations/*.json
+  when: shelf_locations
+
 - name: Load inventory storage instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
@@ -145,7 +163,33 @@
   with_fileglob:
     - instances/*.json
   
-- name: Load inventory storage items
+- name: Create item records directory
+  become: yes
+  file: dest=/etc/.folio-items_ansible state=directory
+
+- name: Copy item records with shelf locations
+  become: yes
+  template: src=items/{{ item }} dest=/etc/.folio-items_ansible/{{ item }}
+  with_items:
+    - bridget-jones-baby-item.json
+    - girl-on-the-train-item.json
+    - interesting-times-item.json
+    - nod-item.json
+    - temeraire-item.json
+    - temeraire2-item.json
+
+- name: Slurp item files
+  slurp: src=/etc/.folio-items_ansible/{{ item }}
+  with_items:
+    - bridget-jones-baby-item.json
+    - girl-on-the-train-item.json
+    - interesting-times-item.json
+    - nod-item.json
+    - temeraire-item.json
+    - temeraire2-item.json
+  register: itemfiles_content
+
+- name: Load items
   uri:
     url: "{{ okapi_url }}/item-storage/items"
     method: POST
@@ -154,13 +198,12 @@
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
+    body: "{{ item.content|b64decode }}"
     status_code: 201
   register: load_item
   changed_when: load_item.status == 201
+  with_items: "{{ itemfiles_content.results }}"
   when: inventory_items.json.totalRecords == 0
-  with_fileglob:
-    - items/*.json
 
 - name: Copy sample MODS data
   become: yes
