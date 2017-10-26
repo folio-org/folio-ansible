@@ -17,13 +17,14 @@
   register: diku_tenant
   changed_when: "diku_tenant.status == 201"
 
+# Returns 400 if already enabled
 - name: Enable Okapi internal module for tenant
   uri:
     url: "{{ okapi_url }}_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
     body: '{ "id": "okapi" }'
-    status_code: 201
+    status_code: 201,400
   register: diku_enable_okapi
   changed_when: "diku_enable_okapi.status == 201"
   when: enable_okapi
