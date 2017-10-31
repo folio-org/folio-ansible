@@ -26,13 +26,13 @@ enable_okapi: true
 folio_modules:
   - index: 0
     name: mod-authtoken
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -48,7 +48,7 @@ folio_modules:
 
   - index: 2
     name: mod-login
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_cmd:
       - "verify.user=true"
@@ -66,7 +66,7 @@ folio_modules:
 
   - index: 3
     name: mod-configuration
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -82,7 +82,7 @@ folio_modules:
 
   - index: 4
     name: mod-users
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -98,19 +98,19 @@ folio_modules:
 
   - index: 5
     name: mod-users-bl
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 6
     name: mod-login-saml
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 7
     name: mod-inventory-storage
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -126,7 +126,7 @@ folio_modules:
 
   - index: 8
     name: mod-inventory
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -134,7 +134,7 @@ folio_modules:
 
   - index: 9
     name: mod-circulation-storage
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -150,13 +150,13 @@ folio_modules:
 
   - index: 10
     name: mod-circulation
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
 
   - index: 11
     name: mod-notify
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
@@ -172,7 +172,7 @@ folio_modules:
 
   - index: 12
     name: mod-notes
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com:9130
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
