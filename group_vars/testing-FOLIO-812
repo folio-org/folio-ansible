@@ -1,0 +1,48 @@
+---
+# Variables for building testing/testing-backend
+okapi_pull: true
+auth_required: true
+loan_action: true
+total_records_key: totalRecords
+load_addresstypes: true
+load_requests: true
+mod_auth_prefixes:
+  - mod-permissions
+  - mod-authtoken
+  - mod-login
+  - mod-users
+mod_login_schema: diku_mod_login
+mod_permissions_schema: diku_mod_permissions
+mod_authtoken_prefix: mod-authtoken
+mod_configuration_prefix: mod-configuration
+mod_metadata_prefixes:
+  - mod-inventory-storage
+  - mod-inventory
+mod_circulation_prefixes:
+  - mod-circulation-storage
+  - mod-circulation
+
+# Variables for building UI
+with_github: false
+stripes_core_version: latest
+stripes_components_version: latest
+stripes_modules:
+  - { name: "@folio/trivial", version: "latest" }
+  - { name: "@folio/users", version: "2.10.100511" }
+  - { name: "@folio/instances", version: "latest" }
+  - { name: "@folio/items", version: "latest" }
+  - { name: "@folio/checkout", version: "latest" }
+  - { name: "@folio/checkin", version: "latest" }
+  - { name: "@folio/requests", version: "latest" }
+  - { name: "@folio/organization", version: "latest" }
+  - { name: "@folio/developer", version: "latest" }
+  - { name: "@folio/circulation", version: "latest" }
+  - { name: "@folio/plugin-markdown-editor", version: "latest" }
+  - { name: "@folio/plugin-markdown-better", version: "latest" }
+  - { name: "@folio/plugin-find-user", version: "latest" }
+  - { name: "@folio/util-notes", version: "latest" }
+okapi_register_modules: true
+folio_npm_repo: npm-folioci
+
+# Metadata for CI build
+version: 5.0.0

@@ -1,7 +1,7 @@
 ---
-# Role to deploy modules into running Okapi
-# Modules must be registered (see okapi-register-modules role)
-#
+# Role to set up service for Okapi deployment
+# Modules can either be listed in folio_modules variable (see okapi-register-modules role)
+# Or this can set up the service with no modules (see okapi-pull role)
 
 # wait a few seconds to make sure okapi is fully running
 - wait_for: timeout=10
@@ -15,6 +15,9 @@
   docker_image: name={{ item.image_repository|default(docker_repo) }}/{{ item.name }}:{{ 'latest' if item.docker_tag is not defined or item.docker_tag == 'latest' else item.docker_tag }}
   when: item.okapi_docker_pull|default("true") == "false"
   with_items: "{{ folio_modules }}"
+
+- set_fact: folio_modules_withid=[]
+  when: folio_modules_withid is not defined
 
 - name: Copy deployment descriptors
   become: yes
