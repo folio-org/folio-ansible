@@ -9758,4 +9758,133 @@
       </mods:holdingExternal>
     </mods:location>
   </mods:mods>
+  <mods:mods version="3.6">
+    <mods:titleInfo>
+      <mods:title>康熙字典  [Character Dictionary of the Era Kangxi]</mods:title>
+    </mods:titleInfo>
+    <mods:typeOfResource>text</mods:typeOfResource>
+    <mods:originInfo>
+      <mods:place>
+        <mods:placeTerm type="text">s.l</mods:placeTerm>
+      </mods:place>
+      <mods:publisher>[s.n.]</mods:publisher>
+      <mods:dateIssued>1710-1716</mods:dateIssued>
+      <mods:dateIssued encoding="marc" point="start">1710</mods:dateIssued>
+      <mods:dateIssued encoding="marc" point="end">1716</mods:dateIssued>
+      <mods:issuance>single unit</mods:issuance>
+    </mods:originInfo>
+    <mods:originInfo eventType="publication">
+      <mods:place>
+        <mods:placeTerm type="text">s.l.</mods:placeTerm>
+      </mods:place>
+      <mods:publisher>[s.n.]</mods:publisher>
+      <mods:dateIssued>1710-1716</mods:dateIssued>
+    </mods:originInfo>
+    <mods:language>
+      <mods:languageTerm authority="iso639-2b" type="code">chi</mods:languageTerm>
+    </mods:language>
+    <mods:physicalDescription>
+      <mods:form authority="marcform">print</mods:form>
+      <mods:extent>39 Lagen in 6 Bd.</mods:extent>
+    </mods:physicalDescription>
+    <mods:identifier>mpiwgkat131474</mods:identifier>
+    <mods:recordInfo>
+      <mods:recordContentSource authority="marcorg"/>
+      <mods:recordCreationDate encoding="marc">160905</mods:recordCreationDate>
+      <mods:recordChangeDate encoding="iso8601">20160908195509.0</mods:recordChangeDate>
+      <mods:recordIdentifier source="DE-601">868935301</mods:recordIdentifier>
+      <mods:recordOrigin>Converted from MARCXML to MODS version 3.6 using MARC21slim2MODS3-6.xsl (Revision 1.117gbv 2017/02/14)</mods:recordOrigin>
+      <mods:languageOfCataloging>
+        <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+      </mods:languageOfCataloging>
+    </mods:recordInfo>
+    <mods:location>
+      <mods:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="Test Library"></h:org>
+          <h:objId>555</h:objId>
+        </h:localHolds>
+      </mods:holdingExternal>
+    </mods:location>
+  </mods:mods>
+  <mods:mods version="3.6">
+    <mods:identifier type="isbn">9783782791120</mods:identifier>
+    <mods:identifier type="isbn">3782791126</mods:identifier>
+    <mods:originInfo>
+      <mods:place>
+        <mods:placeTerm type="text">Gilching</mods:placeTerm>
+      </mods:place>
+      <mods:publisher>Korsch</mods:publisher>
+      <mods:dateIssued>2013</mods:dateIssued>
+    </mods:originInfo>
+    <mods:name type="personal">
+      <mods:namePart type="family">Holzach</mods:namePart>
+      <mods:namePart type="given">Alexander</mods:namePart>
+      <mods:role>
+        <mods:roleTerm type="text">creator</mods:roleTerm>
+      </mods:role>
+    </mods:name>
+    <mods:titleInfo>
+      <mods:title>Böse Mädchen kommen überall hin</mods:title>
+      <mods:subTitle>👍 Satan gefällt das</mods:subTitle>
+    </mods:titleInfo>
+    <mods:location>
+      <mods:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="Test Library"></h:org>
+          <h:objId>666</h:objId>
+        </h:localHolds>
+      </mods:holdingExternal>
+    </mods:location>
+  </mods:mods>
+  <mods:mods version="3.6">
+    <mods:recordInfo>
+      <mods:recordContentSource authority="marcorg"/>
+      <mods:recordCreationDate encoding="marc">970207</mods:recordCreationDate>
+      <mods:recordChangeDate encoding="iso8601">20170518144009.0</mods:recordChangeDate>
+      <mods:recordIdentifier source="DE-601">223496588</mods:recordIdentifier>
+      <mods:recordOrigin>Converted from MARCXML to MODS version 3.6 using MARC21slim2MODS3-6.xsl (Revision 1.117gbv 2017/02/14)</mods:recordOrigin>
+      <mods:languageOfCataloging>
+        <mods:languageTerm authority="iso639-2b" type="code">ger</mods:languageTerm>
+      </mods:languageOfCataloging>
+    </mods:recordInfo>
+    <mods:identifier>pot30552952</mods:identifier>
+    <mods:identifier>BBAWre_00_h019991762</mods:identifier>
+    <mods:identifier type="oclc">833112159</mods:identifier>
+    <mods:originInfo>
+      <mods:place>
+        <mods:placeTerm type="text">Leipzig</mods:placeTerm>
+      </mods:place>
+      <mods:publisher>Bibliogr. Inst.</mods:publisher>
+      <mods:dateIssued>1957</mods:dateIssued>
+      <mods:edition>15. Aufl.</mods:edition>
+      <mods:issuance>single unit</mods:issuance>
+    </mods:originInfo>
+    <mods:originInfo eventType="publication">
+      <mods:place>
+        <mods:placeTerm type="text">Leipzig</mods:placeTerm>
+      </mods:place>
+      <mods:publisher>Bibliogr. Inst.</mods:publisher>
+      <mods:dateIssued>1957</mods:dateIssued>
+    </mods:originInfo>
+    <mods:name type="personal">
+      <mods:namePart type="family">Klien</mods:namePart>
+      <mods:namePart type="given">Horst</mods:namePart>
+      <mods:role>
+        <mods:roleTerm type="text">Hrsg.</mods:roleTerm>
+      </mods:role>
+    </mods:name>
+    <mods:titleInfo>
+      <mods:nonSort xml:space="preserve">DER </mods:nonSort>
+      <mods:title>GROẞE DUDEN</mods:title>
+    </mods:titleInfo>
+    <mods:location>
+      <mods:holdingExternal>
+        <h:localHolds xmlns:h="http://copac.ac.uk/schemas/holdings/v1">
+          <h:org displayName="Test Library"></h:org>
+          <h:objId>777</h:objId>
+        </h:localHolds>
+      </mods:holdingExternal>
+    </mods:location>
+  </mods:mods>
 </mods_records>
