@@ -1,0 +1,12 @@
+---
+# Role to configure okapi-deploy service based on dependency resolution from stripes platform
+# variable mod_descrs comes from stripes-build dependency
+
+# Build a list of modules from the mod_descrs variable
+# Send the list to the Okapi install endpoint (simulate=true) to get a list of dependencies
+# Pull the Docker images
+# Create deployment descriptors
+# Configure okapi-deploy service
+# Restart okapi-deploy
+# Enable modules for tenant using Okapi install
+

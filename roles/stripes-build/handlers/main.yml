@@ -64,7 +64,7 @@
     status_code: 200, 404
   with_items: "{{ mod_descrs }}"
   register: tenant_modules
-  listen: "Register modules"
+  listen: "Enable modules"
 
 - name: Enable modules for tenant
   uri:
@@ -77,4 +77,4 @@
   register: tenant_assoc
   changed_when: tenant_assoc.status == 201
   with_indexed_items: "{{ mod_descrs }}"
-  listen: "Register modules"
+  listen: "Enable modules"

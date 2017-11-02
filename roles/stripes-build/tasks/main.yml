@@ -52,6 +52,15 @@
   when: with_github == true and stripes_strict_md == false
   notify: Rebuild stripes
 
+- name: Force build of mod descriptors from github with strict flag
+  become: yes
+  replace:
+    name: "{{ stripes_conf_dir }}/package.json"
+    regexp: '(^\s*\"postinstall\"\s*:.*build-module-descriptors.js)(?!\s+--strict)(.*$)'
+    replace: '\1 --strict \2'
+  when: with_github and stripes_strict_md
+  notify: Rebuild stripes
+
 - name: set tenant in stripes config
   become: yes
   replace: 
@@ -90,5 +99,10 @@
   command: /bin/true
   when: okapi_register_modules == true
   notify: "Register modules"
+
+- name: Ensure modules are enabled for tenants
+  command: /bin/true
+  when: okapi_enable_modules
+  notify: "Enable modules"
 
 - meta: flush_handlers 

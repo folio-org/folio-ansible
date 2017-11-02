@@ -138,7 +138,7 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_folio_812"],
         "testing-FOLIO-812" => ["build_folio_812"],
-        "folio-backend" => ["build_folio_812"]
+        "folio-backend-folio-812" => ["build_folio_812"]
         # "stripes" => ["build_folio_812"],
         # "folio-sample-data" => ["build_folio_812"],
       }

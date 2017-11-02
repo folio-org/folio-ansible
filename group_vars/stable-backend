@@ -196,6 +196,7 @@ folio_modules:
 
 # UI build will use stripes-demo-platform per defaults in stripes-docker role
 okapi_register_modules: true
+okapi_enable_modules: true
 stripes_strict_md: true
 
 # retrofit for older mod-login and mod-permissions

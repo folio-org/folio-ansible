@@ -23,26 +23,9 @@ mod_circulation_prefixes:
   - mod-circulation
 
 # Variables for building UI
-with_github: false
-stripes_core_version: latest
-stripes_components_version: latest
-stripes_modules:
-  - { name: "@folio/trivial", version: "latest" }
-  - { name: "@folio/users", version: "2.10.100511" }
-  - { name: "@folio/instances", version: "latest" }
-  - { name: "@folio/items", version: "latest" }
-  - { name: "@folio/checkout", version: "latest" }
-  - { name: "@folio/checkin", version: "latest" }
-  - { name: "@folio/requests", version: "latest" }
-  - { name: "@folio/organization", version: "latest" }
-  - { name: "@folio/developer", version: "latest" }
-  - { name: "@folio/circulation", version: "latest" }
-  - { name: "@folio/plugin-markdown-editor", version: "latest" }
-  - { name: "@folio/plugin-markdown-better", version: "latest" }
-  - { name: "@folio/plugin-find-user", version: "latest" }
-  - { name: "@folio/util-notes", version: "latest" }
-okapi_register_modules: true
+stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
+platform_remove_lock: true
 
 # Metadata for CI build
-version: 5.0.0
+version: 1.0.0

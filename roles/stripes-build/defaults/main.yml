@@ -30,6 +30,8 @@ stripes_tenant: diku
 
 # Register module descriptors with Okapi, default false
 okapi_register_modules: false
+# Enable modules for tenant, default false
+okapi_enable_modules: false
 # Generate strict module descriptors (with requirements), default false
 stripes_strict_md: false
 
