@@ -5,8 +5,39 @@
 # Build a list of modules from the mod_descrs variable
 # Send the list to the Okapi install endpoint (simulate=true) to get a list of dependencies
 # Pull the Docker images
+# Set up the database/environment variables
 # Create deployment descriptors
 # Configure okapi-deploy service
 # Restart okapi-deploy
 # Enable modules for tenant using Okapi install
 
+- name: Initialize module list json
+  set_fact: module_list="["
+
+- name: Build module list from Stripes mod descriptors
+  set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
+  with_items: "{{ mod_descrs }}"
+
+- name: Finish module list json
+  set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
+
+- name: Get dependencies for modules from Okapi
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
+    method: POST
+    body_format: json
+    body: "{{ module_list }}"
+  register: module_deps
+
+- name: Init modules deploy list
+  set_fact: deploy_mods=[]
+
+- name: Build module deploy list
+  set_fact: deploy_mods="{{ deploy_mods }} + ['{{ item.id }}']"
+  when: item.id|regex_search('^mod-')
+  with_items: "{{ module_deps.json }}"
+
+- name: Pull Docker images
+  become: yes
+  docker_image: name={{ docker_repo }}/{{ item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1:\\2')}}
+  with_items: "{{ deploy_mods }}"
