@@ -53,9 +53,9 @@
   when: item.storage is defined and item.storage == "postgres"
   with_items: "{{ folio_modules }}"
   
-- name: Copy okapi-deploy.conf
+- name: Copy okapi-deploy.conf (do not overwrite if already in place)
   become: yes
-  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf
+  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf force=no
   notify:
     - Restart okapi-deploy
 
