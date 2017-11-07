@@ -8,11 +8,12 @@
     - okapi
     - okapi-deploy-modules
 
-- hosts: folio-backend-folio-812
+- hosts: folio-topdown
   roles:
     - common
     - postgresql
     - okapi
+    - stripes-docker
     - okapi-deploy-config
 
 # Provision a host with the sample tenant and data

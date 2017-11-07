@@ -105,6 +105,21 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_testing_topdown", autostart: false do |build_testing_topdown|
+    build_testing_topdown.vm.box = "debian/contrib-jessie64"
+    build_testing_topdown.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_topdown.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_testing_topdown.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_testing_topdown"],
+        "testing-topdown" => ["build_testing_topdown"],
+        "folio-topdown" => ["build_testing_topdown"],
+        "folio-sample-data" => ["build_testing_topdown"]
+      }
+    end
+  end
+
   config.vm.define "build_curriculum", autostart: false do |build_curriculum|
     build_curriculum.vm.box = "debian/contrib-jessie64"
     build_curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -125,22 +140,6 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_minimal"],
         "minimal" => ["build_minimal"],
         "folio-backend" => ["build_minimal"]
-      }
-    end
-  end
-
-  config.vm.define "build_folio_812", autostart: false do |build_folio_812|
-    build_folio_812.vm.box = "debian/contrib-jessie64"
-    build_folio_812.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_folio_812.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_folio_812.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_folio_812"],
-        "testing-FOLIO-812" => ["build_folio_812"],
-        "folio-backend-folio-812" => ["build_folio_812"],
-        "folio-sample-data" => ["build_folio_812"],
-        "stripes" => ["build_folio_812"]
       }
     end
   end

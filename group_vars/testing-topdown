@@ -1,5 +1,5 @@
 ---
-# Variables for building testing/testing-backend
+# Variables for building testing-topdown
 okapi_pull: true
 top_down_install: true
 auth_required: true
@@ -28,7 +28,6 @@ enable_okapi: true
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
-platform_remove_lock: true
 
 # Metadata for CI build
 version: 1.0.0
