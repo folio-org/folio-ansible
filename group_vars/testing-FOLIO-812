@@ -1,6 +1,7 @@
 ---
 # Variables for building testing/testing-backend
 okapi_pull: true
+top_down_install: true
 auth_required: true
 loan_action: true
 total_records_key: totalRecords
@@ -21,6 +22,8 @@ mod_metadata_prefixes:
 mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
+shelf_locations: true
+enable_okapi: true
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform

@@ -11,3 +11,4 @@ mod_notify_permissions:
     permissions:
       - notify.all
 auth_by_username: false
+top_down_install: false

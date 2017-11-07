@@ -22,7 +22,7 @@
     status_code: 201
   register: mod_notes_enable
   changed_when: mod_notes_enable.status == 201
-  when: tenant_mod_notes.status == 404
+  when: tenant_mod_notes.status == 404 and not top_down_install
 
 - name: Login as {{ admin_user.username }}
   uri:

@@ -115,4 +115,8 @@
     - Install modules
   when: enable_mods
 
+- name: Set variable to signal that modules should already be enabled
+  set_fact:
+    top_down_install: true
+
 - meta: flush_handlers

@@ -9,6 +9,7 @@
 - set_fact:
     mod_circulation_modules: "{{ mod_circulation_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
   with_items: "{{ mod_circulation_prefixes }}"
+  when: not top_down_install
 
 - name: Check tenant registration
   uri:
@@ -16,6 +17,7 @@
     status_code: 200, 404
   register: tenant_mod_circulation
   with_items: "{{ mod_circulation_modules }}"
+  when: not top_down_install
 
 - name: Enable mod-circulation modules for tenant
   uri:

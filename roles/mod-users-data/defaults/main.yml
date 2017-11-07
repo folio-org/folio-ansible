@@ -13,3 +13,4 @@ mod_users_permissions:
     permissions:
       - users.all
 auth_by_username: false
+top_down_install: false

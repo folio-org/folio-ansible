@@ -11,3 +11,4 @@ metadata_admin_permissions:
   - inventory.all
 auth_by_username: false
 shelf_locations: false
+top_down_install: false

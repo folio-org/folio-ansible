@@ -23,7 +23,7 @@
     status_code: 201
   register: mod_users_bl_enable
   changed_when: mod_users_bl_enable.status == 201
-  when: tenant_mod_users_bl.status == 404
+  when: tenant_mod_users_bl.status == 404 and not top_down_install
 
 - name: Assign mod-users-bl permissions to other users (auth by username)
   uri:

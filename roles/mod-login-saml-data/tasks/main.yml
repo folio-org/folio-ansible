@@ -17,6 +17,13 @@
     url: "{{ okapi_url }}/_/discovery/modules/{{ mod_login_saml_module.0.id }}"
     status_code: 200, 404
   register: mod_login_saml_deploy
+  when: not top_down_install
+
+- name: Set mod-login-saml deployment status for top down install
+  set_fact:
+    mod_login_saml_deploy:
+      status: 200
+  when: mod_login_saml_deploy.skipped
 
 - name: Check tenant mod-login-saml registration
   uri:
@@ -34,7 +41,7 @@
     status_code: 201
   register: mod_login_saml_enable
   changed_when: mod_login_saml_enable.status == 201
-  when: mod_login_saml_deploy.status == 200 and tenant_mod_login_saml.status == 404
+  when: mod_login_saml_deploy.status == 200 and tenant_mod_login_saml.status == 404 and not top_down_install
 
 - name: Login as {{ admin_user.username }}
   uri:
