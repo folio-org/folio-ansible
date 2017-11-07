@@ -23,7 +23,7 @@
   set_fact:
     mod_login_saml_deploy:
       status: 200
-  when: mod_login_saml_deploy.skipped
+  when: mod_login_saml_deploy.skipped is defined and mod_login_saml_deploy.skipped
 
 - name: Check tenant mod-login-saml registration
   uri:

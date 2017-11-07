@@ -19,7 +19,7 @@
   set_fact:
     mod_notify_deploy:
       status: 200
-  when: mod_notify_deploy.skipped
+  when: mod_notify_deploy.skipped is defined and mod_notify_deploy.skipped
 
 - name: Check tenant mod-notify registration
   uri:

@@ -21,7 +21,7 @@
   set_fact:
     tenant_mod_authtoken:
       status: 200
-  when: tenant_mod_authtoken.skipped
+  when: tenant_mod_authtoken.skipped is defined and tenant_mod_authtoken.skipped
 
 - name: Check tenant mod-user registration
   uri:
