@@ -1,4 +1,15 @@
 ---
-- name: Restart okapi-deploy
-  become: yes
-  service: name=okapi-deploy state=restarted
+# wait a few seconds to make sure modules are deployed
+- wait_for: timeout=30
+  listen: Install modules
+
+- name: Perform module installation
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    method: POST
+    body_format: json
+    body: "{{ module_list }}"
+  register: module_install
+  changed_when: module_install.status == 200
+  listen: Install modules
+  

@@ -132,15 +132,15 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_folio_812", autostart: false do |build_folio_812|
     build_folio_812.vm.box = "debian/contrib-jessie64"
     build_folio_812.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_folio_812.vm.synced_folder ".", "/vagrant", disabled: true
+    build_folio_812.vm.network "forwarded_port", guest: 3000, host: 3000
     build_folio_812.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_folio_812"],
         "testing-FOLIO-812" => ["build_folio_812"],
         "folio-backend-folio-812" => ["build_folio_812"]
-        # "stripes" => ["build_folio_812"],
         # "folio-sample-data" => ["build_folio_812"],
+        # "stripes" => ["build_folio_812"]
       }
     end
   end

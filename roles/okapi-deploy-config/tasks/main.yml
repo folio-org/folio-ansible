@@ -2,14 +2,8 @@
 # Role to configure okapi-deploy service based on dependency resolution from stripes platform
 # variable mod_descrs comes from stripes-build dependency
 
-# Build a list of modules from the mod_descrs variable
-# Send the list to the Okapi install endpoint (simulate=true) to get a list of dependencies
-# Pull the Docker images
-# Set up the database/environment variables
-# Create deployment descriptors
-# Configure okapi-deploy service
-# Restart okapi-deploy
-# Enable modules for tenant using Okapi install
+# Note that this role is not entirely idempotent -- if dependencies change, it will break
+# the okapi-deploy service (soon to be made obsolete, see OKAPI-423)
 
 - name: Initialize module list json
   set_fact: module_list="["
@@ -41,6 +35,8 @@
   become: yes
   docker_image: name={{ docker_repo }}/{{ item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1:\\2')}}
   with_items: "{{ deploy_mods }}"
+  notify:
+    - Restart okapi-deploy
 
 - name: Create modules db
   postgresql_db:
@@ -72,6 +68,8 @@
       value: "{{ pg_admin_user }}"
     - name: db.password
       value: "{{ pg_admin_password }}"
+  register: post_env
+  changed_when: post_env.status == 201
 
 - name: Copy deployment descriptors
   become: yes
@@ -85,5 +83,36 @@
   template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf
   notify:
     - Restart okapi-deploy
+  when: deploy_mods
+
+- name: Init modules enable list
+  set_fact: enable_mods=[]
+
+- name: Build module enable list
+  set_fact: enable_mods="{{ enable_mods }} + ['{{ item.id }}']"
+  with_items: "{{ module_deps.json }}"
+
+- name: Find mod-permissions in list
+  set_fact: mod_perms_id="{{ enable_mods|join(',')|regex_search('(mod-permissions-\d+\.\d+\.\d+[a-zA-Z0-9\.-]*)') }}"
+
+- name: Bump mod-permissions to top of list
+  set_fact: enable_mods="['{{ mod_perms_id }}'] + {{ enable_mods|difference([mod_perms_id]) }}"
+  when: mod_perms_id != ""
+
+- name: Initialize install list json
+  set_fact: module_list="["
+
+- name: Build install list
+  set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
+  with_items: "{{ enable_mods }}"
+
+- name: Finish module list json
+  set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
+
+- name: Trigger install modules handler
+  command: /bin/true
+  notify:
+    - Install modules
+  when: enable_mods
 
 - meta: flush_handlers
