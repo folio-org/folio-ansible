@@ -22,6 +22,8 @@ mod_circulation_prefixes:
   - mod-circulation
 shelf_locations: true
 enable_okapi: true
+okapi_java_opts:
+  - "-Xss20M"
 
 folio_modules:
   - index: 0

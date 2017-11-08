@@ -41,3 +41,9 @@ hazelcast_aws_secret_key: 12345678
 hazelcast_ec2_tag_key: Group
 hazelcast_ec2_tag_value: Demo
 hazelcast_address: "10.*"
+
+# Set additional Java opts here, e.g.:
+# okapi_java_opts:
+#   - "-Xss20M"
+# These will be written to /etc/default/okapi
+okapi_java_opts: []
