@@ -105,17 +105,16 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.define "build_testing_topdown", autostart: false do |build_testing_topdown|
-    build_testing_topdown.vm.box = "debian/contrib-jessie64"
-    build_testing_topdown.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_testing_topdown.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_testing_topdown.vm.provision "ansible" do |ansible|
+  config.vm.define "build_snapshot", autostart: false do |build_snapshot|
+    build_snapshot.vm.box = "debian/contrib-jessie64"
+    build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
-        "vagrant" => ["build_testing_topdown"],
-        "testing-topdown" => ["build_testing_topdown"],
-        "folio-topdown" => ["build_testing_topdown"],
-        "folio-sample-data" => ["build_testing_topdown"]
+        "vagrant" => ["build_snapshot"],
+        "snapshot" => ["build_snapshot"],
+        "folio-sample-data" => ["build_snapshot"]
       }
     end
   end

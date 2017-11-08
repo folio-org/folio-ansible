@@ -8,7 +8,7 @@
     - okapi
     - okapi-deploy-modules
 
-- hosts: folio-topdown
+- hosts: snapshot
   roles:
     - common
     - postgresql
