@@ -93,3 +93,5 @@ mod_auth_users:
     password: diku
 
 auth_by_username: false
+
+top_down_install: false

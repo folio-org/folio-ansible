@@ -1,0 +1,35 @@
+---
+# Variables for building testing-topdown
+okapi_java_opts:
+  - "-Xss20M"
+okapi_pull: true
+top_down_install: true
+auth_required: true
+loan_action: true
+total_records_key: totalRecords
+load_addresstypes: true
+load_requests: true
+mod_auth_prefixes:
+  - mod-permissions
+  - mod-authtoken
+  - mod-login
+  - mod-users
+mod_login_schema: diku_mod_login
+mod_permissions_schema: diku_mod_permissions
+mod_authtoken_prefix: mod-authtoken
+mod_configuration_prefix: mod-configuration
+mod_metadata_prefixes:
+  - mod-inventory-storage
+  - mod-inventory
+mod_circulation_prefixes:
+  - mod-circulation-storage
+  - mod-circulation
+shelf_locations: true
+enable_okapi: true
+
+# Variables for building UI
+stripes_github_project: https://github.com/folio-org/folio-testing-platform
+folio_npm_repo: npm-folioci
+
+# Metadata for CI build
+version: 1.0.0

@@ -2,4 +2,5 @@
 dependencies:
   - { role: docker-engine }
   - { role: okapi-undeploy }
-  - { role: okapi-register-modules }
+  - { role: okapi-register-modules, when: not okapi_pull }
+  - { role: okapi-pull, when: okapi_pull }

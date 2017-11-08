@@ -11,3 +11,5 @@ mod_configuration_permissions:
     permissions:
       - configuration.all
 auth_by_username: false
+top_down_install: false
+

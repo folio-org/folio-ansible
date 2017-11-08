@@ -8,6 +8,14 @@
     - okapi
     - okapi-deploy-modules
 
+- hosts: snapshot
+  roles:
+    - common
+    - postgresql
+    - okapi
+    - stripes-docker
+    - okapi-deploy-config
+
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data
   roles:

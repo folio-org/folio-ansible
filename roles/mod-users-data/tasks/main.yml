@@ -15,6 +15,13 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_authtoken_module.0.id }}"
     status_code: 200, 404
   register: tenant_mod_authtoken
+  when: not top_down_install
+
+- name: Set mod_authtoken status for top down install
+  set_fact:
+    tenant_mod_authtoken:
+      status: 200
+  when: tenant_mod_authtoken.skipped is defined and tenant_mod_authtoken.skipped
 
 - name: Check tenant mod-user registration
   uri:
@@ -31,7 +38,7 @@
     status_code: 201
   register: mod_users_enable
   changed_when: mod_users_enable.status == 201
-  when: tenant_mod_users.status == 404
+  when: tenant_mod_users.status == 404 and not top_down_install
 
 - name: Login as {{ admin_user.username }}
   uri:

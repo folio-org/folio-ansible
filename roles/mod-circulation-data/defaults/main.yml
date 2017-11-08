@@ -12,3 +12,4 @@ circulation_admin_permissions:
   - circulation-storage.all
   - circulation.all
 auth_by_username: false
+top_down_install: false

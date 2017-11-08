@@ -1,0 +1,122 @@
+---
+# Role to configure okapi-deploy service based on dependency resolution from stripes platform
+# variable mod_descrs comes from stripes-build dependency
+
+# Note that this role is not entirely idempotent -- if dependencies change, it will break
+# the okapi-deploy service (soon to be made obsolete, see OKAPI-423)
+
+- name: Initialize module list json
+  set_fact: module_list="["
+
+- name: Build module list from Stripes mod descriptors
+  set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
+  with_items: "{{ mod_descrs }}"
+
+- name: Finish module list json
+  set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
+
+- name: Get dependencies for modules from Okapi
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
+    method: POST
+    body_format: json
+    body: "{{ module_list }}"
+  register: module_deps
+
+- name: Init modules deploy list
+  set_fact: deploy_mods=[]
+
+- name: Build module deploy list
+  set_fact: deploy_mods="{{ deploy_mods }} + ['{{ item.id }}']"
+  when: item.id|regex_search('^mod-')
+  with_items: "{{ module_deps.json }}"
+
+- name: Pull Docker images
+  become: yes
+  docker_image: name={{ docker_repo }}/{{ item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1:\\2')}}
+  with_items: "{{ deploy_mods }}"
+  notify:
+    - Restart okapi-deploy
+
+- name: Create modules db
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ module_database }}"
+    owner: "{{ pg_admin_user }}"
+
+- name: Post environment variables for DB
+  uri:
+    url: "{{ okapi_url }}/_/env"
+    method: POST
+    body_format: json
+    body: |
+      {
+        "name": "{{ item.name }}",
+        "value": "{{ item.value }}"
+      }
+    status_code: 201
+  with_items:
+    - name: db.host
+      value: "{{ pg_host }}"
+    - name: db.port
+      value: "{{ pg_port }}"
+    - name: db.database
+      value: "{{ module_database }}"
+    - name: db.username
+      value: "{{ pg_admin_user }}"
+    - name: db.password
+      value: "{{ pg_admin_password }}"
+  register: post_env
+  changed_when: post_env.status == 201
+
+- name: Copy deployment descriptors
+  become: yes
+  template: src=DeploymentDescriptor.json.j2 dest={{ folio_conf }}/deployment-descriptors/{{ item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1') }}.json
+  with_items: "{{ deploy_mods }}"
+  notify:
+    - Restart okapi-deploy
+
+- name: Copy okapi-deploy.conf
+  become: yes
+  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf
+  notify:
+    - Restart okapi-deploy
+  when: deploy_mods
+
+- name: Init modules enable list
+  set_fact: enable_mods=[]
+
+- name: Build module enable list
+  set_fact: enable_mods="{{ enable_mods }} + ['{{ item.id }}']"
+  with_items: "{{ module_deps.json }}"
+
+- name: Find mod-permissions in list
+  set_fact: mod_perms_id="{{ enable_mods|join(',')|regex_search('(mod-permissions-\d+\.\d+\.\d+[a-zA-Z0-9\.-]*)') }}"
+
+- name: Bump mod-permissions to top of list
+  set_fact: enable_mods="['{{ mod_perms_id }}'] + {{ enable_mods|difference([mod_perms_id]) }}"
+  when: mod_perms_id != ""
+
+- name: Initialize install list json
+  set_fact: module_list="["
+
+- name: Build install list
+  set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
+  with_items: "{{ enable_mods }}"
+
+- name: Finish module list json
+  set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
+
+- name: Trigger install modules handler
+  command: /bin/true
+  notify:
+    - Install modules
+  when: enable_mods
+
+- name: Set variable to signal that modules should already be enabled
+  set_fact:
+    top_down_install: true
+
+- meta: flush_handlers

@@ -1,0 +1,21 @@
+{
+  "srvcId" : "{{ item }}",
+  "descriptor" : {
+    "dockerImage" : "{{ docker_repo }}/{{ item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1:\\2')}}",
+    {% if docker_cmd[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] is defined %}
+    "dockerCMD" : [
+    {% for cmd in docker_cmd[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] %}
+      "{{ cmd }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ],
+    {% endif %}
+    {% if env_var[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] is defined %}
+    "env" : [
+    {% for env in env_var[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] %}
+      { "name" : "{{ env.name }}", "value" : "{{ env.value }}" }{% if not loop.last %},{% endif %}
+    {% endfor %}
+    ],
+    {% endif %}
+    "dockerPull" : false
+  }
+}

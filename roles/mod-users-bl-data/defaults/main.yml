@@ -10,3 +10,4 @@ mod_users_bl_permissions:
     permissions:
       - users-bl.all
 auth_by_username: false
+top_down_install: false
