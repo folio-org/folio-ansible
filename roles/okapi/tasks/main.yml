@@ -41,6 +41,11 @@
     okapi_cluster_config_file: '"-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"'
   when: hazelcast_aws_conf == "true"
 
+- name: Install okapi.env
+  become: yes
+  template: src=okapi.env.j2 dest=/etc/default/okapi
+  notify: okapi restart
+
 - name: Install okapi.conf
   become: yes
   template: 
