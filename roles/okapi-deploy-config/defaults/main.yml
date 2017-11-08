@@ -1,5 +1,6 @@
 ---
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+folio_user: folio
 tenant: diku
 docker_repo: folioci  
 pg_admin_user: folio_admin

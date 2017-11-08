@@ -46,31 +46,6 @@
     name: "{{ module_database }}"
     owner: "{{ pg_admin_user }}"
 
-- name: Post environment variables for DB
-  uri:
-    url: "{{ okapi_url }}/_/env"
-    method: POST
-    body_format: json
-    body: |
-      {
-        "name": "{{ item.name }}",
-        "value": "{{ item.value }}"
-      }
-    status_code: 201
-  with_items:
-    - name: db.host
-      value: "{{ pg_host }}"
-    - name: db.port
-      value: "{{ pg_port }}"
-    - name: db.database
-      value: "{{ module_database }}"
-    - name: db.username
-      value: "{{ pg_admin_user }}"
-    - name: db.password
-      value: "{{ pg_admin_password }}"
-  register: post_env
-  changed_when: post_env.status == 201
-
 - name: Copy deployment descriptors
   become: yes
   template: src=DeploymentDescriptor.json.j2 dest={{ folio_conf }}/deployment-descriptors/{{ item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1') }}.json
@@ -80,7 +55,7 @@
 
 - name: Copy okapi-deploy.conf
   become: yes
-  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf
+  template: src=okapi-deploy.conf.j2 dest={{ folio_conf }}/okapi-deploy.conf mode=0600 owner={{ folio_user }}
   notify:
     - Restart okapi-deploy
   when: deploy_mods

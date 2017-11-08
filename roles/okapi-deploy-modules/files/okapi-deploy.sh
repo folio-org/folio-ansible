@@ -45,6 +45,16 @@ if [ "$1" = "start" ] ; then
     fi
   done
   if [ "$OKAPI" = "1" ] ; then
+    # post Okapi environment variables
+    for i in "${!okapi_env[@]}" ; do
+      $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d "{\"name\":\"${i}\",\"value\":\"${okapi_env[$i]}\"}" ${okapi_url}/_/env
+      if [ "$?" = "0" ] ; then
+        echo "Set Okapi environment variable $i"
+      else
+        echo "Failed set Okapi environment variable $i" 1>&2
+        exit 1;
+      fi
+    done
     for i in $modules ; do
       $CURL --output /dev/null --fail --silent -X POST -H "Content-Type: application/json" -d @${CONF_DIR}/deployment-descriptors/${i}.json ${okapi_url}/_/deployment/modules
       if [ "$?" = "0" ] ; then
