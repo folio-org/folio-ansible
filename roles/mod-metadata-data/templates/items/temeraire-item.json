@@ -7,7 +7,7 @@
   "permanentLoanTypeId": "2b94c631-fca9-a892-c730-03ee529ffe27",
   "status": {
     "name": "Available"
-  },{% if shelf_locations %}
+  },{% if inv_storage_3 %}
   "permanentLocationId": "fcd64ce1-6995-48f0-840e-89ffa2288371"{% else %}
   "location": {
     "name": "Main Library"

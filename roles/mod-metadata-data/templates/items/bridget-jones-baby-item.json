@@ -8,7 +8,7 @@
   "temporaryLoanTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0e",
   "status": {
     "name": "Checked Out"
-  },{% if shelf_locations %}
+  },{% if inv_storage_3 %}
   "permanentLocationId": "fcd64ce1-6995-48f0-840e-89ffa2288371"{% else %}
   "location": {
     "name": "Main Library"

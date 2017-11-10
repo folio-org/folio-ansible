@@ -20,7 +20,7 @@ mod_metadata_prefixes:
 mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
-shelf_locations: true
+inv_storage_3: true
 enable_okapi: true
 okapi_java_opts:
   - "-Xss20M"

@@ -146,9 +146,143 @@
   changed_when: load_shelfloc.status == 201
   with_fileglob:
     - shelf-locations/*.json
-  when: shelf_locations
+  when: inv_storage_3
 
-- name: Load inventory storage instances
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage identifier types
+  uri:
+    url: "{{ okapi_url }}/identifier-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_idtype
+  changed_when: load_idtype.status == 201
+  with_fileglob:
+    - identifiertypes/*.json
+  when: inv_storage_3
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage creator types
+  uri:
+    url: "{{ okapi_url }}/creator-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_creatortype
+  changed_when: load_creatortype.status == 201
+  with_fileglob:
+    - creatortypes/*.json
+  when: inv_storage_3
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage contributor types
+  uri:
+    url: "{{ okapi_url }}/contributor-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_contribtype
+  changed_when: load_contribtype.status == 201
+  with_fileglob:
+    - contributortypes/*.json
+  when: inv_storage_3
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage instance types
+  uri:
+    url: "{{ okapi_url }}/instance-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_insttype
+  changed_when: load_insttype.status == 201
+  with_fileglob:
+    - instancetypes/*.json
+  when: inv_storage_3
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage instance formats
+  uri:
+    url: "{{ okapi_url }}/instance-formats"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_instformat
+  changed_when: load_instformat.status == 201
+  with_fileglob:
+    - instanceformats/*.json
+  when: inv_storage_3
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage classification types
+  uri:
+    url: "{{ okapi_url }}/classification-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_classtype
+  changed_when: load_classtype.status == 201
+  with_fileglob:
+    - classificationtypes/*.json
+  when: inv_storage_3
+
+- name: Create instance records directory
+  become: yes
+  file: dest=/etc/.folio-instances_ansible state=directory
+
+- name: Copy instance records
+  become: yes
+  template: src=instances/{{ item }} dest=/etc/.folio-instances_ansible/{{ item }}
+  with_items:
+    - bridgets-baby-instance.json
+    - girl-on-the-train-instance.json
+    - interesting-times-instance.json
+    - nod-instance.json
+    - temeraire-instance.json
+    - transparent-water.json
+
+- name: Slurp instance files
+  slurp: src=/etc/.folio-instances_ansible/{{ item }}
+  with_items:
+    - bridgets-baby-instance.json
+    - girl-on-the-train-instance.json
+    - interesting-times-instance.json
+    - nod-instance.json
+    - temeraire-instance.json
+    - transparent-water.json
+  register: instancefiles_content
+
+- name: Load instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
     method: POST
@@ -157,19 +291,18 @@
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
+    body: "{{ item.content|b64decode }}"
     status_code: 201
   register: load_instance
   changed_when: load_instance.status == 201
-  when: inventory_instances.json.totalRecords == 0
-  with_fileglob:
-    - instances/*.json
+  with_items: "{{ instancefiles_content.results }}"
+  when: inventory_items.json.totalRecords == 0
   
 - name: Create item records directory
   become: yes
   file: dest=/etc/.folio-items_ansible state=directory
 
-- name: Copy item records with shelf locations
+- name: Copy item records
   become: yes
   template: src=items/{{ item }} dest=/etc/.folio-items_ansible/{{ item }}
   with_items:
