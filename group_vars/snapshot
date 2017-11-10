@@ -1,7 +1,5 @@
 ---
 # Variables for building testing-topdown
-okapi_java_opts:
-  - "-Xss20M"
 okapi_pull: true
 top_down_install: true
 auth_required: true
