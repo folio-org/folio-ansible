@@ -42,6 +42,7 @@ admin_permissions:
   - module.users.enabled
   - module.items.enabled
   - module.instances.enabled
+  - module.inventory.enabled
   - module.checkin.enabled
   - module.checkout.enabled
   - module.scan.enabled
