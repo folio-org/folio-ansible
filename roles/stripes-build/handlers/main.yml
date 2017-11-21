@@ -7,7 +7,7 @@
 
 - name: Build stripes
   become: yes
-  shell: "yarn install && yarn build output"
+  shell: "yarn install && yarn build output --sourcemap"
   args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
