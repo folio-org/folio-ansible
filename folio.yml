@@ -26,6 +26,7 @@
     - mod-login-saml-data
     - mod-circulation-data
     - mod-notes-data
+    - mod-graphql-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
