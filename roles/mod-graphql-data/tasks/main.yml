@@ -1,0 +1,25 @@
+---
+# Role to enable mod-graphql for the sample tenant
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- set_fact:
+    mod_graphql_module: "{{ okapi_modules|selectattr('id','match','^'+mod_graphql_prefix+'(-[0-9].*)?$')|list }}"
+
+- name: Check tenant mod-graphql registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_graphql_module.0.id }}"
+    status_code: 200, 404
+  register: tenant_mod_graphql
+
+- name: Enable mod-graphql module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_graphql_module.0.id }}" }'
+    status_code: 201
+  register: mod_graphql_enable
+  changed_when: mod_graphql_enable.status == 201
+  when: tenant_mod_graphql.status == 404 and not top_down_install

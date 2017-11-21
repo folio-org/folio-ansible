@@ -6,8 +6,9 @@
 Vagrant.configure(2) do |config|
 
   # Give us a little headroom
+  # Note that provisioning a Stripes webpack requires more RAM
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = 5120
+    vb.memory = 4096
     vb.cpus = 2
   end
 
@@ -51,6 +52,10 @@ Vagrant.configure(2) do |config|
     build_stable.vm.box = "debian/contrib-jessie64"
     build_stable.vm.network "forwarded_port", guest: 9130, host: 9130
     build_stable.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_stable.vm.provider "virtualbox" do |vb|
+      vb.memory = 8192
+      vb.cpus = 2
+    end
     build_stable.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -82,6 +87,10 @@ Vagrant.configure(2) do |config|
     build_testing.vm.box = "debian/contrib-jessie64"
     build_testing.vm.network "forwarded_port", guest: 9130, host: 9130
     build_testing.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_testing.vm.provider "virtualbox" do |vb|
+      vb.memory = 8192
+      vb.cpus = 2
+    end
     build_testing.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -113,6 +122,10 @@ Vagrant.configure(2) do |config|
     build_snapshot.vm.box = "debian/contrib-jessie64"
     build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_snapshot.vm.provider "virtualbox" do |vb|
+      vb.memory = 8192
+      vb.cpus = 2
+    end
     build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
