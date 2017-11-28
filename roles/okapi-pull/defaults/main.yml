@@ -4,3 +4,4 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 mod_descr_repos:
   urls:
     - http://folio-registry.aws.indexdata.com
+okapi_pull_timeout: 90
