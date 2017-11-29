@@ -71,6 +71,10 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_stable_backend", autostart: false do |build_stable_backend|
     build_stable_backend.vm.box = "debian/contrib-jessie64"
     build_stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_stable_backend.vm.provider "virtualbox" do |vb|
+      vb.memory = 8192
+      vb.cpus = 2
+    end
     build_stable_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -106,6 +110,10 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
     build_testing_backend.vm.box = "debian/contrib-jessie64"
     build_testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_backend.vm.provider "virtualbox" do |vb|
+      vb.memory = 8192
+      vb.cpus = 2
+    end
     build_testing_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
