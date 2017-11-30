@@ -59,6 +59,7 @@ admin_permissions:
   - settings.material-types.all
   - settings.usergroups.all
   - settings.addresstypes.all
+  - stripes-util-notes.all
   - ui-circulation.settings.loan-policies
   - ui-circulation.settings.loan-rules
   - ui-items.settings.material-types

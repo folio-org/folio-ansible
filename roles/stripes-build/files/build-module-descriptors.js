@@ -23,7 +23,7 @@ fs.readdir(indir, (err, filenames) => {
   const sortedFilenames = filenames.sort();
   for (let i = 0; i < sortedFilenames.length; i++) {
     const filename = sortedFilenames[i];
-    if (filename.startsWith('stripes-') && filename !== 'stripes-core') continue;
+    if (filename.startsWith('stripes-') && filename !== 'stripes-core' && filename !== 'stripes-smart-components') continue;
     console.log(`processing '${filename}'`);
     const cmd = `node ${indir}/stripes-core/util/package2md.js${strict ? ' --strict' : ''} ${indir}/${filename}/package.json > ${outdir}/${filename}.json`;
     try {
