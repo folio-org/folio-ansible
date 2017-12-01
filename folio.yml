@@ -17,7 +17,18 @@
     - okapi-deploy-config
 
 # Provision a host with the sample tenant and data
-- hosts: folio-sample-data
+- hosts: folio-sample-data-stable
+  roles:
+    - mod-auth-data
+    - mod-configuration-data
+    - mod-users-data 
+    - mod-users-bl-data
+    - mod-circulation-data
+    - mod-notes-data
+    - mod-auth-demo-users
+
+# Provision a host with the sample tenant and data
+- hosts: folio-sample-data-testing
   roles:
     - mod-auth-data
     - mod-configuration-data
@@ -29,6 +40,18 @@
     - mod-notes-data
     - mod-graphql-data
     - mod-codex-mock-data
+    - mod-auth-demo-users
+
+# Provision a host with the sample tenant and data
+- hosts: folio-sample-data-snapshot
+  roles:
+    - mod-auth-data
+    - mod-configuration-data
+    - mod-users-data 
+    - mod-users-bl-data
+    - mod-login-saml-data
+    - mod-circulation-data
+    - mod-notes-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
