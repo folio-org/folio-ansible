@@ -24,9 +24,11 @@
     - mod-users-data 
     - mod-users-bl-data
     - mod-login-saml-data
+    - mod-user-import-data
     - mod-circulation-data
     - mod-notes-data
     - mod-graphql-data
+    - mod-codex-mock-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build

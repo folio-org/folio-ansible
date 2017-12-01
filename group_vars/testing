@@ -109,6 +109,12 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 7
+    name: mod-user-import
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+
+  - index: 8
     name: mod-inventory-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -124,7 +130,7 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 8
+  - index: 9
     name: mod-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -132,7 +138,7 @@ folio_modules:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     okapi_docker_pull: "false"
 
-  - index: 9
+  - index: 10
     name: mod-circulation-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -148,13 +154,13 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 10
+  - index: 11
     name: mod-circulation
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
 
-  - index: 11
+  - index: 12
     name: mod-notify
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -170,7 +176,7 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 12
+  - index: 13
     name: mod-notes
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -186,10 +192,26 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
-  - index: 13
+  - index: 14
     name: mod-graphql
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
+    okapi_docker_pull: "false"
+
+  - index: 15
+    name: mod-codex-mock
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
 # Variables for building UI

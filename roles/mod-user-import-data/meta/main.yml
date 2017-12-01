@@ -1,0 +1,7 @@
+---
+dependencies:
+  - { role: tenant-data }
+  - { role: okapi-get-modules }
+  - { role: mod-auth-data }
+  - { role: mod-users-data }
+

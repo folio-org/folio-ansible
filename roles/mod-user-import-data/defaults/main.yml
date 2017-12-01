@@ -1,0 +1,14 @@
+---
+# mod-user-import-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: false
+mod_user_import_prefix: mod-user-import
+admin_user: { username: diku_admin, password: admin }
+mod_user_import_permissions:
+  - username: diku_admin
+    perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
+    permissions:
+      - user-import.all
+auth_by_username: false
+top_down_install: false
