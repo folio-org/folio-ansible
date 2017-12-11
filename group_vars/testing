@@ -137,6 +137,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     okapi_docker_pull: "false"
+    docker_port: 9403
 
   - index: 10
     name: mod-circulation-storage
@@ -159,6 +160,7 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_port: 9801
 
   - index: 12
     name: mod-notify

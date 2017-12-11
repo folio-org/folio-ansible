@@ -11,3 +11,4 @@ pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 folio_modules: [ ]
 okapi_pull: false
+default_docker_port: 8081

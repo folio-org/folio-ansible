@@ -16,3 +16,8 @@ docker_cmd:
 env_var:
   mod-inventory:
     - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+# default Docker port for modules
+docker_port:
+  mod-inventory: 9403
+  mod-circulation: 9801
+default_docker_port: 8081

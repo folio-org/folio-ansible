@@ -2,6 +2,9 @@
   "srvcId" : "{{ item }}",
   "descriptor" : {
     "dockerImage" : "{{ docker_repo }}/{{ item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1:\\2')}}",
+    "dockerArgs" : {
+      "HostConfig" : { "PortBindings": { "{{ docker_port[item|regex_replace('(^mod-.*)-(\d+\.\d+\.\d+-.*$)','\\1')]|default(default_docker_port) }}/tcp": [{ "HostPort": "%p" }] } }
+    },
     {% if docker_cmd[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] is defined %}
     "dockerCMD" : [
     {% for cmd in docker_cmd[item|regex_replace('(^mod-.*)-\d+\.\d+\.\d+-.*$','\\1')] %}
