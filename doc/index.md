@@ -4,6 +4,7 @@
 * [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
 * [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
 * [Replace localhost by hostname on the demo box](#replace-localhost-by-hostname-on-the-demo-box)
+* [Replace port 9130](#replace-port-9130)
 * [Updating FOLIO components on Vagrant boxes](#updating-folio-components-on-vagrant-boxes)
     * [Updating Okapi](#updating-okapi)
     * [Updating Docker-based modules](#updating-docker-based-modules)
@@ -112,6 +113,29 @@ this way:
     $ vagrant up
     $ vagrant ssh -c "sudo sed -i -e 's!http://localhost:9130!http://example.com:9130!g' /etc/folio/stripes/stripes.config.js"
     $ vagrant ssh -c "/etc/folio/stripes/build-run"
+
+## Replace port 9130
+
+This is an example how to avoid using port 9130 that may be blocked at
+some institutions. Instead all front-end and back-end requests arrive
+at the same default port (80 for HTTP or 443 for HTTPS). Put the URL
+like `http://example.com` or `https://example.com` into
+stripes.config.js.
+
+An nginx in front of the Vagrant box proxies the requests to ports
+3000 and 9130. This snippet shows how to do it:
+
+    # Frontend requests:
+    # index file at / and favicon.ico and all bundle/chunk/style files and
+    # the /bootstrap/ and /fonts/ directories.
+    location ~ ^(/|/favicon\.ico|/([0-9]+\.)?(bundle|chunk|style)(\.[0-9a-f]+)?\.(css|js)|/bootstrap/.*|/fonts/.*)$ {
+        proxy_pass http://127.0.0.1:3000;
+    }
+
+    # Backend requests:
+    location / {
+        proxy_pass http://127.0.0.1:9130;
+    }
 
 ## Updating FOLIO components on Vagrant boxes
 
