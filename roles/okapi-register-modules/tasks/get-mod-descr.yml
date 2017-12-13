@@ -20,6 +20,7 @@
     url: "{{ module.mod_descriptor_repo }}/_/proxy/modules/{{ module_id }}"
     dest: "{{ folio_conf }}/module-descriptors/{{ module.name }}.json"
     force: yes
+    timeout: 60
   when: module.mod_descriptor_repo is defined
   register: module_repo_update
 
