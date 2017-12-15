@@ -1,0 +1,25 @@
+---
+# Role to enable mod-codex-mux for the sample tenant
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- set_fact:
+    mod_codex_mux_module: "{{ okapi_modules|selectattr('id','match','^'+mod_codex_mux_prefix+'(-[0-9].*)?$')|list }}"
+
+- name: Check tenant mod-codex-mux registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_codex_mux_module.0.id }}"
+    status_code: 200, 404
+  register: tenant_mod_codex_mux
+
+- name: Enable mod-codex-mux module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_codex_mux_module.0.id }}" }'
+    status_code: 201
+  register: mod_codex_mux_enable
+  changed_when: mod_codex_mux_enable.status == 201
+  when: tenant_mod_codex_mux.status == 404 and not top_down_install

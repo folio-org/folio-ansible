@@ -40,6 +40,7 @@
     - mod-notes-data
     - mod-graphql-data
     - mod-codex-mock-data
+    - mod-codex-mux-data
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data
