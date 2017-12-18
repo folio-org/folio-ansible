@@ -121,18 +121,19 @@
     - temeraire-item.json
     - temeraire2-item.json
 
+# Need to process closed loans before open on same item
 - name: Slurp loan files
   slurp: src=/etc/.folio-circ_ansible/loans/{{ item }}
   with_items:
     - bridget-jones-baby-item.json
     - girl-on-the-train-item.json
+    - girl-on-the-train-item-3.json 
     - girl-on-the-train-item-2.json
-    - girl-on-the-train-item-3.json
     - interesting-times-item.json
-    - interesting-times-item-2.json 
     - interesting-times-item-3.json 
+    - interesting-times-item-2.json 
+    - nod-item-2.json 
     - nod-item.json
-    - nod-item-2.json
     - temeraire-item.json
     - temeraire2-item.json
   register: loanfiles_content
