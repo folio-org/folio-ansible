@@ -96,62 +96,10 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
   register: inventory_items
 
-# fails with 422 error if already loaded
-- name: Load inventory storage material types
-  uri:
-    url: "{{ okapi_url }}/material-types"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
-    status_code: 201, 422
-  register: load_mtype
-  changed_when: load_mtype.status == 201
-  with_fileglob:
-    - mtypes/*.json
-
-# fails with 400 if already loaded
-- name: Load inventory storage loan types
-  uri:
-    url: "{{ okapi_url }}/loan-types"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
-    status_code: 201, 400
-  register: load_ltype
-  changed_when: load_ltype.status == 201
-  with_fileglob:
-    - loantypes/*.json
-
-# fails with 422 error if already loaded
-- name: Load inventory storage shelf locations
-  uri:
-    url: "{{ okapi_url }}/shelf-locations"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: diku
-      Accept: application/json
-      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
-    status_code: 201, 422
-  register: load_shelfloc
-  changed_when: load_shelfloc.status == 201
-  with_fileglob:
-    - shelf-locations/*.json
-  when: inv_storage_3
-
 # fails with 400 or 422 error if already loaded
-- name: Load inventory storage identifier types
+- name: Load inventory storage classification types
   uri:
-    url: "{{ okapi_url }}/identifier-types"
+    url: "{{ okapi_url }}/classification-types"
     method: POST
     body_format: json
     headers:
@@ -160,16 +108,16 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 400, 422
-  register: load_idtype
-  changed_when: load_idtype.status == 201
+  register: load_classtype
+  changed_when: load_classtype.status == 201
   with_fileglob:
-    - identifiertypes/*.json
+    - classificationtypes/*.json
   when: inv_storage_3
 
 # fails with 400 or 422 error if already loaded
-- name: Load inventory storage creator types
+- name: Load inventory storage contributor name types
   uri:
-    url: "{{ okapi_url }}/creator-types"
+    url: "{{ okapi_url }}/contributor-name-types"
     method: POST
     body_format: json
     headers:
@@ -178,10 +126,10 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 400, 422
-  register: load_creatortype
-  changed_when: load_creatortype.status == 201
+  register: load_contribnametype
+  changed_when: load_contribnametype.status == 201
   with_fileglob:
-    - creatortypes/*.json
+    - contributornametypes/*.json
   when: inv_storage_3
 
 # fails with 400 or 422 error if already loaded
@@ -203,9 +151,9 @@
   when: inv_storage_3
 
 # fails with 400 or 422 error if already loaded
-- name: Load inventory storage instance types
+- name: Load inventory storage identifier types
   uri:
-    url: "{{ okapi_url }}/instance-types"
+    url: "{{ okapi_url }}/identifier-types"
     method: POST
     body_format: json
     headers:
@@ -214,10 +162,10 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 400, 422
-  register: load_insttype
-  changed_when: load_insttype.status == 201
+  register: load_idtype
+  changed_when: load_idtype.status == 201
   with_fileglob:
-    - instancetypes/*.json
+    - identifiertypes/*.json
   when: inv_storage_3
 
 # fails with 400 or 422 error if already loaded
@@ -239,9 +187,9 @@
   when: inv_storage_3
 
 # fails with 400 or 422 error if already loaded
-- name: Load inventory storage classification types
+- name: Load inventory storage instance types
   uri:
-    url: "{{ okapi_url }}/classification-types"
+    url: "{{ okapi_url }}/instance-types"
     method: POST
     body_format: json
     headers:
@@ -250,10 +198,80 @@
       X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 400, 422
-  register: load_classtype
-  changed_when: load_classtype.status == 201
+  register: load_insttype
+  changed_when: load_insttype.status == 201
   with_fileglob:
-    - classificationtypes/*.json
+    - instancetypes/*.json
+  when: inv_storage_3
+
+# fails with 400 if already loaded
+- name: Load inventory storage loan types
+  uri:
+    url: "{{ okapi_url }}/loan-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400
+  register: load_ltype
+  changed_when: load_ltype.status == 201
+  with_fileglob:
+    - loantypes/*.json
+
+# fails with 422 error if already loaded
+- name: Load inventory storage material types
+  uri:
+    url: "{{ okapi_url }}/material-types"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_mtype
+  changed_when: load_mtype.status == 201
+  with_fileglob:
+    - mtypes/*.json
+
+# fails with 400 or 422 error if already loaded
+- name: Load inventory storage platforms
+  uri:
+    url: "{{ okapi_url }}/platforms"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_platform
+  changed_when: load_platform.status == 201
+  with_fileglob:
+    - platforms/*.json
+  when: inv_storage_3
+
+# fails with 422 error if already loaded
+- name: Load inventory storage shelf locations
+  uri:
+    url: "{{ okapi_url }}/shelf-locations"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_shelfloc
+  changed_when: load_shelfloc.status == 201
+  with_fileglob:
+    - shelf-locations/*.json
   when: inv_storage_3
 
 - name: Create instance records directory
@@ -298,6 +316,24 @@
   with_items: "{{ instancefiles_content.results }}"
   when: inventory_items.json.totalRecords == 0
   
+# fails with 400 or 422 error if already loaded
+- name: Load holdings
+  uri:
+    url: "{{ okapi_url }}/holdings-storage/holdings"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_holding
+  changed_when: load_holding.status == 201
+  with_fileglob:
+    - holdingsrecords/*.json
+  when: inv_storage_3
+
 - name: Create item records directory
   become: yes
   file: dest=/etc/.folio-items_ansible state=directory

@@ -1,8 +1,10 @@
 {
-  "id": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",
-  "title": "Bridget Jones's Baby: the diaries",
+  "id": "7fbd5d84-62d1-44c6-9c45-6cb173998bbd",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "Bridget Jones's Baby: the diaries",{% if inv_storage_3 %}
+  "edition": "First American Edition",{% endif %}
   "identifiers": [
-    { 
+    {
       {% if inv_storage_3 %}
       "identifierTypeId": "5d164f4b-0b15-4e42-ae75-cfcf85318ad9",
       "value": "ocn956625961"
@@ -11,13 +13,12 @@
       "value": "B01LHE7MIU"
       {% endif %}
     }
-  ]{% if inv_storage_3 %},
-  "source": "Sample",
-  "edition": "First American Edition",
-  "creators": [
+  ],{% if inv_storage_3 %}
+  "contributors": [
     {
-      "creatorTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
-      "name": "Fielding, Helen"
+      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "name": "Fielding, Helen",
+      "primary": true
     }
   ],
   "subjects": [
