@@ -35,6 +35,11 @@ used to generate prebuilt Vagrant boxes, available on
   -- a backend FOLIO system with stable releases of backend modules. All
   components should interoperate correctly. 
 
+* [folio/snapshot](https://app.vagrantup.com/folio/boxes/snapshot)
+  -- a full-stack FOLIO system, built from the most recent working
+  commits to frontend components and the matching releases of the
+  backend modules.
+
 * [folio/testing](https://app.vagrantup.com/folio/boxes/testing) --
   a full-stack FOLIO system, with the very latest releases of front- and
   backend modules. Absolutely _not_ guaranteed to interoperate
