@@ -7,6 +7,7 @@
   "status": {
     "name": "Checked out"
   }{% if not inv_storage_3 %},
+  "title": "Temeraire",
   "location": {
     "name": "Annex Library"
   }{% endif %}  

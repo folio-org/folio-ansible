@@ -282,6 +282,8 @@
   become: yes
   template: src=instances/{{ item }} dest=/etc/.folio-instances_ansible/{{ item }}
   with_items:
+    - aba.json
+    - american-journal-of-medicine.json
     - bridgets-baby-instance.json
     - girl-on-the-train-instance.json
     - interesting-times-instance.json
@@ -292,6 +294,8 @@
 - name: Slurp instance files
   slurp: src=/etc/.folio-instances_ansible/{{ item }}
   with_items:
+    - aba.json
+    - american-journal-of-medicine.json
     - bridgets-baby-instance.json
     - girl-on-the-train-instance.json
     - interesting-times-instance.json
@@ -342,7 +346,11 @@
   become: yes
   template: src=items/{{ item }} dest=/etc/.folio-items_ansible/{{ item }}
   with_items:
+    - aba.json
+    - american-journal-of-medicine.json
     - bridget-jones-baby-item.json
+    - bridget-jones-baby-item_2.json
+    - bridget-jones-baby-item_3.json
     - girl-on-the-train-item.json
     - interesting-times-item.json
     - nod-item.json
@@ -352,7 +360,11 @@
 - name: Slurp item files
   slurp: src=/etc/.folio-items_ansible/{{ item }}
   with_items:
+    - aba.json
+    - american-journal-of-medicine.json
     - bridget-jones-baby-item.json
+    - bridget-jones-baby-item_2.json
+    - bridget-jones-baby-item_3.json
     - girl-on-the-train-item.json
     - interesting-times-item.json
     - nod-item.json
