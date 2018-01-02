@@ -1,0 +1,8 @@
+---
+# mod-codex-inventory role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_codex_inventory_prefix: mod-codex-inventory
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+top_down_install: false

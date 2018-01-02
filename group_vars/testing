@@ -217,6 +217,12 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 16
+    name: mod-codex-inventory
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+
+  - index: 17
     name: mod-codex-mux
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
