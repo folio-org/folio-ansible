@@ -2,3 +2,4 @@
 dependencies: 
   - { role: tenant-data }
   - { role: okapi-get-modules }
+  - { role: mod-configuration-data }
