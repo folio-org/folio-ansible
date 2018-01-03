@@ -2,7 +2,7 @@
 # Role to pull module descriptors from a central repo
 
 # wait a few seconds to make sure okapi is up
-- wait_for: timeout=10
+- wait_for: timeout=5
 
 - name: Pull module descriptors
   uri:
