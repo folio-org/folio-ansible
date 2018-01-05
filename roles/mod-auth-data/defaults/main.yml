@@ -52,6 +52,7 @@ admin_permissions:
   - settings.enabled
   - settings.checkout.enabled
   - settings.developer.enabled
+  - settings.users.enabled 
   - settings.loan-rules.all
   - settings.loan-policies.all
   - settings.loan-types.all
@@ -67,7 +68,9 @@ admin_permissions:
   - ui-organization.settings.locale
   - ui-organization.settings.plugins
   - ui-organization.settings.sso
-  - ui-users.editpermsets 
+  - ui-users.create 
+  - ui-users.editpermsets
+  - ui-users.editproxies
   - ui-users.settings.usergroups
   - ui-users.settings.addresstypes
   - ui-users.settings.permsets
