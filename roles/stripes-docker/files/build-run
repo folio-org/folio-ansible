@@ -1,5 +1,5 @@
 cd /etc/folio/stripes/
-sudo yarn build output
+sudo yarn build output --sourcemap
 docker stop stripes_stripes_1
 docker rm stripes_stripes_1
 docker rmi stripes
