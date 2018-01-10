@@ -39,6 +39,7 @@
     - mod-circulation-data
     - mod-notes-data
     - mod-graphql-data
+    - mod-kb-ebsco-data
     - mod-codex-mock-data
     - mod-codex-mux-data
     - mod-codex-inventory-data

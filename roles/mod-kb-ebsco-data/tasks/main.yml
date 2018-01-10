@@ -1,0 +1,103 @@
+---
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+-  set_fact:
+    mod_kb_ebsco_module: "{{ okapi_modules|selectattr('id','match','^'+mod_kb_ebsco_prefix+'(-[0-9].*)?$')|list }}"
+
+- name: Check mod-kb-ebsco deployment
+  uri: 
+    url: "{{ okapi_url }}/_/discovery/modules/{{ mod_kb_ebsco_module.0.id }}"
+    status_code: 200, 404
+  register: mod_kb_ebsco_deploy
+  when: not top_down_install
+
+- name: Set mod-kb-ebsco deployment status for top down install
+  set_fact: 
+    mod_kb_ebsco_deploy:
+      status: 200
+  when: mod_kb_ebsco_deploy.skipped is defined and mod_kb_ebsco_deploy.skipped
+      
+- name: Check tenant mod-kb-ebsco registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_kb_ebsco_module.0.id }}"
+    status_code: 200, 404
+  when: mod_kb_ebsco_deploy.status == 200
+  register: tenant_mod_kb_ebsco
+
+- name: Enable mod-kb-ebsco module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_kb_ebsco_module.0.id }}" }'
+    status_code: 201
+  register: mod_kb_ebsco_enable
+  changed_when: mod_kb_ebsco_enable.status == 201
+  when: tenant_mod_kb_ebsco.status == 404 and not top_down_install
+
+- name: Login as {{ admin_user.username }}
+  uri: 
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_kb_ebsco_login
+  when: mod_kb_ebsco_deploy.status == 200 and auth_required
+
+- name: Assign mod-kb-ebsco permissions to other users (auth by username)
+  uri: 
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_kb_ebsco_login.x_okapi_token }}"
+      Accept: application/json
+    body:  '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_kb_ebsco_perms
+  changed_when: mod_kb_ebsco_perms.status == 200
+  with_subelements: 
+    - "{{ mod_kb_ebsco_permissions }}"
+    - permissions
+  when: mod_kb_ebsco_deploy.status == 200 and auth_required and auth_by_username
+
+- name: Assign mod-kb-ebsco permissions to other users (auth by id)
+  uri: 
+    url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi_Tenant: diku
+      X-Okapi-Token: "{{ mod_kb_ebsco_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_kb_ebsco_perms
+  changed_when: mod_kb_ebsco_perms.status == 200
+  with_subelements: 
+    - "{{ mod_kb_ebsco_permissions }}" 
+    - permissions
+  when: mod_kb_ebsco_deploy.status == 200 and auth_required and not auth_by_username 
+ 
+# Add RM API key
+- name: Add RM API customer ID and key
+  uri: 
+    url: "{{ okapi_url }}/eholdings/configuration"
+    method: PUT
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_kb_ebsco_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{"data":{"id":"configuration","type":"configurations","attributes":{"apiKey":"{{ rmapi_key }}","customerId":"{{ rmapi_custid }}"}}}'
+    status_code: 200
+  register: mod_kb_ebsco_rmapi
+  changed_when: mod_kb_ebsco_rmapi.status == 200
+  when: mod_kb_ebsco_deploy.status == 200 and auth_required and rmapi
+
