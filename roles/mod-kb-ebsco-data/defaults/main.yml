@@ -1,0 +1,13 @@
+---
+# mod-kb-ebsco
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: false
+mod_kb_ebsco_prefix: mod-kb-ebsco
+admin_user: { username: diku_admin, password: admin }
+mod_kb_ebsco_permissions: []
+auth_by_username: false
+top_down_install: false
+
+# rm api 
+rmapi: false
