@@ -99,5 +99,5 @@
     status_code: 200
   register: mod_kb_ebsco_rmapi
   changed_when: mod_kb_ebsco_rmapi.status == 200
-  when: mod_kb_ebsco_deploy.status == 200 and auth_required and rmapi
+  when: mod_kb_ebsco_deploy.status == 200 and auth_required and rmapi and rmapi_custid and rmapi_key
 
