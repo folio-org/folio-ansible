@@ -92,6 +92,22 @@
   with_fileglob:
     - loan-policies/*.json
 
+- name: Load loan rules
+  uri:
+    url: "{{ okapi_url }}/loan-rules-storage"
+    method: PUT
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422, 500
+  register: load_loanp
+  changed_when: load_loanp.status == 201
+  with_fileglob:
+    - loan-rules/use-example-for-everything.json
+
 - name: Get users for loans
   uri:
     url: "{{ okapi_url }}/users?query=active%3D%22true%22%20and%20type%3D%3Dpatron%20sortby%20personal.lastName%20personal.firstName&limit=6"
@@ -114,8 +130,8 @@
     - girl-on-the-train-item-2.json
     - girl-on-the-train-item-3.json
     - interesting-times-item.json
-    - interesting-times-item-2.json 
-    - interesting-times-item-3.json 
+    - interesting-times-item-2.json
+    - interesting-times-item-3.json
     - nod-item.json
     - nod-item-2.json
     - temeraire-item.json
@@ -127,12 +143,12 @@
   with_items:
     - bridget-jones-baby-item.json
     - girl-on-the-train-item.json
-    - girl-on-the-train-item-3.json 
+    - girl-on-the-train-item-3.json
     - girl-on-the-train-item-2.json
     - interesting-times-item.json
-    - interesting-times-item-3.json 
-    - interesting-times-item-2.json 
-    - nod-item-2.json 
+    - interesting-times-item-3.json
+    - interesting-times-item-2.json
+    - nod-item-2.json
     - nod-item.json
     - temeraire-item.json
     - temeraire2-item.json
