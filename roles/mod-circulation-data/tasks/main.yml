@@ -99,12 +99,12 @@
     body_format: json
     headers:
       X-Okapi-Tenant: diku
-      Accept: application/json
+      Accept: application/json, text/plain
       X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
-    status_code: 201, 422, 500
-  register: load_loanp
-  changed_when: load_loanp.status == 201
+    status_code: 204
+  register: load_loanr
+  changed_when: load_loanr.status == 204
   with_fileglob:
     - loan-rules/use-example-for-everything.json
 
