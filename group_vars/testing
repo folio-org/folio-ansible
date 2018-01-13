@@ -226,8 +226,6 @@ folio_modules:
     name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
-    docker_env:
-      - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     okapi_docker_pull: "false"
 
   - index: 18
@@ -239,6 +237,8 @@ folio_modules:
   - index: 19
     name: mod-kb-ebsco
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    docker_env:
+      - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     image_repository: folioci
     okapi_docker_pull: "false"
     
