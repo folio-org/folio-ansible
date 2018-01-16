@@ -38,27 +38,29 @@ admin_permissions:
   - perms.all
   - login.all
   - users.all
-  - module.users.enabled
+  - module.checkin.enabled
+  - module.checkout.enabled
+  - module.eholdings.enabled
   - module.items.enabled
   - module.instances.enabled
   - module.inventory.enabled
-  - module.checkin.enabled
-  - module.checkout.enabled
-  - module.scan.enabled
-  - module.requests.enabled
-  - module.organization.enabled
   - module.notes.enabled
+  - module.organization.enabled
+  - module.requests.enabled
+  - module.scan.enabled
   - module.search.enabled
+  - module.users.enabled 
   - settings.enabled
+  - settings.addresstypes.all 
   - settings.checkout.enabled
   - settings.developer.enabled
-  - settings.users.enabled 
-  - settings.loan-rules.all
+  - settings.eholdings.enabled
   - settings.loan-policies.all
+  - settings.loan-rules.all 
   - settings.loan-types.all
   - settings.material-types.all
-  - settings.usergroups.all
-  - settings.addresstypes.all
+  - settings.usergroups.all 
+  - settings.users.enabled 
   - stripes-util-notes.all
   - ui-circulation.settings.loan-policies
   - ui-circulation.settings.loan-rules
