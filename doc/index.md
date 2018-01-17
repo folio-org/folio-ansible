@@ -131,9 +131,9 @@ An nginx in front of the Vagrant box proxies the requests to ports
 3000 and 9130. This snippet shows how to do it:
 
     # Frontend requests:
-    # index file at / and all *.ico, *,png, *.css, *.js files in the root directory and
+    # index file at / and all *.ico, *,png, *.css, *.js, *.js.map files in the root directory and
     # the /bootstrap/ and /fonts/ and /img/ directories.
-    location ~ ^(/|/[0-9a-zA-Z.-]+\.(ico|png|css|js)|/bootstrap/.*|/fonts/.*|/img/.*)$ {
+    location ~ ^(/|/[0-9a-zA-Z.-]+\.(ico|png|css|js|js\.map)|/bootstrap/.*|/fonts/.*|/img/.*)$ {
         proxy_pass http://127.0.0.1:3000;
     }
 
