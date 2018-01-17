@@ -116,7 +116,7 @@ this way:
 
     $ vagrant init folio/stable
     $ vagrant up
-    $ vagrant ssh -c "sudo sed -i -e 's!http://localhost:9130!http://example.com:9130!g' /etc/folio/stripes/stripes.config.js"
+    $ vagrant ssh -c "sudo sed -i -e 's=http://localhost:9130=http://example.com:9130=g' /etc/folio/stripes/stripes.config.js"
     $ vagrant ssh -c "/etc/folio/stripes/build-run"
 
 ## Replace port 9130
