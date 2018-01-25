@@ -1,6 +1,7 @@
 ---
 # Variables for building testing-topdown
 okapi_pull: true
+okapi_pull_timeout: 600
 top_down_install: true
 auth_required: true
 loan_action: true
