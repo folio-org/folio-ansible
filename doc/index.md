@@ -49,29 +49,14 @@ used to generate prebuilt Vagrant boxes, available on
   -- a backend FOLIO system, with the very latest releases of backend
   modules. Absolutely _not_ guaranteed to interoperate correctly.
 
+* [folio/minimal](https://app.vagrantup.com/folio/boxes/minimal)
+  -- a minimal FOLIO system with just Okapi and no modules or sample data
+  loaded.
+
 * [folio/curriculum](https://app.vagrantup.com/folio/boxes/curriculum)
   -- a box built to support the
   [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
   with prerequisites installed.
-
-* [folio/folio-backend](https://app.vagrantup.com/folio/boxes/folio-backend)
-  -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
-  modules, mod-loan-storage, and mod-circulation. *This box is no
-  longer maintained.*
-
-* [folio/folio-demo](https://app.vagrantup.com/folio/boxes/folio-demo)
-  -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
-  mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
-  Stripes, and the Stripes modules trivial, ui-scan, ui-users, and
-  ui-items. *This box is no longer maintained.*
-
-* [folio/folio-backend-auth](https://app.vagrantup.com/folio/boxes/folio-backend-auth)
-  -- a backend FOLIO system with the mod-auth authentication
-  subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
-  mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
-  subsystem includes three sample users, `diku_admin` (password
-  "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
-  "diku"). *This box is no longer maintained.*
 
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
