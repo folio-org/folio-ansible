@@ -156,7 +156,12 @@ stop working.
     # okapi-deploy service:
     $ sudo systemctl stop okapi-deploy
 
-    # Then edit its deployment descriptor to update
+    # If you want the latest version of the module, just do a
+    # docker pull:
+    $ docker pull folioci/mod-users:latest
+
+    # To update to a specific version of a module,
+    # edit its deployment descriptor to update
     # the version specified and pull the image, e.g.:
     $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
     $ docker pull folioci/mod-users:14.4.1-SNAPSHOT.13
