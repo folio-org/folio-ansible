@@ -152,11 +152,16 @@ stop working.
     # for a list of images
     $ docker images
 
-    # to update a module, edit its deployment descriptor and update
-    # the version specified e.g.:
-    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
+    # To update a module, first undeploy the modules using the
+    # okapi-deploy service:
+    $ sudo systemctl stop okapi-deploy
 
-    # to undeploy and redeploy using the new image
+    # Then edit its deployment descriptor to update
+    # the version specified and pull the image, e.g.:
+    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
+    $ docker pull folioci/mod-users:14.4.1-SNAPSHOT.13
+
+    # Then redeploy using the new image
     $ sudo systemctl restart okapi-deploy
 
 ### Updating Stripes
