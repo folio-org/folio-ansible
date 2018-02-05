@@ -167,7 +167,7 @@ stop working.
     $ docker pull folioci/mod-users:14.4.1-SNAPSHOT.13
 
     # Then redeploy using the new image
-    $ sudo systemctl restart okapi-deploy
+    $ sudo systemctl start okapi-deploy
 
 ### Updating Stripes
 
