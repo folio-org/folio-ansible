@@ -11,6 +11,7 @@
     * [Updating Stripes](#updating-stripes)
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
+    * [404 error on Vagrant box update](#404-error-on-vagrant-box-update)
     * [Vagrant "forwarded port is already in use"](#vagrant-forwarded-port-is-already-in-use)
     * [Viewing the Okapi log](#viewing-the-okapi-log)
     * [Viewing backend module logs](#viewing-backend-module-logs)
@@ -205,6 +206,23 @@ The Vagrantfile in this project contains six target definitions:
    packaging.
 
 ## Troubleshooting/Known Issues
+
+### 404 error on Vagrant box update
+
+As of 5 Feb 2018: If you have an existing Vagrant VM based on a
+Vagrant box file created before this date, you may have an issue with
+the metadata URL for the box file. Check the file
+`~/.vagrant.d/boxes/<box ID>/metadata_url`. If it has an address of the
+form `https://atlas.hashicorp.com/[...]` replace `atlas.hashicorp`
+with `vagrantcloud`. If you are using a version of Vagrant \<= 1.9.6,
+upgrade Vagrant to prevent future problems initializing Vagrant VMs.
+
+To replace the metadata URL for all the boxes in your `~/.vagrant.d`
+directory, use the following `sed` script:
+
+    sed -i -- 's/atlas.hashicorp/vagrantcloud/g' ~/.vagrant.d/boxes/*/metadata_url
+
+For more information, see https://github.com/hashicorp/vagrant/issues/9442
 
 ### Vagrant "forwarded port is already in use"
 
