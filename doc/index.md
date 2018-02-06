@@ -34,7 +34,7 @@ used to generate prebuilt Vagrant boxes, available on
 
 * [folio/stable-backend](https://app.vagrantup.com/folio/boxes/stable-backend)
   -- a backend FOLIO system with stable releases of backend modules. All
-  components should interoperate correctly. 
+  components should interoperate correctly.
 
 * [folio/snapshot](https://app.vagrantup.com/folio/boxes/snapshot)
   -- a full-stack FOLIO system, built from the most recent working
@@ -212,15 +212,19 @@ The Vagrantfile in this project contains six target definitions:
 As of 5 Feb 2018: If you have an existing Vagrant VM based on a
 Vagrant box file created before this date, you may have an issue with
 the metadata URL for the box file. Check the file
-`~/.vagrant.d/boxes/<box ID>/metadata_url`. If it has an address of the
-form `https://atlas.hashicorp.com/[...]` replace `atlas.hashicorp`
-with `vagrantcloud`. If you are using a version of Vagrant \<= 1.9.6,
-upgrade Vagrant to prevent future problems initializing Vagrant VMs.
+`cat ~/.vagrant.d/boxes/<box ID>/metadata_url`. If it has an address of the
+form `https://atlas.hashicorp.com/[...]` then the `atlas.hashicorp`
+needs to be replaced with `vagrantcloud`.
+
+Note: Do not use a text-editor, as they are not proper text files.
 
 To replace the metadata URL for all the boxes in your `~/.vagrant.d`
-directory, use the following `sed` script:
+directory, use the following `Perl one-liner` script:
 
-    sed -i -- 's/atlas.hashicorp/vagrantcloud/g' ~/.vagrant.d/boxes/*/metadata_url
+    perl -p -i -e 's/atlas.hashicorp/vagrantcloud/' ~/.vagrant.d/boxes/*/metadata_url
+
+If you are using a version of Vagrant \<= 1.9.6,
+upgrade Vagrant to prevent future problems initializing Vagrant VMs.
 
 For more information, see https://github.com/hashicorp/vagrant/issues/9442
 
