@@ -36,6 +36,11 @@ env_var:
   mod-inventory:
     - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
 
+# other modules to enable outside dependency resolution
+other_mods:
+  - mod-codex-inventory
+  - mod-codex-ekb
+
 # Docker ports for modules
 docker_port:
   mod-inventory: 9403

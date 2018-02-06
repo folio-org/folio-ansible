@@ -12,6 +12,10 @@
   set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
   with_items: "{{ mod_descrs }}"
 
+- name: Add other modules to module list
+  set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
+  with_items: "{{ other_mods }}"
+
 - name: Finish module list json
   set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
 

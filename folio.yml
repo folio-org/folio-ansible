@@ -56,6 +56,8 @@
     - mod-login-saml-data
     - mod-circulation-data
     - mod-notes-data
+    - mod-kb-ebsco-data
+    - mod-codex-ekb-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
