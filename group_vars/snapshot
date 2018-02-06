@@ -35,6 +35,8 @@ docker_cmd:
 env_var:
   mod-inventory:
     - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+  mod-kb-ebsco:
+    - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
 
 # other modules to enable outside dependency resolution
 other_mods:
