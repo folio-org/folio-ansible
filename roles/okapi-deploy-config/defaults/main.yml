@@ -15,3 +15,5 @@ env_var: {}
 # default Docker port for modules
 docker_port: {}
 default_docker_port: 8081
+# Other modules to enable outside of dependency resolution
+other_mods: []
