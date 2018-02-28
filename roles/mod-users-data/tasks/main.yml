@@ -96,6 +96,7 @@
     method: POST
     body_format: json
     headers:
+      Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: diku
       Accept: application/json
       X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"

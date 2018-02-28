@@ -29,8 +29,6 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Dcache.permissions=false" }
 
   - index: 1
     name: mod-permissions

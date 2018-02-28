@@ -80,6 +80,7 @@
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
     headers:
+      Authtoken-Refresh-Cache: "true"
       Content-Type: application/json
       X-Okapi-Tenant: diku
       Accept: application/json

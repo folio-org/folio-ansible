@@ -33,8 +33,6 @@ docker_cmd:
 
 # env values for modules
 env_var:
-  mod-authtoken:
-    - { name: JAVA_OPTIONS, value: "-Dcache.permissions=false" }
   mod-inventory:
     - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
   mod-kb-ebsco:
