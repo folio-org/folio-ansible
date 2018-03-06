@@ -98,7 +98,7 @@
       X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.customerId", "description": "EBSCO RM-API Customer ID", "enabled": true, "value": "{{ rmapi_custid }}" }'
-    status_code: 201
+    status_code: 201,422
   register: mod_codex_ekb_custid 
   changed_when: mod_codex_ekb_custid.status == 201
   when: mod_codex_ekb_deploy.status == 200 and auth_required and rmapi and rmapi_custid
@@ -113,7 +113,7 @@
       X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.apiKey", "description": "EBSCO RM-API API Key", "enabled": true, "value": "{{ rmapi_key }}" }'
-    status_code: 201
+    status_code: 201,422
   register: mod_codex_ekb_apikey
   changed_when: mod_codex_ekb_apikey.status == 201
   when: mod_codex_ekb_deploy.status == 200 and auth_required and rmapi and rmapi_key
@@ -128,7 +128,7 @@
       X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.url", "description": "EBSCO RM-API URL", "enabled": true, "value": "{{ rmapi_url }}" }'
-    status_code: 201
+    status_code: 201,422
   register: mod_codex_ekb_url
   changed_when: mod_codex_ekb_url.status == 201
   when: mod_codex_ekb_deploy.status == 200 and auth_required and rmapi and rmapi_url
