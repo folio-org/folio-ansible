@@ -55,6 +55,7 @@ admin_permissions:
   - settings.checkout.enabled
   - settings.developer.enabled
   - settings.eholdings.enabled
+  - settings.inventory.enabled
   - settings.loan-policies.all
   - settings.loan-rules.all 
   - settings.loan-types.all
@@ -64,6 +65,8 @@ admin_permissions:
   - stripes-util-notes.all
   - ui-circulation.settings.loan-policies
   - ui-circulation.settings.loan-rules
+  - ui-inventory.settings.materialtypes
+  - ui-inventory.settings.loantypes
   - ui-items.settings.material-types
   - ui-items.settings.loan-types
   - ui-organization.settings.key-bindings
