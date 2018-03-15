@@ -6,6 +6,7 @@
   "itemId": "bb5a6689-c008-4c96-8f8f-b666850ee12d",
   "fulfilmentPreference": "Hold Shelf",
   "holdShelfExpirationDate": "2017-01-20",
+  "status": "Open - Not yet filled",
   "item": {
     "title": "Interesting Times",
     "barcode": "326547658598"
@@ -15,5 +16,5 @@
     "firstName": "{{ loan_users.json.users.0.personal.firstName }}",
     "middleName": "{{ loan_users.json.users.0.personal.middleName | default('') }}",
     "barcode": "{{ loan_users.json.users.0.barcode }}"
-  }  
+  }
 }
