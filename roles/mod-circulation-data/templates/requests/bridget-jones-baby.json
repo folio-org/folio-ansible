@@ -6,6 +6,7 @@
   "itemId": "1b6d3338-186e-4e35-9e75-1b886b0da53e",
   "fulfilmentPreference": "Hold Shelf",
   "holdShelfExpirationDate": "2017-05-20",
+  "status": "Open - Not yet filled",
   "item": {
     "title": "Bridget Jones's Baby",
     "barcode": "453987605438"
@@ -15,5 +16,5 @@
     "firstName": "{{ loan_users.json.users.4.personal.firstName }}",
     "middleName": "{{ loan_users.json.users.4.personal.middleName | default('') }}",
     "barcode": "{{ loan_users.json.users.4.barcode }}"
-  }  
+  }
 }
