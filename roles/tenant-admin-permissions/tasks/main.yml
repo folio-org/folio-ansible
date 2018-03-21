@@ -1,0 +1,66 @@
+---
+
+- name: get list of tenant modules
+  uri: 
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    method: GET
+    status_code: 200
+    body_format: json
+  register: tenant_modules_response
+
+- set_fact: 
+    tenant_modules: "{{ tenant_modules_response | json_query('json[].id') }}"
+
+- name: debug - print list of 'tenant_modules'  
+  debug: 
+    msg: "Tenant Modules {{ tenant_modules }}"
+
+- name: get module descriptors for each tenant module
+  uri: 
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item }}"
+    method: GET
+    status_code: 200
+    body_format: json
+  with_items: "{{ tenant_modules }}"
+  register: tenant_mod_descriptors
+
+- name: set fact 'tenant_admin_permissions_set'
+  set_fact:
+    tenant_admin_permissions_set: "{{ tenant_mod_descriptors | json_query('results[].json.permissionSets[].{ permissionName: permissionName }') }}" 
+
+- name: debug - print 'tenant_admin_permissions_set'
+  debug:
+    msg: "{{ tenant_admin_permissions_set }}"
+
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/bl-users/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: 'application/json, text/plain'
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: tenant_admin_login
+  when: auth_required
+
+- name: set admin user's permissions uuid
+  set_fact: 
+    tenant_admin_perms_uuid: "{{ tenant_admin_login | json_query('json.permissions.id') }}"
+
+- name: Assign permissions to {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ tenant_admin_perms_uuid }}/permissions"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
+      Accept: application/json
+    body: "{{ item }}"
+    body_format: json
+    status_code: 200,422
+  register: tenant_admin_permissions
+  with_items: "{{ tenant_admin_permissions_set }}"
+  changed_when: tenant_admin_permissions.status == 200
+  when: auth_required
