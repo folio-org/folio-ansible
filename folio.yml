@@ -15,6 +15,7 @@
     - okapi
     - stripes-docker
     - okapi-deploy-config
+    - tenant-admin-permissions
 
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-stable
@@ -65,11 +66,13 @@
 - hosts: stripes-build
   roles:
     - stripes-build
+    - tenant-admin-permissions
 
 # Provision a host as a Stripes server
 - hosts: stripes
   roles:
     - stripes-docker
+    - tenant-admin-permissions
 
 # Roles for packaging
 - hosts: vagrant

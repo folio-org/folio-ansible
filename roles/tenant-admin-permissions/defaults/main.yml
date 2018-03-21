@@ -10,3 +10,5 @@ tenant: diku
 admin_user: 
   username: diku_admin 
   password: admin 
+
+auth_by_username: false
