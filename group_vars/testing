@@ -242,6 +242,23 @@ folio_modules:
     docker_env:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     okapi_docker_pull: "false"
+
+  - index: 20
+    name: mod-vendors
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+    
     
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
