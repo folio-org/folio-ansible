@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use Data::Faker;
-use UUID;
+use UUID::Tiny qw(:std);
 use JSON;
 use Getopt::Long;
 
@@ -46,9 +46,7 @@ unless (@address_types) {
 }
 
 for (my $i = $start; $i < $users + $start; $i++) {
-  my ($uuid,$id);
-  UUID::generate($uuid);
-  UUID::unparse($uuid,$id);
+  my $id = create_uuid_as_string(UUID_V4);
   my $username = $faker->username();
   until (!$usernames{$username}) {
     $username = $faker->username();
