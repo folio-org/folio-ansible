@@ -32,7 +32,8 @@ folio_modules:
 
   - index: 1
     name: mod-permissions
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    mod_descriptor_url: http://folio-registry.aws.indexdata.com/_/proxy/modules/mod-permissions-5.0.1-SNAPSHOT.11
+    docker_tag: 5.0.1-SNAPSHOT.11
     image_repository: folioci
     docker_env:
       - { name: db.host, value: "{{ module_pg_host }}" }
