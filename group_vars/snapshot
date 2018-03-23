@@ -26,6 +26,10 @@ mod_circulation_prefixes:
 inv_storage_3: true
 enable_okapi: true
 
+# Pinned modules
+pinned_modules:
+  - { module: mod-permissions, version: 5.0.1-SNAPSHOT.11 }
+
 # dockerCMD values for modules
 docker_cmd:
   mod-login:
