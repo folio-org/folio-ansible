@@ -49,6 +49,8 @@
 
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-snapshot
+  vars_files:
+    - group_vars/snapshot
   roles:
     - mod-auth-data
     - mod-configuration-data
