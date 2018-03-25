@@ -164,7 +164,7 @@
   with_items:
     - libjson-xs-perl
     - libdata-faker-perl
-    - libuuid-perl
+    - libuuid-tiny-perl
 
 - name: Copy gen-folio-users utility
   become: yes
