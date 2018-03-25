@@ -23,9 +23,24 @@
   changed_when: false
   listen: "Register modules"
 
+- name: Create mod_descr_list variable
+  set_fact:
+    mod_descr_list: []
+  listen: "Register modules"
+
+- name: Set mod_descr_list
+  set_fact:
+    mod_descr_list: "{{ mod_descr_list }} + [ '{{ item }}' ]"
+  with_items: "{{ mod_descrs.stdout_lines }}"
+  listen: "Register modules"
+
+- name: Bump stripes-core to the top of the list
+  set_fact: mod_descr_list="['stripes-core.json'] + {{ mod_descr_list|difference(['stripes-core.json']) }}"
+  listen: "Register modules"
+
 - name: Slurp module descriptors
   slurp: src={{ stripes_conf_dir }}/ModuleDescriptors/{{ item }}
-  with_items: "{{ mod_descrs.stdout_lines }}"
+  with_items: "{{ mod_descr_list }}"
   register: mod_descrs_raw
   listen: "Register modules"
 
