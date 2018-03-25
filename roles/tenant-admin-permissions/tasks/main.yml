@@ -1,5 +1,5 @@
 ---
-
+# Note: admin user must be bootstrapped and have mod-permissions perms
 - name: get list of tenant modules
   uri: 
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
