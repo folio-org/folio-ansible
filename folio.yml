@@ -15,6 +15,7 @@
     - okapi
     - stripes-docker
     - okapi-deploy-config
+    - mod-auth-data 
     - tenant-admin-permissions
 
 # Provision a host with the sample tenant and data
@@ -52,7 +53,6 @@
   vars_files:
     - group_vars/snapshot
   roles:
-    - mod-auth-data
     - mod-configuration-data
     - mod-users-data 
     - mod-users-bl-data
