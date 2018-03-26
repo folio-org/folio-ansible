@@ -1,0 +1,32 @@
+{
+  "id" : "d9cd0bed-1b49-4b5e-a7bd-064b8d177231",
+  "name" : "Example Loan Policy",
+  "description" : "An example loan policy",
+  "loanable" : true,
+  "loansPolicy" : {
+    "profileId" : "ROLLING",
+    "period" : {
+      "duration" : 1,
+      "intervalId" : "MONTH"
+    },
+    "closedLibraryDueDateManagementId" : "KEEP_CURRENT_DATE",
+    "existingRequestsPeriod" : {
+      "duration" : 1,
+      "intervalId" : "WEEK"
+    },
+    "gracePeriod" : {
+      "duration" : 7,
+      "intervalId" : "DAYS"
+    }
+  },
+  "renewable" : true,
+  "renewalsPolicy" : {
+    "unlimited" : true,
+    "renewFromId" : "CURRENT_DUE_DATE",
+    "differentPeriod" : true,
+    "period" : {
+      "duration" : 30,
+      "intervalId" : "DAYS"
+    }
+  }
+}

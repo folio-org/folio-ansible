@@ -1,0 +1,60 @@
+---
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=5
+
+- name: Login as {{ admin_user.username }}
+  uri: 
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: tenant_admin_login
+  when: auth_required
+
+# Add RM API key
+- name: Add RM API customer ID
+  uri: 
+    url: "{{ okapi_url }}/configurations/entries"
+    method: POST
+    body_format: json
+    headers: 
+      Authtoken-Refresh-Cache: "true"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+      Accept: application/json
+    body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.customerId", "description": "EBSCO RM-API Customer ID", "enabled": true, "value": "{{ rmapi_custid }}" }'
+    status_code: 201,422
+  register: mod_codex_ekb_custid 
+  changed_when: mod_codex_ekb_custid.status == 201
+   
+- name: Add RM API key
+  uri: 
+    url: "{{ okapi_url }}/configurations/entries"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }} | default('token')"
+      Accept: application/json
+    body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.apiKey", "description": "EBSCO RM-API API Key", "enabled": true, "value": "{{ rmapi_key }}" }'
+    status_code: 201,422
+  register: mod_codex_ekb_apikey
+  changed_when: mod_codex_ekb_apikey.status == 201
+
+- name: Add RM API URL
+  uri: 
+    url: "{{ okapi_url }}/configurations/entries"
+    method: POST
+    body_format: json
+    headers: 
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }} | default('token')"
+      Accept: application/json
+    body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.url", "description": "EBSCO RM-API URL", "enabled": true, "value": "{{ rmapi_url }}" }'
+    status_code: 201,422
+  register: mod_codex_ekb_url
+  changed_when: mod_codex_ekb_url.status == 201

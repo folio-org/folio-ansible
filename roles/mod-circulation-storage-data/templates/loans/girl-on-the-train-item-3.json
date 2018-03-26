@@ -1,0 +1,13 @@
+{
+  "id": "a561c1e7-4ed1-479a-8f87-be0d489e41e1",
+  "userId": "{{ loan_users.json.users.0.id }}",
+  "itemId": "459afaba-5b39-468d-9072-eb1685e0ddf4",
+  "loanDate": "2017-06-11T08:43:15Z",
+  "returnDate": "2017-06-28T08:43:15Z",
+  "dueDate": "2017-07-04T08:43:15Z",
+  {% if loan_action == true %}"action": "checkedin",{% endif %}
+  "status": {
+    "name": "Closed"
+  },
+  "renewalCount": 1
+}

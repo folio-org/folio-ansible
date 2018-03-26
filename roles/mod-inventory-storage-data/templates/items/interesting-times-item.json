@@ -1,0 +1,14 @@
+{
+  "id": "bb5a6689-c008-4c96-8f8f-b666850ee12d",{% if inv_storage_3 %}
+  "holdingsRecordId": "67cd0046-e4f1-4e4f-9024-adf0b0039d09",{% endif %}
+  "barcode": "326547658598",
+  "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+  "permanentLoanTypeId": "2b94c631-fca9-a892-c730-03ee529ffe27",
+  "status": {
+    "name": "Checked out - Held"
+  }{% if not inv_storage_3 %},
+  "title": "Interesting Times",
+  "location": {
+    "name": "Annex Library"
+  }{% endif %}  
+}
