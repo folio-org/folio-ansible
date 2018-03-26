@@ -1,5 +1,5 @@
 ---
-okapi_url: http://localhost:9130/
+okapi_url: http://localhost:9130
 enable_okapi: false
 
 # Diku is the default tenant
