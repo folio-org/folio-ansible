@@ -8,6 +8,10 @@ pg_admin_password: folio_admin
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 module_database: okapi_modules
+# pinned modules example
+# pinned_modules:
+#   - { module: mod-permissions, version: 5.0.1-SNAPSHOT.11 }
+pinned_modules: []
 # default dockerCMD values for modules
 docker_cmd: {}
 # default env values for modules

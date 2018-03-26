@@ -1,0 +1,14 @@
+---
+
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+auth_required: false
+top_down_install: false
+
+tenant: diku
+admin_user: 
+  username: diku_admin 
+  password: admin 
+
+auth_by_username: false

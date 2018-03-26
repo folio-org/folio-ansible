@@ -21,6 +21,8 @@ mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
 inv_storage_3: true
+hierarchical_locations: true
+shelf_locations: true
 enable_okapi: true
 
 folio_modules:
