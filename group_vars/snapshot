@@ -25,7 +25,7 @@ mod_circulation_prefixes:
   - mod-circulation
 inv_storage_3: true
 hierarchical_locations: true
-shelf_locations: true
+shelf_locations: false
 enable_okapi: true
 
 # dockerCMD values for modules
