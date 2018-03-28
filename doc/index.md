@@ -19,7 +19,7 @@
     * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
     * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
-    * [VERR_SVM_DISABLED](#verrsvmdisabled)
+    * [BIOS virtualization configuration](#bios-virtualization-configuration)
 * [Additional information](#additional-information)
 
 ## Prebuilt Vagrant boxes
@@ -325,7 +325,7 @@ with vagrant, and so just let it use the system one (see
 [a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969),
 fixed in v1.9.0).
 
-### VERR_SVM_DISABLED
+### BIOS virtualization configuration
 
 Trying to start VirtualBox may fail with the message:
 
