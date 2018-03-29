@@ -21,7 +21,7 @@
   roles:
     - mod-auth-data 
     - tenant-admin-permissions
-    - stripes-docker 
+    - stripes-docker
 
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-stable
