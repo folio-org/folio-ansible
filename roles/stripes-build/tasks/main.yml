@@ -1,5 +1,4 @@
 ---
-
 - name: create build dir
   become: yes
   file: 
@@ -15,13 +14,13 @@
     - { src: 'stripes.config.js.j2', dest: 'stripes.config.js' }
     - { src: 'package.json.j2', dest: 'package.json' }
   when: with_github == false
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: copy build-module-descriptors.js to build dir
   become: yes
   copy: src=build-module-descriptors.js dest={{ stripes_conf_dir}}/build-module-descriptors.js
   when: with_github == false
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: copy stripes platform files from github project
   become: yes
@@ -30,7 +29,7 @@
     dest: "{{ stripes_conf_dir }}"
     update: no
   when: with_github == true
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: set okapi url in stripes config
   become: yes
@@ -41,7 +40,7 @@
     replace: >-
        \1{{ stripes_okapi_url }}\2
   when: with_github == true
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: Force build of mod descriptors from github without strict flag
   become: yes
@@ -50,7 +49,7 @@
     regexp: '(^\s*\"postinstall\"\s*:.*)\s+--strict(\").*$'
     replace: '\1\2'
   when: with_github == true and stripes_strict_md == false
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: Force build of mod descriptors from github with strict flag
   become: yes
@@ -59,7 +58,7 @@
     regexp: '(^\s*\"postinstall\"\s*:.*build-module-descriptors.js)(?!\s+--strict)(.*$)'
     replace: '\1 --strict \2'
   when: with_github and stripes_strict_md
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: set tenant in stripes config
   become: yes
@@ -68,9 +67,9 @@
     regexp: >-
       ('tenant':\s*'?)[A-Za-z0-9\-]+('.*)$
     replace: >-
-      \1{{ stripes_tenant }}\2 
+      \1{{ stripes_tenant }}\2
   when: with_github == true
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: Move to Node.js 6.X lts
   become: yes
@@ -93,7 +92,7 @@
     src: yarnrc.j2
     dest: "{{ stripes_conf_dir }}/.yarnrc"
   when: npm_proxy == true
-  notify: Rebuild stripes
+  notify: "Rebuild stripes"
 
 - name: Ensure modules are registered
   command: /bin/true
