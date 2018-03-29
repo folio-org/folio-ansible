@@ -90,13 +90,6 @@
   set_fact: enable_mods="{{ enable_mods }} + ['{{ item.id }}']"
   with_items: "{{ module_deps_list }}"
 
-- name: Find stripes-core in list
-  set_fact: stripes_core_id="{{ enable_mods|join(',')|regex_search('(folio_stripes-core-\d+\.\d+\.\d+[a-zA-Z0-9\.-]*)') }}"
-
-- name: Bump stripes-core to top of list
-  set_fact: enable_mods="['{{ stripes_core_id }}'] + {{ enable_mods|difference([stripes_core_id]) }}"
-  when: stripes_core_id != ""
-
 - name: Find mod-permissions in list
   set_fact: mod_perms_id="{{ enable_mods|join(',')|regex_search('(mod-permissions-\d+\.\d+\.\d+[a-zA-Z0-9\.-]*)') }}"
 

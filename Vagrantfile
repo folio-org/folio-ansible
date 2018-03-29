@@ -119,6 +119,7 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_snapshot"],
         "snapshot" => ["build_snapshot"],
+        "snapshot-part2" => ["build_snapshot"],
         "folio-sample-data-snapshot" => ["build_snapshot"]
       }
     end

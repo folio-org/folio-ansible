@@ -1,5 +1,6 @@
 ---
 
+folio_conf: /etc/folio
 stripes_conf_dir: /etc/folio/stripes
 # host address to map container to. '127.0.0.1' by default  
 stripes_host_address: '127.0.0.1'

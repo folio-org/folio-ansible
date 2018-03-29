@@ -12,3 +12,5 @@ metadata_admin_permissions:
 auth_by_username: false
 inv_storage_3: false
 top_down_install: false
+hierarchical_locations: false
+shelf_locations: true

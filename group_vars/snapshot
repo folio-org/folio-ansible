@@ -24,6 +24,8 @@ mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
 inv_storage_3: true
+hierarchical_locations: true
+shelf_locations: false
 enable_okapi: true
 
 # dockerCMD values for modules
@@ -51,6 +53,7 @@ docker_port:
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
+stripes_strict_md: true
 
 # Metadata for CI build
 version: 1.0.0
