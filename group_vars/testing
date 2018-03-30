@@ -222,23 +222,6 @@ folio_modules:
     docker_port: 3000
 
   - index: 15
-    name: mod-codex-mock
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
-
-  - index: 16
     name: mod-codex-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -246,7 +229,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
-  - index: 17
+  - index: 16
     name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -254,7 +237,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
-  - index: 18
+  - index: 17
     name: mod-codex-mux
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -262,7 +245,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
-  - index: 19
+  - index: 18
     name: mod-kb-ebsco
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -270,7 +253,7 @@ folio_modules:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     okapi_docker_pull: "false"
 
-  - index: 20
+  - index: 19
     name: mod-vendors
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
