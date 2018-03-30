@@ -214,7 +214,7 @@
   changed_when: load_shelfloc.status == 201
   with_fileglob:
     - shelf-locations/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and shelf_locations
 
 # fails with 422 error if already loaded
 - name: Load inventory storage institutions

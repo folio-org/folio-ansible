@@ -10,3 +10,4 @@ admin_user:
 
 inv_storage_3: true
 do_mods_larger: false
+shelf_locations: false
