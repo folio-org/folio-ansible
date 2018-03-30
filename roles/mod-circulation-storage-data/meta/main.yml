@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: mod-inventory-storage-data }
-  - { role: mod-users2-data }
+  - { role: mod-users-data2 }
