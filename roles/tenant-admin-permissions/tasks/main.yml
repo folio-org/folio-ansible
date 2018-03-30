@@ -1,37 +1,6 @@
 ---
 # Note: admin user must be bootstrapped and have mod-permissions perms
-- name: get list of tenant modules
-  uri: 
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
-    method: GET
-    status_code: 200
-    body_format: json
-  register: tenant_modules_response
-
-- set_fact: 
-    tenant_modules: "{{ tenant_modules_response | json_query('json[].id') }}"
-
-- name: debug - print list of tenant_modules
-  debug: 
-    msg: "Tenant Modules {{ tenant_modules }}"
-
-- name: get module descriptors for each tenant module
-  uri: 
-    url: "{{ okapi_url }}/_/proxy/modules/{{ item }}"
-    method: GET
-    status_code: 200
-    body_format: json
-  with_items: "{{ tenant_modules }}"
-  register: tenant_mod_descriptors
-
-- name: set fact tenant_admin_permissions_set
-  set_fact:
-    tenant_admin_permissions_set: "{{ tenant_mod_descriptors | json_query('results[].json.permissionSets[].{ permissionName: permissionName }') }}" 
-
-- name: debug - print tenant_admin_permissions_set
-  debug:
-    msg: "{{ tenant_admin_permissions_set }}"
-
+# Requires mod-permissions >= 5.1.0
 - name: Login as {{ admin_user.username }}
   uri:
     url: "{{ okapi_url }}/bl-users/login"
@@ -43,41 +12,35 @@
     body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
     status_code: 201
   register: tenant_admin_login
-  when: auth_required
 
-- name: set admin user permissions uuid
-  set_fact: 
-    tenant_admin_perms_uuid: "{{ tenant_admin_login | json_query('json.permissions.id') }}"
-
-- name: Assign permissions to {{ admin_user.username }} (auth by id)
+- name: Get all permissionSets not included in other permissionSets
+  # cql query for childOf==[]
   uri:
-    url: "{{ okapi_url }}/perms/users/{{ tenant_admin_perms_uuid }}/permissions"
+    url: "{{ okapi_url }}/perms/permissions?query=childOf%3D%3D%5B%5D&length=500"
+    method: GET
+    headers:
+      Accept: "application/json, text/plain"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+  register: all_permissions
+
+- name: Fail if all permissions not retrieved
+  fail:
+    msg: "Retrieved permissions don't match total permissions count"
+  when: all_permissions.json.permissions|length != all_permissions.json.totalRecords
+
+- name: Assign permissions to {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ tenant_admin_login.json.permissions.id }}/permissions"
     method: POST
     headers:
       X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
       Accept: application/json
-    body: "{{ item }}"
+    body: '{ "permissionName" : "{{ item.permissionName }}" }'
     body_format: json
-    status_code: 200,422
+    status_code: 200
+  when: "['{{ item.permissionName }}']|difference(tenant_admin_login.json.permissions.permissions) and auth_required"
   register: tenant_admin_permissions
-  with_items: "{{ tenant_admin_permissions_set }}"
+  with_items: "{{ all_permissions.json.permissions }}"
   changed_when: tenant_admin_permissions.status == 200
-  when: auth_required and not auth_by_username
-
-- name: Assign permissions to {{ admin_user.username }} (auth by username)
-  uri:
-    url: "{{ okapi_url }}/perms/users/{{ admin_user.username }}/permissions"
-    method: POST
-    headers:
-      X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
-      Accept: application/json
-    body: "{{ item }}"
-    body_format: json
-    status_code: 200,422
-  register: tenant_admin_permissions
-  with_items: "{{ tenant_admin_permissions_set }}"
-  changed_when: tenant_admin_permissions.status == 200
-  when: auth_required and auth_by_username
-
