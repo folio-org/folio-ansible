@@ -31,6 +31,8 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 1
     name: mod-permissions
@@ -42,6 +44,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -60,6 +63,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -76,6 +80,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -92,6 +97,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx384m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -103,18 +109,24 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 6
     name: mod-login-saml
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 7
     name: mod-user-import
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 8
     name: mod-inventory-storage
@@ -126,6 +138,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -151,6 +164,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -163,6 +177,8 @@ folio_modules:
     image_repository: folioci
     okapi_docker_pull: "false"
     docker_port: 9801
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 12
     name: mod-notify
@@ -174,6 +190,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -190,6 +207,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -213,6 +231,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -224,18 +243,24 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 17
     name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 18
     name: mod-codex-mux
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 19
     name: mod-kb-ebsco
@@ -255,6 +280,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
