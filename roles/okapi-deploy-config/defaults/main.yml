@@ -1,6 +1,7 @@
 ---
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_user: folio
+folio_conf: /etc/folio
 tenant: diku
 docker_repo: folioci  
 pg_admin_user: folio_admin
@@ -8,16 +9,16 @@ pg_admin_password: folio_admin
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 module_database: okapi_modules
+# pinned modules example
+# pinned_modules:
+#   - { module: mod-permissions, version: 5.0.1-SNAPSHOT.11 }
+pinned_modules: []
 # default dockerCMD values for modules
-docker_cmd:
-  mod-login:
-    - "verify.user=true"
+docker_cmd: {}
 # default env values for modules
-env_var:
-  mod-inventory:
-    - { name: JAVA_OPTS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+env_var: {}
 # default Docker port for modules
-docker_port:
-  mod-inventory: 9403
-  mod-circulation: 9801
+docker_port: {}
 default_docker_port: 8081
+# Other modules to enable outside of dependency resolution
+other_mods: []

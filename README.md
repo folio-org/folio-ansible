@@ -15,7 +15,7 @@ The primary audiences for this project are:
 
 ## License
 
-Copyright (C) 2017 The Open Library Foundation
+Copyright (C) 2016-2018 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
@@ -23,7 +23,8 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 ## System Requirements
 
 For Vagrant deployment:
-* [Vagrant](https://www.vagrantup.com); for Windows use 1.9.2 or \>= 1.9.4.
+* [Vagrant](https://www.vagrantup.com) \>= 1.9.6 (note that the
+  version available in the standard Ubuntu repository is 1.9.1!)
 * [VirtualBox](https://www.virtualbox.org)
 
 For Ansible provisioning (to build a dev VM, or to build the demo or

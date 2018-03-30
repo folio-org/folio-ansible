@@ -8,13 +8,20 @@
     - okapi
     - okapi-deploy-modules
 
+# split these roles so that the "Rebuild stripes" handler is only
+# called once
 - hosts: snapshot
   roles:
     - common
     - postgresql
     - okapi
-    - stripes-docker
     - okapi-deploy-config
+
+- hosts: snapshot-part2
+  roles:
+    - mod-auth-data 
+    - tenant-admin-permissions
+    - stripes-docker
 
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-stable
@@ -39,20 +46,27 @@
     - mod-circulation-data
     - mod-notes-data
     - mod-graphql-data
+    - mod-kb-ebsco-data
     - mod-codex-mock-data
     - mod-codex-mux-data
+    - mod-codex-inventory-data
+    - mod-codex-ekb-data
+    - mod-vendors-data
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-snapshot
+  vars_files:
+    - group_vars/snapshot
   roles:
-    - mod-auth-data
     - mod-configuration-data
     - mod-users-data 
     - mod-users-bl-data
     - mod-login-saml-data
     - mod-circulation-data
     - mod-notes-data
+    - mod-kb-ebsco-data
+    - mod-codex-ekb-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
@@ -60,11 +74,13 @@
 - hosts: stripes-build
   roles:
     - stripes-build
+    - tenant-admin-permissions
 
 # Provision a host as a Stripes server
 - hosts: stripes
   roles:
     - stripes-docker
+    - tenant-admin-permissions
 
 # Roles for packaging
 - hosts: vagrant

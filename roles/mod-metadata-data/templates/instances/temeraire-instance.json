@@ -1,8 +1,15 @@
 {
-  "id": "cf23adf0-61ba-4887-bf82-956c4aae2260",
-  "title": "Temeraire",
-  "identifiers": [
-    {% if inv_storage_3 %}
+  "id": "cf23adf0-61ba-4887-bf82-956c4aae2260",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "Temeraire",{% if inv_storage_3 %}
+  "contributors": [
+    {
+      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "name": "Novik, Naomi",
+      "primary": true
+    }
+  ],{% endif %}
+  "identifiers": [{% if inv_storage_3 %}
     {
       "identifierTypeId": "8261054f-be78-422d-bd51-4ed9f33c3422",
       "value": "1447294130"
@@ -10,8 +17,7 @@
     {
       "identifierTypeId": "8261054f-be78-422d-bd51-4ed9f33c3422",
       "value": "9781447294130"
-    }
-    {% else %}
+    }{% else %}
     {
       "namespace": "isbn",
       "value": "1447294130"
@@ -19,15 +25,7 @@
     {
       "namespace": "isbn",
       "value": "9781447294130"
-    }
-    {% endif %}
+    }{% endif %}
   ]{% if inv_storage_3 %},
-  "source": "Sample",
-  "creators": [
-    {
-      "creatorTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
-      "name": "Novik, Naomi"
-    }
-  ],
   "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c"{% endif %}
 }

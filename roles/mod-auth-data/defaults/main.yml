@@ -35,42 +35,8 @@ admin_user:
   email: admin@diku.example.org
 
 admin_permissions:
-  - perms.all
   - login.all
   - users.all
-  - module.users.enabled
-  - module.items.enabled
-  - module.instances.enabled
-  - module.inventory.enabled
-  - module.checkin.enabled
-  - module.checkout.enabled
-  - module.scan.enabled
-  - module.requests.enabled
-  - module.organization.enabled
-  - module.notes.enabled
-  - module.search.enabled
-  - settings.enabled
-  - settings.checkout.enabled
-  - settings.developer.enabled
-  - settings.loan-rules.all
-  - settings.loan-policies.all
-  - settings.loan-types.all
-  - settings.material-types.all
-  - settings.usergroups.all
-  - settings.addresstypes.all
-  - stripes-util-notes.all
-  - ui-circulation.settings.loan-policies
-  - ui-circulation.settings.loan-rules
-  - ui-items.settings.material-types
-  - ui-items.settings.loan-types
-  - ui-organization.settings.key-bindings
-  - ui-organization.settings.locale
-  - ui-organization.settings.plugins
-  - ui-organization.settings.sso
-  - ui-users.editpermsets 
-  - ui-users.settings.usergroups
-  - ui-users.settings.addresstypes
-  - ui-users.settings.permsets
 
 # Permissions not defined in module descriptors
 additional_permissions: []
@@ -80,15 +46,6 @@ mod_auth_users:
     id: 77136CF1-FF93-4C45-B7B5-187BCB711745
     perms_user_id: e12e46e4-9293-4f75-99ab-181633ab9530
     password: diku
-    permissions:
-      - module.trivial.enabled
-      - module.users.enabled
-      - module.items.enabled
-      - module.scan.enabled
-      - module.requests.enabled
-      - module.okapi-console.enabled
-      - module.organization.enabled
-      - module.settings.enabled
   - username: auth_test2
     id: 17B39C4D-FFAE-4D62-A75D-1B22F45A081E
     perms_user_id: f0977134-cd1a-4e0d-978e-9cad29e9a98a

@@ -1,6 +1,7 @@
 ---
 # Variables for building testing-topdown
 okapi_pull: true
+okapi_pull_timeout: 600
 top_down_install: true
 auth_required: true
 loan_action: true
@@ -23,11 +24,36 @@ mod_circulation_prefixes:
   - mod-circulation-storage
   - mod-circulation
 inv_storage_3: true
+hierarchical_locations: true
+shelf_locations: false
 enable_okapi: true
+
+# dockerCMD values for modules
+docker_cmd:
+  mod-login:
+    - "verify.user=true"
+
+# env values for modules
+env_var:
+  mod-inventory:
+    - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+  mod-kb-ebsco:
+    - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
+
+# other modules to enable outside dependency resolution
+other_mods:
+  - mod-codex-inventory
+  - mod-codex-ekb
+
+# Docker ports for modules
+docker_port:
+  mod-inventory: 9403
+  mod-circulation: 9801
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
+stripes_strict_md: true
 
 # Metadata for CI build
 version: 1.0.0

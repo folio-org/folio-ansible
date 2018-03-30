@@ -1,28 +1,27 @@
 {
-  "id": "f31a36de-fcf8-44f9-87ef-a55d06ad21ae",
-  "title": "The Girl on the Train",
-  "identifiers": [
-    {
-      {% if inv_storage_3 %}
-      "identifierTypeId": "7f907515-a1bf-4513-8a38-92e1a07c539d",
+  "id": "f31a36de-fcf8-44f9-87ef-a55d06ad21ae",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "The Girl on the Train",{% if inv_storage_3 %}
+  "alternativeTitles": ["First alternative title",
+                        "Second alternative title"],{% endif %}
+  "identifiers": [{% if inv_storage_3 %}
+    { "identifierTypeId": "7f907515-a1bf-4513-8a38-92e1a07c539d",
       "value": "B01LO7PJOE"
-      {% else %}
-      "namespace": "asin",
+    }{% else %}
+    { "namespace": "asin",
       "value": "B01LO7PJOE"
-      {% endif %}
-    }
+    }{% endif %}
   ]{% if inv_storage_3 %},
-  "source": "Sample",
-  "alternativeTitles": ["First alternative title", 
-                        "Second alternative title"],
-  "creators": [
+  "contributors": [
     {
-      "creatorTypeId": "2e48e713-17f3-7c13-09f8-23845bb210aa",
-      "name": "Creator A"
+      "contributorNameTypeId": "2e48e713-17f3-7c13-09f8-23845bb210aa",
+      "name": "Creator A",
+      "primary": true
     },
     {
-      "creatorTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0a",
-      "name": "Creator B"
+      "contributorNameTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0a",
+      "name": "Creator B",
+      "primary": false
     }
   ],
   "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c"{% endif %}

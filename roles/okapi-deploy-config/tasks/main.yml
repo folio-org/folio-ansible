@@ -12,6 +12,10 @@
   set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
   with_items: "{{ mod_descrs }}"
 
+- name: Add other modules to module list
+  set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
+  with_items: "{{ other_mods }}"
+
 - name: Finish module list json
   set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
 
@@ -23,13 +27,32 @@
     body: "{{ module_list }}"
   register: module_deps
 
-- name: Init modules deploy list
-  set_fact: deploy_mods=[]
+- name: Build module_deps_list, remove modules that are pinned
+  set_fact:
+    module_deps_list: "{{ module_deps_list|default([]) }} + [{{ item.0 }}]"
+  when: item[0].id|regex_search(item[1].module) != item[1].module
+  with_nested:
+    - "{{ module_deps.json }}"
+    - "{{ pinned_modules }}"
+
+- name: Set module_deps_list if empty
+  set_fact:
+    module_deps_list: "{{ module_deps.json }}"
+  when: module_deps_list is not defined
+
+- name: Build pinned_modules_list
+  set_fact:
+    pinned_modules_list: "{{ pinned_modules_list|default([]) + [ { 'id': item.module + '-' + item.version, 'action': 'enable' } ] }}"
+  with_items: "{{ pinned_modules }}"
+
+- name: Combine lists
+  set_fact:
+    module_deps_list: "{{ module_deps_list|union(pinned_modules_list|default([]))|unique }}"
 
 - name: Build module deploy list
-  set_fact: deploy_mods="{{ deploy_mods }} + ['{{ item.id }}']"
+  set_fact: deploy_mods="{{ deploy_mods|default([]) }} + ['{{ item.id }}']"
   when: item.id|regex_search('^mod-')
-  with_items: "{{ module_deps.json }}"
+  with_items: "{{ module_deps_list }}"
 
 - name: Pull Docker images
   become: yes
@@ -65,7 +88,7 @@
 
 - name: Build module enable list
   set_fact: enable_mods="{{ enable_mods }} + ['{{ item.id }}']"
-  with_items: "{{ module_deps.json }}"
+  with_items: "{{ module_deps_list }}"
 
 - name: Find mod-permissions in list
   set_fact: mod_perms_id="{{ enable_mods|join(',')|regex_search('(mod-permissions-\d+\.\d+\.\d+[a-zA-Z0-9\.-]*)') }}"

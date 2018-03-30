@@ -2,13 +2,13 @@
 # Role to load a dummy tenant
 - name: Check diku tenant
   uri:
-    url: "{{ okapi_url}}_/proxy/tenants/diku"
+    url: "{{ okapi_url}}/_/proxy/tenants/diku"
     status_code: 200, 404
   register: diku_status
 
 - name: Create diku tenant
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants"
+    url: "{{ okapi_url }}/_/proxy/tenants"
     method: POST
     body_format: json
     body: "{{ lookup('file','diku.json') }}"
@@ -20,7 +20,7 @@
 # Returns 400 if already enabled
 - name: Enable Okapi internal module for tenant
   uri:
-    url: "{{ okapi_url }}_/proxy/tenants/diku/modules"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
     body: '{ "id": "okapi" }'

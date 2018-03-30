@@ -6,6 +6,7 @@
   "itemId": "459afaba-5b39-468d-9072-eb1685e0ddf4",
   "fulfilmentPreference": "Delivery",
   "requestExpirationDate": "2017-12-22",
+  "status": "Open - Not yet filled",
   "item": {
     "title": "The Girl on the Train",
     "barcode": "765475420716"
@@ -15,5 +16,5 @@
     "firstName": "{{ loan_users.json.users.3.personal.firstName }}",
     "middleName": "{{ loan_users.json.users.3.personal.middleName | default('') }}",
     "barcode": "{{ loan_users.json.users.3.barcode }}"
-  }  
+  }
 }

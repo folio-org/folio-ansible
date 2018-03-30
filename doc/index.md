@@ -11,6 +11,7 @@
     * [Updating Stripes](#updating-stripes)
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
+    * [404 error on Vagrant box update](#404-error-on-vagrant-box-update)
     * [Vagrant "forwarded port is already in use"](#vagrant-forwarded-port-is-already-in-use)
     * [Viewing the Okapi log](#viewing-the-okapi-log)
     * [Viewing backend module logs](#viewing-backend-module-logs)
@@ -18,7 +19,7 @@
     * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
     * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
-    * [VERR_SVM_DISABLED](#verrsvmdisabled)
+    * [BIOS virtualization configuration](#bios-virtualization-configuration)
 * [Additional information](#additional-information)
 
 ## Prebuilt Vagrant boxes
@@ -33,7 +34,12 @@ used to generate prebuilt Vagrant boxes, available on
 
 * [folio/stable-backend](https://app.vagrantup.com/folio/boxes/stable-backend)
   -- a backend FOLIO system with stable releases of backend modules. All
-  components should interoperate correctly. 
+  components should interoperate correctly.
+
+* [folio/snapshot](https://app.vagrantup.com/folio/boxes/snapshot)
+  -- a full-stack FOLIO system, built from the most recent working
+  commits to frontend components and the matching releases of the
+  backend modules.
 
 * [folio/testing](https://app.vagrantup.com/folio/boxes/testing) --
   a full-stack FOLIO system, with the very latest releases of front- and
@@ -44,29 +50,14 @@ used to generate prebuilt Vagrant boxes, available on
   -- a backend FOLIO system, with the very latest releases of backend
   modules. Absolutely _not_ guaranteed to interoperate correctly.
 
+* [folio/minimal](https://app.vagrantup.com/folio/boxes/minimal)
+  -- a minimal FOLIO system with just Okapi and no modules or sample data
+  loaded.
+
 * [folio/curriculum](https://app.vagrantup.com/folio/boxes/curriculum)
   -- a box built to support the
   [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
   with prerequisites installed.
-
-* [folio/folio-backend](https://app.vagrantup.com/folio/boxes/folio-backend)
-  -- a backend FOLIO system, with Okapi, mod-users, the mod-metadata
-  modules, mod-loan-storage, and mod-circulation. *This box is no
-  longer maintained.*
-
-* [folio/folio-demo](https://app.vagrantup.com/folio/boxes/folio-demo)
-  -- a full-stack FOLIO system, with Okapi, mod-users, mod-metadata,
-  mod-loan-storage, mod-circulation, mod-auth, mod-users-bl,
-  Stripes, and the Stripes modules trivial, ui-scan, ui-users, and
-  ui-items. *This box is no longer maintained.*
-
-* [folio/folio-backend-auth](https://app.vagrantup.com/folio/boxes/folio-backend-auth)
-  -- a backend FOLIO system with the mod-auth authentication
-  subsystem, with Okapi, mod-users, mod-metadata, mod-loan-storage,
-  mod-circulation, mod-users-bl, and the mod-auth modules. The authorization
-  subsystem includes three sample users, `diku_admin` (password
-  "admin"), `auth_test1` (password "diku"), and `auth_test2` (password
-  "diku"). *This box is no longer maintained.*
 
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
@@ -106,29 +97,36 @@ it for module deployment.
 ## Replace localhost by hostname on the demo box
 
 To make the demo box accessible from machines other than the local one,
-Stripes needs the hostname of the backend. Configure the hostname
-this way:
+Stripes needs the hostname of the backend. Use this `Vagrantfile` to
+configure the hostname:
 
-    $ vagrant init folio/stable
-    $ vagrant up
-    $ vagrant ssh -c "sudo sed -i -e 's!http://localhost:9130!http://example.com:9130!g' /etc/folio/stripes/stripes.config.js"
-    $ vagrant ssh -c "/etc/folio/stripes/build-run"
+    Vagrant.configure("2") do |config|
+      config.vm.box = "folio/testing"
+
+      config.vm.provision "shell", env: {
+        "URL" => "http://example.com:9130"
+      }, inline: <<-SHELL
+        set -e
+        sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$URL'=" /etc/folio/stripes/stripes.config.js
+        /etc/folio/stripes/build-run
+      SHELL
+    end
 
 ## Replace port 9130
 
 This is an example how to avoid using port 9130 that may be blocked at
 some institutions. Instead all front-end and back-end requests arrive
-at the same default port (80 for HTTP or 443 for HTTPS). Put the URL
-like `http://example.com` or `https://example.com` into
-stripes.config.js.
+at the same default port (80 for HTTP or 443 for HTTPS). Configure the
+URL like `http://example.com` or `https://example.com` as explained in
+the previous section.
 
 An nginx in front of the Vagrant box proxies the requests to ports
 3000 and 9130. This snippet shows how to do it:
 
     # Frontend requests:
-    # index file at / and favicon.ico and all bundle/chunk/style files and
-    # the /bootstrap/ and /fonts/ directories.
-    location ~ ^(/|/favicon\.ico|/([0-9]+\.)?(bundle|chunk|style)(\.[0-9a-f]+)?\.(css|js)|/bootstrap/.*|/fonts/.*)$ {
+    # index file at / and all *.ico, *,png, *.css, *.js, *.js.map files in the root directory and
+    # the /bootstrap/ and /fonts/ and /img/ and /translations/ directories.
+    location ~ ^(/|/[0-9a-zA-Z.-]+\.(ico|png|css|js|js\.map)|/bootstrap/.*|/fonts/.*|/img/.*|/translations/.*)$ {
         proxy_pass http://127.0.0.1:3000;
     }
 
@@ -162,12 +160,22 @@ stop working.
     # for a list of images
     $ docker images
 
-    # to update a module, edit its deployment descriptor and update
-    # the version specified e.g.:
-    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
+    # To update a module, first undeploy the modules using the
+    # okapi-deploy service:
+    $ sudo systemctl stop okapi-deploy
 
-    # to undeploy and redeploy using the new image
-    $ sudo systemctl restart okapi-deploy
+    # If you want the latest version of the module, just do a
+    # docker pull:
+    $ docker pull folioci/mod-users:latest
+
+    # To update to a specific version of a module,
+    # edit its deployment descriptor to update
+    # the version specified and pull the image, e.g.:
+    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
+    $ docker pull folioci/mod-users:14.4.1-SNAPSHOT.13
+
+    # Then redeploy using the new image
+    $ sudo systemctl start okapi-deploy
 
 ### Updating Stripes
 
@@ -205,6 +213,27 @@ The Vagrantfile in this project contains six target definitions:
    packaging.
 
 ## Troubleshooting/Known Issues
+
+### 404 error on Vagrant box update
+
+As of 5 Feb 2018: If you have an existing Vagrant VM based on a
+Vagrant box file created before this date, you may have an issue with
+the metadata URL for the box file. Check the file
+`cat ~/.vagrant.d/boxes/<box ID>/metadata_url`. If it has an address of the
+form `https://atlas.hashicorp.com/[...]` then the `atlas.hashicorp`
+needs to be replaced with `vagrantcloud`.
+
+Note: Do not use a text-editor, as they are not proper text files.
+
+To replace the metadata URL for all the boxes in your `~/.vagrant.d`
+directory, use the following `Perl one-liner` script:
+
+    perl -p -i -e 's/atlas.hashicorp/vagrantcloud/' ~/.vagrant.d/boxes/*/metadata_url
+
+If you are using a version of Vagrant \<= 1.9.6,
+upgrade Vagrant to prevent future problems initializing Vagrant VMs.
+
+For more information, see https://github.com/hashicorp/vagrant/issues/9442
 
 ### Vagrant "forwarded port is already in use"
 
@@ -296,7 +325,7 @@ with vagrant, and so just let it use the system one (see
 [a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969),
 fixed in v1.9.0).
 
-### VERR_SVM_DISABLED
+### BIOS virtualization configuration
 
 Trying to start VirtualBox may fail with the message:
 

@@ -11,10 +11,26 @@
   template: src=nginx.conf.j2 dest={{ stripes_conf_dir }}/nginx.conf
   notify: Rebuild container
 
+- name: Slurp install.json
+  slurp: src={{ folio_conf }}/install.json
+  register: install_json_raw
+  when: top_down_install|default(false)
+  ignore_errors: yes
+
+- name: Copy install.json to build dir
+  become: yes
+  copy: dest={{ stripes_conf_dir }}/install.json content={{ install_json_raw.content|b64decode|from_json|to_nice_json }}
+  when: top_down_install|default(false)
+  ignore_errors: yes
+
+- name: Check for install.json
+  stat: path={{ stripes_conf_dir }}/install.json
+  register: install_json
+
 - name: copy Dockerfile to docker build dir
   become: yes
-  copy:
-    src: Dockerfile
+  template:
+    src: Dockerfile.j2
     dest: "{{ stripes_conf_dir }}/Dockerfile"
   notify: Rebuild container
 
