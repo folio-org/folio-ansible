@@ -216,6 +216,78 @@
     - shelf-locations/*.json
   when: inv_storage_3
 
+# fails with 422 error if already loaded
+- name: Load inventory storage institutions
+  uri:
+    url: "{{ okapi_url }}/location-units/institutions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_locinst
+  changed_when: load_locinst.status == 201
+  with_fileglob:
+    - location-units/institutions/*.json
+  when: inv_storage_3 and hierarchical_locations
+
+# fails with 422 error if already loaded
+- name: Load inventory storage campuses
+  uri:
+    url: "{{ okapi_url }}/location-units/campuses"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_loccamp
+  changed_when: load_loccamp.status == 201
+  with_fileglob:
+    - location-units/campuses/*.json
+  when: inv_storage_3 and hierarchical_locations
+
+# fails with 422 error if already loaded
+- name: Load inventory storage libraries
+  uri:
+    url: "{{ okapi_url }}/location-units/libraries"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_loclib
+  changed_when: load_loclib.status == 201
+  with_fileglob:
+    - location-units/libraries/*.json
+  when: inv_storage_3 and hierarchical_locations
+
+# fails with 422 error if already loaded
+- name: Load inventory storage locations
+  uri:
+    url: "{{ okapi_url }}/locations"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_location
+  changed_when: load_location.status == 201
+  with_fileglob:
+    - locations/*.json
+  when: inv_storage_3 and hierarchical_locations
+
 - name: Load instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"
