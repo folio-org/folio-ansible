@@ -92,11 +92,12 @@
     method: PUT
     body_format: json
     headers: 
+      Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: diku
       X-Okapi-Token: "{{ mod_kb_ebsco_login.x_okapi_token }}"
       Accept: application/json
     body: '{"data":{"id":"configuration","type":"configurations","attributes":{"apiKey":"{{ rmapi_key }}","customerId":"{{ rmapi_custid }}"}}}'
-    status_code: 200
+    status_code: 200,422
   register: mod_kb_ebsco_rmapi
   changed_when: mod_kb_ebsco_rmapi.status == 200
   when: mod_kb_ebsco_deploy.status == 200 and auth_required and rmapi and rmapi_custid and rmapi_key

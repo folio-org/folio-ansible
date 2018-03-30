@@ -1,0 +1,46 @@
+---
+# Note: admin user must be bootstrapped and have mod-permissions perms
+# Requires mod-permissions >= 5.1.0
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/bl-users/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: 'application/json, text/plain'
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: tenant_admin_login
+
+- name: Get all permissionSets not included in other permissionSets
+  # cql query for childOf==[]
+  uri:
+    url: "{{ okapi_url }}/perms/permissions?query=childOf%3D%3D%5B%5D&length=500"
+    method: GET
+    headers:
+      Accept: "application/json, text/plain"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+  register: all_permissions
+
+- name: Fail if all permissions not retrieved
+  fail:
+    msg: "Retrieved permissions don't match total permissions count"
+  when: all_permissions.json.permissions|length != all_permissions.json.totalRecords
+
+- name: Assign permissions to {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ tenant_admin_login.json.permissions.id }}/permissions"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.permissionName }}" }'
+    body_format: json
+    status_code: 200
+  when: "['{{ item.permissionName }}']|difference(tenant_admin_login.json.permissions.permissions) and auth_required"
+  register: tenant_admin_permissions
+  with_items: "{{ all_permissions.json.permissions }}"
+  changed_when: tenant_admin_permissions.status == 200

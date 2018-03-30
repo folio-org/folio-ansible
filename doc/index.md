@@ -19,7 +19,7 @@
     * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
     * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
-    * [VERR_SVM_DISABLED](#verrsvmdisabled)
+    * [BIOS virtualization configuration](#bios-virtualization-configuration)
 * [Additional information](#additional-information)
 
 ## Prebuilt Vagrant boxes
@@ -97,21 +97,28 @@ it for module deployment.
 ## Replace localhost by hostname on the demo box
 
 To make the demo box accessible from machines other than the local one,
-Stripes needs the hostname of the backend. Configure the hostname
-this way:
+Stripes needs the hostname of the backend. Use this `Vagrantfile` to
+configure the hostname:
 
-    $ vagrant init folio/stable
-    $ vagrant up
-    $ vagrant ssh -c "sudo sed -i -e 's=http://localhost:9130=http://example.com:9130=g' /etc/folio/stripes/stripes.config.js"
-    $ vagrant ssh -c "/etc/folio/stripes/build-run"
+    Vagrant.configure("2") do |config|
+      config.vm.box = "folio/testing"
+
+      config.vm.provision "shell", env: {
+        "URL" => "http://example.com:9130"
+      }, inline: <<-SHELL
+        set -e
+        sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$URL'=" /etc/folio/stripes/stripes.config.js
+        /etc/folio/stripes/build-run
+      SHELL
+    end
 
 ## Replace port 9130
 
 This is an example how to avoid using port 9130 that may be blocked at
 some institutions. Instead all front-end and back-end requests arrive
-at the same default port (80 for HTTP or 443 for HTTPS). Put the URL
-like `http://example.com` or `https://example.com` into
-stripes.config.js.
+at the same default port (80 for HTTP or 443 for HTTPS). Configure the
+URL like `http://example.com` or `https://example.com` as explained in
+the previous section.
 
 An nginx in front of the Vagrant box proxies the requests to ports
 3000 and 9130. This snippet shows how to do it:
@@ -318,7 +325,7 @@ with vagrant, and so just let it use the system one (see
 [a known issue for v1.8.7](https://github.com/mitchellh/vagrant/issues/7969),
 fixed in v1.9.0).
 
-### VERR_SVM_DISABLED
+### BIOS virtualization configuration
 
 Trying to start VirtualBox may fail with the message:
 
