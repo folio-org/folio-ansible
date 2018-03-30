@@ -243,12 +243,16 @@ folio_modules:
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 17
     name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
     okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 18
     name: mod-codex-mux
@@ -264,7 +268,6 @@ folio_modules:
     image_repository: folioci
     docker_env:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     okapi_docker_pull: "false"
 
   - index: 20

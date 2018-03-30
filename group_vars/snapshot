@@ -35,8 +35,38 @@ docker_cmd:
 
 # env values for modules
 env_var:
+  mod-authtoken:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-permissions:
+    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+  mod-login:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-configuration:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-users:
+    - { name: JAVA_OPTIONS, value: "-Xmx384m" }
+  mod-users-bl:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-login-saml:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-inventory-storage:
+    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
   mod-inventory:
     - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+  mod-circulation-storage:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-circulation:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-notify:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-notes:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-codex-inventory:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-codex-mux:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-codex-ekb:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-kb-ebsco:
     - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
 
