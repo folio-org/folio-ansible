@@ -2,7 +2,7 @@
 # Role to load a dummy tenant
 - name: Check tenant
   uri:
-    url: "{{ okapi_url}}/_/proxy/tenants/{{ tenant }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}"
     status_code: 200, 404
   register: tenant_check
 
