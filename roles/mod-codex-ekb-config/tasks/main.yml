@@ -38,7 +38,7 @@
     body_format: json
     headers: 
       X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }} | default('token')"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }} | default('token')"
       Accept: application/json
     body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.apiKey", "description": "EBSCO RM-API API Key", "enabled": true, "value": "{{ rmapi_key }}" }'
     status_code: 201,422
@@ -52,7 +52,7 @@
     body_format: json
     headers: 
       X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ mod_codex_ekb_login.x_okapi_token }} | default('token')"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }} | default('token')"
       Accept: application/json
     body: '{ "module": "EKB", "configName": "api_access", "code": "kb.ebsco.url", "description": "EBSCO RM-API URL", "enabled": true, "value": "{{ rmapi_url }}" }'
     status_code: 201,422
