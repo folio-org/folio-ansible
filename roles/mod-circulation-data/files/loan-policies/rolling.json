@@ -4,19 +4,19 @@
   "description" : "An example loan policy",
   "loanable" : true,
   "loansPolicy" : {
-    "profileId" : "ROLLING",
+    "profileId" : "Rolling",
     "period" : {
       "duration" : 1,
-      "intervalId" : "MONTH"
+      "intervalId" : "Months"
     },
     "closedLibraryDueDateManagementId" : "KEEP_CURRENT_DATE",
     "existingRequestsPeriod" : {
       "duration" : 1,
-      "intervalId" : "WEEK"
+      "intervalId" : "Weeks"
     },
     "gracePeriod" : {
       "duration" : 7,
-      "intervalId" : "DAYS"
+      "intervalId" : "Days"
     }
   },
   "renewable" : true,
@@ -26,7 +26,7 @@
     "differentPeriod" : true,
     "period" : {
       "duration" : 30,
-      "intervalId" : "DAYS"
+      "intervalId" : "Days"
     }
   }
 }
