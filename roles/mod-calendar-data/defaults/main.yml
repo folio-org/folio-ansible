@@ -1,0 +1,14 @@
+---
+# mod-calendar-data role
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+mod_calendar_prefix: mod-calendar
+auth_required: false
+admin_user: { username: diku_admin, password: admin }
+mod_calendar_permissions:
+  - username: diku_admin
+    perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
+    permissions:
+      - calendar.collection.all
+auth_by_username: false
+top_down_install: false
