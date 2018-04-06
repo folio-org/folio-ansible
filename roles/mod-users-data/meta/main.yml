@@ -1,4 +1,3 @@
 ---
 dependencies:
-  - { role: tenant-data }
-  - { role: okapi-get-modules }
+  - { role: tenant-admin-permissions }

@@ -1,0 +1,214 @@
+---
+# Role to enable mod-users for the sample tenant and load sample data
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=10
+
+- set_fact:
+    mod_authtoken_module: "{{ okapi_modules|selectattr('id','match','^'+mod_authtoken_prefix+'(-[0-9].*)?$')|list }}"
+
+- set_fact:
+    mod_users_module: "{{ okapi_modules|selectattr('id','match','^'+mod_users_prefix+'(-[0-9].*)?$')|list }}"
+
+- name: Check tenant mod-authtoken registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_authtoken_module.0.id }}"
+    status_code: 200, 404
+  register: tenant_mod_authtoken
+  when: not top_down_install
+
+- name: Set mod_authtoken status for top down install
+  set_fact:
+    tenant_mod_authtoken:
+      status: 200
+  when: tenant_mod_authtoken.skipped is defined and tenant_mod_authtoken.skipped
+
+- name: Check tenant mod-user registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ mod_users_module.0.id }}"
+    status_code: 200, 404
+  register: tenant_mod_users
+
+- name: Enable mod-users module for tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_users_module.0.id }}" }'
+    status_code: 201
+  register: mod_users_enable
+  changed_when: mod_users_enable.status == 201
+  when: tenant_mod_users.status == 404 and not top_down_install
+
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: mod_users_login
+  when: auth_required and tenant_mod_authtoken.status == 200
+
+- name: Assign mod-users permissions to other users (auth by username)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.username }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_users_perms
+  changed_when: mod_users_perms.status == 200
+  with_subelements:
+    - "{{ mod_users_permissions }}"
+    - permissions
+  when: auth_required and auth_by_username
+
+- name: Assign mod-users permissions to other users (auth by id)
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ item.0.perms_user_id }}/permissions"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item.1 }}" }'
+    status_code: 200,422
+  register: mod_users_perms
+  changed_when: mod_users_perms.status == 200
+  with_subelements:
+    - "{{ mod_users_permissions }}"
+    - permissions
+  when: auth_required and not auth_by_username
+
+# 422 error means the group is already there
+- name: Load groups
+  uri:
+    url: "{{ okapi_url }}/groups"
+    method: POST
+    body_format: json
+    headers:
+      Authtoken-Refresh-Cache: "true"
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201,422
+  register: load_group
+  changed_when: load_group.status == 201
+  with_fileglob:
+    - groups/*.json
+
+# need to get groups UUIDs for user generation
+- name: Get user groups
+  uri:
+    url: "{{ okapi_url }}/groups"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: usergroups
+
+# There is no unique constraint, so duplicate address type records can be loaded willy-nilly
+# So need to check if they are already there
+# need to get address type UUIDs for user generation
+- name: Get address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: addresstypes
+  when: load_addresstypes == true
+
+- name: Load address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201
+  register: load_group
+  changed_when: load_group.status == 201
+  when: load_addresstypes == true and addresstypes.json.totalRecords == 0
+  with_fileglob:
+    - addresstypes/*.json
+
+# need to get address type UUIDs for user generation
+- name: Get address types
+  uri:
+    url: "{{ okapi_url }}/addresstypes?query=addressType%3DHome+or+addressType%3DWork"
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+  register: addresstypes
+  when: load_addresstypes == true
+
+- name: Install prereqs for user generation from apt
+  become: yes
+  apt: name={{ item }} state=present
+  with_items:
+    - libjson-xs-perl
+    - libdata-faker-perl
+    - libuuid-tiny-perl
+
+- name: Copy gen-folio-users utility
+  become: yes
+  copy: src=gen-folio-users dest=/usr/local/bin/gen-folio-users mode=0755
+
+- name: Generate user files with address types
+  become: yes
+  shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }} --addresstype={{ addresstypes.json.addressTypes|map(attribute='id')|join(',') }}
+  args:
+    creates: /etc/.folio-users_ansible
+  when: load_addresstypes == true
+
+- name: Generate user files with legacy address types
+  become: yes
+  shell: mkdir /etc/.folio-users_ansible && chdir /etc/.folio-users_ansible && gen-folio-users --users={{ num_users }} --group={{ usergroups.json.usergroups|map(attribute='id')|join(',') }}
+  args:
+    creates: /etc/.folio-users_ansible
+  when: load_addresstypes == false
+
+- name: Get filenames
+  shell: ls /etc/.folio-users_ansible
+  register: userfiles
+  changed_when: false
+
+- name: Slurp user files
+  slurp: src=/etc/.folio-users_ansible/{{ item }}
+  with_items: "{{ userfiles.stdout_lines }}"
+  register: userfiles_content
+
+# 422 error may mean the user is already there
+# Or it may mean the user structure is invalid
+- name: Load users
+  uri:
+    url: "{{ okapi_url }}/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: diku
+      Accept: application/json
+      X-Okapi-Token: "{{ mod_users_login.x_okapi_token | default('token') }}"
+    body: "{{ item.content|b64decode }}"
+    status_code: 201,422
+  register: load_user
+  changed_when: load_user.status == 201
+  failed_when: "load_user.status == 422 and (load_user.json.errors.0.message is not defined or load_user.json.errors.0.message != 'User with this id already exists')"
+  with_items: "{{ userfiles_content.results }}"
+

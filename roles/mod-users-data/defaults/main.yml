@@ -1,16 +1,9 @@
 ---
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-mod_users_prefix: mod-users
-mod_authtoken_prefix: authtoken-module
-auth_required: false
+auth_required: true
+tenant: diku
 admin_user: { username: diku_admin, password: admin }
-num_users: 20
-load_addresstypes: false
-mod_users_permissions:
-  - username: diku_admin
-    perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
-    permissions:
-      - users.all
-auth_by_username: false
+num_users: 10
+load_addresstypes: true
 top_down_install: false
