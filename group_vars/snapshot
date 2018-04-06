@@ -69,6 +69,8 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-kb-ebsco:
     - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
+  mod-calendar:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
