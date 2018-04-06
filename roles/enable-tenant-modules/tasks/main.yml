@@ -5,16 +5,20 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=5
 
-- set_fact:
-    tenant_modules: []
+#- set_fact:
+#    tenant_modules: []
+
+- debug:
+    msg: "{{ okapi_modules }}"
 
 - set_fact:
-    tenant_modules: "{{ tenant_modules }} + [{{ okapi_modules|selectattr('id','match','^' + item.name + '(-[0-9].*)?$')|first }}]"
+    tenant_modules: "{{ tenant_modules | default([]) + [ okapi_modules|select('match','^' + item.name + '(-[0-9].*)?$')|first ] }}"
   with_items: "{{ folio_modules }}"
+
 
 - name: Check tenant module registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item.id }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item }}"
     status_code: 200, 404
   register: tenant_module_check
   with_items: "{{ tenant_modules }}"
@@ -24,7 +28,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ item.item.id }}" }'
+    body: '{ "id" : "{{ item.item }}" }'
     status_code: 201
   register: tenant_module_enable
   changed_when: tenant_module_enable.status == 201
