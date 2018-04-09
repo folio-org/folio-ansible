@@ -3,7 +3,7 @@
 # when not running a "top down install"
 
 # wait a few seconds to make sure modules are spun up
-- wait_for: timeout=5
+- wait_for: timeout=30
 
 #- set_fact:
 #    tenant_modules: []
