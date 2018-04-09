@@ -420,7 +420,7 @@
 - name: Get location for upload status
   set_fact:
     upload_status_location: "{{ mods_load.stdout_lines|select('match','^Location:')|list|first|regex_replace('^Location: ') }}"
-  when: mods_load
+  when: do_mods_larger
 
 - name: remove sample MODS temp dir
   command: rm -rf {{ tmpdir_samplemods.path|quote }}
