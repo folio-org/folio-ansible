@@ -13,12 +13,14 @@
 
 - set_fact:
     mod_auth_modules: "{{ mod_auth_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
+    mod_auth_modules: "{{ mod_auth_modules + [ okapi_modules|select('match','^' + item + '(-[0-9].*)?$')|list ] }}"
+
   with_items: "{{ mod_auth_prefixes }}"
   when: not top_down_install
 
 - name: Check mod-auth modules tenant registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.id }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item }}"
     status_code: 200, 404
   register: tenant_mod_auth
   with_items: "{{ mod_auth_modules }}"
@@ -29,7 +31,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ item.1.id }}" }'
+    body: '{ "id" : "{{ item.1 }}" }'
     status_code: 201
   register: mod_auth_enable
   changed_when: mod_auth_enable.status == 201
