@@ -1,0 +1,27 @@
+{
+  "id": "69640328-788e-43fc-9c3c-af39e243f3b7",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "ABA Journal",{% if inv_storage_3 %}
+  "publication": [
+    {
+      "publisher": "American Bar Association",
+      "place": "Chicago, Ill.",
+      "dateOfPublication": "1915-1983"
+    }
+  ],{% endif %}
+  "identifiers": [{% if inv_storage_3 %}
+    {
+      "identifierTypeId": "913300b2-03ed-469a-8179-c1092c991227",
+      "value": "0747-0088"
+    },
+    {
+      "identifierTypeId": "c858e4f2-2b6b-4385-842b-60732ee14abb",
+      "value": "84641839"
+    }{% else %}
+    {
+      "namespace": "issn",
+      "value": "0747-0088"
+    }{% endif %}
+  ]{% if inv_storage_3 %},
+  "instanceTypeId": "a35947c6-795f-41d4-9c34-e5668d925d3f"{% endif %}
+}

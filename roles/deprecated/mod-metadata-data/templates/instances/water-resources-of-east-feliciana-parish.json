@@ -1,0 +1,15 @@
+{
+  "id": "bbd4a5e1-c9f3-44b9-bfdf-d184e04f0ba0",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "Water resources of East Feliciana Parish, Louisiana"{% if inv_storage_3 %},
+  "contributors": [
+    {
+      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "name": "White, Vincent E.",
+      "primary": true
+    }
+  ],
+  "instanceTypeId": "447bea04-0b30-4f0d-8841-a9164ee5d9cb",
+  "instanceFormatId": "e0474071-2d1d-4898-b226-226bd060aa55"{% endif %}
+}
+

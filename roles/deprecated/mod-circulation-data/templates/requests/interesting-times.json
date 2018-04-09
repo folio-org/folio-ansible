@@ -1,0 +1,20 @@
+{
+  "id": "f7a5ec07-3422-4024-9dec-1217f71eb2f8",
+  "requestType": "Hold",
+  "requestDate": "2017-01-18T09:23:45Z",
+  "requesterId": "{{ loan_users.json.users.0.id }}",
+  "itemId": "bb5a6689-c008-4c96-8f8f-b666850ee12d",
+  "fulfilmentPreference": "Hold Shelf",
+  "holdShelfExpirationDate": "2017-01-20",
+  "status": "Open - Not yet filled",
+  "item": {
+    "title": "Interesting Times",
+    "barcode": "326547658598"
+  },
+  "requester": {
+    "lastName": "{{ loan_users.json.users.0.personal.lastName }}",
+    "firstName": "{{ loan_users.json.users.0.personal.firstName }}",
+    "middleName": "{{ loan_users.json.users.0.personal.middleName | default('') }}",
+    "barcode": "{{ loan_users.json.users.0.barcode }}"
+  }
+}

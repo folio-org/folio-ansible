@@ -5,5 +5,5 @@
     url: "{{ okapi_url }}/_/proxy/modules"
   register: okapi_modules_req
 
-- set_fact: okapi_modules={{ okapi_modules_req.json }}
+- set_fact: okapi_modules={{ okapi_modules_req | json_query('json[].id') }}
 

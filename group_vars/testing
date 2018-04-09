@@ -22,6 +22,7 @@ mod_circulation_prefixes:
   - mod-circulation
 inv_storage_3: true
 hierarchical_locations: true
+do_mods_larger: true
 shelf_locations: false
 enable_okapi: true
 

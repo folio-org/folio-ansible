@@ -1,0 +1,31 @@
+{
+  "id": "6506b79b-7702-48b2-9774-a1c538fdd34e",{% if inv_storage_3 %}
+  "source": "Sample",{% endif %}
+  "title": "Nod",{% if inv_storage_3 %}
+  "contributors": [
+    {
+      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "name": "Barnes, Adrian",
+      "primary": true
+    }
+  ],{% endif %}
+  "identifiers": [{% if inv_storage_3 %}
+    {
+      "identifierTypeId": "8261054f-be78-422d-bd51-4ed9f33c3422",
+      "value": "0956687695"
+    },
+    {
+      "identifierTypeId": "8261054f-be78-422d-bd51-4ed9f33c3422",
+      "value": "9780956687695"
+    }{% else %}
+    {
+      "namespace": "isbn",
+      "value": "0956687695"
+    },
+    {
+      "namespace": "isbn",
+      "value": "9780956687695"
+    }{% endif %}
+  ]{% if inv_storage_3 %},
+  "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c"{% endif %}
+}

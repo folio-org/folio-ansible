@@ -1,0 +1,20 @@
+{
+  "id": "cbd5780e-8145-4c9c-90cb-b72b37dfbab1",
+  "requestType": "Recall",
+  "requestDate": "2017-03-15T13:21:34Z",
+  "requesterId": "{{ loan_users.json.users.1.id }}",
+  "itemId": "23f2c8e1-bd5d-4f27-9398-a688c998808a",
+  "fulfilmentPreference": "Delivery",
+  "requestExpirationDate": "2017-03-22",
+  "status": "Open - Not yet filled",
+  "item": {
+    "title": "Nod",
+    "barcode": "697685458679"
+  },
+  "requester": {
+    "lastName": "{{ loan_users.json.users.1.personal.lastName }}",
+    "firstName": "{{ loan_users.json.users.1.personal.firstName }}",
+    "middleName": "{{ loan_users.json.users.1.personal.middleName | default('') }}",
+    "barcode": "{{ loan_users.json.users.1.barcode }}"
+  }
+}

@@ -37,20 +37,9 @@
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-testing
   roles:
+    - enable-tenant-modules
     - mod-auth-data
-    - mod-configuration-data
-    - mod-users-data 
-    - mod-users-bl-data
-    - mod-login-saml-data
-    - mod-user-import-data
     - mod-circulation-data
-    - mod-notes-data
-    - mod-graphql-data
-    - mod-kb-ebsco-data
-    - mod-codex-mux-data
-    - mod-codex-inventory-data
-    - mod-codex-ekb-data
-    - mod-vendors-data
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data
@@ -58,14 +47,7 @@
   vars_files:
     - group_vars/snapshot
   roles:
-    - mod-configuration-data
-    - mod-users-data 
-    - mod-users-bl-data
-    - mod-login-saml-data
     - mod-circulation-data
-    - mod-notes-data
-    - mod-kb-ebsco-data
-    - mod-codex-ekb-data
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build

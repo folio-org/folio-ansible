@@ -1,0 +1,18 @@
+{
+  "id": "1b6d3338-186e-4e35-9e75-1b886b0da53e",{% if inv_storage_3 %}
+  "holdingsRecordId": "65cb2bf0-d4c2-4886-8ad0-b76f1ba75d61",{% endif %}
+  "barcode": "453987605438",
+  "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
+  "permanentLoanTypeId": "2b94c631-fca9-4892-a730-03ee529ffe27",
+  "temporaryLoanTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0e",
+  "status": {
+    "name": "Checked out"
+  },{% if inv_storage_3 %}
+  "pieceIdentifiers": ["Copy 1"],
+  "numberOfPieces": "1",
+  "notes": [ "Signed by the author" ]{% else %}
+  "title": "Bridget Jones's Baby: the diaries",
+  "location": {
+    "name": "Main Library"
+  }{% endif %}
+}

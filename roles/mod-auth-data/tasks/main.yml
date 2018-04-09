@@ -3,38 +3,7 @@
 #
 
 # wait a few seconds to make sure modules are spun up
-- wait_for: timeout=20
-
-#######################################################
-# Setup -- only required if not top-down installation #
-#######################################################
-
-- set_fact: mod_auth_modules=[]
-
-- set_fact:
-    mod_auth_modules: "{{ mod_auth_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
-  with_items: "{{ mod_auth_prefixes }}"
-  when: not top_down_install
-
-- name: Check mod-auth modules tenant registration
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.id }}"
-    status_code: 200, 404
-  register: tenant_mod_auth
-  with_items: "{{ mod_auth_modules }}"
-  when: not top_down_install
-
-- name: Enable mod-auth modules for tenant
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
-    method: POST
-    body_format: json
-    body: '{ "id" : "{{ item.1.id }}" }'
-    status_code: 201
-  register: mod_auth_enable
-  changed_when: mod_auth_enable.status == 201
-  when: tenant_mod_auth.results[item.0].status == 404
-  with_indexed_items: "{{ mod_auth_modules }}"
+- wait_for: timeout=5
 
 ########################################
 # Bootstrap admin user and permissions #

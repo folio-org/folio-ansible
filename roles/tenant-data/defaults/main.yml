@@ -2,3 +2,9 @@
 okapi_url: http://localhost:9130
 enable_okapi: false
 
+# Diku is the default tenant
+tenant: diku
+tenant_name: 'Datalogisk Institut'
+tenant_desc: 'Danish Library Technology Institute'
+
+tenant_json: "{{ lookup('template', 'tenant.json.j2') }}"

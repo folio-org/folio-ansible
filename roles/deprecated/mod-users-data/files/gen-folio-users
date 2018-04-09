@@ -1,0 +1,108 @@
+#!/usr/bin/perl
+# build a users collection with fake data
+use strict;
+use warnings;
+use Data::Faker;
+use UUID::Tiny qw(:std);
+use JSON;
+use Getopt::Long;
+
+# Command line options --users --start --group --addresstype
+# --group, --addresstype can be specified multiple times, or comma delimited
+# If --addresstype is not provided, use legacy addressTypeId
+my $users = 20;
+my $start = 0;
+my @groups = ();
+my @address_types = ();
+GetOptions ("users=i" => \$users,
+            "start=i" => \$start,
+            "group=s" => \@groups,
+            "addresstype=s" => \@address_types);
+@groups = split(/,/,join(',',@groups));
+@address_types = split(/,/,join(',',@address_types));
+
+my $faker = Data::Faker->new();
+my $common_last_name = $faker->last_name();
+my %usernames;
+my %barcodes;
+
+# possible values for contactTypeId:
+# 001 = Mail
+# 002 = Email
+# 003 = Text message
+# 004 = Phone
+# 005 = Mobile phone
+my @contacts = qw(001 002 003 004 005);
+
+# possible values for addressTypeId
+# 001 = Claim
+# 002 = Home
+# 003 = Order
+# 004 = Payment
+# 005 = Returns
+# 006 = Work
+unless (@address_types) {
+  @address_types = qw(002 006);
+}
+
+for (my $i = $start; $i < $users + $start; $i++) {
+  my $id = create_uuid_as_string(UUID_V4);
+  my $username = $faker->username();
+  until (!$usernames{$username}) {
+    $username = $faker->username();
+  }
+  $usernames{$username} = 1;
+  my $barcode = sprintf("%d",rand(1e+15));
+  until (!$barcodes{$barcode}) {
+    $barcode = sprintf("%d",rand(1e+15));
+  }
+  my $address = 
+  $barcodes{$barcode} = 1;
+  my $user = {
+              username => $username,
+              id => $id,
+              barcode => $barcode,
+              active => (rand(1) > 0.3 ? JSON::true : JSON::false),
+              type => 'patron',
+              personal => {
+                           lastName => (rand(1) > 0.09 ?
+					 $faker->last_name() :
+					 $common_last_name),
+                           firstName => $faker->first_name(),
+                           email => $faker->email(),
+                           phone => $faker->phone_number(),
+                           dateOfBirth => $faker->sqldate(),
+                           preferredContactTypeId => $contacts[int(rand(5))],
+                           addresses => [
+                                         {
+                                          countryId => 'US',
+                                          addressLine1 => $faker->street_address(),
+                                          city => $faker->city(),
+                                          region => $faker->us_state_abbr(),
+                                          postalCode => $faker->us_zip_code(),
+                                          addressTypeId => $address_types[int(rand(@address_types))],
+                                          primaryAddress => JSON::true
+                                         }
+                                        ]
+                          },
+              createdDate => $faker->sqldate(),
+              enrollmentDate => $faker->sqldate(),
+              expirationDate => $faker->sqldate(),
+              updatedDate => $faker->sqldate()
+             };
+  if (@groups) {
+    $$user{'patronGroup'} = $groups[rand(@groups)];
+  }
+  if (rand(1) > 0.3) {
+    $$user{'personal'}{'middleName'} = $faker->first_name();
+  }
+  if (rand(1) > 0.3) {
+    $$user{'personal'}{'mobilePhone'} = $faker->phone_number();
+  }
+  open(OUT,">User" . sprintf("%03d",$i) . ".json") or die "Can't open output file: $!\n";
+  print OUT to_json($user, { pretty => 1 }) . "\n";
+  close(OUT);
+}
+
+exit;
+

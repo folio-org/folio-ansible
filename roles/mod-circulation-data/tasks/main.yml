@@ -2,34 +2,7 @@
 # Role to enable mod-circulation for the sample tenant and load sample data
 
 # wait a few seconds to make sure modules are spun up
-- wait_for: timeout=10
-
-- set_fact: mod_circulation_modules=[]
-
-- set_fact:
-    mod_circulation_modules: "{{ mod_circulation_modules }} + {{ okapi_modules|selectattr('id','match','^'+item+'(-[0-9].*)?$')|list }}"
-  with_items: "{{ mod_circulation_prefixes }}"
-  when: not top_down_install
-
-- name: Check tenant registration
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules/{{ item.id }}"
-    status_code: 200, 404
-  register: tenant_mod_circulation
-  with_items: "{{ mod_circulation_modules }}"
-  when: not top_down_install
-
-- name: Enable mod-circulation modules for tenant
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/diku/modules"
-    method: POST
-    body_format: json
-    body: '{ "id" : "{{ item.1.id }}" }'
-    status_code: 201
-  register: mod_circulation_enable
-  changed_when: mod_circulation_enable.status == 201
-  when: tenant_mod_circulation.results[item.0].status == 404
-  with_indexed_items: "{{ mod_circulation_modules }}"
+- wait_for: timeout=5
 
 - name: Login as {{ admin_user.username }}
   uri:
@@ -37,11 +10,11 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
     body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
     status_code: 201
-  register: mod_circulation_login
+  register: tenant_admin_login
   when: auth_required
 
 - name: Grant additional permissions to {{ admin_user.username }} (auth by username)
@@ -50,8 +23,8 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "permissionName" : "{{ item }}" }'
     status_code: 200,422
@@ -66,8 +39,8 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "permissionName" : "{{ item }}" }'
     status_code: 200,422
@@ -83,9 +56,9 @@
     body_format: json
     headers:
       Authtoken-Refresh-Cache: "true"
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 201, 422, 500
   register: load_loanp
@@ -99,9 +72,9 @@
     method: PUT
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json, text/plain
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
     body: "{{ lookup('file', item) }}"
     status_code: 204
   register: load_loanr
@@ -114,46 +87,10 @@
     url: "{{ okapi_url }}/users?query=active%3D%22true%22%20and%20type%3D%3Dpatron%20sortby%20personal.lastName%20personal.firstName&limit=6"
     headers:
       Accept: application/json
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token|default('token') }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
   register: loan_users
 
-- name: Create loan records directory
-  become: yes
-  file: dest=/etc/.folio-circ_ansible/loans state=directory
-
-- name: Copy loan records with userIds
-  become: yes
-  template: src=loans/{{ item }} dest=/etc/.folio-circ_ansible/loans/{{ item }}
-  with_items:
-    - bridget-jones-baby-item.json
-    - girl-on-the-train-item.json
-    - girl-on-the-train-item-2.json
-    - girl-on-the-train-item-3.json
-    - interesting-times-item.json
-    - interesting-times-item-2.json
-    - interesting-times-item-3.json
-    - nod-item.json
-    - nod-item-2.json
-    - temeraire-item.json
-    - temeraire2-item.json
-
-# Need to process closed loans before open on same item
-- name: Slurp loan files
-  slurp: src=/etc/.folio-circ_ansible/loans/{{ item }}
-  with_items:
-    - bridget-jones-baby-item.json
-    - girl-on-the-train-item.json
-    - girl-on-the-train-item-3.json
-    - girl-on-the-train-item-2.json
-    - interesting-times-item.json
-    - interesting-times-item-3.json
-    - interesting-times-item-2.json
-    - nod-item-2.json
-    - nod-item.json
-    - temeraire-item.json
-    - temeraire2-item.json
-  register: loanfiles_content
 
 # 422 (or 500?) error means the data are already there
 - name: Load loans
@@ -162,39 +99,25 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
-    body: "{{ item.content|b64decode }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('template', item) | to_json }}"
     status_code: 201,422,500
   register: load_loan
   changed_when: load_loan.status == 201
-  with_items: "{{ loanfiles_content.results }}"
-
-- name: Create request records directory
-  become: yes
-  file: dest=/etc/.folio-circ_ansible/requests state=directory
-  when: load_requests == true
-
-- name: Copy request records with userIds
-  become: yes
-  template: src={{ item }} dest=/etc/.folio-circ_ansible/{{ item }}
   with_items:
-    - requests/bridget-jones-baby.json
-    - requests/girl-on-the-train.json
-    - requests/interesting-times.json
-    - requests/nod.json
-  when: load_requests == true
-
-- name: Slurp request files
-  slurp: src=/etc/.folio-circ_ansible/requests/{{ item }}
-  with_items:
-    - bridget-jones-baby.json
-    - girl-on-the-train.json
-    - interesting-times.json
-    - nod.json
-  register: requestfiles_content
-  when: load_requests == true
+    - loans/bridget-jones-baby-item.json
+    - loans/girl-on-the-train-item.json
+    - loans/girl-on-the-train-item-3.json
+    - loans/girl-on-the-train-item-2.json
+    - loans/interesting-times-item.json
+    - loans/interesting-times-item-3.json
+    - loans/interesting-times-item-2.json
+    - loans/nod-item-2.json
+    - loans/nod-item.json
+    - loans/temeraire-item.json
+    - loans/temeraire2-item.json
 
 # 422 error means the data are already there
 - name: Load requests
@@ -203,12 +126,16 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_circulation_login.x_okapi_token | default('token') }}"
-    body: "{{ item.content|b64decode }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('template', item) | to_json }}"
     status_code: 201,422,500
   register: load_request
   changed_when: load_request.status == 201
-  with_items: "{{ requestfiles_content.results }}"
+  with_items:
+    - requests/bridget-jones-baby.json
+    - requests/girl-on-the-train.json
+    - requests/interesting-times.json
+    - requests/nod.json
   when: load_requests == true

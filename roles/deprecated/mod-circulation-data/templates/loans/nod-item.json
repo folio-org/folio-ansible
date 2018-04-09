@@ -1,0 +1,12 @@
+{
+  "id": "959f65f6-ce51-4984-99fa-5e11c1f5661c",
+  "userId": "{{ loan_users.json.users.3.id }}",
+  "itemId": "23f2c8e1-bd5d-4f27-9398-a688c998808a",
+  "loanDate": "2017-03-03T15:41:54Z",
+  "dueDate": "2017-03-17T15:41:54Z",
+  {% if loan_action == true %}"action": "checkedout",{% endif %}
+  "status": {
+    "name": "Open"
+  },
+  "renewalCount": 1
+}
