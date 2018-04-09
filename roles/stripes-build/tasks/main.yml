@@ -27,6 +27,7 @@
   git: 
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
+    version: "{{ stripes_github_version }}"
     update: no
   when: with_github == true
   notify: "Rebuild stripes"

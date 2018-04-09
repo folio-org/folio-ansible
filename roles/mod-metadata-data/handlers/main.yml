@@ -1,0 +1,16 @@
+---
+- name: Wait for MODS load
+  uri:
+    url: "{{ upload_status_location }}"
+    headers:
+      X-Okapi-Tenant: diku
+      X-Okapi-Token: "{{ mod_metadata_login.x_okapi_token | default('token') }}"
+  register: mods_status
+  until: mods_status.json is defined and mods_status.json.status == 'Completed'
+  retries: 10
+  delay: 10
+  listen: "Wait for MODS"
+
+- name: Wait even longer for MODS load
+  wait_for: timeout=120
+  listen: "Wait for MODS"

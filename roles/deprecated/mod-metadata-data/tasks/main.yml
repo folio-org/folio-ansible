@@ -476,5 +476,13 @@
   when: mods_sample.changed
 
 - name: Load larger sample data from MODS ingest
-  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Token: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods-large_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  command: "/usr/bin/curl -w '\n' -D - -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: diku' -H 'X-Okapi-Token: {{ mod_metadata_login.x_okapi_token | default('token') }}' -F upload=@/etc/.mod-metadata-mods-large_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
   when: mods_larger.changed
+  register: mods_load
+  notify: "Wait for MODS"
+
+- name: Get location for upload status
+  set_fact:
+    upload_status_location: "{{ mods_load.stdout_lines|select('match','^Location:')|list|first|regex_replace('^Location: ') }}"
+
+- meta: flush_handlers
