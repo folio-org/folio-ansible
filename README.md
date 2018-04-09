@@ -29,7 +29,7 @@ For Vagrant deployment:
 
 For Ansible provisioning (to build a dev VM, or to build the demo or
 backend system from scratch)
-* [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.2
+* [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.3
 
 This installation has been tested on macOS "Sierra", Ubuntu 16.04, and
 Windows 10. Note that Windows cannot serve as an Ansible control host.

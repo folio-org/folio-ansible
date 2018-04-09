@@ -20,3 +20,11 @@ inv_storage_3: true
 do_mods_larger: false
 shelf_locations: false
 hierarchical_locations: true
+load_class_types: true
+load_name_types: true
+load_contrib_types: true
+load_id_types: true
+load_instance_formats: true
+load_instance_types: true
+load_platforms: true
+load_holdings: true

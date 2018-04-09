@@ -4,6 +4,7 @@ with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
 stripes_github_version: HEAD
 platform_remove_lock: false
+with_sourcemap: true
 
 # OR specify stripes configuration here and configure from ansible templates 
 stripes_core_version: "latest"

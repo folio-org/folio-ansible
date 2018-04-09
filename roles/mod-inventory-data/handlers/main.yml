@@ -9,8 +9,10 @@
   until: mods_status.json is defined and mods_status.json.status == 'Completed'
   retries: 10
   delay: 10
+  when: upload_status_location is string
   listen: "Wait for MODS"
 
 - name: Wait even longer for MODS load
   wait_for: timeout=120
+  when: upload_status_location is string
   listen: "Wait for MODS"

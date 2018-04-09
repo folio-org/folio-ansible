@@ -4,6 +4,17 @@ auth_required: true
 loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
+do_mods_larger: true
+hierarchical_locations: false
+load_class_types: false
+load_name_types: false
+load_contrib_types: false
+load_id_types: false
+load_instance_formats: false
+load_instance_types: false
+load_platforms: false
+load_holdings: false
+loan_action: false
 
 folio_modules:
   - index: 0
@@ -198,6 +209,7 @@ folio_modules:
 okapi_register_modules: true
 okapi_enable_modules: true
 stripes_strict_md: true
+with_sourcemap: false
 
 # retrofit for older mod-login and mod-permissions
 # see FOLIO-827 and FOLIO-905

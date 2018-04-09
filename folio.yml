@@ -26,12 +26,9 @@
 # Provision a host with the sample tenant and data
 - hosts: folio-sample-data-stable
   roles:
+    - enable-tenant-modules
     - mod-auth-data
-    - mod-configuration-data
-    - mod-users-data 
-    - mod-users-bl-data
     - mod-circulation-data
-    - mod-notes-data
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data

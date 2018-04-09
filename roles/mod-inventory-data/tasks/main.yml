@@ -23,7 +23,7 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "{{ tenant }"
+      X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "permissionName" : "{{ item }}" }'
@@ -86,7 +86,7 @@
   changed_when: load_classtype.status == 201
   with_fileglob:
     - classificationtypes/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_class_types
 
 # fails with 400 or 422 error if already loaded
 - name: Load inventory storage contributor name types
@@ -104,7 +104,7 @@
   changed_when: load_contribnametype.status == 201
   with_fileglob:
     - contributornametypes/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_name_types
 
 # fails with 400 or 422 error if already loaded
 - name: Load inventory storage contributor types
@@ -122,7 +122,7 @@
   changed_when: load_contribtype.status == 201
   with_fileglob:
     - contributortypes/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_contrib_types
 
 # fails with 400 or 422 error if already loaded
 - name: Load inventory storage identifier types
@@ -140,7 +140,7 @@
   changed_when: load_idtype.status == 201
   with_fileglob:
     - identifiertypes/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_id_types
 
 # fails with 400 or 422 error if already loaded
 - name: Load inventory storage instance formats
@@ -158,7 +158,7 @@
   changed_when: load_instformat.status == 201
   with_fileglob:
     - instanceformats/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_instance_formats
 
 # fails with 400 or 422 error if already loaded
 - name: Load inventory storage instance types
@@ -176,7 +176,7 @@
   changed_when: load_insttype.status == 201
   with_fileglob:
     - instancetypes/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_instance_types
 
 # fails with 400 if already loaded
 - name: Load inventory storage loan types
@@ -228,7 +228,7 @@
   changed_when: load_platform.status == 201
   with_fileglob:
     - platforms/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_platforms
 
 # fails with 422 error if already loaded
 - name: Load inventory storage shelf locations
@@ -339,7 +339,7 @@
     - instances/american-journal-of-medicine.json
     - instances/temeraire-instance.json
     - instances/bridgets-baby-instance.json
-#    - instances/transparent-water.json
+    - instances/transparent-water.json
     - instances/girl-on-the-train-instance.json
     - instances/interesting-times-instance.json
   when: inventory_items.json.totalRecords == 0
@@ -360,7 +360,7 @@
   changed_when: load_holding.status == 201
   with_fileglob:
     - holdingsrecords/*.json
-  when: inv_storage_3
+  when: inv_storage_3 and load_holdings
 
 - name: Load items
   uri:

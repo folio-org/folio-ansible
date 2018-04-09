@@ -10,6 +10,15 @@
   shell: "yarn install && yarn build output --sourcemap"
   args:
     chdir: "{{ stripes_conf_dir }}"
+  when: with_sourcemap
+  listen: "Rebuild stripes"
+
+- name: Build stripes (no sourcemap)
+  become: yes
+  shell: "yarn install && yarn build output"
+  args:
+    chdir: "{{ stripes_conf_dir }}"
+  when: not with_sourcemap
   listen: "Rebuild stripes"
 
 - name: Record stripes rebuild variable
