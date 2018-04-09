@@ -5,16 +5,9 @@
 # wait a few seconds to make sure modules are spun up
 - wait_for: timeout=30
 
-#- set_fact:
-#    tenant_modules: []
-
-- debug:
-    msg: "{{ okapi_modules }}"
-
 - set_fact:
     tenant_modules: "{{ tenant_modules | default([]) + [ okapi_modules|select('match','^' + item.name + '(-[0-9].*)?$')|first ] }}"
   with_items: "{{ folio_modules }}"
-
 
 - name: Check tenant module registration
   uri:
