@@ -4,7 +4,7 @@
   "title": "Interesting Times",{% if inv_storage_3 %}
   "contributors": [
     {
-      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "contributorNameTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2a",
       "name": "Pratchett, Terry",
       "primary": true
     }
@@ -27,5 +27,5 @@
       "value": "9780552142352"
     }{% endif %}
   ]{% if inv_storage_3 %},
-  "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c"{% endif %}
+  "instanceTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2c"{% endif %}
 }

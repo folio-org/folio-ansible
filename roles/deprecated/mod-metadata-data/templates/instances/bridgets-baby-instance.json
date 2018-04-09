@@ -16,7 +16,7 @@
   ],{% if inv_storage_3 %}
   "contributors": [
     {
-      "contributorNameTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2a",
+      "contributorNameTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2a",
       "name": "Fielding, Helen",
       "primary": true
     }
@@ -41,7 +41,7 @@
       "dateOfPublication": "2016"
     }
   ],
-  "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c",
+  "instanceTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2c",
   "physicalDescriptions": [
     "219 pages ; 20 cm."
   ],
