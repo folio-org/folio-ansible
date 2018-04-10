@@ -5,7 +5,7 @@
   "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
   "permanentLoanTypeId": "2e48e713-17f3-4c13-a9f8-23845bb210a4",
   "status": {
-    "name": "Checked out - Recalled"
+    "name": "Available"
   }{% if not inv_storage_3 %},
   "title": "Nod",
   "location": {
