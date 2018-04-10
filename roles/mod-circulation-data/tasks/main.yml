@@ -31,7 +31,7 @@
   register: admin_perms
   changed_when: admin_perms.status == 200
   with_items: "{{ circulation_admin_permissions }}"
-  when: auth_required and auth_by_username
+  when: auth_required and auth_by_username and not top_down_install
 
 - name: Grant additional permissions to {{ admin_user.username }} (auth by id)
   uri:
@@ -47,7 +47,7 @@
   register: admin_perms
   changed_when: admin_perms.status == 200
   with_items: "{{ circulation_admin_permissions }}"
-  when: auth_required and not auth_by_username
+  when: auth_required and not auth_by_username and not top_down_install
 
 - name: Load loan policies
   uri:
