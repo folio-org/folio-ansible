@@ -3,7 +3,7 @@
   "holdingsRecordId": "68872d8a-bf16-420b-829f-206da38f6c10",{% endif %}
   "barcode": "697685458679",
   "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
-  "permanentLoanTypeId": "2e48e713-17f3-7c13-09f8-23845bb210a4",
+  "permanentLoanTypeId": "2e48e713-17f3-4c13-a9f8-23845bb210a4",
   "status": {
     "name": "Checked out - Recalled"
   }{% if not inv_storage_3 %},

@@ -4,7 +4,7 @@
   "barcode": "4539876054383",
   "materialTypeId": "1a54b431-2e4f-452d-9cae-9cee66c9a892",
   "permanentLoanTypeId": "2b94c631-fca9-4892-a730-03ee529ffe27",
-  "temporaryLoanTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0e",
+  "temporaryLoanTypeId": "e8b311a6-3b21-43f2-a269-dd9310cb2d0e",
   "status": {
     "name": "Checked out"
   },{% if inv_storage_3 %}

@@ -14,15 +14,15 @@
   ]{% if inv_storage_3 %},
   "contributors": [
     {
-      "contributorNameTypeId": "2e48e713-17f3-7c13-09f8-23845bb210aa",
+      "contributorNameTypeId": "2e48e713-17f3-4c13-a9f8-23845bb210aa",
       "name": "Creator A",
       "primary": true
     },
     {
-      "contributorNameTypeId": "e8b311a6-3b21-03f2-2269-dd9310cb2d0a",
+      "contributorNameTypeId": "e8b311a6-3b21-43f2-a269-dd9310cb2d0a",
       "name": "Creator B",
       "primary": false
     }
   ],
-  "instanceTypeId": "2b94c631-fca9-a892-c730-03ee529ffe2c"{% endif %}
+  "instanceTypeId": "2b94c631-fca9-4892-a730-03ee529ffe2c"{% endif %}
 }
