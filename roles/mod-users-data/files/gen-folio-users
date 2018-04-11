@@ -3,8 +3,7 @@
 use strict;
 use warnings;
 use Data::Faker;
-use Date::Calc qw(Add_Delta_Days);
-use UUID;
+use UUID::Tiny qw(:std);
 use JSON;
 use Getopt::Long;
 
@@ -24,9 +23,6 @@ GetOptions ("users=i" => \$users,
 
 my $faker = Data::Faker->new();
 my $common_last_name = $faker->last_name();
-my ($day,$month,$year) = (localtime(time))[3..5];
-$year += 1900;
-$month += 1;
 my %usernames;
 my %barcodes;
 
@@ -50,9 +46,7 @@ unless (@address_types) {
 }
 
 for (my $i = $start; $i < $users + $start; $i++) {
-  my ($uuid,$id);
-  UUID::generate($uuid);
-  UUID::unparse($uuid,$id);
+  my $id = create_uuid_as_string(UUID_V4);
   my $username = $faker->username();
   until (!$usernames{$username}) {
     $username = $faker->username();
@@ -62,10 +56,8 @@ for (my $i = $start; $i < $users + $start; $i++) {
   until (!$barcodes{$barcode}) {
     $barcode = sprintf("%d",rand(1e+15));
   }
+  my $address = 
   $barcodes{$barcode} = 1;
-  my ($enr_year,$enr_month,$enr_day) = Add_Delta_Days($year,$month,$day,-int(rand(1460)));
-  my ($exp_year,$exp_month,$exp_day) = Add_Delta_Days($year,$month,$day,int(rand(730)));
-  my ($birth_year,$birth_month,$birth_day) = Add_Delta_Days($enr_year,$enr_month,$enr_day,-(int(rand(25550)) + 730));
   my $user = {
               username => $username,
               id => $id,
@@ -79,7 +71,7 @@ for (my $i = $start; $i < $users + $start; $i++) {
                            firstName => $faker->first_name(),
                            email => $faker->email(),
                            phone => $faker->phone_number(),
-                           dateOfBirth => "$birth_year-" . sprintf("%02d",$birth_month) . '-' . sprintf("%02d",$birth_day),
+                           dateOfBirth => $faker->sqldate(),
                            preferredContactTypeId => $contacts[int(rand(5))],
                            addresses => [
                                          {
@@ -93,8 +85,10 @@ for (my $i = $start; $i < $users + $start; $i++) {
                                          }
                                         ]
                           },
-              enrollmentDate => "$enr_year-" . sprintf("%02d",$enr_month) . '-' . sprintf("%02d",$enr_day),
-              expirationDate => "$exp_year-" . sprintf("%02d",$exp_month) . '-' . sprintf("%02d",$exp_day)
+              createdDate => $faker->sqldate(),
+              enrollmentDate => $faker->sqldate(),
+              expirationDate => $faker->sqldate(),
+              updatedDate => $faker->sqldate()
              };
   if (@groups) {
     $$user{'patronGroup'} = $groups[rand(@groups)];

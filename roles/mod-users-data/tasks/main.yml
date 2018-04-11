@@ -106,7 +106,6 @@
   with_items:
     - Data::Faker
     - UUID::Tiny
-    - Date::Calc
   when: ansible_os_family == 'RedHat'
 
 - name: Install prereqs perl packages for user generation via apt
@@ -119,7 +118,6 @@
     - libjson-xs-perl
     - libdata-faker-perl
     - libuuid-tiny-perl
-    - libdate-calc-perl
   when: ansible_os_family == 'Debian'
 
 - name: Copy gen-folio-users utility
