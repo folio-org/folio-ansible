@@ -39,7 +39,7 @@
   become: yes
   lineinfile: 
     dest: /etc/postgresql/9.6/main/postgresql.conf
-    regexp: '^max_connections\s*=\s*\d+$'
+    regexp: '^max_connections\s*=\s*\d+.*$'
     line: "max_connections = {{ pg_max_conn }}"
     backrefs: yes 
   notify: Restart postgresql
