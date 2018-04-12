@@ -9,20 +9,20 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
     body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
     status_code: 201
-  register: mod_auth_login
+  register: tenant_admin_login
 
 # Get users up to 300
 - name: Get 1st 100 users
   uri:
     url: "{{ okapi_url }}/users?limit=100"
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
   register: users1
 
 - name: Copy users to variable
@@ -32,9 +32,9 @@
   uri:
     url: "{{ okapi_url }}/users?offset=100&limit=100"
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
   register: users2
   when: users1.json.{{ total_records_key }} > 100
 
@@ -46,9 +46,9 @@
   uri:
     url: "{{ okapi_url }}/users?offset=200&limit=100"
     headers:
-      X-Okapi-Tenant: diku
+      X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
   register: users3
   when: users1.json.{{ total_records_key }} > 200
 
@@ -62,8 +62,8 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "username" : "{{ item.username }}", "password" : "{{ item.username }}" }'
     status_code: 201,422
@@ -77,8 +77,8 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "username" : "{{ item.username }}" }'
     status_code: 201,422
@@ -93,8 +93,8 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: diku
-      X-Okapi-Token: "{{ mod_auth_login.x_okapi_token }}"
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
       Accept: application/json
     body: '{ "userId" : "{{ item.id }}" }'
     status_code: 201,422
