@@ -2,3 +2,7 @@
 # Record key for mod-users total records, default "total_records"
 total_records_key: total_records
 auth_by_username: false
+tenant: diku
+admin_user:
+  username: diku_admin
+  password: admin
