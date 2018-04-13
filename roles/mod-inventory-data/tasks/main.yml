@@ -320,6 +320,24 @@
     - locations/*.json
   when: inv_storage_3 and hierarchical_locations
 
+# fails with 422 error if already loaded
+- name: Load inventory storage service points
+  uri:
+    url: "{{ okapi_url }}/service-points"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_service_point
+  changed_when: load_service_point.status == 201
+  with_fileglob:
+    - service-points/*.json
+  when: inv_storage_3 and load_service_points
+
 - name: Load instances
   uri:
     url: "{{ okapi_url }}/instance-storage/instances"

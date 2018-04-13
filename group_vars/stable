@@ -14,6 +14,7 @@ load_instance_formats: false
 load_instance_types: false
 load_platforms: false
 load_holdings: false
+load_service_points: true
 loan_action: false
 
 folio_modules:
