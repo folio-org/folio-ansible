@@ -14,6 +14,7 @@
     method: POST
     body_format: json
     body: "{{ module_list }}"
+    timeout: "{{ install_timeout }}"
   register: module_install
   changed_when: module_install.status == 200
   listen: Install modules

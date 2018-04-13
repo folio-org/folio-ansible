@@ -28,3 +28,4 @@ load_instance_formats: true
 load_instance_types: true
 load_platforms: true
 load_holdings: true
+load_service_points: true
