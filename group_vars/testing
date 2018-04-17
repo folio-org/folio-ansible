@@ -26,6 +26,9 @@ do_mods_larger: true
 shelf_locations: false
 enable_okapi: true
 
+# set the default postgres connection pool per module/tenant
+pg_max_pool_size: 5
+
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -45,6 +48,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -64,6 +68,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -81,6 +86,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -98,6 +104,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -139,6 +146,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -165,6 +173,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -191,6 +200,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -208,6 +218,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -264,6 +275,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"
@@ -281,6 +293,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     storage: postgres
     database: "{{ module_database }}"

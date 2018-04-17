@@ -13,5 +13,5 @@ module_ids="{% for module in deploy_mods %}{{ module }}{% if not loop.last %} {%
 declare -A okapi_env
 # Enter Okapi environment variables here, e.g.:
 # okapi_env=([db.host]=localhost)
-okapi_env=([db.host]="{{ pg_host }}" [db.port]="{{ pg_port }}" [db.database]="{{ module_database }}" [db.username]="{{ pg_admin_user }}" [db.password]="{{ pg_admin_password }}")
+okapi_env=([db.host]="{{ pg_host }}" [db.port]="{{ pg_port }}" [db.database]="{{ module_database }}" [db.username]="{{ pg_admin_user }}" [db.password]="{{ pg_admin_password }}" [db.maxPoolSize]="{{ pg_max_pool_size }}")
 
