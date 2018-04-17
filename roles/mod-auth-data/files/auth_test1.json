@@ -1,6 +1,7 @@
 {
    "username" : "auth_test1",
    "type" : "employee",
+   "patronGroup" : "050b914e-4695-4726-8797-caa040d7e671",
    "personal" : {
       "email" : "kayla@collins-grady.lr",
       "firstName" : "Maureen",
