@@ -19,7 +19,7 @@
 
 - hosts: snapshot-part2
   roles:
-    - mod-auth-data 
+    - deprecated/mod-auth-data 
     - tenant-admin-permissions
     - stripes-docker
 
@@ -27,7 +27,7 @@
 - hosts: folio-sample-data-stable
   roles:
     - enable-tenant-modules
-    - mod-auth-data
+    - deprecated/mod-auth-data
     - mod-circulation-data
     - mod-auth-demo-users
 
@@ -35,7 +35,7 @@
 - hosts: folio-sample-data-testing
   roles:
     - enable-tenant-modules
-    - mod-auth-data
+    - deprecated/mod-auth-data
     - mod-circulation-data
     - mod-auth-demo-users
 
