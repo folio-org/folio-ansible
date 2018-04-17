@@ -5,6 +5,9 @@ total_records_key: totalRecords
 loan_action: true
 load_addresstypes: true
 
+# set the default postgres connection pool per module/tenant
+pg_max_pool_size: 5
+
 folio_modules:
   - index: 0
     name: mod-authtoken
@@ -28,6 +31,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -49,6 +53,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -68,6 +73,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -86,6 +92,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -113,6 +120,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -143,6 +151,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -170,6 +179,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
@@ -188,6 +198,7 @@ folio_modules:
       - { name: db.username, value: "{{ pg_admin_user }}" }
       - { name: db.password, value: "{{ pg_admin_password }}" }
       - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
     storage: postgres
     database: "{{ module_database }}"
     pg_user: "{{ pg_admin_user }}"
