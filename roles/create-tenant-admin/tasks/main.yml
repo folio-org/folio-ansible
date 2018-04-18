@@ -1,0 +1,71 @@
+---
+# Role to bootstrap a tenant admin user
+#
+
+# wait a few seconds to make sure modules are spun up
+- wait_for: timeout=5
+
+####################
+# Set up variables #
+####################
+
+- name: Set mod_permissions_schema
+  set_fact: mod_permissions_schema="{{ tenant }}_mod_permissions"
+
+- name: Set mod_login_schema
+  set_fact: mod_login_schema="{{ tenant }}_mod_login"
+
+- name: Set mod_users_schema
+  set_fact: mod_users_schema="{{ tenant }}_mod_users"
+
+- name: Set admin_user_id
+  set_fact: admin_user_id="{{ 9999999999999999999999 | random | to_uuid }}"
+
+- name: Set admin_perms_id
+  set_fact: admin_perms_id="{{ 9999999999999999999999 | random | to_uuid }}"
+
+########################################
+# Bootstrap admin user and permissions #
+########################################
+
+- name: Create .pgpass for Ansible user
+  lineinfile:
+    dest: "{{ ansible_env.HOME }}/.pgpass"
+    line: "{{ pg_host }}:{{ pg_port }}:*:{{ pg_admin_user }}:{{ pg_admin_password }}"
+    create: yes
+    mode: 0600
+
+- name: Check auth_credentials for admin user
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "SELECT COUNT({{ mod_login_schema }}.auth_credentials.*) FROM {{ mod_login_schema }}.auth_credentials INNER JOIN {{ mod_users_schema }}.users ON {{ mod_login_schema }}.auth_credentials.jsonb->>'userId' = {{ mod_users_schema }}.users.jsonb->>'id' WHERE {{ mod_users_schema }}.users.jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: admin_credentials_check
+  changed_when: no
+
+- name: Insert admin user into auth_credentials
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (jsonb) values ('{\"userId\":\"{{ admin_user_id }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
+  when: admin_credentials_check.stdout | int == 0
+
+- name: Check permissions_users for admin user
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "SELECT {{ mod_permissions_schema }}.permissions_users.jsonb->>'id' FROM {{ mod_permissions_schema }}.permissions_users INNER JOIN {{ mod_users_schema }}.users ON {{ mod_permissions_schema }}.permissions_users.jsonb->>'userId' = {{ mod_users_schema }}.users.jsonb->>'id' WHERE {{ mod_users_schema }}.users.jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: admin_permissions_check
+  changed_when: no
+
+- name: Set admin_perms_id
+  set_fact: admin_perms_id={{ admin_permissions_check.stdout|trim }}
+  when: admin_permissions_check.stdout != ""
+
+- name: Insert admin user into permissions_users
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_permissions_schema }}.permissions_users (jsonb) values ('{\"id\":\"{{ admin_perms_id }}\",\"userId\":\"{{ admin_user_id }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
+  when: admin_permissions_check.stdout == ""
+
+- name: Check mod-users for admin user
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select jsonb->>'id' from {{ mod_users_schema }}.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
+  register: admin_mod_users_check
+  changed_when: no
+
+- name: Set admin_user_id
+  set_fact: admin_user_id={{ admin_mod_users_check.stdout|trim }}
+  when: admin_mod_users_check.stdout != ""
+
+- name: Insert admin user into mod_users
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_users_schema }}.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user_id }}\",\"active\":true,\"personal\":{\"lastName\":\"{{ admin_user.last_name }}\",\"firstName\":\"{{ admin_user.first_name }}\",\"email\":\"{{ admin_user.email }}\"}}')" {{ module_database }}
+  when: admin_mod_users_check.stdout == ""
