@@ -1,0 +1,5 @@
+---
+dependencies:
+  - { role: common }
+  - { role: tenant-data }
+  - { role: okapi-get-modules }
