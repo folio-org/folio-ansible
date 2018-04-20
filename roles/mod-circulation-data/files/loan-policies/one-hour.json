@@ -1,0 +1,20 @@
+{
+  "id" : "43198de5-f56a-4a53-a0bd-5a324418967a",
+  "name" : "One Hour",
+  "loanable" : true,
+  "loansPolicy" : {
+    "profileId" : "Rolling",
+    "period" : {
+      "duration" : 1,
+      "intervalId" : "Hours"
+    },
+    "closedLibraryDueDateManagementId" : "KEEP_CURRENT_DATE"
+  },
+  "renewable" : true,
+  "renewalsPolicy" : {
+    "unlimited" : false,
+    "renewFromId" : "KEEP_CURRENT_DATE",
+    "differentPeriod" : false
+  }
+}
+
