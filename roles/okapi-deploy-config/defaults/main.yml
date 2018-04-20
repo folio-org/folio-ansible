@@ -22,3 +22,4 @@ docker_port: {}
 default_docker_port: 8081
 # Other modules to enable outside of dependency resolution
 other_mods: []
+install_timeout: 300

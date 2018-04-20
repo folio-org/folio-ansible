@@ -8,26 +8,14 @@ loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
 load_requests: true
-mod_auth_prefixes:
-  - mod-permissions
-  - mod-authtoken
-  - mod-login
-  - mod-users
-mod_login_schema: diku_mod_login
-mod_permissions_schema: diku_mod_permissions
-mod_authtoken_prefix: mod-authtoken
-mod_configuration_prefix: mod-configuration
-mod_metadata_prefixes:
-  - mod-inventory-storage
-  - mod-inventory
-mod_circulation_prefixes:
-  - mod-circulation-storage
-  - mod-circulation
 inv_storage_3: true
 do_mods_larger: true
 hierarchical_locations: true
 shelf_locations: false
 enable_okapi: true
+
+# set the default postgres connection pool per module/tenant
+pg_max_pool_size: 5
 
 # dockerCMD values for modules
 docker_cmd:

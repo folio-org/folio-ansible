@@ -8,7 +8,7 @@ top_down_install: false
 admin_user: 
   username: diku_admin 
   password: admin 
-  perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c
+  perms_user_id: "{{ admin_perms_id|default('2408ae64-56ad-4177-9024-1e35fe5d895c') }}"
 
 tenant: diku
 
@@ -28,3 +28,4 @@ load_instance_formats: true
 load_instance_types: true
 load_platforms: true
 load_holdings: true
+load_service_points: true
