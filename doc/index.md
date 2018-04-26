@@ -223,7 +223,9 @@ the metadata URL for the box file. Check the file
 form `https://atlas.hashicorp.com/[...]` then the `atlas.hashicorp`
 needs to be replaced with `vagrantcloud`.
 
-Note: Do not use a text-editor, as they are not proper text files.
+(Note: Do not use a text-editor, as they are not proper text files.
+They have no final newline, and if added then vagrant will break.
+Perl can [rescue](https://stackoverflow.com/questions/16365155/removing-a-newline-character-at-the-end-of-a-file).)
 
 To replace the metadata URL for all the boxes in your `~/.vagrant.d`
 directory, use the following `Perl one-liner` script:
