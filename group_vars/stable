@@ -4,7 +4,7 @@ auth_required: true
 loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
-do_mods_larger: true
+load_mods_larger: true
 hierarchical_locations: false
 load_class_types: false
 load_name_types: false

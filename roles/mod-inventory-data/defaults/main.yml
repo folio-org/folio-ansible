@@ -17,7 +17,8 @@ inventory_admin_permissions:
   - inventory.all
 
 inv_storage_3: true
-do_mods_larger: false
+load_mods: true
+load_mods_larger: false
 shelf_locations: false
 hierarchical_locations: true
 load_class_types: true

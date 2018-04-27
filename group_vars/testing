@@ -7,7 +7,7 @@ load_addresstypes: true
 load_requests: true
 inv_storage_3: true
 hierarchical_locations: true
-do_mods_larger: true
+load_mods_larger: true
 shelf_locations: false
 enable_okapi: true
 
