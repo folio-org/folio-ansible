@@ -294,6 +294,8 @@ folio_npm_repo: npm-folioci
 platform_remove_lock: true
 okapi_register_modules: true
 okapi_enable_modules: true
+node_environment:
+  NODE_ENV:
 
 # Metadata for CI build
 version: 5.0.0
