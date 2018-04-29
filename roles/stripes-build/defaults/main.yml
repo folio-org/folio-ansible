@@ -5,6 +5,8 @@ stripes_github_project: https://github.com/folio-org/stripes-demo-platform
 stripes_github_version: HEAD
 platform_remove_lock: false
 with_sourcemap: true
+node_environment:
+  NODE_ENV: production
 
 # OR specify stripes configuration here and configure from ansible templates 
 stripes_core_version: "latest"
