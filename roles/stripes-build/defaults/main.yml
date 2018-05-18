@@ -43,6 +43,10 @@ stripes_strict_md: false
 folio_npm_base_url: repository.folio.org/repository/
 folio_npm_repo: npm-folio
 
+# Use existing stripes platform yarn.lock
+use_folio_snapshot_yarnlock: false
+folio_snapshot_yarnlock_url: "http://folio-snapshot-stable.aws.indexdata.com/yarn.lock"
+
 #
 # Disabled by default
 # 
