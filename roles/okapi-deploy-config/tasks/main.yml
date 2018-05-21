@@ -1,53 +1,20 @@
 ---
-# Role to configure okapi-deploy service based on dependency resolution from stripes platform
+# Configure okapi-deploy service based on dependency resolution from stripes platform
 # variable mod_descrs comes from stripes-build dependency
 
-# Note that this role is not entirely idempotent -- if dependencies change, it will break
-# the okapi-deploy service (soon to be made obsolete, see OKAPI-423)
+- include: create_module_deps_list.yml
+  when: use_folio_snapshot == false
 
-- name: Initialize module list json
-  set_fact: module_list="["
+- name: get current stable snapshot module list
+  uri: 
+    url: "{{ folio_snapshot_url }}/install.json"
+      method: GET
+      status_code: 200
+  register: folio_snapshot_modules
+  when: use_folio_snapshot == true
 
-- name: Build module list from Stripes mod descriptors
-  set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
-  with_items: "{{ mod_descrs }}"
-
-- name: Add other modules to module list
-  set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
-  with_items: "{{ other_mods }}"
-
-- name: Finish module list json
-  set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
-
-- name: Get dependencies for modules from Okapi
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
-    method: POST
-    body_format: json
-    body: "{{ module_list }}"
-  register: module_deps
-
-- name: Build module_deps_list, remove modules that are pinned
-  set_fact:
-    module_deps_list: "{{ module_deps_list|default([]) }} + [{{ item.0 }}]"
-  when: item[0].id|regex_search(item[1].module) != item[1].module
-  with_nested:
-    - "{{ module_deps.json }}"
-    - "{{ pinned_modules }}"
-
-- name: Set module_deps_list if empty
-  set_fact:
-    module_deps_list: "{{ module_deps.json }}"
-  when: module_deps_list is not defined
-
-- name: Build pinned_modules_list
-  set_fact:
-    pinned_modules_list: "{{ pinned_modules_list|default([]) + [ { 'id': item.module + '-' + item.version, 'action': 'enable' } ] }}"
-  with_items: "{{ pinned_modules }}"
-
-- name: Combine lists
-  set_fact:
-    module_deps_list: "{{ module_deps_list|union(pinned_modules_list|default([]))|unique }}"
+- set_fact: module_deps_list="{{ folio_snapshot_modules.json }}"
+  when: use_folio_snapshot == true
 
 - name: Build module deploy list
   set_fact: deploy_mods="{{ deploy_mods|default([]) }} + ['{{ item.id }}']"
