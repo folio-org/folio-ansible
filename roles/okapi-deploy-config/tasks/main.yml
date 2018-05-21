@@ -3,7 +3,7 @@
 # variable mod_descrs comes from stripes-build dependency
 
 - include: create_module_deps_list.yml
-  when: use_folio_snapshot == false
+  when: not use_folio_snapshot
 
 - name: get current stable snapshot module list
   uri: 
@@ -11,10 +11,10 @@
     method: GET
     status_code: 200
   register: folio_snapshot_modules
-  when: use_folio_snapshot == true
+  when: use_folio_snapshot
 
 - set_fact: module_deps_list="{{ folio_snapshot_modules.json }}"
-  when: use_folio_snapshot == true
+  when: use_folio_snapshot
 
 - name: Build module deploy list
   set_fact: deploy_mods="{{ deploy_mods|default([]) }} + ['{{ item.id }}']"

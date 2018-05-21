@@ -48,7 +48,7 @@
   get_url: 
     url: "{{ folio_snapshot_url }}/yarn.lock"
     dest: "{{ stripes_conf_dir }}"
-  when: use_folio_snapshot == true
+  when: use_folio_snapshot
   notify: "Rebuild stripes" 
 
 - name: Force build of mod descriptors from github without strict flag
