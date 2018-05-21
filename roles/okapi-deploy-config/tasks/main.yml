@@ -8,8 +8,8 @@
 - name: get current stable snapshot module list
   uri: 
     url: "{{ folio_snapshot_url }}/install.json"
-      method: GET
-      status_code: 200
+    method: GET
+    status_code: 200
   register: folio_snapshot_modules
   when: use_folio_snapshot == true
 
