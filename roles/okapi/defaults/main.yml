@@ -33,7 +33,7 @@ carbon_port: 2003
 # 
 # Set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
 # you are running on ec2 instances
-hazelcast_aws_conf: "false"
+hazelcast_aws_conf: false
 hazelcast_aws_region: us-east-1
 hazelcast_security_group: okapi
 hazelcast_aws_access_key: 12345678

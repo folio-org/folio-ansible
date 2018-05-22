@@ -39,7 +39,7 @@
 - name: Enable external hazelcast config if AWS
   set_fact: 
     okapi_cluster_config_file: '"-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"'
-  when: hazelcast_aws_conf == "true"
+  when: hazelcast_aws_conf
 
 - name: Install okapi.env
   become: yes
@@ -64,7 +64,7 @@
     owner: okapi
     group: okapi
     mode: 0640
-  when: hazelcast_aws_conf == "true"
+  when: hazelcast_aws_conf
   notify: okapi restart
 
 
