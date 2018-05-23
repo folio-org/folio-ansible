@@ -26,4 +26,3 @@ install_timeout: 300
 
 use_folio_snapshot: false
 folio_snapshot_url: 'http://folio-snapshot-stable.aws.indexdata.com'
-
