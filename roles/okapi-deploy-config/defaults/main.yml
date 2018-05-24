@@ -23,3 +23,6 @@ default_docker_port: 8081
 # Other modules to enable outside of dependency resolution
 other_mods: []
 install_timeout: 300
+
+use_folio_snapshot: false
+folio_snapshot_url: 'http://folio-snapshot-stable.aws.indexdata.com'
