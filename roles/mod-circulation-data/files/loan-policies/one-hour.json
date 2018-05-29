@@ -13,8 +13,8 @@
   "renewable" : true,
   "renewalsPolicy" : {
     "unlimited" : false,
-    "renewFromId" : "KEEP_CURRENT_DATE",
+    "numberAllowed": 3,
+    "renewFromId" : "SYSTEM_DATE",
     "differentPeriod" : false
   }
 }
-
