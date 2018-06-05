@@ -1,0 +1,77 @@
+---
+# Role to install tenant software from a TenantModuleDescriptorList
+
+- name: Create modules db
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ module_database }}"
+    owner: "{{ pg_admin_user }}"
+
+- name: Update Okapi environment variables
+  uri:
+    url: "{{ okapi_url }}/_/env"
+    method: POST
+    body_format: json
+    body: "{{ item }}"
+    status_code: 200, 201
+  with_items: "{{ module_env }}"
+  register: update_env
+  changed_when: update_env.status == 201
+
+- name: Create configuration directory
+  become: yes
+  file: path=/etc/folio/okapi state=directory
+
+- name: Copy TenantModuleDescriptorList from source
+  become: yes
+  get_url: url={{ install_url }} dest=/etc/folio/okapi/install.json
+  register: install_list
+
+- name: Slurp TenantModuleDescriptorList into memory
+  slurp: src=/etc/folio/okapi/install.json
+  register: install_list_raw
+
+- name: Init variable for backend modules
+  set_fact: install_okapi_modules=[]
+
+# depends on "mod-" naming convention
+- name: Select backend modules from install list
+  set_fact:
+    install_okapi_modules: "{{ install_okapi_modules }} + [ {{ item }} ]"
+  with_items: "{{ install_list_raw.content|b64decode }}"
+  when: item.id.startswith('mod-')
+
+- name: Init variable for frontend modules
+  set_fact: install_stripes_modules=[]
+
+# depends on "folio_" naming convention
+- name: Select frontend modules from install list
+  set_fact:
+    install_stripes_modules: "{{ install_stripes_modules }} + [ {{ item }} ]"
+  with_items: "{{ install_list_raw.content|b64decode }}"
+  when: item.id.startswith('folio_')
+
+- name: Set install deployment parameter
+  set_fact:
+    install_deploy_param: "{{ '?deploy=true' if (install_deploy) else '' }}"
+
+- name: Install/deploy backend tenant software (warning - this can take a long time)
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{{ install_deploy_param }}"
+    method: POST
+    body_format: json
+    body: "{{ install_okapi_modules }}"
+    timeout: "{{ install_timeout }}"
+  register: backend_deploy
+  changed_when: backend_deploy.status == 200
+
+- name: Enable frontend tenant software
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    method: POST
+    body_format: json
+    body: "{{ install_stripes_modules }}"
+  register: frontend_enable
+  changed_when: frontend_enable.status == 200
