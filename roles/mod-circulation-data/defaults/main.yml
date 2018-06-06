@@ -18,3 +18,4 @@ circulation_admin_permissions:
 
 loan_action: true
 load_requests: true
+mod_circulation_ref_only: false
