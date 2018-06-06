@@ -1,0 +1,33 @@
+server {
+  listen {{ listen_port }};
+  server_name {{ stripes_server_name }};
+  charset utf-8;
+  # Serve index.html for any request not found
+  location / {
+    # Set path
+    root {{ stripes_conf_dir }}/output;
+    try_files $uri /index.html;
+  }
+  location /yarn.lock {
+    alias {{ stripes_conf_dir }}/yarn.lock;
+    include mime.types;
+    types {
+      text/plain lock;
+    }
+  }
+  {% if stat_install_json.stat.exists %}
+  location /install.json {
+    alias /etc/folio/okapi/install.json;
+    include mime.types;
+    types {
+      text/plain lock;
+    }
+  }
+  {% endif %}
+  {% if nginx_proxy_okapi %}
+  location /okapi {
+    rewrite ^/okapi/(.*) /$1 break;
+    proxy_pass {{ nginx_proxy_okapi_url }};
+  }
+  {% endif %}
+}
