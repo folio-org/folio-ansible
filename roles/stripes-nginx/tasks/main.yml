@@ -24,9 +24,4 @@
   file: src=/etc/nginx/sites-available/stripes path=/etc/nginx/sites-enabled/stripes state=link
   notify: Restart nginx
 
-- name: Remove default site from sites-enabled
-  become: yes
-  file: path=/etc/nginx/sites-enabled/default state=absent
-  notify: Restart nginx
-
 - meta: flush_handlers

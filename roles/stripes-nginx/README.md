@@ -16,7 +16,8 @@ Ansible role to serve a stripes webpack with nginx (and optionally proxy Okapi).
 ```yaml
 # defaults
 listen_port: 80
-stripes_server_name: "{{ ansible_default_ipv4.address }}"
+stripes_server_name:
+  - "{{ ansible_default_ipv4.address }}"
 nginx_proxy_okapi: no
 nginx_proxy_okapi_url: "http://{{ ansible_default_ipv4.address }}:9130"
 ```
