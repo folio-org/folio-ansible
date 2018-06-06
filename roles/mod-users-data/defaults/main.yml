@@ -7,3 +7,4 @@ admin_user: { username: diku_admin, password: admin }
 num_users: 10
 load_addresstypes: true
 top_down_install: false
+mod_users_ref_only: false
