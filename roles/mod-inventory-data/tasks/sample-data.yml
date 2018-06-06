@@ -1,0 +1,131 @@
+---
+- name: Check for sample instances
+  uri:
+    url: "{{ okapi_url }}/instance-storage/instances"
+    headers:
+      Authtoken-Refresh-Cache: "true"
+      Content-Type: application/json
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+  register: inventory_instances
+
+- name: Check for sample items
+  uri:
+    url: "{{ okapi_url }}/item-storage/items"
+    headers:
+      Content-Type: application/json
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+  register: inventory_items
+
+- name: Load instances
+  uri:
+    url: "{{ okapi_url }}/instance-storage/instances"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('template', item) }}"
+    status_code: 201,400,422
+  register: load_instance
+  changed_when: load_instance.status == 201
+  with_items:
+    - instances/aba.json
+    - instances/nod-instance.json
+    - instances/american-journal-of-medicine.json
+    - instances/temeraire-instance.json
+    - instances/bridgets-baby-instance.json
+    - instances/transparent-water.json
+    - instances/girl-on-the-train-instance.json
+    - instances/interesting-times-instance.json
+  when: inventory_items.json.totalRecords == 0
+  
+# fails with 400 or 422 error if already loaded
+- name: Load holdings
+  uri:
+    url: "{{ okapi_url }}/holdings-storage/holdings"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 400, 422
+  register: load_holding
+  changed_when: load_holding.status == 201
+  with_fileglob:
+    - holdingsrecords/*.json
+  when: inv_storage_3 and load_holdings
+
+- name: Load items
+  uri:
+    url: "{{ okapi_url }}/item-storage/items"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('template', item) | to_json }}"
+    status_code: 201,400,422
+  register: load_item
+  changed_when: load_item.status == 201
+  with_items: 
+    - items/aba.json
+    - items/american-journal-of-medicine.json
+    - items/bridget-jones-baby-item.json
+    - items/bridget-jones-baby-item_2.json
+    - items/bridget-jones-baby-item_3.json
+    - items/girl-on-the-train-item.json
+    - items/interesting-times-item.json
+    - items/nod-item.json
+    - items/temeraire-item.json
+    - items/temeraire2-item.json
+  when: inventory_items.json.totalRecords == 0
+
+- name: create temp dir for MODS data
+  tempfile: 
+    path: /tmp
+    state: directory
+  register: tmpdir_samplemods
+  when: load_mods or load_mods_larger
+
+- name: Copy sample MODS data
+  copy: 
+    src: multiple-mods-records.xml 
+    dest: "{{ tmpdir_samplemods.path }}/mod-metadata-mods_ansible.xml"
+  register: mods_sample
+  when: load_mods
+
+- name: Copy larger MODS sample
+  copy: 
+    src: many_mods.xml 
+    dest: "{{ tmpdir_samplemods.path }}/mod-metadata-mods-large_ansible.xml"
+  register: mods_larger
+  when: load_mods_larger
+
+- name: Load sample data from MODS ingest
+  command: "/usr/bin/curl -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: {{ tenant }}' -H 'X-Okapi-Token: {{ tenant_admin_login.x_okapi_token | default('token') }}' -F upload=@{{ tmpdir_samplemods.path }}/mod-metadata-mods_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  when: load_mods and mods_sample.changed
+
+- name: Load larger sample data from MODS ingest
+  command: "/usr/bin/curl -w '\n' -D - -X POST -H 'Content-type: multipart/form-data' -H 'X-Okapi-Tenant: {{ tenant }}' -H 'X-Okapi-Token: {{ tenant_admin_login.x_okapi_token | default('token') }}' -F upload=@{{ tmpdir_samplemods.path }}/mod-metadata-mods-large_ansible.xml {{ okapi_url }}/inventory/ingest/mods"
+  when: load_mods_larger and mods_larger.changed
+  register: mods_load
+  notify: "Wait for MODS"
+
+- name: Get location for upload status
+  set_fact:
+    upload_status_location: "{{ mods_load.stdout_lines|default([])|select('match','^Location:')|list|first|default([])|regex_replace('^Location: ') }}"
+  when: load_mods_larger
+
+- name: remove sample MODS temp dir
+  command: rm -rf {{ tmpdir_samplemods.path|quote }}
+  args:
+    removes: "{{ tmpdir_samplemods.path }}"
+  when: load_mods or load_mods_larger
