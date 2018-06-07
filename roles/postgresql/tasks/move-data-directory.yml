@@ -1,0 +1,42 @@
+---
+# Plays to move the data directory from the Postgresql default
+# Assumes default data_directory location from Postgresql 9.6 package
+# (/var/lib/postgresql/9.6/main)
+
+# If new data directory already exists, do not execute any of these tasks
+
+- name: Check data directory
+  become: yes
+  stat: path={{ pg_data_directory_path }}/{{ pg_data_directory }}
+  register: check_data_dir
+
+- name: Shutdown Postgresql
+  become: yes
+  service: name=postgresql state=stopped
+  when: check_data_dir.stat.exists != true
+
+- name: Create data directory path
+  become: yes
+  file:
+    path: "{{ pg_data_directory_path }}"
+    state: directory
+  when: check_data_dir.stat.exists != true
+
+- name: Move data directory
+  become: yes
+  command: "mv /var/lib/postgresql/9.6/main {{ pg_data_directory_path }}/{{ pg_data_directory }}"
+  when: check_data_dir.stat.exists != true
+
+- name: Configure postgresql data directory
+  become: yes
+  lineinfile:
+    dest: /etc/postgresql/9.6/main/postgresql.conf
+    regexp: '^data_directory\s*='
+    line: "data_directory = '{{ pg_data_directory_path }}/{{ pg_data_directory }}'"
+    backup: yes
+  when: check_data_dir.stat.exists != true
+
+- name: Start up Postgresql
+  become: yes
+  service: name=postgresql state=started
+  when: check_data_dir.stat.exists != true

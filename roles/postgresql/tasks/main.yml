@@ -44,6 +44,10 @@
     backrefs: yes 
   notify: Restart postgresql
 
+- name: Move data directory
+  include: move-data-directory.yml
+  when: pg_data_directory is defined
+  
 - name: Configure postgresql to allow connections from all addresses
   become: yes
   lineinfile:
