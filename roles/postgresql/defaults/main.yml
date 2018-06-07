@@ -2,7 +2,6 @@
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_max_conn: 500
-# Set pg_data_directory variables to something other than package
+# Set pg_data_directory variable to something other than package
 # default -- undefined by default in ../tasks/main.yml
-#pg_data_directory_path:
 #pg_data_directory:

@@ -7,7 +7,7 @@
 
 - name: Check data directory
   become: yes
-  stat: path={{ pg_data_directory_path }}/{{ pg_data_directory }}
+  stat: path={{ pg_data_directory }}
   register: check_data_dir
 
 - name: Shutdown Postgresql
@@ -15,16 +15,21 @@
   service: name=postgresql state=stopped
   when: check_data_dir.stat.exists != true
 
+- name: Get data directory path
+  set_fact:
+    pg_data_directory_path: "{{ pg_data_directory.split('/')[:pg_data_directory.split('/')|length - 1]|join('/') }}"
+  when: check_data_dir.stat.exists != true
+ 
 - name: Create data directory path
   become: yes
   file:
     path: "{{ pg_data_directory_path }}"
     state: directory
-  when: check_data_dir.stat.exists != true
+  when: check_data_dir.stat.exists != true and pg_data_directory_path
 
 - name: Move data directory
   become: yes
-  command: "mv /var/lib/postgresql/9.6/main {{ pg_data_directory_path }}/{{ pg_data_directory }}"
+  command: "mv /var/lib/postgresql/9.6/main {{ pg_data_directory }}"
   when: check_data_dir.stat.exists != true
 
 - name: Configure postgresql data directory
@@ -32,7 +37,7 @@
   lineinfile:
     dest: /etc/postgresql/9.6/main/postgresql.conf
     regexp: '^data_directory\s*='
-    line: "data_directory = '{{ pg_data_directory_path }}/{{ pg_data_directory }}'"
+    line: "data_directory = '{{ pg_data_directory }}'"
     backup: yes
   when: check_data_dir.stat.exists != true
 
