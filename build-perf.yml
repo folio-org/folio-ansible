@@ -1,0 +1,37 @@
+---
+# Playbook to set up environment for performance testing
+# Configure Okapi based on yarn.lock and install.json from folio-snapshot-stable
+- hosts: all
+  become: yes
+  become_method: sudo 
+  gather_facts: no
+  tasks:
+    - name: Bootstrap Python 2.x
+      raw: test -e /usr/bin/python || (apt -qqy update && apt install -qy python-minimal)
+      register: output
+      changed_when: output.stdout != ""
+      ignore_errors: yes
+
+- hosts: perf-database
+  roles:
+    - postgresql
+
+- hosts: perf-okapi
+  roles:
+    - okapi
+    - okapi-pull
+
+- hosts: perf-stripes
+  roles:
+    - stripes-nginx
+    
+- hosts: perf-docker
+  roles:
+    - docker-engine
+
+- hosts: perf-okapi
+  roles:
+    - okapi-tenant-install
+    - create-tenant-admin
+    - tenant-admin-permissions
+    - mod-circulation-data

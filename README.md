@@ -67,6 +67,13 @@ For more information, see [Vagrant VMs and Ansible roles](doc/index.md).
 In addition, this project includes a [Vagrantfile](Vagrantfile) for
 creating different environments.
 
+## Playbooks
+
+There are two playbooks in this repo:
+
+* [folio.yml](folio.yml) - builds the environments on the Vagrant boxes.
+* [build-perf.yml](build-perf.yml) - builds an environment for performance testing.
+
 ## Documentation
 
 * [VM and playbook documentation](doc/index.md)
