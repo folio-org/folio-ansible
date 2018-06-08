@@ -1,0 +1,24 @@
+---
+okapi_role: dev
+okapi_storage: postgres
+enable_okapi: yes
+install_deploy: yes
+auth_required: yes
+top_down_install: yes
+mod_users_ref_only: yes
+load_mods: no
+mod_inventory_ref_only: yes
+load_requests: no
+mod_circulation_ref_only: yes
+stripes_github_project: https://github.com/folio-org/folio-testing-platform
+okapi_register_modules: yes
+stripes_strict_md: yes
+folio_npm_repo: folioci
+use_folio_snapshot: yes
+stripes_okapi_url: http://localhost:3000/okapi
+stripes_build_okapi_url: http://localhost:9130
+listen_port: 3000
+stripes_server_name:
+  - localhost
+nginx_proxy_okapi: yes
+nginx_proxy_okapi_url: http://localhost:9130

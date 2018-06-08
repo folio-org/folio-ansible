@@ -149,4 +149,19 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_perf", autostart: false do |build_perf|
+    build_perf.vm.box = "bento/ubuntu-16.04"
+    build_perf.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_perf.vm.provision "ansible" do |ansible|
+      ansible.playbook = "build-perf.yml"
+      ansible.groups = {
+        "perf-database" => ["build_perf"],
+        "perf-okapi" => ["build_perf"],
+        "perf-stripes" => ["build_perf"],
+        "perf-docker" => ["build_perf"],
+        "vagrant-perf-test" => ["build_perf"]
+      }
+    end
+  end
+
 end
