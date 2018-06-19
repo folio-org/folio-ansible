@@ -1,0 +1,25 @@
+---
+# defaults
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+auth_required: no
+
+admin_user: 
+  username: diku_admin 
+  password: admin 
+
+tenant: diku
+
+update_repo: yes
+module_version: HEAD
+working_dir: /tmp/module-sample-data
+
+# undefined by default, need to be defined for the role to work
+# Module name, e.g. mod-vendors
+module_name:
+# Git URL for repository, e.g. https://github.com/folio-org/mod-vendors
+repository:
+# List of fileglobs to load relative to the root of the repository, e.g. sample-data/*.json
+fileglob: []
+# Okapi URL for posting the data, e.g. /vendors
+load_endpoint:
