@@ -1,0 +1,43 @@
+---
+# Role to load module sample data
+- name: Create sample data directory on control host
+  file: path={{ working_dir }} state=directory
+  delegate_to: 127.0.0.1
+
+- name: Clone repo with sample data
+  git: repo={{ repository }} dest={{ working_dir }}/{{ module_name }} version={{ module_version }} update={{ update_repo }}
+  delegate_to: 127.0.0.1
+
+- name: Create full path to sample data
+  set_fact:
+    full_path_fileglob: "{{ full_path_fileglob|default([]) + [ working_dir + '/' + module_name + '/' + item ] }}"
+  with_items: "{{ fileglob }}"
+
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: tenant_admin_login
+  when: auth_required
+
+# fails with 422 error if already loaded
+- name: Load module data
+  uri:
+    url: "{{ okapi_url }}{{ load_endpoint }}"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+    body: "{{ lookup('file', item) }}"
+    status_code: 201, 422
+  register: load_module_data
+  changed_when: load_module_data.status == 201
+  with_fileglob: "{{ full_path_fileglob }}"
