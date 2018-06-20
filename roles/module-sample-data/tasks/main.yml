@@ -2,10 +2,14 @@
 # Role to load module sample data
 - name: Create sample data directory on control host
   file: path={{ working_dir }} state=directory
+  vars:
+    ansible_become: false
   delegate_to: 127.0.0.1
 
 - name: Clone repo with sample data
   git: repo={{ repository }} dest={{ working_dir }}/{{ module_name }} version={{ module_version }} update={{ update_repo }}
+  vars:
+    ansible_become: false
   delegate_to: 127.0.0.1
 
 - name: Create full path to sample data
