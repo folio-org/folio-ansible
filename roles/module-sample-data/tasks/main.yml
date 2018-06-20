@@ -7,7 +7,7 @@
   delegate_to: 127.0.0.1
 
 - name: Clone repo with sample data
-  git: repo={{ repository }} dest={{ working_dir }}/{{ module_name }} version={{ module_version }} update={{ update_repo }}
+  git: repo={{ repository }} dest={{ working_dir }}/{{ module_name }} version={{ module_version }} update={{ update_repo }} force={{ force_repo_update }}
   vars:
     ansible_become: false
   delegate_to: 127.0.0.1

@@ -41,6 +41,7 @@ admin_user:
 tenant: diku
 
 update_repo: yes
+force_repo_update: yes
 module_version: HEAD
 working_dir: /tmp/module-sample-data
 
