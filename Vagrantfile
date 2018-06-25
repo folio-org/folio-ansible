@@ -81,6 +81,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "build_testing", autostart: false do |build_testing|
     build_testing.vm.box = "debian/contrib-jessie64"
+    build_testing.vm.provider "virtualbox" do |vt|
+      vt.memory = 10240
+    end
     build_testing.vm.network "forwarded_port", guest: 9130, host: 9130
     build_testing.vm.network "forwarded_port", guest: 3000, host: 3000
     build_testing.vm.provision "ansible" do |ansible|
@@ -97,6 +100,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
     build_testing_backend.vm.box = "debian/contrib-jessie64"
+    build_testing_backend.vm.provider "virtualbox" do |vtb|
+      vtb.memory = 10240
+    end
     build_testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
     build_testing_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
