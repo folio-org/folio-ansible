@@ -55,10 +55,8 @@
     - role: module-sample-data
       module_name: mod-vendors
       repository: "https://github.com/folio-org/mod-vendors"
-      path: sample-data
-      load_endpoint: /vendor
-      fileglob:
-        - sample-data/vendors/*.json
+      files:
+        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
     - mod-auth-demo-users
 
 # Provision a host with a Stripes build
