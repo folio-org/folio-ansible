@@ -6,8 +6,6 @@ A generic Ansible role for loading sample data from a module repository.
 
 * A running Okapi system with the module in place, enabled for the tenant. The `admin_user` (see [Variables](#variables) below) needs to have all required permissions.
 * [Git](https://git-scm.com) must be install on the Ansible control host
-* Roles:
-  * tenant-admin-permissions
 
 ## Usage
 

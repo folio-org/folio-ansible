@@ -12,9 +12,13 @@
     ansible_become: false
   delegate_to: 127.0.0.1
 
+- name: Reset full_path_fileglob
+  set_fact:
+    full_path_fileglob: []
+
 - name: Create full path to sample data
   set_fact:
-    full_path_fileglob: "{{ full_path_fileglob|default([]) + [ working_dir + '/' + module_name + '/' + item ] }}"
+    full_path_fileglob: "{{ full_path_fileglob + [ working_dir + '/' + module_name + '/' + item ] }}"
   with_items: "{{ fileglob }}"
 
 - name: Login as {{ admin_user.username }}
