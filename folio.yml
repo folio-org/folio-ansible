@@ -28,22 +28,69 @@
   roles:
     - enable-tenant-modules
     - deprecated/mod-auth-data
+    - deprecated/mod-inventory-data
     - mod-circulation-data
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data
-- hosts: folio-sample-data-testing
+- name: Set up tenant for sample data
+  hosts: folio-sample-data-testing
   roles:
     - enable-tenant-modules
     - create-tenant-admin
+    - tenant-admin-permissions
+
+- name: Load inventory data
+  hosts: folio-sample-data-testing
+  roles:
+    - role: module-sample-data
+      module_name: mod-inventory-storage
+      repository: "https://github.com/folio-org/mod-inventory-storage"
+      module_version: FOLIO-1313-align-data
+      duplicate_key_error: 400
+      files:
+        - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
+        - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
+        - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
+        - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
+        - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
+        - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
+        - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
+        - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
+        - { load_endpoint: /location-units/campuses, fileglob: reference-data/location-units/campuses/*.json, dup_override: 422 }
+        - { load_endpoint: /location-units/libraries, fileglob: reference-data/location-units/libraries/*.json,  dup_override: 422 }
+        - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
+        - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
+        - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
+        - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
+        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
+        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
+        - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
+        - { load_endpoint: /item-storage/items, fileglob: sample-data/items/*.json }
+
+- name: Load MODS data
+  hosts: folio-sample-data-testing
+  roles:
+    - mod-inventory-mods
+
+- name: Load circulation data
+  hosts: folio-sample-data-testing
+  roles:
     - mod-circulation-data
+
+- name: Load vendors
+  hosts: folio-sample-data-testing
+  roles:
     - role: module-sample-data
       module_name: mod-vendors
       repository: "https://github.com/folio-org/mod-vendors"
-      path: sample-data
       load_endpoint: /vendor
       fileglob:
         - sample-data/vendors/*.json
+
+- name: Create demo users
+  hosts: folio-sample-data-testing
+  roles:
     - mod-auth-demo-users
 
 # Provision a host with the sample tenant and data
@@ -51,6 +98,7 @@
   vars_files:
     - group_vars/snapshot
   roles:
+    - deprecated/mod-inventory-data
     - mod-circulation-data
     - role: module-sample-data
       module_name: mod-vendors
