@@ -45,7 +45,6 @@
     - role: module-sample-data
       module_name: mod-inventory-storage
       repository: "https://github.com/folio-org/mod-inventory-storage"
-      module_version: FOLIO-1313-align-data
       duplicate_key_error: 400
       files:
         - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
