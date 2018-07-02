@@ -28,3 +28,8 @@
 - name: Load module data
   include: load-data.yml load_endpoint={{ item.load_endpoint }} fileglob={{ item.fileglob }} dup_key={{ item.dup_override|default(duplicate_key_error) }}
   with_items: "{{ files }}"
+
+- name: Remove working dir
+  command: rm -rf {{ working_dir }}
+  args:
+    removes: "{{ working_dir }}"
