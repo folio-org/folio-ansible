@@ -46,7 +46,7 @@
   changed_when: load_module_data.status == 201
   with_fileglob: "{{ full_path_fileglob }}"
 
-- name: Remove temp user data dir
+- name: Remove working dir
   command: rm -rf {{ working_dir }}
   args:
     removes: "{{ working_dir }}"
