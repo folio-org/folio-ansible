@@ -5,9 +5,7 @@ A generic Ansible role for loading sample data from a module repository.
 ## Prerequisites
 
 * A running Okapi system with the module in place, enabled for the tenant. The `admin_user` (see [Variables](#variables) below) needs to have all required permissions.
-* [Git](https://git-scm.com) must be install on the Ansible control host
-* Roles:
-  * tenant-admin-permissions
+* [Git](https://git-scm.com) must be installed on the Ansible control host
 
 ## Usage
 
@@ -19,8 +17,8 @@ Invoke the role in a playbook with variables defined, e.g.:
     - role: module-sample-data
       module_name: mod-vendors
       repository: https://github.com/folio-org/mod-vendors
-      fileglob: vendors.json
-      load_endpoint: /vendor
+      files:
+        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
 ```
 
 ## Variables
@@ -45,13 +43,15 @@ force_repo_update: yes
 module_version: HEAD
 working_dir: /tmp/module-sample-data
 
+# Status code for duplicate key
+duplicate_key_error: 422
+
 # undefined by default, need to be defined for the role to work
 # Module name, e.g. mod-vendors
 module_name:
 # Git URL for repository, e.g. https://github.com/folio-org/mod-vendors
 repository:
-# List of fileglobs to load relative to the root of the repository, e.g. sample-data/*.json
-fileglob: []
-# Okapi URL for posting the data, e.g. /vendor
-load_endpoint:
+# List of files to load per endpoint, e.g. { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
+# Override duplicate_key_error here with variable dup_override
+files: []
 ```

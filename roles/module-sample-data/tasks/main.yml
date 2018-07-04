@@ -12,11 +12,6 @@
     ansible_become: false
   delegate_to: 127.0.0.1
 
-- name: Create full path to sample data
-  set_fact:
-    full_path_fileglob: "{{ full_path_fileglob|default([]) + [ working_dir + '/' + module_name + '/' + item ] }}"
-  with_items: "{{ fileglob }}"
-
 - name: Login as {{ admin_user.username }}
   uri:
     url: "{{ okapi_url }}/authn/login"
@@ -30,21 +25,9 @@
   register: tenant_admin_login
   when: auth_required
 
-# fails with 422 error if already loaded
 - name: Load module data
-  uri:
-    url: "{{ okapi_url }}{{ load_endpoint }}"
-    method: POST
-    body_format: json
-    headers:
-      X-Okapi-Tenant: "{{ tenant }}"
-      Accept: application/json
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
-    body: "{{ lookup('file', item) }}"
-    status_code: 201, 422
-  register: load_module_data
-  changed_when: load_module_data.status == 201
-  with_fileglob: "{{ full_path_fileglob }}"
+  include: load-data.yml load_endpoint={{ item.load_endpoint }} fileglob={{ item.fileglob }} dup_key={{ item.dup_override|default(duplicate_key_error) }}
+  with_items: "{{ files }}"
 
 - name: Remove working dir
   command: rm -rf {{ working_dir }}

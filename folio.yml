@@ -1,78 +1,96 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: folio-backend
+- hosts: stable:stable-backend:testing:snapshot:minimal
   roles:
     - common
     - postgresql
     - okapi
+
+# Configure builds
+- name: Configure stable build
+  hosts: stable:stable-backend
+  roles:
     - okapi-deploy-modules
+    - enable-tenant-modules
 
-# split these roles so that the "Rebuild stripes" handler is only
-# called once
-- hosts: snapshot
+- name: Configure testing build
+  hosts: testing
   roles:
-    - common
-    - postgresql
-    - okapi
-    - okapi-deploy-config
-
-- hosts: snapshot-part2
-  roles:
+    - okapi-deploy-modules
+    - enable-tenant-modules
     - create-tenant-admin
     - tenant-admin-permissions
-    - stripes-docker
 
-# Provision a host with the sample tenant and data
-- hosts: folio-sample-data-stable
+- name: Configure snapshot build
+  hosts: snapshot
   roles:
-    - enable-tenant-modules
-    - deprecated/mod-auth-data
-    - mod-circulation-data
-    - mod-auth-demo-users
-
-# Provision a host with the sample tenant and data
-- hosts: folio-sample-data-testing
-  roles:
-    - enable-tenant-modules
+    - okapi-deploy-config
     - create-tenant-admin
-    - mod-circulation-data
-    - role: module-sample-data
-      module_name: mod-vendors
-      repository: "https://github.com/folio-org/mod-vendors"
-      path: sample-data
-      load_endpoint: /vendor
-      fileglob:
-        - sample-data/vendors/*.json
-    - mod-auth-demo-users
+    - tenant-admin-permissions
 
-# Provision a host with the sample tenant and data
-- hosts: folio-sample-data-snapshot
-  vars_files:
-    - group_vars/snapshot
+# Sample data for stable
+- name: Load sample data for stable build
+  hosts: stable:stable-backend
   roles:
+    - deprecated/mod-auth-data
+    - deprecated/mod-inventory-data
+    - mod-circulation-data
+    - mod-auth-demo-users
+
+# Sample data for testing and snapshot
+- name: Load sample data for testing/snapshot builds
+  hosts: testing:snapshot
+  roles:
+    - role: module-sample-data
+      module_name: mod-inventory-storage
+      repository: "https://github.com/folio-org/mod-inventory-storage"
+      duplicate_key_error: 400
+      files:
+        - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
+        - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
+        - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
+        - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
+        - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
+        - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
+        - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
+        - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
+        - { load_endpoint: /location-units/campuses, fileglob: reference-data/location-units/campuses/*.json, dup_override: 422 }
+        - { load_endpoint: /location-units/libraries, fileglob: reference-data/location-units/libraries/*.json,  dup_override: 422 }
+        - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
+        - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
+        - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
+        - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
+        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
+        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
+        - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
+        - { load_endpoint: /item-storage/items, fileglob: sample-data/items/*.json }
+    - mod-inventory-mods
     - mod-circulation-data
     - role: module-sample-data
       module_name: mod-vendors
       repository: "https://github.com/folio-org/mod-vendors"
-      path: sample-data
-      load_endpoint: /vendor
-      fileglob:
-        - sample-data/vendors/*.json
+      files:
+        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
     - mod-auth-demo-users
 
-# Provision a host with a Stripes build
-# Post module descriptors to Okapi
-- hosts: stripes-build
+# Set up stripes
+- name: Build stripes webpack, assign permissions
+  hosts: stripes-build
   roles:
     - stripes-build
     - tenant-admin-permissions
 
-# Provision a host as a Stripes server
-- hosts: stripes
+- name: Build Stripes webpack and container, assign permissions
+  hosts: stripes
   roles:
     - stripes-docker
     - tenant-admin-permissions
+
+- name: Build Stripes container
+  hosts: snapshot
+  roles:
+    - stripes-docker
 
 # Roles for packaging
 - hosts: vagrant

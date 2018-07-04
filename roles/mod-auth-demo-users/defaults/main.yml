@@ -1,6 +1,8 @@
 ---
 # Record key for mod-users total records, default "totalRecords"
 total_records_key: totalRecords
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 auth_by_username: false
 tenant: diku
 admin_user:

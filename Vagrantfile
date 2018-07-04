@@ -57,8 +57,6 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_stable"],
         "stable" => ["build_stable"],
-        "folio-backend" => ["build_stable"],
-        "folio-sample-data-stable" => ["build_stable"],
         "stripes" => ["build_stable"]
       }
     end
@@ -72,8 +70,6 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_stable_backend"],
         "stable-backend" => ["build_stable_backend"],
-        "folio-backend" => ["build_stable_backend"],
-        "folio-sample-data-stable" => ["build_stable_backend"],
         "stripes-build" => ["build_stable_backend"]
       }
     end
@@ -91,8 +87,6 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_testing"],
         "testing" => ["build_testing"],
-        "folio-backend" => ["build_testing"],
-        "folio-sample-data-testing" => ["build_testing"],
         "stripes" => ["build_testing"]
       }
     end
@@ -109,8 +103,6 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_testing_backend"],
         "testing" => ["build_testing_backend"],
-        "folio-backend" => ["build_testing_backend"],
-        "folio-sample-data-testing" => ["build_testing_backend"],
         "stripes-build" => ["build_testing_backend"]
       }
     end
@@ -124,9 +116,7 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_snapshot"],
-        "snapshot" => ["build_snapshot"],
-        "snapshot-part2" => ["build_snapshot"],
-        "folio-sample-data-snapshot" => ["build_snapshot"]
+        "snapshot" => ["build_snapshot"]
       }
     end
   end
@@ -149,8 +139,7 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_minimal"],
-        "minimal" => ["build_minimal"],
-        "folio-backend" => ["build_minimal"]
+        "minimal" => ["build_minimal"]
       }
     end
   end
