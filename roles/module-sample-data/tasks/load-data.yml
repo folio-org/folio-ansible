@@ -9,7 +9,7 @@
     headers:
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
+      X-Okapi-Token: "{{ token }}"
     body: "{{ lookup('file', data_file) }}"
     status_code: 201, {{ dup_key }}
   register: load_module_data

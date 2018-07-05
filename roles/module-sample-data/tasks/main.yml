@@ -26,7 +26,7 @@
   when: auth_required
 
 - name: Load module data
-  include: load-data.yml load_endpoint={{ item.load_endpoint }} fileglob={{ item.fileglob }} dup_key={{ item.dup_override|default(duplicate_key_error) }}
+  include: load-data.yml load_endpoint={{ item.load_endpoint }} fileglob={{ item.fileglob }} dup_key={{ item.dup_override|default(duplicate_key_error) }} token={{ tenant_admin_login.x_okapi_token|default('token') }}
   with_items: "{{ files }}"
 
 - name: Remove working dir
