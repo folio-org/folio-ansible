@@ -346,4 +346,4 @@ Machine Mode or AMD-V. Good luck!
 * [Vagrant documentation](https://www.vagrantup.com/docs/)
 * [Ansible documentation](http://docs.ansible.com/ansible/index.html)
 * [Docker documentation](https://docs.docker.com/)
-* Other FOLIO Developer documentation is at [dev.folio.org](http://dev.folio.org/)
+* Other FOLIO Developer documentation is at [dev.folio.org](https://dev.folio.org/)

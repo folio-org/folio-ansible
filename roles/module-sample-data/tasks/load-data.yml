@@ -1,0 +1,19 @@
+---
+# load the actual data
+# fails with 422 error if already loaded
+- name: Load module data to {{ load_endpoint }}
+  uri:
+    url: "{{ okapi_url }}{{ load_endpoint }}"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ token }}"
+    body: "{{ lookup('file', data_file) }}"
+    status_code: 201, {{ dup_key }}
+  register: load_module_data
+  changed_when: load_module_data.status == 201
+  with_fileglob: "{{ working_dir + '/' + module_name + '/' + fileglob }}"
+  loop_control:
+    loop_var: data_file

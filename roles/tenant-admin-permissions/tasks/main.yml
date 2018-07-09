@@ -44,3 +44,6 @@
   register: tenant_admin_permissions
   with_items: "{{ all_permissions.json.permissions }}"
   changed_when: tenant_admin_permissions.status == 200
+
+- name: Wait for permissions to save before proceeding
+  wait_for: timeout=10
