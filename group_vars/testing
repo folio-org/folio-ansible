@@ -306,7 +306,6 @@ folio_modules:
     
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
-stripes_github_version: MODVEND-26-add-ui-finance
 folio_npm_repo: npm-folioci
 platform_remove_lock: true
 okapi_register_modules: true

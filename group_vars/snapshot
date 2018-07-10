@@ -60,6 +60,10 @@ env_var:
     - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
   mod-calendar:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-vendors:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-finance:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
@@ -73,7 +77,6 @@ docker_port:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
-stripes_github_version: MODVEND-26-add-ui-finance
 folio_npm_repo: npm-folioci
 stripes_strict_md: true
 
