@@ -5,7 +5,7 @@
   "loanDate": "2017-06-11T08:43:15Z",
   "returnDate": "2017-06-28T08:43:15Z",
   "dueDate": "2017-07-04T08:43:15Z",
-  {% if loan_action == true %}"action": "checkedin",{% endif %}
+  "action": "checkedin",
   "status": {
     "name": "Closed"
   },

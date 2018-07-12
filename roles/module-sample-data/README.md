@@ -53,5 +53,7 @@ module_name:
 repository:
 # List of files to load per endpoint, e.g. { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
 # Override duplicate_key_error here with variable dup_override
+# Override default HTTP method with variable http_method (default is POST)
+# Override default HTTP code for updated record with variable updated_code (default is 201)
 files: []
 ```

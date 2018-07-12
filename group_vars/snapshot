@@ -4,10 +4,8 @@ okapi_pull: true
 okapi_pull_timeout: 600
 top_down_install: true
 auth_required: true
-loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
-load_requests: true
 inv_storage_3: true
 load_mods_larger: true
 hierarchical_locations: true

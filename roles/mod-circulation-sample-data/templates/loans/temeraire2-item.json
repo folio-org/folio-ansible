@@ -4,7 +4,7 @@
   "itemId": "23fdb0bc-ab58-442a-b326-577a96204487",
   "loanDate": "2017-10-14T18:32:31Z",
   "dueDate": "2017-11-11T18:32:31Z",
-  {% if loan_action == true %}"action": "checkedout",{% endif %}
+  "action": "checkedout",
   "status": {
     "name": "Open"
   },
