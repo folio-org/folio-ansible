@@ -69,9 +69,11 @@
     - role: module-sample-data
       module_name: mod-circulation-storage
       repository: "https://github.com/folio-org/mod-circulation-storage"
+      duplicate_key_error: 400
       files:
         - { load_endpoint: /loan-policy-storage/loan-policies, fileglob: reference-data/loan-policy-storage/loan-policies/*.json, dup_override: 500 }
         - { load_endpoint: /loan-rules-storage, fileglob: reference-data/loan-rules-storage/*.json, http_method: PUT, updated_code: 204 }
+        - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
     - mod-circulation-sample-data
     - role: module-sample-data
       module_name: mod-vendors
