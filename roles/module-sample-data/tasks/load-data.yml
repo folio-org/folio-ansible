@@ -4,16 +4,16 @@
 - name: Load module data to {{ load_endpoint }}
   uri:
     url: "{{ okapi_url }}{{ load_endpoint }}"
-    method: POST
+    method: "{{ http_method }}"
     body_format: json
     headers:
       X-Okapi-Tenant: "{{ tenant }}"
-      Accept: application/json
+      Accept: application/json, text/plain
       X-Okapi-Token: "{{ token }}"
     body: "{{ lookup('file', data_file) }}"
-    status_code: 201, {{ dup_key }}
+    status_code: "{{ updated_code }}, {{ dup_key }}"
   register: load_module_data
-  changed_when: load_module_data.status == 201
+  changed_when: load_module_data.status == updated_code|int
   with_fileglob: "{{ working_dir + '/' + module_name + '/' + fileglob }}"
   loop_control:
     loop_var: data_file

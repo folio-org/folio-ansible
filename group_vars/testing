@@ -1,10 +1,8 @@
 ---
 # Variables for building testing/testing-backend
 auth_required: true
-loan_action: true
 total_records_key: totalRecords
 load_addresstypes: true
-load_requests: true
 inv_storage_3: true
 hierarchical_locations: true
 load_mods_larger: true

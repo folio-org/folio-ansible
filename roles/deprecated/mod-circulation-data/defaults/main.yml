@@ -1,15 +1,20 @@
 ---
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-mod_circulation_prefixes:
-  - circulation-storage
-  - circulation
 auth_required: false
-admin_user: { username: diku_admin, password: admin, perms_user_id: 2408ae64-56ad-4177-9024-1e35fe5d895c }
-loan_action: false
-load_requests: false
+auth_by_username: false
+top_down_install: false
+
+admin_user: 
+  username: diku_admin
+  password: admin
+  perms_user_id: "{{ admin_perms_id|default('2408ae64-56ad-4177-9024-1e35fe5d895c') }}"
+
+tenant: diku
+
 circulation_admin_permissions:
   - circulation-storage.all
   - circulation.all
-auth_by_username: false
-top_down_install: false
+
+loan_action: true
+load_requests: true
