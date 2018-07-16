@@ -38,6 +38,16 @@
     - deprecated/mod-circulation-data
     - mod-auth-demo-users
 
+# Sample data for testing
+- name: Load sample data for testing builds
+  hosts: testing
+  roles:
+    - role: module-sample-data
+      module_name: mod-tags
+      repository: "https://github.com/folio-org/mod-tags"
+      files:
+        - { load_endpoint: /tags, fileglob: sample-data/*.json }
+
 # Sample data for testing and snapshot
 - name: Load sample data for testing/snapshot builds
   hosts: testing:snapshot
