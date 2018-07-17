@@ -96,7 +96,8 @@
 - name: Build stripes webpack, assign permissions
   hosts: stripes-build
   roles:
-    - stripes-build
+    - role: stripes-build
+      build_webpack: no
     - tenant-admin-permissions
 
 - name: Build Stripes webpack and container, assign permissions

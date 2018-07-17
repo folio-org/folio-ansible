@@ -7,20 +7,19 @@
 
 - name: Build stripes
   become: yes
-  shell: "yarn install && yarn build output --sourcemap"
+  shell: "yarn install"
   args:
     chdir: "{{ stripes_conf_dir }}"
   environment: "{{ node_environment }}"
-  when: with_sourcemap
   listen: "Rebuild stripes"
 
-- name: Build stripes (no sourcemap)
+- name: Build webpack
   become: yes
-  shell: "yarn install && yarn build output"
+  shell: "yarn build output{% if with_sourcemap %} --sourcemap{% endif %}"
   args:
     chdir: "{{ stripes_conf_dir }}"
   environment: "{{ node_environment }}"
-  when: not with_sourcemap
+  when: build_webpack
   listen: "Rebuild stripes"
 
 - name: Record stripes rebuild variable
