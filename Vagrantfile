@@ -76,7 +76,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing", autostart: false do |build_testing|
-    build_testing.vm.box = "debian/contrib-jessie64"
+    build_testing.vm.box = "bento/ubuntu-16.04"
     build_testing.vm.provider "virtualbox" do |vt|
       vt.memory = 10240
     end
