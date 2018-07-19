@@ -7,6 +7,7 @@
     method: "{{ http_method }}"
     body_format: json
     headers:
+      Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json, text/plain
       X-Okapi-Token: "{{ token }}"
