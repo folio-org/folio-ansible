@@ -62,6 +62,8 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-finance:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-feesfines:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
