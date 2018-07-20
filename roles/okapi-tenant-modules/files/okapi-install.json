@@ -1,0 +1,78 @@
+[
+    {
+        "action": "enable",
+        "id": "mod-permissions-5.2.5-SNAPSHOT.22"
+    },
+    {
+        "action": "enable",
+        "id": "mod-users-15.1.0-SNAPSHOT.36"
+    },
+    {
+        "action": "enable",
+        "id": "mod-login-4.1.0-SNAPSHOT.12"
+    },
+    {
+        "action": "enable",
+        "id": "mod-users-bl-3.0.0-SNAPSHOT.17"
+    },
+    {
+        "action": "enable",
+        "id": "mod-authtoken-1.4.1-SNAPSHOT.21"
+    },
+    {
+        "action": "enable",
+        "id": "mod-configuration-4.0.4-SNAPSHOT.36"
+    },
+    {
+        "action": "enable",
+        "id": "mod-calendar-1.0.0-SNAPSHOT.37"
+    },
+    {
+        "action": "enable",
+        "id": "mod-circulation-storage-5.3.0-SNAPSHOT.93"
+    },
+    {
+        "action": "enable",
+        "id": "mod-inventory-storage-12.1.0-SNAPSHOT.128"
+    },
+    {
+        "action": "enable",
+        "id": "mod-circulation-10.7.0-SNAPSHOT.160"
+    },
+    {
+        "action": "enable",
+        "id": "mod-kb-ebsco-0.1.1-SNAPSHOT.112"
+    },
+    {
+        "action": "enable",
+        "id": "mod-inventory-9.1.0-SNAPSHOT.88"
+    },
+    {
+        "action": "enable",
+        "id": "mod-login-saml-1.1.0-SNAPSHOT.23"
+    },
+    {
+        "action": "enable",
+        "id": "mod-notify-1.1.7-SNAPSHOT.46"
+    },
+    {
+        "action": "enable",
+        "id": "mod-notes-2.1.1-SNAPSHOT.57"
+    },
+    {
+        "action": "enable",
+        "id": "mod-codex-mux-2.2.2-SNAPSHOT.55"
+    },
+    {
+        "action": "enable",
+        "id": "mod-vendors-1.0.1-SNAPSHOT.20"
+    },
+    {
+        "action": "enable",
+        "id": "mod-codex-inventory-1.2.0-SNAPSHOT.53"
+    },
+    {
+        "action": "enable",
+        "id": "mod-codex-ekb-1.0.1-SNAPSHOT.64"
+    }
+]

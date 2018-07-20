@@ -121,6 +121,22 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_release", autostart: false do |build_release|
+    build_release.vm.box = "debian/contrib-jessie64"
+    build_release.vm.provider "virtualbox" do |vr|
+      vr.memory = 10240
+    end
+    build_release.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_release.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_release.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_release"],
+        "release" => ["build_release"]
+      }
+    end
+  end
+
   config.vm.define "build_curriculum", autostart: false do |build_curriculum|
     build_curriculum.vm.box = "debian/contrib-jessie64"
     build_curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
