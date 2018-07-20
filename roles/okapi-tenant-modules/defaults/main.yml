@@ -1,0 +1,27 @@
+---
+# defaults
+create_db: yes
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_max_pool_size: 5
+module_database: okapi_modules
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+module_env:
+  - { name: db.host, value: "{{ pg_host }}" }
+  - { name: db.port, value: "{{ pg_port }}" }
+  - { name: db.database, value: "{{ module_database }}" }
+  - { name: db.username, value: "{{ pg_admin_user }}" }
+  - { name: db.password, value: "{{ pg_admin_password }}" }
+  - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
+
+tenant: diku
+deploy_timeout: 600
+
+# Define one or more of these variables to post install JSON to Okapi. They are posted in the order listed here.
+# deploy_file:
+# deploy_url:
+# enable_file:
+# enable_url:

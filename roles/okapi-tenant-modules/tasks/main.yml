@@ -1,0 +1,97 @@
+---
+- name: Install prerequisites from apt
+  become: yes
+  apt: 
+    name: "{{ item }}"
+    state: present
+  with_items: 
+    - libpq-dev
+    - python-psycopg2  
+    - postgresql-client
+  when: create_db
+  
+- name: Create modules db
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ module_database }}"
+    owner: "{{ pg_admin_user }}"
+  when: create_db
+
+- name: Set Okapi environment
+  uri:
+    url: "{{ okapi_url }}/_/env"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ item|to_json }}"
+    status_code: 201
+  register: set_okapi_env
+  changed_when: set_okapi_env.status == 201
+  with_items: "{{ module_env }}"
+
+- name: Post install JSON from file for deployment
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?deploy=true"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ lookup('file', deploy_file) }}"
+    timeout: "{{ deploy_timeout }}"
+  register: deploy_from_file
+  changed_when: deploy_from_file.status == 200
+  when: deploy_file|default(false)
+
+- name: Get install JSON from URL for deployment
+  uri: 
+    url: "{{ deploy_url }}"
+    method: GET
+  register: deploy_json
+  when: deploy_url|default(false)
+
+- name: Post install JSON from URL for deployment
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?deploy=true"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ deploy_json.json }}"
+    timeout: "{{ deploy_timeout }}"
+  register: deploy_from_url
+  changed_when: deploy_from_url.status == 200
+  when: deploy_url|default(false)
+
+- name: Post install JSON from file for enabling modules (no deployment)
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ lookup('file', enable_file) }}"
+  register: enable_from_file
+  changed_when: enable_from_file.status == 200
+  when: enable_file|default(false)
+
+- name: Get install JSON from URL for enabling modules (no deployment)
+  uri: 
+    url: "{{ enable_url }}"
+    method: GET
+  register: enable_json
+  when: enable_url|default(false)
+
+- name: Post install JSON from URL for enabling modules (no deployment)
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ enable_json.json }}"
+  register: enable_from_url
+  changed_when: enable_from_url.status == 200
+  when: enable_url|default(false)
