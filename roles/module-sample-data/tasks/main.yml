@@ -1,13 +1,13 @@
 ---
-# Role to load module sample data
-- name: Create sample data directory on control host
-  file: path={{ working_dir }} state=directory
-  vars:
-    ansible_become: false
-  delegate_to: 127.0.0.1
+
+- name: Create tmp directory to locate sample data
+  tempfile:
+    path: /tmp
+    state: directory
+  register: tmpdir_sample
 
 - name: Clone repo with sample data
-  git: repo={{ repository }} dest={{ working_dir }}/{{ module_name }} version={{ module_version }} update={{ update_repo }} force={{ force_repo_update }}
+  git: repo={{ repository }} dest={{ tmpdir_sample.path }}/{{ module_name }} version={{ module_version }} update={{ update_repo }} force={{ force_repo_update }}
   vars:
     ansible_become: false
   delegate_to: 127.0.0.1
@@ -29,7 +29,7 @@
   include: load-data.yml load_endpoint={{ item.load_endpoint }} fileglob={{ item.fileglob }} dup_key={{ item.dup_override|default(duplicate_key_error) }} http_method={{ item.http_method|default('POST') }} updated_code={{ item.updated_code|default(201) }} token={{ tenant_admin_login.x_okapi_token|default('token') }}
   with_items: "{{ files }}"
 
-- name: Remove working dir
-  command: rm -rf {{ working_dir }}
+- name: Remove tmp sample data dir
+  command: rm -rf {{ tmpdir_sample.path|quote }}
   args:
-    removes: "{{ working_dir }}"
+    removes: "{{ tmpdir_sample.path }}"
