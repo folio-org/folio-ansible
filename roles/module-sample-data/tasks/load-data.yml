@@ -14,6 +14,6 @@
     status_code: "{{ updated_code }}, {{ dup_key }}"
   register: load_module_data
   changed_when: load_module_data.status == updated_code|int
-  with_fileglob: "{{ working_dir + '/' + module_name + '/' + fileglob }}"
+  with_fileglob: "{{ tmpdir_sample.path + '/' + module_name + '/' + fileglob }}"
   loop_control:
     loop_var: data_file
