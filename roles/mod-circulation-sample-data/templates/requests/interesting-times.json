@@ -7,6 +7,7 @@
   "fulfilmentPreference": "Hold Shelf",
   "holdShelfExpirationDate": "2017-01-20",
   "status": "Open - Not yet filled",
+  "position": 1,
   "item": {
     "title": "Interesting Times",
     "barcode": "326547658598"

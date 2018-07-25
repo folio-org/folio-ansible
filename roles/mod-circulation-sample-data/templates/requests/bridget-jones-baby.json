@@ -7,6 +7,7 @@
   "fulfilmentPreference": "Hold Shelf",
   "holdShelfExpirationDate": "2017-05-20",
   "status": "Open - Not yet filled",
+  "position": 1,
   "item": {
     "title": "Bridget Jones's Baby",
     "barcode": "453987605438"
