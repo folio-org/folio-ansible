@@ -1,9 +1,9 @@
 ---
 # load the actual data
-# fails with 422 error if already loaded
+
 - name: Load module data to {{ load_endpoint }}
   uri:
-    url: "{{ okapi_url }}{{ load_endpoint }}"
+    url: "{{ okapi_url }}{{ load_endpoint|regex_replace('\\$filename', data_file.split('/')|last|regex_replace('\\..*$')) }}"
     method: "{{ http_method }}"
     body_format: json
     headers:

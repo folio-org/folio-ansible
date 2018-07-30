@@ -72,7 +72,7 @@
         - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
         - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
         - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
-        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
+        - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
         - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
         - { load_endpoint: /item-storage/items, fileglob: sample-data/items/*.json }
     - mod-inventory-mods
@@ -82,7 +82,7 @@
       duplicate_key_error: 400
       files:
         - { load_endpoint: /loan-policy-storage/loan-policies, fileglob: reference-data/loan-policy-storage/loan-policies/*.json, dup_override: 500 }
-        - { load_endpoint: /loan-rules-storage, fileglob: reference-data/loan-rules-storage/*.json, http_method: PUT, updated_code: 204 }
+        - { load_endpoint: /loan-rules-storage, fileglob: reference-data/loan-rules-storage/*.json, http_method: PUT, updated_code: 204, dup_override: 204 }
         - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
     - mod-circulation-sample-data
     - role: module-sample-data
@@ -196,4 +196,3 @@
 
     - name: Clone curriculum repository
       git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum
-

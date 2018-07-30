@@ -21,6 +21,23 @@ Invoke the role in a playbook with variables defined, e.g.:
         - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
 ```
 
+### Usage notes
+
+* If you use the magic variable `$filename` as part of the `load_endpoint`, the filename of each file (stripped of the file extension) is substituted into the string for the load endpoint.
+* If there is only one valid status code from the web service you are loading to (for example, you are using a PUT method, which always updates the data), set `dup_override` to the same value as `updated_code`.
+
+A more complex example:
+
+```yaml
+- hosts: my-folio-test
+  roles:
+    - role: module-sample-data
+      module_name: mod-inventory-storage
+      repository: https://github.com/folio-org/mod-inventory-storage
+      files:
+        - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
+```
+
 ## Variables
 
 ```yaml
