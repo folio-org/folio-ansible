@@ -41,7 +41,7 @@
   changed_when: no
 
 - name: Insert admin user into auth_credentials
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (jsonb) values ('{\"userId\":\"{{ admin_user_id }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
+  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (_id,jsonb) values ('{{ admin_user_id }}','{\"userId\":\"{{ admin_user_id }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
   when: admin_credentials_check.stdout | int == 0
 
 - name: Check permissions_users for admin user
