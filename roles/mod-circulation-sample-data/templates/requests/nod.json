@@ -7,6 +7,7 @@
   "fulfilmentPreference": "Delivery",
   "requestExpirationDate": "2017-03-22",
   "status": "Open - Not yet filled",
+  "position": 1,
   "item": {
     "title": "Nod",
     "barcode": "697685458679"
