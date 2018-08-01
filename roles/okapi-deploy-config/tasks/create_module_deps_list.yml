@@ -47,6 +47,4 @@
 
 - name: Combine lists
   set_fact:
-    module_deps_list: "{{ module_deps_list|union(pinned_modules_list|default([]))|unique }}"
-
-
+    module_deps_list: "{{ pinned_modules_list|default([])|union(module_deps_list)|unique }}"
