@@ -10,9 +10,9 @@ Ansible role for deploying and enabling modules for a tenant based on an install
   * The ability to deploy modules, either using `exec` or Docker (you can use the `docker-engine` role to install Docker on the target system).
   * A tenant (you can use the `tenant-data` role to create a tenant).
 
-* An install file containing a JSON array of modules for posting to the `/_/proxy/tenants/<tenantId>/install?deploy` endpoint for deployment. This can optionally point to a URL. A [sample file](roles/okapi-install.json) is available in the `files` directory of this role.
+* An install file containing a JSON array of modules for posting to the `/_/proxy/tenants/<tenantId>/install?deploy` endpoint for deployment. This can optionally point to a URL. A [sample file](files/okapi-install.json) is available in the `files` directory of this role.
 
-* An install file containing a JSON array of modules for posting to the `/_/proxy/tenants/<tenantId>/install` endpoint to enable the modules without deployment. This can optionally point to a URL. A [sample file](roles/stripes-install.json) is available in the `files` directory of this role.
+* An install file containing a JSON array of modules for posting to the `/_/proxy/tenants/<tenantId>/install` endpoint to enable the modules without deployment. This can optionally point to a URL. A [sample file](files/stripes-install.json) is available in the `files` directory of this role.
 
 ## Usage
 
