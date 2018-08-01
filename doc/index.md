@@ -56,7 +56,7 @@ used to generate prebuilt Vagrant boxes, available on
 
 * [folio/curriculum](https://app.vagrantup.com/folio/boxes/curriculum)
   -- a box built to support the
-  [FOLIO Developer Curriculum](https://github.com/folio-org/curriculum),
+  [FOLIO Developer Curriculum](https://dev.folio.org/tutorials/curriculum/),
   with prerequisites installed.
 
 All Vagrant boxes come with sample user and inventory data. The
