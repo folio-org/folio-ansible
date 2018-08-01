@@ -49,6 +49,15 @@
   become: yes
   apt: name=docker-engine
 
+- name: install Docker daemon.json config
+  become: yes
+  copy: 
+    src: daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Create systemd configuration directory for Docker
   become: yes
   file: path=/etc/systemd/system/docker.service.d state=directory
