@@ -8,3 +8,4 @@ tenant: diku
 admin_user:
   username: diku_admin
   password: admin
+service_points_users: yes

@@ -16,6 +16,7 @@ load_platforms: false
 load_holdings: false
 load_service_points: true
 loan_action: false
+service_points_users: false
 
 # set the default postgres connection pool per module/tenant
 pg_max_pool_size: 5

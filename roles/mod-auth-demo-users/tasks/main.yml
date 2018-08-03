@@ -102,3 +102,38 @@
   changed_when: create_perms.status == 201
   with_items: "{{ users }}"
   when: not auth_by_username
+
+- name: Get service points
+  uri:
+    url: "{{ okapi_url }}/service-points"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
+      Accept: application/json
+  register: service_points
+  when: service_points_users
+
+- name: Set list of service point ids
+  set_fact: service_points_ids={{ '\"' + service_points|json_query('json.servicepoints[*].id')|join('\", \"') + '\"' }}
+  when: service_points_users
+
+- name: Create service points users
+  uri:
+    url: "{{ okapi_url }}/service-points-users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token }}"
+      Accept: application/json
+    status_code: 201,422 
+    body: >-
+      {
+        "userId": "{{ item.id }}",
+        "servicePointsIds": [ {{ service_points_ids }} ],
+        "defaultServicePointId": "{{ service_points|json_query('json.servicepoints[*].id')|random }}"
+      }        
+  register: create_sp_user
+  changed_when: create_sp_user.status == 201
+  with_items: "{{ users }}"
+  when: service_points_users
