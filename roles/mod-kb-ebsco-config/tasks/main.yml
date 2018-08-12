@@ -10,6 +10,7 @@
     headers: 
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
+      Content-Type: application/json
     body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
     status_code: 201
   register: tenant_admin_login
@@ -26,6 +27,7 @@
       X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
       Accept: application/json
+      Content-Type: application/json
     body: '{"data":{"id":"configuration","type":"configurations","attributes":{"apiKey":"{{ rmapi_key }}","customerId":"{{ rmapi_custid }}"}}}'
     status_code: 200,422
   register: mod_kb_ebsco_rmapi
