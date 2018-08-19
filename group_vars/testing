@@ -96,30 +96,6 @@ folio_modules:
     okapi_docker_pull: "false"
 
   - index: 5
-    name: mod-users-bl
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-
-  - index: 6
-    name: mod-login-saml
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-
-  - index: 7
-    name: mod-user-import
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-
-  - index: 8
     name: mod-inventory-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     image_repository: folioci
@@ -136,6 +112,30 @@ folio_modules:
     pg_user: "{{ pg_admin_user }}"
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
+
+  - index: 6
+    name: mod-users-bl
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - index: 7
+    name: mod-login-saml
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - index: 8
+    name: mod-user-import
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - index: 9
     name: mod-inventory
