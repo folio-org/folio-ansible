@@ -15,7 +15,7 @@
 
 - name: Build webpack
   become: yes
-  shell: "yarn build output{% if with_sourcemap %} --sourcemap{% endif %}"
+  shell: "yarn build output{% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
   args:
     chdir: "{{ stripes_conf_dir }}"
   environment: "{{ node_environment }}"
