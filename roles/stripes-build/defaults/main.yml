@@ -33,8 +33,8 @@ node_environment:
   NODE_ENV: production
 build_webpack: true
 
-with_translations: false
-webpack_languages: 'da,de,en,es_ES,fr,hu,it_IT,pt_BR'
+with_translations: true
+webpack_languages: 'en-US,en-GB,da-DK,de-DE,hu-HU'
 
 # Register module descriptors with Okapi, default false
 okapi_register_modules: false
