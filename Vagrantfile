@@ -93,7 +93,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
-    build_testing_backend.vm.box = "debian/contrib-jessie64"
+    build_testing_backend.vm.box = "bento/ubuntu-16.04"
     build_testing_backend.vm.provider "virtualbox" do |vtb|
       vtb.memory = 10240
     end
@@ -109,7 +109,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_snapshot", autostart: false do |build_snapshot|
-    build_snapshot.vm.box = "debian/contrib-jessie64"
+    build_snapshot.vm.box = "bento/ubuntu-16.04"
     build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     build_snapshot.vm.provision "ansible" do |ansible|

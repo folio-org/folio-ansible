@@ -69,6 +69,7 @@ env_var:
 other_mods:
   - mod-codex-inventory
   - mod-codex-ekb
+  - mod-rtac
 
 # Docker ports for modules
 docker_port:

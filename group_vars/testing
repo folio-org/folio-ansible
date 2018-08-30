@@ -338,6 +338,14 @@ folio_modules:
     pg_password: "{{ pg_admin_password }}"
     okapi_docker_pull: "false"
 
+  - index: 24
+    name: mod-rtac
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    okapi_docker_pull: "false"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
