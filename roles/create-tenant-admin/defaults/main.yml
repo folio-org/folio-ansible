@@ -1,22 +1,11 @@
 ---
+# defaults
 okapi_port: 9130
-
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-
-pg_admin_user: folio_admin
-pg_admin_password: folio_admin
-pg_host: "{{ ansible_default_ipv4.address }}"
-pg_port: 5432
-
-module_database: okapi_modules
 tenant: diku
-
 admin_user:
   username: diku_admin
   password: admin
-  hash: 52DCA1934B2B32BEA274900A496DF162EC172C1E
-  salt: 483A7C864569B90C24A0A6151139FF0B95005B16
-  permissions: "\\\"perms.all\\\",\\\"login.all\\\",\\\"users.all\\\""
   first_name: DIKU
   last_name: ADMINISTRATOR
   email: admin@diku.example.org

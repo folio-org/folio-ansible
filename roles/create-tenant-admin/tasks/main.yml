@@ -9,66 +9,110 @@
 # Set up variables #
 ####################
 
-- name: Set mod_permissions_schema
-  set_fact: mod_permissions_schema="{{ tenant }}_mod_permissions"
-
-- name: Set mod_login_schema
-  set_fact: mod_login_schema="{{ tenant }}_mod_login"
-
-- name: Set mod_users_schema
-  set_fact: mod_users_schema="{{ tenant }}_mod_users"
-
-- name: Set admin_user_id
+- name: Set admin_user ID
   set_fact: admin_user_id="{{ 9999999999999999999999 | random | to_uuid }}"
 
-- name: Set admin_perms_id
-  set_fact: admin_perms_id="{{ 9999999999999999999999 | random | to_uuid }}"
+#####################
+# Disable authtoken #
+#####################
 
-- name: Set admin_credentials_id
-  set_fact: admin_credentials_id="{{ 9999999999999999999999 | random | to_uuid }}"
+- name: Find ID of authtoken module, if enabled
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/authtoken"
+    headers:
+      Accept: "application/json, text/plain"
+  register: authtoken_module
 
-########################################
-# Bootstrap admin user and permissions #
-########################################
+- name: Disable authtoken and dependencies
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    method: POST
+    body_format: json
+    headers:
+      Accept: "application/json, text/plain"
+    body: '[ { "id": "{{ authtoken_module.json.0.id }}", "action": "disable" } ]'
+  register: authtoken_disable
+  when: authtoken_module.json.0 is defined
 
-- name: Create .pgpass for Ansible user
-  lineinfile:
-    dest: "{{ ansible_env.HOME }}/.pgpass"
-    line: "{{ pg_host }}:{{ pg_port }}:*:{{ pg_admin_user }}:{{ pg_admin_password }}"
-    create: yes
-    mode: 0600
+########################
+# Bootstrap admin user #
+########################
 
-- name: Check auth_credentials for admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "SELECT COUNT({{ mod_login_schema }}.auth_credentials.*) FROM {{ mod_login_schema }}.auth_credentials INNER JOIN {{ mod_users_schema }}.users ON {{ mod_login_schema }}.auth_credentials.jsonb->>'userId' = {{ mod_users_schema }}.users.jsonb->>'id' WHERE {{ mod_users_schema }}.users.jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
-  register: admin_credentials_check
-  changed_when: no
+- name: Bootstrap admin user
+  block:
+    - name: Create user record
+      uri:
+        url: "{{ okapi_url }}/users"
+        method: POST
+        body_format: json
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+        body: |
+          {
+            "id": "{{ admin_user_id }}",
+            "username": "{{ admin_user.username }}",
+            "active": true,
+            "personal": {
+              "lastName": "{{ admin_user.last_name|default('') }}",
+              "firstName": "{{ admin_user.first_name|default('') }}",
+              "email": "{{ admin_user.email|default('') }}"
+            }
+          }
+        status_code: 201
+      register: create_user
+      changed_when: create_user.status == 201
+    - name: Create login record
+      uri:
+        url: "{{ okapi_url }}/authn/credentials"
+        method: POST
+        body_format: json
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+        body: |
+          {
+            "userId": "{{ admin_user_id }}",
+            "password": "{{ admin_user.password }}"
+          }
+        status_code: 201
+      register: create_login
+      changed_when: create_login.status == 201
+    - name: Create permissions record
+      uri:
+        url: "{{ okapi_url }}/perms/users"
+        method: POST
+        body_format: json
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+        body: |
+          {
+            "userId": "{{ admin_user_id }}",
+            "permissions": [
+              "perms.all"
+            ]
+          }
+        status_code: 201
+      register: create_login
+      changed_when: create_login.status == 201
+  always:
+    ####################
+    # Enable authtoken #
+    ####################
+    - name: Build authtoken_enable list
+      set_fact:
+        authtoken_enable: "{{ authtoken_enable|default([]) + [ { 'id': item.id, 'action': 'enable' } ] }}"
+      when: authtoken_module.json.0 is defined
+      with_items: "{{ authtoken_disable.json|reverse|list }}"
 
-- name: Insert admin user into auth_credentials
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_login_schema }}.auth_credentials (_id,jsonb) values ('{{ admin_credentials_id }}','{\"id\":\"{{ admin_credentials_id }}\",\"userId\":\"{{ admin_user_id }}\",\"hash\":\"{{ admin_user.hash }}\",\"salt\":\"{{ admin_user.salt }}\"}')" {{ module_database }}
-  when: admin_credentials_check.stdout | int == 0
-
-- name: Check permissions_users for admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "SELECT {{ mod_permissions_schema }}.permissions_users.jsonb->>'id' FROM {{ mod_permissions_schema }}.permissions_users INNER JOIN {{ mod_users_schema }}.users ON {{ mod_permissions_schema }}.permissions_users.jsonb->>'userId' = {{ mod_users_schema }}.users.jsonb->>'id' WHERE {{ mod_users_schema }}.users.jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
-  register: admin_permissions_check
-  changed_when: no
-
-- name: Set admin_perms_id
-  set_fact: admin_perms_id={{ admin_permissions_check.stdout|trim }}
-  when: admin_permissions_check.stdout != ""
-
-- name: Insert admin user into permissions_users
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_permissions_schema }}.permissions_users (jsonb) values ('{\"id\":\"{{ admin_perms_id }}\",\"userId\":\"{{ admin_user_id }}\",\"permissions\":[{{ admin_user.permissions }}]}')" {{ module_database }}
-  when: admin_permissions_check.stdout == ""
-
-- name: Check mod-users for admin user
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "select jsonb->>'id' from {{ mod_users_schema }}.users where jsonb @> '{\"username\":\"{{ admin_user.username }}\"}'" {{ module_database }}
-  register: admin_mod_users_check
-  changed_when: no
-
-- name: Set admin_user_id
-  set_fact: admin_user_id={{ admin_mod_users_check.stdout|trim }}
-  when: admin_mod_users_check.stdout != ""
-
-- name: Insert admin user into mod_users
-  shell: psql -h {{ pg_host }} -p {{ pg_port}} -U {{ pg_admin_user }} -qtwc "insert into {{ mod_users_schema }}.users (jsonb) values ('{\"username\":\"{{ admin_user.username }}\",\"id\":\"{{ admin_user_id }}\",\"active\":true,\"personal\":{\"lastName\":\"{{ admin_user.last_name }}\",\"firstName\":\"{{ admin_user.first_name }}\",\"email\":\"{{ admin_user.email }}\"}}')" {{ module_database }}
-  when: admin_mod_users_check.stdout == ""
+    - name: Enable authtoken and dependencies
+      uri:
+        url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+        method: POST
+        body_format: json
+        headers:
+          Accept: "application/json, text/plain"
+        body: "{{ authtoken_enable }}"
+      register: authtoken_enable_result
+      when: authtoken_module.json.0 is defined
