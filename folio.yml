@@ -95,6 +95,14 @@
       repository: "https://github.com/folio-org/mod-tags"
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
+    - role: module-sample-data
+      module_name: mod-finance
+      repository: "https://github.com/folio-org/mod-finance"
+      files:
+        - { load_endpoint: /fiscal_year, fileglob: sample-data/fiscal-years/*.json }
+        - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
+        - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
+        - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
     - mod-auth-demo-users
 
 # Sample data for release build
