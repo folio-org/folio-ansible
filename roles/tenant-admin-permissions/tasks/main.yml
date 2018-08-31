@@ -40,7 +40,7 @@
     body: '{ "permissionName" : "{{ item.permissionName }}" }'
     body_format: json
     status_code: 200
-  when: "['{{ item.permissionName }}']|difference(tenant_admin_login.json.permissions.permissions) and auth_required"
+  when: "[ item.permissionName ]|difference(tenant_admin_login.json.permissions.permissions)"
   register: tenant_admin_permissions
   with_items: "{{ all_permissions.json.permissions }}"
   changed_when: tenant_admin_permissions.status == 200
