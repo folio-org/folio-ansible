@@ -40,6 +40,17 @@
 
 - name: Bootstrap admin user
   block:
+    - name: Check for user record
+      uri:
+        url: "{{ okapi_url }}/users?query=username%3d%3d{{ admin_user.username }}"
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+      register: check_user
+    - name: Get user ID if user already exists
+      set_fact:
+        admin_user_id: "{{ check_user.json.users.0.id }}"
+      when: check_user.json.totalRecords > 0
     - name: Create user record
       uri:
         url: "{{ okapi_url }}/users"
@@ -62,6 +73,14 @@
         status_code: 201
       register: create_user
       changed_when: create_user.status == 201
+      when: check_user.json.totalRecords == 0
+    - name: Check for login record
+      uri:
+        url: "{{ okapi_url }}/authn/credentials?query=userId%3d%3d{{ admin_user_id }}"
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+      register: check_login
     - name: Create login record
       uri:
         url: "{{ okapi_url }}/authn/credentials"
@@ -78,6 +97,14 @@
         status_code: 201
       register: create_login
       changed_when: create_login.status == 201
+      when: check_login.json.totalRecords == 0
+    - name: Check for permissions record
+      uri:
+        url: "{{ okapi_url }}/perms/users?query=userId%3d%3d{{ admin_user_id }}"
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+      register: check_perms
     - name: Create permissions record
       uri:
         url: "{{ okapi_url }}/perms/users"
@@ -96,6 +123,7 @@
         status_code: 201
       register: create_login
       changed_when: create_login.status == 201
+      when: check_perms.json.totalRecords == 0
   always:
     ####################
     # Enable authtoken #
