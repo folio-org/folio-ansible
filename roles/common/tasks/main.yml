@@ -28,6 +28,7 @@
     - apt-transport-https
     - ca-certificates
     - unzip
+    - jq
 
 - name: Install postgresql client things on all nodes
   become: yes
