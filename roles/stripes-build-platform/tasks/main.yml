@@ -18,7 +18,7 @@
   become: yes
   copy: 
     src: genStripesModDescriptors.sh 
-    dest: {{ stripes_conf_dir}}/genStripesModDescriptors.sh
+    dest: "{{ stripes_conf_dir }}/genStripesModDescriptors.sh"
     mode: 0755
 
 - name: copy yarn.lock file to stripes_conf_dir
