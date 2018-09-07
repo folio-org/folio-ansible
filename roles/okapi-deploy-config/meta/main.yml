@@ -2,4 +2,4 @@
 dependencies:
   - { role: okapi-deploy-modules }
   - { role: tenant-data }
-  - { role: stripes-build, okapi_register_modules: true, stripes_strict_md: true }
+  - { role: stripes-build-platform, okapi_register_modules: true, stripes_strict_md: true }
