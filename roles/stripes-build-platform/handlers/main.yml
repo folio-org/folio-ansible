@@ -1,0 +1,111 @@
+---
+- name: Remove yarn.lock from platform
+  become: yes
+  file: path={{ stripes_conf_dir }}/yarn.lock state=absent
+  when: platform_remove_lock == true
+  listen: "Rebuild stripes"
+
+- name: Build stripes
+  become: yes
+  shell: "yarn install"
+  args:
+    chdir: "{{ stripes_conf_dir }}"
+  listen: "Rebuild stripes"
+
+- name: Generate Stripes Module Descriptors
+  become: yes
+  shell: "./genStripesModDescriptors.sh -o ModuleDescriptors {% if stripes_strict_md %} --strict{% endif %}"
+  args: 
+    chdir: "{{ stripes_conf_dir }}"
+  listen: "Rebuild stripes" 
+
+- name: Build webpack
+  become: yes
+  shell: "yarn build output --okapiurl {{ stripes_okapi_url }} --tenant {{ stripes_tenant }} {% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
+  args:
+    chdir: "{{ stripes_conf_dir }}"
+  environment: "{{ node_environment }}"
+  when: build_webpack
+  listen: "Rebuild stripes"
+
+- name: Record stripes rebuild variable
+  set_fact:
+    stripes_rebuild: true
+  listen: "Rebuild stripes"
+
+- name: Get module descriptor filenames
+  shell: ls {{ stripes_conf_dir }}/ModuleDescriptors
+  register: mod_descrs
+  changed_when: false
+  listen: "Register modules"
+
+- name: Create mod_descr_list variable
+  set_fact:
+    mod_descr_list: []
+  listen: "Register modules"
+
+- name: Set mod_descr_list
+  set_fact:
+    mod_descr_list: "{{ mod_descr_list }} + [ '{{ item }}' ]"
+  with_items: "{{ mod_descrs.stdout_lines }}"
+  listen: "Register modules"
+
+- name: Bump stripes-core to the top of the list
+  set_fact: mod_descr_list="['stripes-core.json'] + {{ mod_descr_list|difference(['stripes-core.json']) }}"
+  listen: "Register modules"
+
+- name: Slurp module descriptors
+  slurp: src={{ stripes_conf_dir }}/ModuleDescriptors/{{ item }}
+  with_items: "{{ mod_descr_list }}"
+  register: mod_descrs_raw
+  listen: "Register modules"
+
+- set_fact: mod_descrs=[]
+  listen: "Register modules"
+
+- set_fact:
+    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
+  with_items: "{{ mod_descrs_raw.results }}"
+  listen: "Register modules"
+
+- name: Check module registration
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/modules/{{ item.id }}"
+    status_code: 200, 404
+  with_items: "{{ mod_descrs }}"
+  register: mod_reg_status
+  listen: "Register modules"
+
+- name: Register modules with Okapi
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/modules"
+    method: POST
+    body_format: json
+    body: "{{ item.1|to_json }}"
+    status_code: 201
+  when: mod_reg_status.results[item.0].status == 404
+  register: mod_register
+  changed_when: mod_register.status == 201
+  with_indexed_items: "{{ mod_descrs }}"
+  listen: "Register modules"
+
+- name: Check tenant-module association
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
+    status_code: 200, 404
+  with_items: "{{ mod_descrs }}"
+  register: tenant_modules
+  listen: "Enable modules"
+
+- name: Enable modules for tenant
+  uri:
+    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.1.id }}" }'
+    status_code: 201
+  when: tenant_modules.results[item.0].status == 404
+  register: tenant_assoc
+  changed_when: tenant_assoc.status == 201
+  with_indexed_items: "{{ mod_descrs }}"
+  listen: "Enable modules"

@@ -1,0 +1,6 @@
+{% if npm_proxy %}
+registry=https://{{ folio_npm_base_url }}{{ folio_npm_repo }}/
+//{{ folio_npm_base_url }}:_authToken={{ npm_authtoken }}
+{% else %}
+@folio:registry=https://{{ folio_npm_base_url}}{{ folio_npm_repo }}/
+{% endif %}
