@@ -14,7 +14,7 @@
 
 - name: Generate Stripes Module Descriptors
   become: yes
-  shell: "./genStripesModDescriptors.sh -o ModuleDescriptors {% if stripes_strict_md %} --strict{% endif %}"
+  command: "./genStripesModDescriptors.sh -o ModuleDescriptors {% if stripes_strict_md %} --strict{% endif %}"
   args: 
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes" 
