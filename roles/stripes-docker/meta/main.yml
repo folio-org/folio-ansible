@@ -1,4 +1,4 @@
 ---
 dependencies:
   - { role: docker-engine }
-  - { role: stripes-build }
+  - { role: stripes-build-platform }
