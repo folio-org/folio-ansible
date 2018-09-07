@@ -39,9 +39,9 @@ else
 fi
 
 if [[ "$strict" == true ]]; then
-  stripescliCmd=$(stripes mod descriptor --configFile stripes.config.js --full --strict)
+  stripescliCmd=$(./node_modules/.bin/stripes mod descriptor --configFile stripes.config.js --full --strict)
 else
-  stripescliCmd=$(stripes mod descriptor --configFile stripes.config.js --full)
+  stripescliCmd=$(./node_modules/.bin/stripes mod descriptor --configFile stripes.config.js --full)
 fi
 
 descriptors=$(echo ${stripescliCmd} | jq -r '.[] | @base64')
