@@ -50,8 +50,15 @@
   with_items: "{{ mod_descrs.stdout_lines }}"
   listen: "Register modules"
 
+- name: Get name of stripes-core MD file
+  set_fact:
+    stripes_core_md_file: "{{ item }}"
+  with_items: "{{ mod_descr_list}}"
+  when: item|regex_search('(^folio_stripes-core-\d*)')
+  listen: "Register modules"
+
 - name: Bump stripes-core to the top of the list
-  set_fact: mod_descr_list="['stripes-core.json'] + {{ mod_descr_list|difference(['stripes-core.json']) }}"
+  set_fact: mod_descr_list="['{{ stripes_core_md_file }}'] + {{ mod_descr_list|difference(['{{ stripes_core_md_file }}']) }}"
   listen: "Register modules"
 
 - name: Slurp module descriptors
