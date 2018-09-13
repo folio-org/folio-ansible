@@ -79,6 +79,7 @@
         - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
         - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
         - { load_endpoint: /item-storage/items, fileglob: sample-data/items/*.json }
+        - { load_endpoint: /instance-storage/instance-relationships, fileglob: sample-data/instance-relationships/*.json }
     - mod-inventory-mods
     - role: module-sample-data
       module_name: mod-circulation-storage
