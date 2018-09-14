@@ -63,6 +63,7 @@
         - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
         - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
         - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
+        - { load_endpoint: /instance-relationship-types, fileglob: reference-data/instance-relationship-types/*.json }
         - { load_endpoint: /instance-statuses, fileglob: reference-data/instance-statuses/*.json }
         - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
         - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
