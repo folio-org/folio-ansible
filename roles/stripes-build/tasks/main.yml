@@ -69,17 +69,6 @@
   when: with_github and stripes_strict_md
   notify: "Rebuild stripes"
 
-- name: set tenant in stripes config
-  become: yes
-  replace: 
-    name: "{{ stripes_conf_dir }}/stripes.config.js"
-    regexp: >-
-      ('tenant':\s*'?)[A-Za-z0-9\-]+('.*)$
-    replace: >-
-      \1{{ stripes_tenant }}\2
-  when: with_github == true
-  notify: "Rebuild stripes"
-
 - name: Move to Node.js 6.X lts
   become: yes
   shell: n lts && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
