@@ -1,89 +1,21 @@
 ---
-# Variables for building testing-topdown
+# Variables for building a FOLIO release
 okapi_pull: true
 okapi_pull_timeout: 600
-top_down_install: true
 auth_required: true
-total_records_key: totalRecords
-load_addresstypes: true
-inv_storage_3: true
 load_mods_larger: true
-hierarchical_locations: true
-shelf_locations: false
 enable_okapi: true
-
-# set the default postgres connection pool per module/tenant
-pg_max_pool_size: 5
-
-# dockerCMD values for modules
-docker_cmd:
-  mod-login:
-    - "verify.user=true"
-
-# env values for modules
-env_var:
-  mod-authtoken:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-permissions:
-    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-  mod-login:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-configuration:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-users:
-    - { name: JAVA_OPTIONS, value: "-Xmx384m" }
-  mod-users-bl:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-login-saml:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-inventory-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-  mod-inventory:
-    - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
-  mod-circulation-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-circulation:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-notify:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-notes:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-codex-inventory:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-codex-mux:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-codex-ekb:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-kb-ebsco:
-    - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
-  mod-calendar:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-vendors:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-finance:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-feesfines:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-orders-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-rtac:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-
-# other modules to enable outside dependency resolution
-other_mods:
-  - mod-codex-inventory
-  - mod-codex-ekb
-  - mod-rtac
-
-# Docker ports for modules
-docker_port:
-  mod-inventory: 9403
-  mod-circulation: 9801
+deploy_url: https://cdn.rawgit.com/folio-org/platform-complete/q3-2018/okapi-install.json
+enable_url: https://cdn.rawgit.com/folio-org/platform-complete/q3-2018/stripes-install.json
 
 # Variables for building UI
-stripes_github_project: https://github.com/folio-org/platform-core
+stripes_github_project: https://github.com/folio-org/platform-complete
+stripes_github_version: q3-2018
 folio_npm_repo: npm-folio
-stripes_strict_md: true
+okapi_register_modules: no
+okapi_enable_modules: no
+platform_remove_lock: no
+with_sourcemap: no
 
 # Metadata for CI build
-version: 1.0.0
+version: Q3-2018
