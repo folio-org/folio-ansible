@@ -33,7 +33,7 @@
 - name: Install okapi debian package 
   become: yes
   apt: 
-    name: okapi 
+    name: "okapi{% if okapi_version %}={{ okapi_version }}{% endif %}"
     state: present
 
 - name: Enable external hazelcast config if AWS
