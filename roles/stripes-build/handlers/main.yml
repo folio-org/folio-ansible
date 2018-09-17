@@ -21,9 +21,7 @@
 
 - name: Build webpack
   become: yes
-  shell: "yarn build output --okapiurl {{ stripes_okapi_url }} --tenant {{ stripes_tenant }} {
-% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack
-_languages }}{% endif %}"
+  shell: "yarn build output --okapiurl {{ stripes_okapi_url }} --tenant {{ stripes_tenant }} {% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
   args:
     chdir: "{{ stripes_conf_dir }}"
   environment: "{{ node_environment }}"
