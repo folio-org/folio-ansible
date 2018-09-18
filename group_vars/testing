@@ -364,6 +364,42 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
+  - index: 26
+    name: mod-template-engine
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
+  - index: 27
+    name: mod-password-validator
+    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+    image_repository: folioci
+    docker_env:
+      - { name: db.host, value: "{{ module_pg_host }}" }
+      - { name: db.port, value: "{{ pg_port }}" }
+      - { name: db.username, value: "{{ pg_admin_user }}" }
+      - { name: db.password, value: "{{ pg_admin_password }}" }
+      - { name: db.database, value: "{{ module_database }}" }
+      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    storage: postgres
+    database: "{{ module_database }}"
+    pg_user: "{{ pg_admin_user }}"
+    pg_password: "{{ pg_admin_password }}"
+    okapi_docker_pull: "false"
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
