@@ -14,9 +14,13 @@
     - okapi-deploy-modules
     - enable-tenant-modules
 
+# Need to build the webpack early to allow enough RAM for the build
+# But don't want to enable modules at this point
 - name: Configure testing build
   hosts: testing
   roles:
+    - role: stripes-build
+      okapi_enable_modules: false
     - okapi-deploy-modules
     - enable-tenant-modules
     - create-tenant-admin
