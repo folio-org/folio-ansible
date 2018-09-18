@@ -19,15 +19,3 @@ with_sourcemap: no
 
 # Metadata for CI build
 version: Q3-2018
-
-# These are mostly defaults except EBSCO_RMAPI_BASE_URL which is a
-# bit of a workaround for mod-kb-ebsco since we cannot set that for the 
-# module individually at runtime at this time.
-module_env:
-  - { name: db.host, value: "{{ pg_host }}" }
-  - { name: db.port, value: "{{ pg_port }}" }
-  - { name: db.database, value: "{{ module_database }}" }
-  - { name: db.username, value: "{{ pg_admin_user }}" }
-  - { name: db.password, value: "{{ pg_admin_password }}" }
-  - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
-  - { name: EBSCO_RMAPI_BASE_URL, value: https://sandbox.ebsco.io }
