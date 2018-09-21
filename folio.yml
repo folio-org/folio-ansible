@@ -5,6 +5,7 @@
   roles:
     - common
     - postgresql
+    - docker-engine
     - okapi
 
 # Configure builds
@@ -17,8 +18,9 @@
 - name: Configure testing build
   hosts: testing
   roles:
-    - okapi-deploy-modules
-    - enable-tenant-modules
+    - okapi-register-modules
+    - tenant-data
+    - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
 

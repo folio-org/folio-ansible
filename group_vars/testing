@@ -9,6 +9,9 @@ load_mods_larger: true
 shelf_locations: false
 enable_okapi: true
 
+# used in okapi-tenant-deploy
+update_launch_descr: true
+
 # set the default postgres connection pool per module/tenant
 pg_max_pool_size: 5
 
@@ -16,358 +19,216 @@ folio_modules:
   - index: 0
     name: mod-authtoken
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 1
     name: mod-permissions
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 2
     name: mod-login
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_cmd:
       - "verify.user=true"
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 3
     name: mod-configuration
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 4
     name: mod-users
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 5
     name: mod-inventory-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 6
     name: mod-users-bl
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 7
     name: mod-login-saml
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 8
     name: mod-user-import
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 9
     name: mod-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
-    okapi_docker_pull: "false"
-    docker_port: 9403
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 10
     name: mod-circulation-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 11
     name: mod-circulation
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
-    docker_port: 9801
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 12
     name: mod-notify
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 13
     name: mod-notes
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 14
     name: mod-graphql
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
-    docker_port: 3000
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 15
     name: mod-codex-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 16
     name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 17
     name: mod-codex-mux
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 18
     name: mod-kb-ebsco
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 19
     name: mod-vendors
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 20
     name: mod-calendar
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
     
   - index: 21
     name: mod-finance
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
     
   - index: 22
     name: mod-feesfines
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 23
     name: mod-tags
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 24
     name: mod-orders-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
     docker_env:
-      - { name: db.host, value: "{{ module_pg_host }}" }
-      - { name: db.port, value: "{{ pg_port }}" }
-      - { name: db.username, value: "{{ pg_admin_user }}" }
-      - { name: db.password, value: "{{ pg_admin_password }}" }
-      - { name: db.database, value: "{{ module_database }}" }
-      - { name: db.maxPoolSize, value: "{{ pg_max_pool_size }}" }
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    storage: postgres
-    database: "{{ module_database }}"
-    pg_user: "{{ pg_admin_user }}"
-    pg_password: "{{ pg_admin_password }}"
-    okapi_docker_pull: "false"
+    deploy: yes
+    okapi_docker_pull: "true"
 
   - index: 25
     name: mod-rtac
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
-    image_repository: folioci
-    okapi_docker_pull: "false"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+    okapi_docker_pull: "true"
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
 platform_remove_lock: true
+build_module_descriptors: false # mod descrs are built by `yarn install` in folio-testing-platform
 okapi_register_modules: true
 okapi_enable_modules: true
 node_environment:
