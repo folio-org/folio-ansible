@@ -4,7 +4,7 @@
 # if version is "latest", get the latest version
 - name: Get mod ids from repo for {{ module.name }}
   uri:
-    url: "{{ module.mod_descriptor_repo }}/_/proxy/modules?filter={{ module.module_id|default(module.name) }}&orderBy=id&order=desc"
+    url: "{{ module.mod_descriptor_repo|default(mod_descriptor_repo) }}/_/proxy/modules?filter={{ module.module_id|default(module.name) }}&orderBy=id&order=desc"
   register: module_ids
   when: module.version is not defined or module.version == "latest"
 
@@ -18,7 +18,7 @@
 
 - name: Get module descriptor from repo for {{ module.name }}
   uri:
-    url: "{{ module.mod_descriptor_repo }}/_/proxy/modules/{{ module_id }}"
+    url: "{{ module.mod_descriptor_repo|default(mod_descriptor_repo) }}/_/proxy/modules/{{ module_id }}"
     headers:
       Accept: application/json
   register: mod_descr_repo

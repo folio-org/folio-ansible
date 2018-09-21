@@ -19,7 +19,8 @@ Invoke the role in a playbook, e.g.:
       folio_modules:
         - name: mod-login # this is the base of the module name
           version: 3.1.0 # if undefined, defaults to "latest"
-          # either mod_descriptor_repo or mod_descriptor_url must be defined
+          # If mod_descriptor_url is defined, it overrides mod_descriptor_repo
+          # (both the role-level variable and the item-level variable)
           # mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.1.0/ModuleDescriptor.json
           mod_descriptor_repo: http://folio-registry.aws.indexdata.com
           # the following properties override the embedded launch descriptor in the
@@ -47,5 +48,6 @@ See above for documentation on the format of the `folio_modules` variable.
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_modules: [ ]
+mod_descriptor_repo: http://folio-registry.aws.indexdata.com
 update_launch_descr: no
 ```

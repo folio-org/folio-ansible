@@ -27,7 +27,7 @@
 
 - name: Get module descriptors from repository
   include: get-mod-descr.yml module={{ item }}
-  when: item.mod_descriptor_repo is defined
+  when: item.mod_descriptor_url is not defined and (item.mod_descriptor_repo is defined or mod_descriptor_repo)
   with_items: "{{ folio_modules }}"
 
 # Update launch descriptors with customizations from folio_modules list

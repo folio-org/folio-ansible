@@ -17,19 +17,16 @@ pg_max_pool_size: 5
 
 folio_modules:
   - name: mod-authtoken
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-permissions
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
 
   - name: mod-login
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_cmd:
       - "verify.user=true"
     docker_env:
@@ -37,137 +34,114 @@ folio_modules:
     deploy: yes
 
   - name: mod-configuration
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-users
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
     deploy: yes
 
   - name: mod-inventory-storage
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
 
   - name: mod-users-bl
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-login-saml
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-user-import
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-inventory
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     deploy: yes
 
   - name: mod-circulation-storage
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-circulation
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-notify
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-notes
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-graphql
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     deploy: yes
 
   - name: mod-codex-inventory
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-codex-ekb
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-codex-mux
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-kb-ebsco
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     deploy: yes
 
   - name: mod-vendors
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-calendar
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
     
   - name: mod-finance
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
     
   - name: mod-feesfines
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-tags
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-orders-storage
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-rtac
-    mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
