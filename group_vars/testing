@@ -16,219 +16,168 @@ update_launch_descr: true
 pg_max_pool_size: 5
 
 folio_modules:
-  - index: 0
-    name: mod-authtoken
+  - name: mod-authtoken
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 1
-    name: mod-permissions
+  - name: mod-permissions
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 2
-    name: mod-login
+  - name: mod-login
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_cmd:
       - "verify.user=true"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 3
-    name: mod-configuration
+  - name: mod-configuration
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 4
-    name: mod-users
+  - name: mod-users
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 5
-    name: mod-inventory-storage
+  - name: mod-inventory-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 6
-    name: mod-users-bl
+  - name: mod-users-bl
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 7
-    name: mod-login-saml
+  - name: mod-login-saml
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 8
-    name: mod-user-import
+  - name: mod-user-import
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 9
-    name: mod-inventory
+  - name: mod-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 10
-    name: mod-circulation-storage
+  - name: mod-circulation-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 11
-    name: mod-circulation
+  - name: mod-circulation
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 12
-    name: mod-notify
+  - name: mod-notify
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 13
-    name: mod-notes
+  - name: mod-notes
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 14
-    name: mod-graphql
+  - name: mod-graphql
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 15
-    name: mod-codex-inventory
+  - name: mod-codex-inventory
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 16
-    name: mod-codex-ekb
+  - name: mod-codex-ekb
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 17
-    name: mod-codex-mux
+  - name: mod-codex-mux
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 18
-    name: mod-kb-ebsco
+  - name: mod-kb-ebsco
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 19
-    name: mod-vendors
+  - name: mod-vendors
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 20
-    name: mod-calendar
+  - name: mod-calendar
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
     
-  - index: 21
-    name: mod-finance
+  - name: mod-finance
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
     
-  - index: 22
-    name: mod-feesfines
+  - name: mod-feesfines
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 23
-    name: mod-tags
+  - name: mod-tags
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 24
-    name: mod-orders-storage
+  - name: mod-orders-storage
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
-  - index: 25
-    name: mod-rtac
+  - name: mod-rtac
     mod_descriptor_repo: http://folio-registry.aws.indexdata.com
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
 platform_remove_lock: true
-build_module_descriptors: false # mod descrs are built by `yarn install` in folio-testing-platform
+# mod descrs are built by `yarn install` in folio-testing-platform
+build_module_descriptors: false
 okapi_register_modules: true
 okapi_enable_modules: true
 node_environment:
