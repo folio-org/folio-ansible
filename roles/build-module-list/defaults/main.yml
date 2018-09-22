@@ -1,0 +1,12 @@
+---
+# defaults
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# Define one or more of these variables to post install JSON to Okapi. They will be posted in the order listed here.
+
+# URL for install file with modules for Okapi to enable and deploy
+# deploy_url:
+
+# URL for install file with modules for Okapi to enable only (no deployment)
+# enable_url:

@@ -1,0 +1,38 @@
+---
+- name: Get install JSON from URL for deployment
+  uri: 
+    url: "{{ deploy_url }}"
+    method: GET
+  register: deploy_json
+  when: deploy_url|default(false)
+
+- name: Build list from deployment JSON
+  set_fact:
+    tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2'), 'deploy': true } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id, 'deploy': true } ] }}"
+  with_items: "{{ deploy_json.json }}"
+  when: deploy_json|default(false) and deploy_json.json is defined
+
+- name: Get install JSON from URL for enabling modules (no deployment)
+  uri: 
+    url: "{{ enable_url }}"
+    method: GET
+  register: enable_json
+  when: enable_url|default(false)
+
+- name: Build list from JSON from enabling modules JSON
+  set_fact:
+    tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2') } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id } ] }}"
+  with_items: "{{ enable_json.json }}"
+  when: enable_json|default(false) and enable_json.json is defined
+
+### HERE I AM -- need to combine with existing folio_modules list
+
+- name: Combine with existing folio_modules list for custom settings
+  set_fact:
+    tmp_folio_modules_combined: "{{ tmp_folio_modules_combined|default([]) + [ item|combine(folio_modules|default([])|selectattr('name','equalto',item.name)|first|default({})) ] }}"
+  with_items:
+    - "{{ tmp_folio_modules }}"
+
+- name: Reset folio_modules
+  set_fact:
+    folio_modules: "{{ tmp_folio_modules_combined }}"
