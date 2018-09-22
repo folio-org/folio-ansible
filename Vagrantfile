@@ -122,7 +122,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_release", autostart: false do |build_release|
-    build_release.vm.box = "debian/contrib-jessie64"
+    build_release.vm.box = "bento/ubuntu-16.04"
     build_release.vm.provider "virtualbox" do |vr|
       vr.memory = 10240
     end
