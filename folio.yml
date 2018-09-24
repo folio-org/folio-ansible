@@ -57,7 +57,6 @@
       repository: "https://github.com/folio-org/mod-inventory-storage"
       duplicate_key_error: 400
       files:
-        - { load_endpoint: /cataloging-levels, fileglob: reference-data/cataloging-levels/*.json }
         - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
         - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
         - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
@@ -129,6 +128,7 @@
         - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
         - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
         - { load_endpoint: /instance-relationship-types, fileglob: reference-data/instance-relationship-types/*.json }
+        - { load_endpoint: /instance-statuses, fileglob: reference-data/instance-statuses/*.json }
         - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
         - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
         - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
@@ -136,6 +136,7 @@
         - { load_endpoint: /location-units/libraries, fileglob: reference-data/location-units/libraries/*.json,  dup_override: 422 }
         - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
         - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
+        - { load_endpoint: /modes-of-issuance, fileglob: reference-data/modes-of-issuance/*.json }
         - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
         - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
         - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
