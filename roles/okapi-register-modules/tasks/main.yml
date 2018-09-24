@@ -83,7 +83,7 @@
     body_format: json
     body: "{{ item.1 }}"
     status_code: 201
-  when: mod_reg_status.results[{{ item.0 }}].status == 404
+  when: mod_reg_status.results[item.0].status == 404
   register: mod_reg
   changed_when: mod_reg.status == 201
   with_indexed_items: "{{ mod_descrs }}"
