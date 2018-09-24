@@ -5,6 +5,7 @@ load_mods_larger: true
 enable_okapi: true
 deploy_url: https://rawgit.com/folio-org/platform-complete/q3-2018/okapi-install.json
 enable_url: https://rawgit.com/folio-org/platform-complete/q3-2018/stripes-install.json
+update_launch_descr: true
 
 # module settings
 folio_modules:
