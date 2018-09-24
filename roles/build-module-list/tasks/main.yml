@@ -6,6 +6,12 @@
   register: deploy_json
   when: deploy_url|default(false)
 
+- name: Get install JSON from file for deployment
+  set_fact:
+    deploy_json:
+      json: "{{ lookup('file', deploy_file) }}"
+  when: deploy_file|default(false) and not deploy_url|default(false)  
+  
 - name: Build list from deployment JSON
   set_fact:
     tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2'), 'deploy': true } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id, 'deploy': true } ] }}"
@@ -18,6 +24,12 @@
     method: GET
   register: enable_json
   when: enable_url|default(false)
+
+- name: Get install JSON from file for enabling modules (no deployment)
+  set_fact:
+    enable_json:
+      json: "{{ lookup('file', enable_file) }}"
+  when: enable_file|default(false) and not enable_url|default(false)  
 
 - name: Build list from JSON from enabling modules JSON
   set_fact:
@@ -34,3 +46,5 @@
 - name: Reset folio_modules
   set_fact:
     folio_modules: "{{ tmp_folio_modules_combined }}"
+
+- debug: var=folio_modules

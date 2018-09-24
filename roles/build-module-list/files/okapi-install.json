@@ -1,0 +1,98 @@
+[ 
+  {
+    "id" : "mod-users-15.2.1",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-permissions-5.3.2",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-login-4.5.0",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-inventory-storage-12.8.2",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-users-bl-4.0.2",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-authtoken-1.5.2",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-configuration-5.0.0",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-circulation-storage-6.1.0",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-circulation-12.0.0",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-kb-ebsco-1.0.1",
+    "action" : "enable"
+  }, 
+  { 
+    "id": "mod-vendors-1.0.1",
+    "action": "enable"
+  },
+  {
+    "id" : "mod-finance-1.0.0",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-inventory-9.5.0",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-login-saml-1.2.0",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-notify-1.1.8",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-notes-2.1.2",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-codex-mux-2.2.2",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-tags-0.1.3",
+    "action" : "enable"
+  }, 
+  {
+    "id" : "mod-feesfines-14.2.4",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-codex-inventory-1.2.1",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-codex-ekb-1.0.0",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-user-import-3.1.0",
+    "action" : "enable"
+  },
+  {
+    "id" : "mod-rtac-1.1.0",
+    "action" : "enable"
+  },
+  {
+    "id": "mod-calendar-1.0.2",
+    "action" : "enable"
+  }
+]
