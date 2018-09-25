@@ -5,6 +5,7 @@
   roles:
     - common
     - postgresql
+    - docker-engine
     - okapi
 
 # Configure builds
@@ -17,8 +18,9 @@
 - name: Configure testing build
   hosts: testing
   roles:
-    - okapi-deploy-modules
-    - enable-tenant-modules
+    - okapi-register-modules
+    - tenant-data
+    - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
 
@@ -32,10 +34,10 @@
 - name: Configure release build
   hosts: release
   roles:
-    - docker-engine
-    - okapi-pull
+    - build-module-list
+    - okapi-register-modules
     - tenant-data
-    - okapi-tenant-modules
+    - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
 
@@ -111,8 +113,6 @@
     - mod-auth-demo-users
 
 # Sample data for release build
-# Most of the reference data is loaded from folio-install Q2-2018 release
-# There is a risk that the sample data not stored in folio-install will become incompatible
 - name: Load sample data for release build
   hosts: release
   roles:

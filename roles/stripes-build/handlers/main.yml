@@ -18,6 +18,7 @@
   args: 
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
+  when: build_module_descriptors
 
 - name: Build webpack
   become: yes

@@ -1,0 +1,82 @@
+[ 
+  {
+    "action": "enable",
+    "id":  "folio_stripes-core-2.12.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_checkin-1.2.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_checkout-1.2.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_circulation-1.2.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_developer-1.4.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_eholdings-1.0.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_finance-1.0.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_inventory-1.2.3"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_myprofile-0.2.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_organization-2.3.2"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_plugin-find-instance-1.0.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_plugin-find-user-1.2.0"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_requests-1.2.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_search-1.2.1"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_servicepoints-1.0.2"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_stripes-smart-components-1.7.3"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_tags-1.0.4"
+  },
+  {
+    "action": "enable",
+    "id":  "folio_users-2.15.2"
+  },
+  {
+    "action": "enable",
+    "id": "folio_vendors-1.0.1"
+  },
+  {
+    "action": "enable",
+    "id": "folio_calendar-2.0.4"
+  }
+]

@@ -4,25 +4,25 @@
 # if version is "latest", get the latest version
 - name: Get mod ids from repo for {{ module.name }}
   uri:
-    url: "{{ module.mod_descriptor_repo }}/_/proxy/modules?filter={{ module.module_id|default(module.name) }}&orderBy=id&order=desc"
+    url: "{{ module.mod_descriptor_repo|default(mod_descriptor_repo) }}/_/proxy/modules?filter={{ module.module_id|default(module.name) }}&orderBy=id&order=desc"
   register: module_ids
-  when: module.mod_descriptor_repo is defined and (module.version is not defined or module.version == "latest")
+  when: module.version is not defined or module.version == "latest"
 
-- set_fact: module_id={{ module_ids.json.0.id }}
-  when:  module.mod_descriptor_repo is defined and (module.version is not defined or module.version == "latest")
+- name: Set module_id for "latest"
+  set_fact: module_id={{ module_ids.json.0.id }}
+  when: module.version is not defined or module.version == "latest"
 
-- set_fact: module_id={{ module.module_id|default(module.name) }}-{{ module.version }}
-  when: module.mod_descriptor_repo is defined and (module.version is defined and module.version != "latest")
+- name: Set module_id for pinned module version
+  set_fact: module_id={{ module.module_id|default(module.name) }}-{{ module.version }}
+  when: module.version is defined and module.version != "latest"
 
-- name: Copy module descriptor from repo for {{ module.name }}
-  become: yes
-  get_url:
-    url: "{{ module.mod_descriptor_repo }}/_/proxy/modules/{{ module_id }}"
-    dest: "{{ folio_conf }}/module-descriptors/{{ module.name }}.json"
-    force: yes
-    timeout: 60
-  when: module.mod_descriptor_repo is defined
-  register: module_repo_update
+- name: Get module descriptor from repo for {{ module.name }}
+  uri:
+    url: "{{ module.mod_descriptor_repo|default(mod_descriptor_repo) }}/_/proxy/modules/{{ module_id }}"
+    headers:
+      Accept: application/json
+  register: mod_descr_repo
 
-- set_fact:
-    mod_descriptor_repo_update: "{{ mod_descriptor_repo_update }} + [ {{ module_repo_update }} ]"
+- name: Add module descriptor to mod_descrs list
+  set_fact:
+    mod_descrs: "{{ mod_descrs|default([]) }} + [ {{ mod_descr_repo.json }} ]"
