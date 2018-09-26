@@ -43,8 +43,6 @@
   when: item.deploy is defined and item.deploy is sameas true
   with_items: "{{ folio_modules }}"
 
-- debug: var=install_deploy
-
 - name: Build install list for modules without deployment
   set_fact:
     install: "{{ install|default([]) + [ install_obj|combine({'id': item.name + '-' + item.version}) ] if item.version is defined else install|default([]) + [ install_obj|combine({'id': item.name}) ] }}"
