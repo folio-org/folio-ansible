@@ -10,12 +10,19 @@
   shell: "yarn install"
   args:
     chdir: "{{ stripes_conf_dir }}"
-  environment: "{{ node_environment }}"
   listen: "Rebuild stripes"
+
+- name: Generate module descriptors
+  become: yes
+  shell: "yarn build-module-descriptors"
+  args: 
+    chdir: "{{ stripes_conf_dir }}"
+  listen: "Rebuild stripes"
+  when: build_module_descriptors
 
 - name: Build webpack
   become: yes
-  shell: "yarn build output{% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
+  shell: "yarn build output --okapi {{ stripes_okapi_url }} --tenant {{ stripes_tenant }} {% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
   args:
     chdir: "{{ stripes_conf_dir }}"
   environment: "{{ node_environment }}"
@@ -29,11 +36,11 @@
 
 - name: Get module descriptor filenames
   shell: ls {{ stripes_conf_dir }}/ModuleDescriptors
-  register: mod_descrs
+  register: mod_descrs_files
   changed_when: false
   listen: "Register modules"
 
-- name: Create mod_descr_list variable
+- name: Create mod_descr_list variable to order modules
   set_fact:
     mod_descr_list: []
   listen: "Register modules"
@@ -41,7 +48,7 @@
 - name: Set mod_descr_list
   set_fact:
     mod_descr_list: "{{ mod_descr_list }} + [ '{{ item }}' ]"
-  with_items: "{{ mod_descrs.stdout_lines }}"
+  with_items: "{{ mod_descrs_files.stdout_lines }}"
   listen: "Register modules"
 
 - name: Bump stripes-core to the top of the list
@@ -54,11 +61,13 @@
   register: mod_descrs_raw
   listen: "Register modules"
 
-- set_fact: mod_descrs=[]
+- name: Reset mod_descr_list variable
+  set_fact: mod_descr_list=[]
   listen: "Register modules"
 
-- set_fact:
-    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
+- name: Build mod_descr_list for registration
+  set_fact:
+    mod_descr_list: "{{ mod_descr_list }} + [ {{ item.content|b64decode|from_json }} ]"
   with_items: "{{ mod_descrs_raw.results }}"
   listen: "Register modules"
 
@@ -66,7 +75,7 @@
   uri:
     url: "{{ stripes_okapi_url }}/_/proxy/modules/{{ item.id }}"
     status_code: 200, 404
-  with_items: "{{ mod_descrs }}"
+  with_items: "{{ mod_descr_list }}"
   register: mod_reg_status
   listen: "Register modules"
 
@@ -80,14 +89,14 @@
   when: mod_reg_status.results[item.0].status == 404
   register: mod_register
   changed_when: mod_register.status == 201
-  with_indexed_items: "{{ mod_descrs }}"
+  with_indexed_items: "{{ mod_descr_list }}"
   listen: "Register modules"
 
 - name: Check tenant-module association
   uri:
     url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
     status_code: 200, 404
-  with_items: "{{ mod_descrs }}"
+  with_items: "{{ mod_descr_list }}"
   register: tenant_modules
   listen: "Enable modules"
 
@@ -101,5 +110,5 @@
   when: tenant_modules.results[item.0].status == 404
   register: tenant_assoc
   changed_when: tenant_assoc.status == 201
-  with_indexed_items: "{{ mod_descrs }}"
+  with_indexed_items: "{{ mod_descr_list }}"
   listen: "Enable modules"

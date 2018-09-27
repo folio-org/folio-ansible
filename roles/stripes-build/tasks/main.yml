@@ -32,17 +32,6 @@
   when: with_github == true
   notify: "Rebuild stripes"
 
-- name: set okapi url in stripes config
-  become: yes
-  replace: 
-    name: "{{ stripes_conf_dir }}/stripes.config.js"
-    regexp: >- 
-       ('url':\s*'?)http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+('.*)$
-    replace: >-
-       \1{{ stripes_okapi_url }}\2
-  when: with_github == true
-  notify: "Rebuild stripes"
-
 - name: copy yarn.lock file to stripes_conf_dir
   become: yes
   get_url: 
@@ -64,20 +53,9 @@
   become: yes
   replace:
     name: "{{ stripes_conf_dir }}/package.json"
-    regexp: '(^\s*\"postinstall\"\s*:.*build-module-descriptors.js)(?!\s+--strict)(.*$)'
+    regexp: '(^\s*\"build-module-descriptors\"\s*:.*build-module-descriptors.js)(?!\s+--strict)(.*$)'
     replace: '\1 --strict \2'
   when: with_github and stripes_strict_md
-  notify: "Rebuild stripes"
-
-- name: set tenant in stripes config
-  become: yes
-  replace: 
-    name: "{{ stripes_conf_dir }}/stripes.config.js"
-    regexp: >-
-      ('tenant':\s*'?)[A-Za-z0-9\-]+('.*)$
-    replace: >-
-      \1{{ stripes_tenant }}\2
-  when: with_github == true
   notify: "Rebuild stripes"
 
 - name: Move to Node.js 6.X lts

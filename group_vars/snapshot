@@ -80,6 +80,8 @@ docker_port:
 stripes_github_project: https://github.com/folio-org/folio-testing-platform
 folio_npm_repo: npm-folioci
 stripes_strict_md: true
+# mod descrs are built by `yarn install` in folio-testing-platform
+build_module_descriptors: false
 
 # Metadata for CI build
 version: 1.0.0

@@ -1,6 +1,6 @@
 ---
 # Configure okapi-deploy service based on dependency resolution from stripes platform
-# variable mod_descrs comes from stripes-build dependency
+# variable mod_descr_list comes from stripes-build dependency
 
 - include: create_module_deps_list.yml
   when: not use_folio_snapshot

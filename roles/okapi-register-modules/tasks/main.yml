@@ -10,110 +10,58 @@
 # Setup #
 #########
 
-- name: Set up conf directory
-  become: yes
-  file: state=directory path={{ folio_conf }}/module-descriptors
-
-- name: Copy module descriptors to remote by URL
-  become: yes
-  get_url: url={{ item.mod_descriptor_url }} dest={{ folio_conf }}/module-descriptors/{{ item.name }}.json force=yes
+- name: Get module descriptors by URL
+  uri:
+    url: "{{ item.mod_descriptor_url }}"
+    headers:
+      Accept: application/json
   when: item.mod_descriptor_url is defined
   with_items: "{{ folio_modules }}"
-  register: mod_descriptor_url_update
+  register: mod_descrs_url
 
-- set_fact: mod_descriptor_repo_update=[]
-  
-- name: Copy module descriptors to remote from repository
+- name: Add module descriptors to mod_descrs list
+  set_fact:
+    mod_descrs: "{{ mod_descrs_source|default([]) }} + [ {{ mod_descrs_url.results[item.0].json }} ]"
+  when: item.1.mod_descriptor_url is defined
+  with_indexed_items: "{{ folio_modules }}"
+
+- name: Get module descriptors from repository
   include: get-mod-descr.yml module={{ item }}
+  when: item.mod_descriptor_url is not defined and (item.mod_descriptor_repo is defined or mod_descriptor_repo)
   with_items: "{{ folio_modules }}"
 
-- name: Slurp module descriptors into memory
-  slurp: src={{ folio_conf }}/module-descriptors/{{ item.name }}.json
-  with_items: "{{ folio_modules }}"
-  register: mod_descrs_raw
+# Update launch descriptors with customizations from folio_modules list
+# could be extended to support swapping exec for dockerImage, etc.
+# For now just supports env variables, dockerCMD, and dockerPull
+- name: Update env for embedded launch descriptors
+  set_fact:
+    mod_descrs_env: "{{ mod_descrs_env|default([]) }} + [ {% if mod_descrs[item.0].launchDescriptor is defined and item.1.docker_env is defined %}{{ mod_descrs[item.0]|combine({'launchDescriptor': {'env': item.1.docker_env}},recursive=True) }}{% else %}{{ mod_descrs[item.0] }}{% endif %} ]"
+  with_indexed_items: "{{ folio_modules }}"
+  when: update_launch_descr
 
-- set_fact: mod_descrs=[]
+- name: Update dockerCMD for embedded launch descriptors
+  set_fact:
+    mod_descrs_cmd: "{{ mod_descrs_cmd|default([]) }} + [ {% if mod_descrs_env[item.0].launchDescriptor is defined and item.1.docker_cmd is defined %}{{ mod_descrs_env[item.0]|combine({'launchDescriptor': {'dockerCMD': item.1.docker_cmd}},recursive=True) }}{% else %}{{ mod_descrs_env[item.0] }}{% endif %} ]"
+  with_indexed_items: "{{ folio_modules }}"
+  when: update_launch_descr
 
-- set_fact:
-    mod_descrs: "{{ mod_descrs }} + [ {{ item.content|b64decode|from_json }} ]"
-  with_items: "{{ mod_descrs_raw.results }}"
+- name: Update dockerPull for embedded launch descriptors
+  set_fact:
+    mod_descrs_pull: "{{ mod_descrs_pull|default([]) }} + [ {% if mod_descrs_cmd[item.0].launchDescriptor is defined and item.1.okapi_docker_pull is defined %}{{ mod_descrs_cmd[item.0]|combine({'launchDescriptor': {'dockerPull': true if item.1.okapi_docker_pull == 'true' else false}},recursive=True) }}{% else %}{{ mod_descrs_cmd[item.0] }}{% endif %} ]"
+  with_indexed_items: "{{ folio_modules }}"
+  when: update_launch_descr
 
-- set_fact: folio_modules_withid=[]
+- name: Reset mod_descrs variable
+  set_fact:
+    mod_descrs: "{{ mod_descrs_pull }}"
+  when: update_launch_descr
 
-- set_fact:
-    folio_modules_withid: "{{ folio_modules_withid }} + [ {{ folio_modules[item.0]|combine({'module_id':item.1.id}) }} ]"
+# This task can be removed when okapi-deploy-modules role is removed
+- name: Set folio_modules_withid variable for okapi-deploy-modules
+  set_fact:
+    folio_modules_withid: "{{ folio_modules_withid|default([]) }} + [ {{ folio_modules[item.0]|combine({'module_id':item.1.id}) }} ]"
   with_indexed_items:
     - "{{ mod_descrs }}"
-
-##################################
-# Undeploy if new mod descriptor #
-##################################
-
-- name: Get tenants
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants"
-    status_code: 200
-  register: tenants
-
-- name: Check tenant association for changed modules
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ item[0].id }}/modules/{{ item[1].module_id }}"
-    status_code: 200, 404
-  when:
-    - mod_descriptor_url_update.results[{{ item[1].index }}].changed or mod_descriptor_repo_update[{{ item[1].index }}].changed
-  with_nested:
-    - "{{ tenants.json }}"
-    - "{{ folio_modules_withid }}"
-  register: tenant_association
-
-- name: Disassociate modules from tenants if mod descriptor updated
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ item.item[0].id }}/modules/{{ item.item[1].module_id }}"
-    method: DELETE
-    status_code: 204
-  when:
-    - not (item.skipped is defined) or not item.skipped
-    - item.status == 200
-  register: tenant_disassociate
-  changed_when: tenant_disassociate.status == 204
-  with_items:
-    - "{{ tenant_association.results[::-1] }}"
-
-- name: Check deployment for changed modules
-  uri:
-    url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
-    status_code: 200, 404
-  when:
-    - mod_descriptor_url_update.results[{{ item.index }}].changed or mod_descriptor_repo_update[{{ item.index }}].changed
-  with_items: "{{ folio_modules_withid }}"
-  register: module_deployment
-
-- name: Undeploy changed modules
-  uri:
-    url: "{{ okapi_url }}/_/discovery/modules/{{ item[0].item.module_id }}/{{ item[1].instId }}"
-    method: DELETE
-    status_code: 204
-  when:
-    - not (item[0].skipped is defined) or not item[0].skipped
-    - item[0].status == 200
-  register: module_undeploy
-  changed_when: module_undeploy.status == 204
-  with_subelements:
-    - "{{ module_deployment.results[::-1] }}"
-    - json
-    - skip_missing: yes
-
-- name: Un-register changed modules
-  uri:
-    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
-    method: DELETE
-    status_code: 204, 404
-  when:
-    - folio_modules_withid|bool
-    - mod_descriptor_update.results[{{ item.index }}].changed
-  with_items: "{{ folio_modules_withid[::-1] }}"
-  register: mod_unreg
-  changed_when: "mod_unreg.status == 204"
 
 ####################
 # Register modules #
@@ -121,12 +69,21 @@
 
 - name: Check module registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
+    url: "{{ okapi_url }}/_/proxy/modules/{{ item.id }}"
     status_code: 200, 404
-  with_items: "{{ folio_modules_withid }}"
+  with_items: "{{ mod_descrs }}"
   register: mod_reg_status
 
 - name: Register modules
-  shell: "curl -X POST -H \"Content-Type: application/json\" -d @{{ folio_conf }}/module-descriptors/{{ item.name }}.json -sSf {{ okapi_url }}/_/proxy/modules"
-  when: mod_reg_status.results[{{ item.index }}].status == 404
-  with_items: "{{ folio_modules_withid }}"
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules"
+    headers:
+      Accept: application/json, text/plain
+    method: POST
+    body_format: json
+    body: "{{ item.1 }}"
+    status_code: 201
+  when: mod_reg_status.results[item.0].status == 404
+  register: mod_reg
+  changed_when: mod_reg.status == 201
+  with_indexed_items: "{{ mod_descrs }}"

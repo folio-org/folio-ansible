@@ -1,7 +1,7 @@
 ---
 
 # Role to configure okapi-deploy service based on dependency resolution from stripes platform
-# variable mod_descrs comes from stripes-build dependency
+# variable mod_descr_list comes from stripes-build dependency
 
 
 - name: Initialize module list json
@@ -9,7 +9,7 @@
 
 - name: Build module list from Stripes mod descriptors
   set_fact: module_list='{{ module_list }} { "id":"{{ item.id }}", "action":"enable" },'
-  with_items: "{{ mod_descrs }}"
+  with_items: "{{ mod_descr_list }}"
 
 - name: Add other modules to module list
   set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'

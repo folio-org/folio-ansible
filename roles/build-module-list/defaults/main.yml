@@ -1,0 +1,19 @@
+---
+# defaults
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+# Define or override one or more of these variables to post install JSON to Okapi.
+# Note that if the x_url variables are defined, they will override the x_file variables
+
+# File with modules for Okapi to enable and deploy
+deploy_file: okapi-install.json
+
+# URL for install file with modules for Okapi to enable and deploy
+# deploy_url:
+
+# File with modules for Okapi to enable only (no deployment)
+enable_file: stripes-install.json
+
+# URL for install file with modules for Okapi to enable only (no deployment)
+# enable_url:
