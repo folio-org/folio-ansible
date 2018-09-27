@@ -77,11 +77,12 @@ docker_port:
   mod-circulation: 9801
 
 # Variables for building UI
-stripes_github_project: https://github.com/folio-org/folio-testing-platform
+stripes_github_project: https://github.com/folio-org/platform-complete
+stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 stripes_strict_md: true
 # mod descrs are built by `yarn install` in folio-testing-platform
-build_module_descriptors: false
+# build_module_descriptors: false
 
 # Metadata for CI build
 version: 1.0.0
