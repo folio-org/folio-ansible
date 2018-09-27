@@ -108,8 +108,8 @@
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
     - role: module-sample-data
-      module_name: mod-finance
-      repository: "https://github.com/folio-org/mod-finance"
+      module_name: mod-finance-storage
+      repository: "https://github.com/folio-org/mod-finance-storage"
       files:
         - { load_endpoint: /fiscal_year, fileglob: sample-data/fiscal-years/*.json }
         - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
@@ -167,9 +167,9 @@
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
     - role: module-sample-data
-      module_name: mod-finance
+      module_name: mod-finance-storage
       module_version: v1.0.0
-      repository: "https://github.com/folio-org/mod-finance"
+      repository: "https://github.com/folio-org/mod-finance-storage"
       files:
         - { load_endpoint: /fiscal_year, fileglob: sample-data/fiscal-years/*.json }
         - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
