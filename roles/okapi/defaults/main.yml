@@ -8,7 +8,7 @@ okapi_cluster_port: 9001
 okapi_cluster_config_file: ""
 okapi_port: 9130
 okapi_port_start: 9131
-okapi_port_end: 9161
+okapi_port_end: 9661
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
 
