@@ -122,4 +122,4 @@ platform_remove_lock: no
 with_sourcemap: no
 
 # Metadata for CI build
-version: 1.0.0
+version: 1.0.1
