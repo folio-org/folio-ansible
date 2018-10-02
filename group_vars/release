@@ -122,6 +122,7 @@ platform_remove_lock: no
 with_sourcemap: no
 
 # Metadata for CI build
+box_tag: folio/Q3-2018
 version: 1.0.1
 version_descr: |
   # FOLIO Q3-2018 Release (v1.0.1)
