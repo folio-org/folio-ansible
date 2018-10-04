@@ -58,7 +58,7 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-vendors:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-finance:
+  mod-finance-storage:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-feesfines:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
