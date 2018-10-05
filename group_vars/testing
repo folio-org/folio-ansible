@@ -141,6 +141,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-orders
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-rtac
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
