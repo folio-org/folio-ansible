@@ -48,6 +48,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
 
+  - name: mod-password-validator
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-users-bl
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -152,11 +157,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-template-engine
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: mod-password-validator
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
