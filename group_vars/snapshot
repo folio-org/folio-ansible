@@ -64,6 +64,10 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-orders-storage:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-orders:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-rtac:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
