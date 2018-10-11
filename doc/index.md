@@ -97,27 +97,29 @@ it for module deployment.
 ## Replace localhost by hostname on the demo box
 
 To make the demo box accessible from machines other than the local one,
-Stripes needs the hostname of the backend. Use this `Vagrantfile` to
-configure the hostname:
+Stripes needs the Okapi URL for accessing the backend. Use this `Vagrantfile` to
+configure it:
 
     Vagrant.configure("2") do |config|
       config.vm.box = "folio/testing"
 
       config.vm.provision "shell", env: {
-        "URL" => "http://example.com:9130"
+        "OKAPI" => "http://example.com:9130"
       }, inline: <<-SHELL
         set -e
-        sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$URL'=" /etc/folio/stripes/stripes.config.js
+        sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$OKAPI'=" /etc/folio/stripes/node_modules/@folio/platform-core/stripes.config.js
         /etc/folio/stripes/build-run
       SHELL
     end
+
+In older Vagrant boxes the stripes.config.js file that sets the Okapi URL was in `/etc/folio/stripes/`.
 
 ## Replace port 9130
 
 This is an example how to avoid using port 9130 that may be blocked at
 some institutions. Instead all front-end and back-end requests arrive
 at the same default port (80 for HTTP or 443 for HTTPS). Configure the
-URL like `http://example.com` or `https://example.com` as explained in
+Okapi URL like `http://example.com` or `https://example.com` as explained in
 the previous section.
 
 An nginx in front of the Vagrant box proxies the requests to ports
