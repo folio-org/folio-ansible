@@ -6,7 +6,7 @@ Ansible role for registering a set of modules from a variable list, or from one 
 
 * A running Okapi system
 
-* A list of modules in the `folio_modules` variable. This list can be set globally in a variables file, or created by another role, such as `okapi-module-list`
+* A list of modules in the `folio_modules` variable. This list can be set globally in a variables file, or created by another role, such as `build-module-list`
 
 ## Usage
 
