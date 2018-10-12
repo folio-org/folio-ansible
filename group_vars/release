@@ -123,13 +123,17 @@ with_sourcemap: no
 
 # Metadata for CI build
 box_tag: folio/Q3-2018
-version: 1.0.1
+version: 1.0.2
 version_descr: |
-  # FOLIO Q3-2018 Release (v1.0.1)
+  # FOLIO Q3-2018 Release (v1.0.2)
   
   Admin login: diku_admin/admin
   
   Q3-2018 release version of the FOLIO platform, built from Q3-2018 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+  
+  ## Updates from 1.0.1
+  
+  * Update mod-authtoken to v1.5.3. Fixes [MODAT-33](https://issues.folio.org/browse/MODAT-33).
   
   ## Updates from 1.0.0
   
