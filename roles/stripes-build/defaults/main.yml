@@ -57,3 +57,11 @@ folio_snapshot_url: 'http://folio-snapshot-stable.aws.indexdata.com'
 # 
 npm_proxy: false
 npm_authtoken: ''
+
+# Set to 'true' to generate  stripes-install.json and okapi-install.json files
+# for build-module-list
+build_install_files: false
+
+# Build okapi-install.json with releases only - no snapshots. 
+# Assumes build_install_files is 'true'
+releases_only: false

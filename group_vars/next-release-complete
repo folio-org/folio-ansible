@@ -1,0 +1,118 @@
+# Variables for building a FOLIO release
+auth_required: true
+load_mods_larger: true
+enable_okapi: true
+update_launch_descr: true
+fetch_install_files: true
+
+# module settings
+folio_modules:
+  - name: mod-authtoken
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-permissions
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-configuration
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-users
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx384m" }
+
+  - name: mod-inventory-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+
+  - name: mod-users-bl
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-login-saml
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-user-import
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-inventory
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+
+  - name: mod-circulation-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-circulation
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-notify
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-notes
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-codex-inventory
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-codex-ekb
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-codex-mux
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-kb-ebsco
+
+  - name: mod-vendors
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-calendar
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    
+  - name: mod-finance
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    
+  - name: mod-feesfines
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-tags
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-orders-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+  - name: mod-rtac
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+
+# Variables for building UI
+stripes_github_project: https://github.com/folio-org/platform-complete
+stripes_github_version: next-release
+stripes_strict_md: true
+folio_npm_repo: npm-folio
+okapi_register_modules: no
+okapi_enable_modules: no
+platform_remove_lock: no
+with_sourcemap: no

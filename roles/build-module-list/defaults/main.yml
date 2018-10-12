@@ -17,3 +17,6 @@ enable_file: stripes-install.json
 
 # URL for install file with modules for Okapi to enable only (no deployment)
 # enable_url:
+
+# fetch stripes-install.json and okapi-istall.json from stripes-build. Default is 'false'
+fetch_install_files: false
