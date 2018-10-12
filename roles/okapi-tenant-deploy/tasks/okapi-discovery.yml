@@ -1,0 +1,39 @@
+---
+# Tasks to post a deployment descriptor for a module with a url property
+
+- name: Set module id if version is defined
+  set_fact:
+    discovery_module_id: "{{ item.name + '-' + item.version }}"
+  when: item.version is defined
+
+- name: Get module ids if version is not defined
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules?filter={{ item.name }}"
+  register: discovery_module_versions
+  when: item.version is not defined
+
+- name: Set module id from latest version if version is not defined
+  set_fact:
+    discovery_module_id: "{{ discovery_module_versions.json.0.id }}"
+  when: item.version is not defined
+
+- name: Check Okapi discovery to avoid multiple entries
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ discovery_module_id }}"
+    status_code: 200,404
+  register: discovery_check_module
+
+- name: Post to Okapi discovery
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules"
+    method: POST
+    body_format: json
+    body:
+      srvcId: "{{ discovery_module_id }}"
+      instId: "{{ discovery_module_id }}"
+      url: "{{ item.url }}"
+    status_code: 201
+  register: discovery_post
+  changed_when: discovery_post.status == 201
+  when: discovery_check_module.status == 404
+

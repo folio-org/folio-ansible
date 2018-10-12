@@ -28,6 +28,10 @@ Invoke the role in a playbook, e.g.:
       folio_modules:
         - name: mod-login # this is the base of the module name
           version: 3.1.0 # if undefined, Okapi will resolve to the most recent version that satisfies dependencies
+          # either url or deploy can be used to register the module with Okapi's /_/discovery service
+          # If the module is already registered, neither are required
+          # url takes precedence over deploy
+          # url: "http://my-mod-login:8081"
           deploy: yes # if defined, Okapi will attempt to deploy the module using the launch descriptor embedded in the registered module descriptor
 ```
 
