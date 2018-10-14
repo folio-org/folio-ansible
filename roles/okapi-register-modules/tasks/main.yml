@@ -10,6 +10,26 @@
 # Setup #
 #########
 
+- name: Init mod_descrs
+  set_fact:
+    mod_descrs: []
+
+- name: Init mod_descrs_env
+  set_fact:
+    mod_descrs_env: []
+
+- name: Init mod_descrs_cmd
+  set_fact:
+    mod_descrs_cmd: []
+
+- name: Init mod_descrs_pull
+  set_fact:
+    mod_descrs_pull: []
+
+- name: Init folio_modules_withid
+  set_fact:
+    folio_modules_withid: []
+
 - name: Get module descriptors by URL
   uri:
     url: "{{ item.mod_descriptor_url }}"
@@ -21,7 +41,7 @@
 
 - name: Add module descriptors to mod_descrs list
   set_fact:
-    mod_descrs: "{{ mod_descrs_source|default([]) }} + [ {{ mod_descrs_url.results[item.0].json }} ]"
+    mod_descrs: "{{ mod_descrs|default([]) }} + [ {{ mod_descrs_url.results[item.0].json }} ]"
   when: item.1.mod_descriptor_url is defined
   with_indexed_items: "{{ folio_modules }}"
 
