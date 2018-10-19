@@ -112,8 +112,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-kb-ebsco
-    docker_env:
-      - { name: 'EBSCO_RMAPI_BASE_URL', value: 'https://sandbox.ebsco.io' }
     deploy: yes
 
   - name: mod-vendors
