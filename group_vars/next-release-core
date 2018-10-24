@@ -77,6 +77,9 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
+other_mods:
+  - mod-codex-inventory
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core
 stripes_github_version: next-release
