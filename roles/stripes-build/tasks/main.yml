@@ -83,8 +83,8 @@
 
 - name: copy build-install-files.sh
   become: yes
-  copy:
-    src: build-install-files.sh
+  template:
+    src: build-install-files.sh.j2
     dest: "{{ stripes_conf_dir }}/build-install-files.sh"
     mode: 0755
   when: build_install_files == true
