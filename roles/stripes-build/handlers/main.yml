@@ -22,7 +22,7 @@
 
 - name: Build install files
   become: yes
-  shell: "./build-install-files.sh -o {{ stripes_okapi_url }} -t {{ stripes_tenant }} -p ./ModuleDescriptors{% if releases_only %} --releases-only{% endif %}"
+  shell: "./build-install-files.sh"
   args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
