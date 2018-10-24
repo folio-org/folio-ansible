@@ -9,70 +9,21 @@
 type curl >/dev/null 2>&1 || { echo >&2 "curl is required but it's not installed"; exit 1; }
 type jq >/dev/null 2>&1 || { echo >&2 "jq is required but it's not installed"; exit 1; }
 
-usage() {
-  cat << EOF
-Usage: ${0##*/} -o OKAPI_URL -t TENANT -p /path/to/mod/descriptors --coreonly (Optional)
-EOF
-}
 
-while [[ $# -gt 0 ]]
-do
-   key="$1"
-
-   case $key in
-      -o|--okapiurl)
-         okapiUrl="$2"
-         shift # past argument
-         shift # past value
-        ;;
-      -t|--tenant)
-         tenant="$2"
-         shift # past argument
-         shift # past value
-         ;;
-      -p|--path)
-         mdPath="$2"
-         shift # past argument
-         shift # past argument
-         ;;
-      -c|--coreonly)
-         coreOnly=true
-         shift # past argument
-         ;;
-      -r|--releases-only)
-         releasesOnly=true
-         shift # past argument
-         ;;
-      *) 
-         usage >&2
-         exit 1 
-         ;;
-esac
-done
-
-if [[ -z "$okapiUrl" || -z "$tenant" || -z "$mdPath" ]]; then
-    echo "Missing required option(s)"
-    usage >&2
-    exit 1
-fi
+# set by Ansible
+okapiUrl="{{ stripes_okapi_url }}"
+tenant="{{ stripes_tenant }}"
+mdPath="{{ md_path }}"
+includeModules="{%if other_mods %}{% for module in other_mods %}{{ module }} {% endfor %}{% endif %}"
+excludeModules="{% for module in exclude_mods %}{{ module }} {% endfor %}"
+releasesOnly={{ releases_only }}
 
 
 modDescriptorList=$(ls $mdPath/*.json)
-
 stripesInstallList="./stripes-install.json"
 okapiInstallList="./okapi-install.json"
 installList="/tmp/install.json"
 
-# These need to be added manually. 
-includeModulesCore="mod-codex-inventory"
-includeModulesAll="$includeModulesCore mod-rtac"
-excludeModules="folio_stripes folio_eslint-config-stripes folio_react-intl-safe-html folio_react-big-calendar"
-
-if [ "$coreOnly" = true ]; then
-  includeModules="$includeModulesCore"
-else
-  includeModules="$includeModulesAll"
-fi
 
 if [ "$releasesOnly" = true ]; then
   installOpts="simulate=true&preRelease=false"
