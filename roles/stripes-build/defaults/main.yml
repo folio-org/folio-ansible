@@ -62,6 +62,27 @@ npm_authtoken: ''
 # for build-module-list
 build_install_files: false
 
-# Build okapi-install.json with releases only - no snapshots. 
-# Assumes build_install_files is 'true'
+## Other build-modules-list related options. Assumes build_install_files is set to 'true'
+
+# Build okapi-install.json with releases only - no snapshots.  Default 'false'
 releases_only: false
+
+# Path to stripes module descriptors
+md_path: './ModuleDescriptors'
+
+# Do NOT attempt to enable the following modules or non-modules. Defaults.
+exclude_mods: 
+  - folio_stripes
+  - folio_eslint-config-stripes
+  - folio_react-intl-safe-html 
+  - folio_react-big-calendar
+
+# Additional backend modules to add to okapi-install.json that wouldn't be added
+# via Okapi dependency resolution
+# e.g 
+# other_mods:
+#   - mod-codex-inventory
+other_mods: []
+
+
+# 
