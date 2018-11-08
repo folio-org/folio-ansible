@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: stable:stable-backend:testing:snapshot:release:minimal
+- hosts: stable:stable-backend:testing-core:testing:snapshot:release:minimal
   roles:
     - common
     - postgresql
@@ -18,7 +18,7 @@
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
 - name: Configure testing build
-  hosts: testing
+  hosts: testing-core:testing
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -55,9 +55,9 @@
     - deprecated/mod-circulation-data
     - mod-auth-demo-users
 
-# Sample data for testing and snapshot
+# Sample data for testing-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
-  hosts: testing:snapshot
+  hosts: testing-core:testing:snapshot
   roles:
     - role: module-sample-data
       module_name: mod-inventory-storage
@@ -99,15 +99,21 @@
         - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
     - mod-circulation-sample-data
     - role: module-sample-data
-      module_name: mod-vendors
-      repository: "https://github.com/folio-org/mod-vendors"
-      files:
-        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
-    - role: module-sample-data
       module_name: mod-tags
       repository: "https://github.com/folio-org/mod-tags"
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
+    - mod-auth-demo-users
+
+# Additional sample data for testing and snapshot
+- name: Load sample data for testing/snapshot builds
+  hosts: testing:snapshot
+  roles:
+    - role: module-sample-data
+      module_name: mod-vendors
+      repository: "https://github.com/folio-org/mod-vendors"
+      files:
+        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
     - role: module-sample-data
       module_name: mod-finance-storage
       repository: "https://github.com/folio-org/mod-finance-storage"
@@ -116,7 +122,6 @@
         - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
         - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
         - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
-    - mod-auth-demo-users
 
 # Sample data for release build
 - name: Load sample data for release build

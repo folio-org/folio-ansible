@@ -75,6 +75,23 @@ Vagrant.configure(2) do |config|
     end
   end
 
+  config.vm.define "build_testing_core", autostart: false do |build_testing_core|
+    build_testing_core.vm.box = "bento/ubuntu-16.04"
+    build_testing_core.vm.provider "virtualbox" do |vt|
+      vt.memory = 10240
+    end
+    build_testing_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_core.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_testing_core.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_testing_core"],
+        "testing-core" => ["build_testing_core"],
+        "stripes" => ["build_testing_core"]
+      }
+    end
+  end
+
   config.vm.define "build_testing", autostart: false do |build_testing|
     build_testing.vm.box = "bento/ubuntu-16.04"
     build_testing.vm.provider "virtualbox" do |vt|
