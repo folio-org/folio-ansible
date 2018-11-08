@@ -70,6 +70,30 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-password-validator:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-template-engine:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-audit:
+    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+  mod-audit-filter:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-source-record-storage:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-source-record-manager:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-data-import:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-gobi:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-oai-pmh:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-patron:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-sender:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-email:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-event-config:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
