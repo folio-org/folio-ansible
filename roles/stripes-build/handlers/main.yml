@@ -20,6 +20,14 @@
   listen: "Rebuild stripes"
   when: build_module_descriptors
 
+- name: Build install files
+  become: yes
+  shell: "./build-install-files.sh"
+  args:
+    chdir: "{{ stripes_conf_dir }}"
+  listen: "Rebuild stripes"
+  when: build_install_files == true
+
 - name: Build webpack
   become: yes
   shell: "yarn build output --okapi {{ stripes_okapi_url }} --tenant {{ stripes_tenant }} {% if with_sourcemap %} --sourcemap{% endif %}{% if with_translations %} --languages {{ webpack_languages }}{% endif %}"
