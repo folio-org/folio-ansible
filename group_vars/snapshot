@@ -78,8 +78,10 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-source-record-storage:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    - { name: "test.mode", value: "true" }
   mod-source-record-manager:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    - { name: "test.mode", value: "true" }
   mod-data-import:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-gobi:
