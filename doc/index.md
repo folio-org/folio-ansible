@@ -108,7 +108,10 @@ configure it:
       }, inline: <<-SHELL
         set -e
         sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$OKAPI'=" /etc/folio/stripes/node_modules/@folio/platform-core/stripes.config.js
+        systemctl stop okapi
+        rm -rf /etc/folio/stripes/output
         /etc/folio/stripes/build-run
+        systemctl start okapi
       SHELL
     end
 
