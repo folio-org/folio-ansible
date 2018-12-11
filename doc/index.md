@@ -28,13 +28,9 @@ The Vagrantfile and Ansible playbooks and roles in this project are
 used to generate prebuilt Vagrant boxes, available on
 [Vagrant Cloud](https://app.vagrantup.com/folio):
 
-* [folio/stable](https://app.vagrantup.com/folio/boxes/stable) -- a
+* [folio/Q3-2018](https://app.vagrantup.com/folio/boxes/Q3-2018) -- a
   full-stack FOLIO system with stable releases of front- and
   backend modules. All components should interoperate correctly.
-
-* [folio/stable-backend](https://app.vagrantup.com/folio/boxes/stable-backend)
-  -- a backend FOLIO system with stable releases of backend modules. All
-  components should interoperate correctly.
 
 * [folio/snapshot](https://app.vagrantup.com/folio/boxes/snapshot)
   -- a full-stack FOLIO system, built from the most recent working
@@ -65,7 +61,7 @@ modules are enabled for the sample tenant, "diku".
 To try out any of these boxes, create an empty directory, `cd` into
 it, and initialize a Vagrantfile, e.g.:
 
-    $ vagrant init --minimal folio/stable
+    $ vagrant init --minimal folio/testing-backend
 
 If you have downloaded a previous version of the box, then from
 time-to-time it will need to be updated with `vagrant box update`
