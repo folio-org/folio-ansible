@@ -6,7 +6,7 @@ pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_port: 5432
 module_database: okapi_modules
-num_users: 200
+num_users: 20
 stripes_okapi_url: http://localhost:9130
 docker_users:
   - folio

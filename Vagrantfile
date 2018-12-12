@@ -86,8 +86,7 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_testing_core"],
-        "testing-core" => ["build_testing_core"],
-        "stripes" => ["build_testing_core"]
+        "testing-core" => ["build_testing_core"]
       }
     end
   end
