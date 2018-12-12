@@ -86,7 +86,6 @@
         - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
         - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
         - { load_endpoint: /modes-of-issuance, fileglob: reference-data/modes-of-issuance/*.json }
-        - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
         - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
         - { load_endpoint: /statistical-code-types, fileglob: reference-data/statistical-code-types/*.json, dup_override: 422 }
         - { load_endpoint: /statistical-codes, fileglob: reference-data/statistical-codes/*.json }
