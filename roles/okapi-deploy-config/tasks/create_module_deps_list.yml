@@ -15,6 +15,10 @@
   set_fact: module_list='{{ module_list }} { "id":"{{ item }}", "action":"enable" },'
   with_items: "{{ other_mods }}"
 
+- name: Add pinned modules to module list
+  set_fact: module_list='{{ module_list }} { "id":"{{ item.module }}-{{ item.version }}", "action":"enable" },'
+  with_items: "{{ pinned_modules }}"
+
 - name: Finish module list json
   set_fact: module_list="{{ module_list|regex_replace('(.*),$','\\1') }} ]"
 
