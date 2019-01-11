@@ -39,21 +39,22 @@ Windows 10. Note that Windows cannot serve as an Ansible control host.
 If all you want to do is try out a prepackaged FOLIO demo Vagrant box,
 create a new directory, `cd` into it, and try:
 
-    $ vagrant init folio/stable
+    $ vagrant init folio/Q4-2018
     $ vagrant up
 
 Now you can open [http://localhost:3000](http://localhost:3000).
 Admin login: diku\_admin/admin
 
-Or, if you want to try a prepackaged FOLIO backend Vagrant box, try:
+Or, if you want to try a prepackaged FOLIO backend Vagrant box with the
+most recent versions of all components, try:
 
-    $ vagrant init folio/stable-backend
+    $ vagrant init folio/testing-backend
     $ vagrant up
 
-There are also `folio/testing` and `folio/testing-backend` Vagrant boxes available,
-which contain the most recent versions of all components, absolutely
-_not_ guaranteed to work together. The Vagrant Cloud page for
-[folio/stable](https://app.vagrantup.com/folio/boxes/stable) has
+The testing boxes are absolutely _not_ guaranteed to work together.
+
+The Vagrant Cloud page [folio](https://app.vagrantup.com/folio) lists
+all available boxes and has
 detailed release notes, including which versions of the backend and
 frontend modules are provided.
 

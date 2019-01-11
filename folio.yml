@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: stable:stable-backend:testing-core:testing:snapshot:release:minimal
+- hosts: stable:stable-backend:testing-core:testing:snapshot:release-core:minimal
   roles:
     - common
     - postgresql
@@ -36,8 +36,8 @@
     - create-tenant-admin
     - tenant-admin-permissions
 
-- name: Configure release build
-  hosts: release
+- name: Configure release-core build
+  hosts: release-core
   roles:
     - build-module-list
     - okapi-register-modules
@@ -64,15 +64,21 @@
       repository: "https://github.com/folio-org/mod-inventory-storage"
       duplicate_key_error: 400
       files:
+        - { load_endpoint: /alternative-title-types, fileglob: reference-data/alternative-title-types/*.json }
+        - { load_endpoint: /call-number-types, fileglob: reference-data/call-number-types/*.json }
         - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
         - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
         - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
         - { load_endpoint: /electronic-access-relationships, fileglob: reference-data/electronic-access-relationships/*.json }
+        - { load_endpoint: /holdings-note-types, fileglob: reference-data/holdings-note-types/*.json }
+        - { load_endpoint: /holdings-types, fileglob: reference-data/holdings-types/*.json }
         - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
+        - { load_endpoint: /ill-policies, fileglob: reference-data/ill-policies/*.json }
         - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
         - { load_endpoint: /instance-relationship-types, fileglob: reference-data/instance-relationship-types/*.json }
         - { load_endpoint: /instance-statuses, fileglob: reference-data/instance-statuses/*.json }
         - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
+        - { load_endpoint: /item-note-types, fileglob: reference-data/item-note-types/*.json }
         - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
         - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
         - { load_endpoint: /location-units/campuses, fileglob: reference-data/location-units/campuses/*.json, dup_override: 422 }
@@ -80,9 +86,9 @@
         - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
         - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
         - { load_endpoint: /modes-of-issuance, fileglob: reference-data/modes-of-issuance/*.json }
-        - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
         - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
-        - { load_endpoint: /statistical-code-types, fileglob: reference-data/statistical-code-types/*.json }
+        - { load_endpoint: /statistical-code-types, fileglob: reference-data/statistical-code-types/*.json, dup_override: 422 }
+        - { load_endpoint: /statistical-codes, fileglob: reference-data/statistical-codes/*.json }
         - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
         - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
         - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
@@ -123,24 +129,31 @@
         - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
         - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
 
-# Sample data for release build
-- name: Load sample data for release build
-  hosts: release
+# Sample data for release-core build
+- name: Load sample data for release-core build
+  hosts: release-core
   roles:
     - role: module-sample-data
       module_name: mod-inventory-storage
       repository: "https://github.com/folio-org/mod-inventory-storage"
-      module_version: v12.8.2
+      module_version: v14.0.0
       duplicate_key_error: 400
       files:
+        - { load_endpoint: /alternative-title-types, fileglob: reference-data/alternative-title-types/*.json }
+        - { load_endpoint: /call-number-types, fileglob: reference-data/call-number-types/*.json }
         - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
         - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
         - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
+        - { load_endpoint: /electronic-access-relationships, fileglob: reference-data/electronic-access-relationships/*.json }
+        - { load_endpoint: /holdings-note-types, fileglob: reference-data/holdings-note-types/*.json }
+        - { load_endpoint: /holdings-types, fileglob: reference-data/holdings-types/*.json }
         - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
+        - { load_endpoint: /ill-policies, fileglob: reference-data/ill-policies/*.json }
         - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
         - { load_endpoint: /instance-relationship-types, fileglob: reference-data/instance-relationship-types/*.json }
         - { load_endpoint: /instance-statuses, fileglob: reference-data/instance-statuses/*.json }
         - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
+        - { load_endpoint: /item-note-types, fileglob: reference-data/item-note-types/*.json }
         - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
         - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
         - { load_endpoint: /location-units/campuses, fileglob: reference-data/location-units/campuses/*.json, dup_override: 422 }
@@ -148,8 +161,9 @@
         - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
         - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
         - { load_endpoint: /modes-of-issuance, fileglob: reference-data/modes-of-issuance/*.json }
-        - { load_endpoint: /platforms, fileglob: reference-data/platforms/*.json }
         - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
+        - { load_endpoint: /statistical-code-types, fileglob: reference-data/statistical-code-types/*.json, dup_override: 422 }
+        - { load_endpoint: /statistical-codes, fileglob: reference-data/statistical-codes/*.json }
         - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
         - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
         - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
@@ -158,7 +172,7 @@
     - mod-inventory-mods
     - role: module-sample-data
       module_name: mod-circulation-storage
-      module_version: v6.1.0
+      module_version: v6.2.0
       repository: "https://github.com/folio-org/mod-circulation-storage"
       duplicate_key_error: 400
       files:
@@ -168,25 +182,10 @@
     - mod-circulation-sample-data
     - role: module-sample-data
       module_name: mod-tags
-      module_version: v0.1.2
+      module_version: v0.2.0
       repository: "https://github.com/folio-org/mod-tags"
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
-    - role: module-sample-data
-      module_name: mod-finance-storage
-      module_version: v1.0.0
-      repository: "https://github.com/folio-org/mod-finance-storage"
-      files:
-        - { load_endpoint: /fiscal_year, fileglob: sample-data/fiscal-years/*.json }
-        - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
-        - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
-        - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
-    - role: module-sample-data
-      module_name: mod-vendors
-      module_version: v1.0.1
-      repository: "https://github.com/folio-org/mod-vendors"
-      files:
-        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
     - mod-auth-demo-users
 
 # Set up stripes
@@ -204,7 +203,7 @@
     - tenant-admin-permissions
 
 - name: Build Stripes container
-  hosts: snapshot:release
+  hosts: snapshot:release-core
   roles:
     - stripes-docker
 

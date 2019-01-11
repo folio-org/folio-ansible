@@ -1,121 +1,91 @@
----
-# Variables for building testing/testing-backend
+# Variables for building a FOLIO release
 auth_required: true
-total_records_key: totalRecords
-load_addresstypes: true
-inv_storage_3: true
-hierarchical_locations: true
 load_mods_larger: true
-shelf_locations: false
 enable_okapi: true
-
-# used in okapi-tenant-deploy
 update_launch_descr: true
+fetch_install_files: true
 
-# set the default postgres connection pool per module/tenant
-pg_max_pool_size: 5
-
+# module settings
 folio_modules:
   - name: mod-authtoken
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    deploy: yes
 
   - name: mod-login
     docker_cmd:
       - "verify.user=true"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-configuration
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-users
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
-    deploy: yes
 
   - name: mod-inventory-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    deploy: yes
-
-  - name: mod-password-validator
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: mod-notify
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-users-bl
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-login-saml
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-inventory
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
-    deploy: yes
 
   - name: mod-circulation-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-circulation
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
+
+  - name: mod-notify
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
   - name: mod-notes
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-codex-inventory
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-codex-mux
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-feesfines
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
 
   - name: mod-tags
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
+
+other_mods:
+  - mod-codex-inventory
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core
-stripes_github_version: snapshot
-folio_npm_repo: npm-folioci
-platform_remove_lock: false
-# mod descrs are built by `yarn install` in folio-testing-platform
-# build_module_descriptors: false
-okapi_register_modules: true
-okapi_enable_modules: true
-node_environment:
-  NODE_ENV:
+stripes_github_version: next-release
+stripes_strict_md: true
+folio_npm_repo: npm-folio
+okapi_register_modules: no
+okapi_enable_modules: no
+platform_remove_lock: no
+with_sourcemap: no

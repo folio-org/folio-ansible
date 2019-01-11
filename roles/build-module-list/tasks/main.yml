@@ -1,4 +1,8 @@
 ---
+
+- include: fetch_install_files.yml
+  when: fetch_install_files == true
+
 - name: Get install JSON from URL for deployment
   uri: 
     url: "{{ deploy_url }}"
@@ -48,3 +52,9 @@
     folio_modules: "{{ tmp_folio_modules_combined }}"
 
 - debug: var=folio_modules
+
+- name: remove install file temp dir
+  file:
+    path: "{{ tempdir_installfiles }}"
+    state: absent
+  when: fetch_install_files == true

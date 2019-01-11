@@ -52,56 +52,12 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-codex-mux:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-codex-ekb:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-calendar:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-vendors:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-finance-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-feesfines:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-orders-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-orders:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-rtac:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-password-validator:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-template-engine:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-audit:
-    - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-  mod-audit-filter:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-source-record-storage:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    - { name: "test.mode", value: "true" }
-  mod-source-record-manager:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    - { name: "test.mode", value: "true" }
-  mod-data-import:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-gobi:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-oai-pmh:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-patron:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-sender:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-email:
-    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-  mod-event-config:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
 # other modules to enable outside dependency resolution
 other_mods:
   - mod-codex-inventory
-  - mod-codex-ekb
-  - mod-rtac
 
 # Docker ports for modules
 docker_port:
@@ -109,7 +65,7 @@ docker_port:
   mod-circulation: 9801
 
 # Variables for building UI
-stripes_github_project: https://github.com/folio-org/platform-complete
+stripes_github_project: https://github.com/folio-org/platform-core
 stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 stripes_strict_md: true
