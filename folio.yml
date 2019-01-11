@@ -18,7 +18,7 @@
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
 - name: Configure testing build
-  hosts: testing-core:testing
+  hosts: testing
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -28,6 +28,22 @@
     - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
+
+# Configure build for top-down deployment
+# (Okapi dependency resolution)
+- name: Configure top-down build
+  hosts: testing-core
+  roles:
+    # - stripes-docker
+    # - okapi-pull
+    # - tenant-data
+    - role: build-module-list
+      stripes_platform: /etc/folio/stripes
+    # - okapi-register-modules
+    # - okapi-tenant-deploy
+    # - create-tenant-admin
+    # - tenant-admin-permissions
+
 
 - name: Configure snapshot build
   hosts: snapshot
@@ -208,9 +224,9 @@
     - stripes-docker
 
 # Roles for packaging
-- hosts: vagrant
-  roles:
-    - maven-3
+# - hosts: vagrant
+#   roles:
+#     - maven-3
 
 - hosts: packer
   roles:
