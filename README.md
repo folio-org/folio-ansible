@@ -39,7 +39,7 @@ Windows 10. Note that Windows cannot serve as an Ansible control host.
 If all you want to do is try out a prepackaged FOLIO demo Vagrant box,
 create a new directory, `cd` into it, and try:
 
-    $ vagrant init folio/Q3-2018
+    $ vagrant init folio/Q4-2018
     $ vagrant up
 
 Now you can open [http://localhost:3000](http://localhost:3000).
