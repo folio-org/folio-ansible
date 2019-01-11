@@ -51,6 +51,10 @@
     install_list: "{{ install_list }} + [ { 'id': item, 'action': 'enable' } ]"
   with_items: "{{ add_modules }}"
 
+- name: Add pinned modules to install_list
+  set_fact: install_list='{{ install_list }} { "id":"{{ item.module }}-{{ item.version }}", "action":"enable" },'
+  with_items: "{{ pinned_modules }}"
+
 - name: Get dependencies for modules from Okapi
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
@@ -81,6 +85,7 @@
   set_fact:
     module_deps_list: "{{ pinned_modules_list|default([])|union(module_deps_list)|unique }}"
 
-- debug: var=module_deps_list
-
-- fail:
+- name: Build list from module_deps_list
+  set_fact:
+    tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2') } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id } ] }}"
+  with_items: "{{ module_deps_list }}"
