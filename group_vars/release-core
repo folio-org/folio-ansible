@@ -102,8 +102,8 @@ with_sourcemap: no
 box_tag: folio/Q4-2018
 version: 1.0.0
 version_descr: |
-  # FOLIO Q4-2018 ("Aster") Release (v1.0.0)
+  # FOLIO Q4-2018 (Aster) Release (v1.0.0)
 
   Admin login: diku_admin/admin
 
-  Q4-2018 ("Aster") release version of the FOLIO platform, built from core Q4-2018 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+  Q4-2018 (Aster) release version of the FOLIO platform, built from core Q4-2018 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
