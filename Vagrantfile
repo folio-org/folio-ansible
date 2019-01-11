@@ -121,18 +121,18 @@ Vagrant.configure(2) do |config|
     end
   end
 
-  config.vm.define "build_release", autostart: false do |build_release|
-    build_release.vm.box = "bento/ubuntu-16.04"
-    build_release.vm.provider "virtualbox" do |vr|
+  config.vm.define "build_release_core", autostart: false do |build_release_core|
+    build_release_core.vm.box = "bento/ubuntu-16.04"
+    build_release_core.vm.provider "virtualbox" do |vr|
       vr.memory = 10240
     end
-    build_release.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_release.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_release.vm.provision "ansible" do |ansible|
+    build_release_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_release_core.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_release_core.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
-        "vagrant" => ["build_release"],
-        "release" => ["build_release"]
+        "vagrant" => ["build_release_core"],
+        "release-core" => ["build_release_core"]
       }
     end
   end
