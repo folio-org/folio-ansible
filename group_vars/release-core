@@ -102,7 +102,7 @@ with_sourcemap: no
 box_tag: folio/Q4-2018
 version: 1.0.1
 version_descr: |
-  # FOLIO Q4-2018 (Aster) Release (v1.0.0)
+  # FOLIO Q4-2018 (Aster) Release (v1.0.1)
 
   Admin login: diku_admin/admin
 
