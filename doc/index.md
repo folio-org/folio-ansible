@@ -28,7 +28,7 @@ The Vagrantfile and Ansible playbooks and roles in this project are
 used to generate prebuilt Vagrant boxes, available on
 [Vagrant Cloud](https://app.vagrantup.com/folio):
 
-* [folio/Q4-2018](https://app.vagrantup.com/folio/boxes/Q3-2018) -- a
+* [folio/Q4-2018](https://app.vagrantup.com/folio/boxes/Q4-2018) -- a
   full-stack FOLIO system with stable releases of front- and
   backend modules. All components should interoperate correctly.
 
@@ -193,25 +193,14 @@ Docker container and restart it:
 
 ## Vagrantfile targets
 
-The Vagrantfile in this project contains six target definitions:
+The Vagrantfile in this project contains various target definitions, for example:
 
-1. `stable` -- This target pulls the folio/stable Vagrant box hosted
-   on Vagrant Cloud.
-2. `stable-backend` -- This target pulls the folio/stable-backend
-   Vagrant box hosted on Vagrant Cloud.
-3. `testing` -- This target pulls the folio/testing
-   Vagrant box hosted on Vagrant Cloud.
-4. `testing-backend` -- This target pulls the folio/testing-backend
-   Vagrant box hosted on Vagrant Cloud.
-5. `curriculum` -- This target pulls the folio/curriculum Vagrant box
-   hosted on Vagrant Cloud.
-6. `build_stable` -- a target to build the `stable` box for packaging.
-7. `build_stable_backend` -- a target to build the `stable-backend`
-   box for packaging.
-8. `build_testing` -- a target to build the `testing` box
+* `build_testing_backend` -- a target to build the `testing-backend` box
    for packaging.
-9. `build_curriculum` -- a target to build the `curriculum` box for
-   packaging.
+* `testing-backend` -- This target pulls the folio/testing-backend
+   Vagrant box hosted on Vagrant Cloud.
+
+Similar targets are provided for the various boxes [described](#prebuilt-vagrant-boxes) above, and others.
 
 ## Troubleshooting/Known Issues
 
