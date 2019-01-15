@@ -40,11 +40,11 @@
 #     - tenant-data
 #     - role: build-module-list
 #       stripes_platform: /etc/folio/stripes
-#     # HEREIAM: create deployment descriptors with overridden values
-#     # from folio_modules variable, post to /_/discovery
-#     - okapi-tenant-deploy
-#     - create-tenant-admin
-#     - tenant-admin-permissions
+#     - okapi-deployment
+#     # HERE I AM enable modules for tenant
+#     # - okapi-tenant-deploy
+#     # - create-tenant-admin
+#     # - tenant-admin-permissions
 
 
 - name: Configure snapshot build
