@@ -1,8 +1,4 @@
 ---
-
-- include: fetch_install_files.yml
-  when: fetch_install_files == true
-
 - name: Build tmp_folio_modules from stripes platform
   include_tasks: platform-build.yml
   when: stripes_platform is defined
@@ -54,9 +50,3 @@
 - name: Reset folio_modules
   set_fact:
     folio_modules: "{{ tmp_folio_modules_combined }}"
-
-- name: remove install file temp dir
-  file:
-    path: "{{ tempdir_installfiles }}"
-    state: absent
-  when: fetch_install_files == true
