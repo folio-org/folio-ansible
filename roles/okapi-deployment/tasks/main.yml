@@ -100,5 +100,3 @@
   changed_when: deploy_module.status == 201
   when: item.status == 404
   with_items: "{{ module_deploy_check.results }}"
-
-- fail:
