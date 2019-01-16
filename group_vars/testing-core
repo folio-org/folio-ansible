@@ -18,25 +18,24 @@ stripes_exclude_list:
 add_modules:
   - mod-codex-inventory
   - mod-graphql
+  - mod-audit-filter
+  - mod-audit
+# Sample pinned module
+# pinned_modules:
+#   - module: mod-authtoken
+#     version: v2.0.0
 
-# used in okapi-tenant-deploy
-update_launch_descr: true
-
-# set the default postgres connection pool per module/tenant
-pg_max_pool_size: 5
-
+# modules that need to be deployed
 folio_modules:
   - name: mod-authtoken
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
-    okapi_docker_pull: "false"
 
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     deploy: yes
-    okapi_docker_pull: "true"
 
   - name: mod-login
     docker_cmd:
@@ -116,6 +115,24 @@ folio_modules:
     deploy: yes
 
   - name: mod-tags
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-template-engine
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-graphql
+    deploy: yes
+
+  - name: mod-audit
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+    deploy: yes
+
+  - name: mod-audit-filter
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
