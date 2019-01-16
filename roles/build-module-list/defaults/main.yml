@@ -38,4 +38,8 @@ stripes_exclude_list: []
 add_modules: []
 
 # Modules that need to be pinned
+# Example:
+# pinned_modules:
+#   - module: mod-authtoken
+#     version: v2.4.6
 pinned_modules: []
