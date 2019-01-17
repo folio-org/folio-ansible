@@ -86,7 +86,23 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_snapshot_core"],
-        "snapshot-core" => ["build_snapshot_core"]
+        "snapshot-core" => ["build_snapshot_core"],
+        "stripes-docker" => ["build_snapshot_core"]
+      }
+    end
+  end
+
+  config.vm.define "build_snapshot_backend_core", autostart: false do |build_snapshot_backend_core|
+    build_snapshot_backend_core.vm.box = "bento/ubuntu-16.04"
+    build_snapshot_backend_core.vm.provider "virtualbox" do |vt|
+      vt.memory = 10240
+    end
+    build_snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_snapshot_backend_core.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_snapshot_backend_core"],
+        "snapshot-core" => ["build_snapshot_backend_core"]
       }
     end
   end
@@ -132,7 +148,8 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_snapshot"],
-        "snapshot" => ["build_snapshot"]
+        "snapshot" => ["build_snapshot"],
+        "stripes-docker" => ["build_snapshot"]
       }
     end
   end
@@ -148,7 +165,8 @@ Vagrant.configure(2) do |config|
       ansible.playbook = "folio.yml"
       ansible.groups = {
         "vagrant" => ["build_release_core"],
-        "release-core" => ["build_release_core"]
+        "release-core" => ["build_release_core"],
+        "stripes-docker" => ["build_release_core"]
       }
     end
   end

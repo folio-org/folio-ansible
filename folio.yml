@@ -34,7 +34,9 @@
 - name: Configure snapshot-core build
   hosts: snapshot-core
   roles:
-    - stripes-docker
+    - role: stripes-build
+      okapi_register_modules: false
+      okapi_enable_modules: false
     - okapi-pull
     - tenant-data
     - role: build-module-list
@@ -45,7 +47,6 @@
       module_env: []
     - create-tenant-admin
     - tenant-admin-permissions
-
 
 - name: Configure snapshot build
   hosts: snapshot
@@ -221,7 +222,8 @@
     - tenant-admin-permissions
 
 - name: Build Stripes container
-  hosts: snapshot:release-core
+  #hosts: snapshot-core:snapshot:release-core
+  hosts: stripes-docker
   roles:
     - stripes-docker
 
