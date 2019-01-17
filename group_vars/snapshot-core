@@ -36,6 +36,8 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-login-saml:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-calendar:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-inventory-storage:
     - { name: JAVA_OPTIONS, value: "-Xmx512m" }
   mod-inventory:
