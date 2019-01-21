@@ -1,0 +1,102 @@
+---
+# Setup
+- name: Install prerequisites from apt
+  become: yes
+  apt:
+    name: [libpq-dev, python-psycopg2, postgresql-client]
+    state: present
+  when: create_db
+
+- name: Create modules db
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ module_database }}"
+    owner: "{{ pg_admin_user }}"
+  when: create_db
+
+- name: Set Okapi environment
+  uri:
+    url: "{{ okapi_url }}/_/env"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ item|to_json }}"
+    status_code: 201
+  register: set_okapi_env
+  changed_when: set_okapi_env.status == 201
+  with_items: "{{ module_env }}"
+
+- name: Init mod_descrs
+  set_fact:
+    mod_descrs: []
+
+- name: Init dep_descrs
+  set_fact:
+    dep_descrs: {}
+
+- name: Init launch_descrs_env
+  set_fact:
+    dep_descrs_env: {}
+
+- name: Init launch_descrs_cmd
+  set_fact:
+    dep_descrs_cmd: {}
+
+# Get the module descriptors from Okapi
+- name: Get module descriptors
+  uri:
+    url: "{{ okapi_url + '/_/proxy/modules/' + item.name + '-' + item.version }}"
+    headers:
+      Accept: application/json
+  when: item.deploy|default(false)
+  with_items: "{{ folio_modules }}"
+  register: mod_descrs
+
+- name: Build base dep_descrs dict
+  set_fact:
+    dep_descrs: "{{ dep_descrs|default({})|combine({item.item.name: { 'srvcId': item.json.id, 'nodeId': node_id, 'descriptor': item.json.launchDescriptor } }) }}"
+  when: item.json is defined
+  with_items: "{{ mod_descrs.results }}"
+
+- name: Add env to dep_descrs
+  set_fact:
+    dep_descrs_env: "{{ dep_descrs_env|default({})|combine({item.name: {'descriptor': {'env': item.docker_env}}}) }}"
+  when: item.deploy|default(false) and item.docker_env is defined
+  with_items: "{{ folio_modules }}"
+
+- name: Add dockerCMD to dep_descrs
+  set_fact:
+    dep_descrs_cmd: "{{ dep_descrs_cmd|default({})|combine({item.name: {'descriptor': {'dockerCMD': item.docker_cmd}}}) }}"
+  when: item.deploy|default(false) and item.docker_cmd is defined
+  with_items: "{{ folio_modules }}"
+
+- name: Combine dep_descrs dicts
+  set_fact:
+    dep_descrs: "{{ dep_descrs|combine(dep_descrs_env|default({}), dep_descrs_cmd|default({}), recursive=True) }}"
+
+- name: Check for module deployment
+  uri:
+    url: "{{ okapi_url + '/_/discovery/modules/' + item.value.srvcId }}"
+    headers:
+      Accept: application/json
+    status_code: 200, 404
+  with_dict: "{{ dep_descrs }}"
+  register: module_deploy_check
+
+- name: Deploy modules
+  uri:
+    url: "{{ okapi_url + '/_/discovery/modules' }}"
+    method: POST
+    body_format: json
+    headers:
+      Accept: application/json, text/plain
+    body: "{{ item.item.value|to_json }}"
+    status_code: 201
+    timeout: 300
+  register: deploy_module
+  changed_when: deploy_module.status == 201
+  when: item.status == 404
+  with_items: "{{ module_deploy_check.results }}"

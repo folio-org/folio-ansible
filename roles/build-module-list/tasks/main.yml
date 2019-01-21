@@ -1,45 +1,45 @@
 ---
-
-- include: fetch_install_files.yml
-  when: fetch_install_files == true
+- name: Build tmp_folio_modules from stripes platform
+  include_tasks: platform-build.yml
+  when: stripes_platform is defined
 
 - name: Get install JSON from URL for deployment
-  uri: 
+  uri:
     url: "{{ deploy_url }}"
     method: GET
   register: deploy_json
-  when: deploy_url|default(false)
+  when: stripes_platform is not defined and deploy_url|default(false)
 
 - name: Get install JSON from file for deployment
   set_fact:
     deploy_json:
       json: "{{ lookup('file', deploy_file) }}"
-  when: deploy_file|default(false) and not deploy_url|default(false)  
-  
+  when: stripes_platform is not defined and deploy_file|default(false) and not deploy_url|default(false)
+
 - name: Build list from deployment JSON
   set_fact:
     tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2'), 'deploy': true } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id, 'deploy': true } ] }}"
   with_items: "{{ deploy_json.json }}"
-  when: deploy_json|default(false) and deploy_json.json is defined
+  when: stripes_platform is not defined and deploy_json|default(false) and deploy_json.json is defined
 
 - name: Get install JSON from URL for enabling modules (no deployment)
-  uri: 
+  uri:
     url: "{{ enable_url }}"
     method: GET
   register: enable_json
-  when: enable_url|default(false)
+  when: stripes_platform is not defined and enable_url|default(false)
 
 - name: Get install JSON from file for enabling modules (no deployment)
   set_fact:
     enable_json:
       json: "{{ lookup('file', enable_file) }}"
-  when: enable_file|default(false) and not enable_url|default(false)  
+  when: stripes_platform is not defined and enable_file|default(false) and not enable_url|default(false)
 
-- name: Build list from JSON from enabling modules JSON
+- name: Build list from enabling modules JSON
   set_fact:
     tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [ { 'name': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$','\\1'), 'version': item.id|regex_replace('^(.*)-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)','\\2') } ] if item.id|regex_search('-((0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*).*)$') else tmp_folio_modules|default([]) + [ { 'name': item.id } ] }}"
   with_items: "{{ enable_json.json }}"
-  when: enable_json|default(false) and enable_json.json is defined
+  when: stripes_platform is not defined and enable_json|default(false) and enable_json.json is defined
 
 - name: Combine with existing folio_modules list for custom settings
   set_fact:
@@ -50,11 +50,3 @@
 - name: Reset folio_modules
   set_fact:
     folio_modules: "{{ tmp_folio_modules_combined }}"
-
-- debug: var=folio_modules
-
-- name: remove install file temp dir
-  file:
-    path: "{{ tempdir_installfiles }}"
-    state: absent
-  when: fetch_install_files == true

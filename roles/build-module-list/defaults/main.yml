@@ -2,21 +2,44 @@
 # defaults
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+tenant: diku
 
 # Define or override one or more of these variables to post install JSON to Okapi.
-# Note that if the x_url variables are defined, they will override the x_file variables
+# Order of precedence:
+# 1. stripes-platform
+# 2. x_url variables
+# 3. x_file variables
 
-# File with modules for Okapi to enable and deploy
-deploy_file: okapi-install.json
+# Directory containing stripes-platform for constructing the module list
+# using Okapi dependency resolution
+# stripes_platform: /etc/folio/stripes
 
 # URL for install file with modules for Okapi to enable and deploy
 # deploy_url:
 
-# File with modules for Okapi to enable only (no deployment)
-enable_file: stripes-install.json
+# File with modules for Okapi to enable and deploy
+deploy_file: okapi-install.json
 
 # URL for install file with modules for Okapi to enable only (no deployment)
 # enable_url:
 
 # fetch stripes-install.json and okapi-istall.json from stripes-build. Default is 'false'
 fetch_install_files: false
+
+# File with modules for Okapi to enable only (no deployment)
+enable_file: stripes-install.json
+
+# Variables for stripes-platform build
+
+# modules that should never be registered
+stripes_exclude_list: []
+
+# Additional modules that need to be installed independent of dependency resolution
+add_modules: []
+
+# Modules that need to be pinned
+# Example:
+# pinned_modules:
+#   - module: mod-authtoken
+#     version: v2.4.6
+pinned_modules: []

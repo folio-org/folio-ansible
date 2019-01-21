@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: stable:stable-backend:testing:snapshot:release-core:minimal
+- hosts: stable:stable-backend:snapshot-core:testing:snapshot:release-core:minimal
   roles:
     - common
     - postgresql
@@ -26,6 +26,25 @@
     - okapi-register-modules
     - tenant-data
     - okapi-tenant-deploy
+    - create-tenant-admin
+    - tenant-admin-permissions
+
+# Configure build for top-down deployment
+# (Okapi dependency resolution)
+- name: Configure snapshot-core build
+  hosts: snapshot-core
+  roles:
+    - role: stripes-build
+      okapi_register_modules: false
+      okapi_enable_modules: false
+    - okapi-pull
+    - tenant-data
+    - role: build-module-list
+      stripes_platform: /etc/folio/stripes
+    - okapi-deployment
+    - role: okapi-tenant-deploy
+      create_db: no
+      module_env: []
     - create-tenant-admin
     - tenant-admin-permissions
 
@@ -55,9 +74,9 @@
     - deprecated/mod-circulation-data
     - mod-auth-demo-users
 
-# Sample data for testing and snapshot
+# Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
-  hosts: testing:snapshot
+  hosts: snapshot-core:testing:snapshot
   roles:
     - role: module-sample-data
       module_name: mod-inventory-storage
@@ -105,15 +124,21 @@
         - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
     - mod-circulation-sample-data
     - role: module-sample-data
-      module_name: mod-vendors
-      repository: "https://github.com/folio-org/mod-vendors"
-      files:
-        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
-    - role: module-sample-data
       module_name: mod-tags
       repository: "https://github.com/folio-org/mod-tags"
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
+    - mod-auth-demo-users
+
+# Additional sample data for testing and snapshot
+- name: Load sample data for testing/snapshot builds
+  hosts: testing:snapshot
+  roles:
+    - role: module-sample-data
+      module_name: mod-vendors
+      repository: "https://github.com/folio-org/mod-vendors"
+      files:
+        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
     - role: module-sample-data
       module_name: mod-finance-storage
       repository: "https://github.com/folio-org/mod-finance-storage"
@@ -122,7 +147,6 @@
         - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
         - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
         - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
-    - mod-auth-demo-users
 
 # Sample data for release-core build
 - name: Load sample data for release-core build
@@ -198,7 +222,8 @@
     - tenant-admin-permissions
 
 - name: Build Stripes container
-  hosts: snapshot:release-core
+  #hosts: snapshot-core:snapshot:release-core
+  hosts: stripes-docker
   roles:
     - stripes-docker
 
