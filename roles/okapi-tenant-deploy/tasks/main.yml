@@ -1,15 +1,15 @@
 ---
 - name: Install prerequisites from apt
   become: yes
-  apt: 
+  apt:
     name: "{{ item }}"
     state: present
-  with_items: 
+  with_items:
     - libpq-dev
-    - python-psycopg2  
+    - python-psycopg2
     - postgresql-client
   when: create_db
-  
+
 - name: Create modules db
   postgresql_db:
     login_host: "{{ pg_host }}"
@@ -37,6 +37,21 @@
   when: item.url is defined
   with_items: "{{ folio_modules }}"
 
+- name: Build tenant parameter list
+  set_fact:
+    tenant_parameters: "{{ tenant_parameters|default([]) + item.tenant_parameters }}"
+  when: item.tenant_parameters|default(false)
+  with_items: "{{ folio_modules }}"
+
+- name: Discard duplicates in tenant parameter list
+  set_fact:
+    tenant_parameters: "{{ tenant_parameters|default([])|unique }}"
+
+- name: Convert tenant parameter list to query string
+  set_fact:
+    tenant_param_querystr: "{{ tenant_param_querystr|default('') + item.name + '%3D' + item.value }}{% if item != tenant_parameters[-1] %}%2C{% endif %}"
+  with_items: "{{ tenant_parameters }}"
+
 - name: Create dict for install object
   set_fact:
     install_obj:
@@ -56,7 +71,7 @@
 
 - name: Post install list for deployment and enabling
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?deploy=true"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?deploy=true{% if tenant_param_querystr|default(false) %}&tenantParameters={{ tenant_param_querystr }}{% endif %}"
     method: POST
     body_format: json
     headers:
@@ -69,7 +84,7 @@
 
 - name: Post install list for enabling modules (no deployment)
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{% if tenant_param_querystr|default(false) %}?tenantParameters={{ tenant_param_querystr }}{% endif %}"
     method: POST
     body_format: json
     headers:

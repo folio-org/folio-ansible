@@ -33,6 +33,9 @@ Invoke the role in a playbook, e.g.:
           # url takes precedence over deploy
           # url: "http://my-mod-login:8081"
           deploy: yes # if defined, Okapi will attempt to deploy the module using the launch descriptor embedded in the registered module descriptor
+          # tenant parameters to pass on tenant initialization
+          tenant_parameters:
+            - { name: loadReference, value: "true" }
 ```
 
 ## Variables
