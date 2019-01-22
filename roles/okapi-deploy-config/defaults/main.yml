@@ -3,7 +3,7 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_user: folio
 folio_conf: /etc/folio
 tenant: diku
-docker_repo: folioci  
+docker_repo: folioci
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_host: "{{ ansible_default_ipv4.address }}"
@@ -19,6 +19,12 @@ docker_cmd: {}
 env_var: {}
 # default Docker port for modules
 docker_port: {}
+# default tenant parameter list for modules
+tenant_parameters: {}
+# tenant_parameters example
+# tenant_parameters:
+#   mod-inventory-storage:
+#     - { name: loadReference, value: "true" }
 default_docker_port: 8081
 # Other modules to enable outside of dependency resolution
 other_mods: []

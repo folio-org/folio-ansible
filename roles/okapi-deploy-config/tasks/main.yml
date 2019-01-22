@@ -6,7 +6,7 @@
   when: not use_folio_snapshot
 
 - name: get current stable snapshot module list
-  uri: 
+  uri:
     url: "{{ folio_snapshot_url }}/install.json"
     method: GET
     status_code: 200
