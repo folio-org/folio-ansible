@@ -97,6 +97,11 @@ env_var:
   mod-event-config:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
 
+# tenant parameters for modules
+tenant_parameters:
+  mod-inventory-storage:
+    - { name: loadReference, value: "true" }
+
 # other modules to enable outside dependency resolution
 other_mods:
   - mod-codex-inventory
