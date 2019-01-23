@@ -81,7 +81,7 @@
 
 - name: Check module registration
   uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/modules/{{ item.id }}"
+    url: "{{ stripes_build_okapi_url }}/_/proxy/modules/{{ item.id }}"
     status_code: 200, 404
   with_items: "{{ mod_descr_list }}"
   register: mod_reg_status
@@ -89,7 +89,7 @@
 
 - name: Register modules with Okapi
   uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/modules"
+    url: "{{ stripes_build_okapi_url }}/_/proxy/modules"
     method: POST
     body_format: json
     body: "{{ item.1|to_json }}"
@@ -102,7 +102,7 @@
 
 - name: Check tenant-module association
   uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
+    url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
     status_code: 200, 404
   with_items: "{{ mod_descr_list }}"
   register: tenant_modules
@@ -110,7 +110,7 @@
 
 - name: Enable modules for tenant
   uri:
-    url: "{{ stripes_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
+    url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
     method: POST
     body_format: json
     body: '{ "id" : "{{ item.1.id }}" }'
