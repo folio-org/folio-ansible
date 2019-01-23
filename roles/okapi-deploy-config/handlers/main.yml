@@ -8,9 +8,26 @@
   copy: dest={{ folio_conf }}/install.json content={{ module_list|to_nice_json }}
   listen: Install modules
 
+- name: Build tenant parameter list
+  set_fact:
+    tenant_param_list: "{{ tenant_param_list|default([]) + item.value }}"
+  with_dict: "{{ tenant_parameters }}"
+  listen: Install modules
+
+- name: Discard duplicates in tenant parameter list
+  set_fact:
+    tenant_param_list: "{{ tenant_param_list|default([])|unique }}"
+  listen: Install modules
+
+- name: Convert tenant parameter list to query string
+  set_fact:
+    tenant_param_querystr: "{{ tenant_param_querystr|default('') + item.name + '%3D' + item.value }}{% if item != tenant_param_list[-1] %}%2C{% endif %}"
+  with_items: "{{ tenant_param_list }}"
+  listen: Install modules
+
 - name: Perform module installation
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{% if tenant_param_querystr|default(false) %}?tenantParameters={{ tenant_param_querystr }}{% endif %}"
     method: POST
     body_format: json
     body: "{{ module_list }}"
@@ -18,4 +35,3 @@
   register: module_install
   changed_when: module_install.status == 200
   listen: Install modules
-  
