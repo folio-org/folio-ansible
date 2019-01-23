@@ -48,6 +48,8 @@ folio_modules:
   - name: mod-inventory-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
     deploy: yes
 
   - name: mod-password-validator
