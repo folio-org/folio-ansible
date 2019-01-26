@@ -3,6 +3,7 @@
 <!-- ../../okapi/doc/md2toc -l 2 index.md -->
 * [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
 * [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
+* [Running backend modules on your host system](#running-backend-modules-on-your-host-system)
 * [Replace localhost by hostname on the demo box](#replace-localhost-by-hostname-on-the-demo-box)
 * [Replace port 9130](#replace-port-9130)
 * [Updating FOLIO components on Vagrant boxes](#updating-folio-components-on-vagrant-boxes)
@@ -89,6 +90,65 @@ Data is persisted for all modules using a PostgreSQL server running on
 the Vagrant box. The Docker engine is also installed, and configured
 to listen on localhost:4243 of the Vagrant box so that Okapi can use
 it for module deployment.
+
+## Running backend modules on your host system
+
+You can make a service running on your host system available to the
+Okapi system running in a Vagrant VM by taking advantage of the
+standard Vagrant NAT networking setup. Services on your host system
+are accessible to the guest VM at IP `10.0.2.2` (the NAT default
+gateway). To enable a module running locally as a new module for the
+default tenant:
+
+1. Build and run the module locally on an available port on the host
+   machine.
+
+2. Post a module descriptor for the local module to the Okapi running
+   in the Vagrant VM, using the Okapi `/_/proxy/modules` endpoint.
+
+3. Post a deployment descriptor for the local module with a URL
+   pointing to the default gateway, using the Okapi
+   `/_/discovery/modules` endpoint. For example:
+
+```json
+{
+  "srvcId": "mod-mymod-0.1.0",
+  "instId": "mod-mymod-on-host",
+  "url": "http://10.0.2.2:8081"
+}
+```
+
+4. Enable the module for the default tenant by posting to the Okapi
+   `/_/proxy/tenants/diku/install` endpoint. For example:
+
+```json
+[
+  {
+    "id": "mod-mymod-0.1.0",
+    "action": "enable"
+  }
+]
+```
+
+To upgrade an existing module for the default tenant to use a local
+module, follow the same procedure, but use Okapi's upgrade facility
+when posting to `/_/proxy/tenants/diku/install`. For example:
+
+```json
+[
+  {
+    "id": "mod-tags-0.3.0",
+    "from": "mod-tags-0.2.0",
+    "action": "enable"
+  }
+]
+```
+
+For more details on working with Okapi's module API, see the
+[Okapi Guide](https://github.com/folio-org/okapi/blob/master/doc/guide.md). Some
+of these interactions can be simplified by using the Stripes CLI to
+manage modules, see the
+[Stripes CLI Back-end Guide](https://github.com/folio-org/stripes-cli/blob/master/doc/backend-guide.md).
 
 ## Replace localhost by hostname on the demo box
 
