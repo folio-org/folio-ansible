@@ -113,7 +113,7 @@
       module_name: mod-vendors
       repository: "https://github.com/folio-org/mod-vendors"
       files:
-        - { load_endpoint: /vendor, fileglob: sample-data/vendors/*.json }
+        - { load_endpoint: /vendor-storage/vendors, fileglob: sample-data/vendors/*.json }
     - role: module-sample-data
       module_name: mod-finance-storage
       repository: "https://github.com/folio-org/mod-finance-storage"
