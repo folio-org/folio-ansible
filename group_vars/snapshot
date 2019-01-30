@@ -48,6 +48,8 @@ env_var:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-notes:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+  mod-kb-ebsco-java:
+    - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-codex-inventory:
     - { name: JAVA_OPTIONS, value: "-Xmx256m" }
   mod-codex-mux:
@@ -107,6 +109,7 @@ other_mods:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-rtac
+  - mod-kb-ebsco-java
 
 # Docker ports for modules
 docker_port:
