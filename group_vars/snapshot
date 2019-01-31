@@ -109,7 +109,6 @@ other_mods:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-rtac
-  - mod-kb-ebsco-java
 
 # Docker ports for modules
 docker_port:
