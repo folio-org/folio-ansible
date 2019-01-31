@@ -14,6 +14,10 @@ tenant: diku
 # using Okapi dependency resolution
 # stripes_platform: /etc/folio/stripes
 
+# Okapi install endpoint should only resolve dependencies that
+# are classified as releases.  Use with stripes_platform
+# releases_only: false
+
 # URL for install file with modules for Okapi to enable and deploy
 # deploy_url:
 
