@@ -22,14 +22,25 @@
   when: with_github == false
   notify: "Rebuild stripes"
 
-- name: copy stripes platform files from github project
+- name: copy stripes platform files from github project from branch
   become: yes
   git: 
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
     version: "{{ stripes_github_version }}"
     update: no
-  when: with_github == true
+  when: with_github == true and not from_refspec
+  notify: "Rebuild stripes"
+
+- name: copy stripes platform files from github project from refspec
+  become: yes
+  git: 
+    repo: "{{ stripes_github_project }}"
+    dest: "{{ stripes_conf_dir }}"
+    version: "{{ stripes_github_version }}"
+    refspec: "{{ stripes_github_refspec }}:{{ stripes_github_version }}"
+    update: no
+  when: with_github == true and from_refspec
   notify: "Rebuild stripes"
 
 - name: copy yarn.lock file to stripes_conf_dir
