@@ -1,0 +1,5 @@
+server {
+  listen {{ edge_listen_port }};
+  server_name{% for alias in edge_server_name %} {{ alias }}{% endfor %};
+  charset utf-8;
+}
