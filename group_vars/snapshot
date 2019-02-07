@@ -103,6 +103,8 @@ env_var:
 tenant_parameters:
   mod-inventory-storage:
     - { name: loadReference, value: "true" }
+  mod-orders-storage:
+    - { name: loadSample, value: "true" }
 
 # other modules to enable outside dependency resolution
 other_mods:
