@@ -1,4 +1,17 @@
 ---
+# Setup
+- name: Create configuration directory
+  become: yes
+  file:
+    path: "{{ edge_conf_dir }}"
+    state: directory
+
+- name: Copy authentication store
+  become: yes
+  template:
+    src: ephemeral.properties
+    dest: "{{ edge_conf_dir }}/{{ edge_module }}-ephemeral.properties"
+
 # Get module version
 - name: Get tenant modules
   uri:
@@ -25,17 +38,19 @@
     name: "{{ edge_module }}-{{ edge_module_version }}"
     image: "{{ edge_docker_repo }}/{{ edge_module }}:{{ edge_module_version }}"
     env: "{{ edge_module_docker_env }}"
+    command:
+      - "-Dsecure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
     keep_volumes: no
     published_ports: "{{ edge_module_publish_port }}:{{ edge_module_expose_port }}"
     restart_policy: always
     state: started
+    volumes: "{{ edge_conf_dir }}:/mnt"
 
 # Set up nginx proxy
 - name: Configure nginx
   become: yes
   blockinfile:
     dest: /etc/nginx/sites-available/edge
-    backup: yes
     marker: "# {mark} {{ edge_module }} ANSIBLE MANAGED BLOCK"
     insertbefore: "^}\\s*$"
     block: |
