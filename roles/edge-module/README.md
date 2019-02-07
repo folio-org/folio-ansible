@@ -8,7 +8,7 @@ This role deploys an edge module as a Docker container, and sets up nginx to pro
 
 ## Prerequisites
 
-* This role relies on a Docker daemon to deploy edge module containers. You can use the [docker-engine](../roles/docker-engine) role to set up and configure Docker locally on the host, or use another Docker instance.
+* This role relies on a Docker daemon on the host to deploy edge module containers. You can use the [docker-engine](../roles/docker-engine) role to set up and configure Docker.
 
 * The edge module must be registered and initialized for the tenant. Managing Okapi module registration, tenant initialization, and dependency resolution are outside the scope of this role. You can use the [okapi-register-modules](../roles/okapi-register-modules/README.md), [okapi-deployment](../roles/okapi-deployment/README.md), and [okapi-tenant-deploy](../roles/okapi-tenant-deploy/README.md) roles for managing those tasks.
 
@@ -33,11 +33,13 @@ Invoke this role for each edge module you wish to set up. For example:
         JAVA_OPTIONS: "-Xmx256m"
 ```
 
-## Known issues
+## Known issues/limitations
 
 * The role assumes that there is one nginx configuration for all edge modules. This can theoretically result in a route collision if module paths conflict.
 
 * The role does not attempt to manage the published port of the container. This will result in conflicts if not managed.
+
+* Because the edge modules rely on a file for configuring authentication, this role will only work with a local Docker daemon.
 
 ## Variables
 ```yaml
@@ -51,8 +53,6 @@ tenant: diku
 
 # Docker setup
 edge_docker_repo: folioci
-edge_docker_host: unix://var/run/docker.sock
-edge_module_host: localhost
 
 # Module setup
 # edge_module, and edge_module_publish_port, edge_module_path variables must be defined or the role will fail

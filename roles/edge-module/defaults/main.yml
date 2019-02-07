@@ -8,8 +8,6 @@ tenant: diku
 
 # Docker setup
 edge_docker_repo: folioci
-edge_docker_host: unix://var/run/docker.sock
-edge_module_host: localhost
 
 # Module setup
 # edge_module, and edge_module_publish_port, edge_module_path variables must be defined or the role will fail

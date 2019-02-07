@@ -24,7 +24,6 @@
   docker_container:
     name: "{{ edge_module }}-{{ edge_module_version }}"
     image: "{{ edge_docker_repo }}/{{ edge_module }}:{{ edge_module_version }}"
-    docker_host: "{{ edge_docker_host }}"
     env: "{{ edge_module_docker_env }}"
     keep_volumes: no
     published_ports: "{{ edge_module_publish_port }}:{{ edge_module_expose_port }}"
@@ -41,7 +40,7 @@
     insertbefore: "^}\\s*$"
     block: |
       location {{ edge_module_path }} {
-        proxy_pass http://{{ edge_module_host }}:{{ edge_module_publish_port }};
+        proxy_pass http://localhost:{{ edge_module_publish_port }};
       }
   notify: Restart nginx
 
