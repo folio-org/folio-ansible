@@ -1,0 +1,67 @@
+---  
+- name: check if mods are already enabled  
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item }}"
+    status_code: 200, 404
+  register: tenant_module_check
+  with_items:
+    - mod-users
+    - mod-permissions
+
+- name: dump results for debug
+  debug:
+    var: tenant_module_check
+
+- name: Enable mod-users and mod-permissions on supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ item.item }}" }'
+    status_code: 201
+  register: tenant_module_enable
+  changed_when: tenant_module_enable.status == 201  
+  when: item.status == 404
+  with_items: "{{ tenant_module_check.results }}"
+
+- name: check if superuser has already been created
+  uri:
+    url: "{{ okapi_url }}/users/{{ superuser_username | to_uuid }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    status_code: 200, 404
+  register: superuser_created_check
+
+- name: create superuser in mod-users
+  uri:
+    url: "{{ okapi_url }}/users"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body_format: json
+    body: '{ "id": "{{ superuser_username | to_uuid }}", "username": "{{ superuser_username }}", "active": "true"}'
+    status_code: 201
+  register: superuser_mod_users
+  changed_when: superuser_mod_users.status == 201
+  when: superuser_created_check.status == 404
+
+- name: dump results for debug
+  debug:
+    var: superuser_mod_users
+
+- name: add permissions for superuser
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body_format: json
+    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all" ] }'
+    status_code: 201
+  when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
+
+- name: PLACEHOLDER check if mod authtoken is enabled
+  shell: echo "pass"
