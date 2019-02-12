@@ -12,6 +12,135 @@
     src: ephemeral.properties
     dest: "{{ edge_conf_dir }}/{{ edge_module }}-ephemeral.properties"
 
+# Set up institutional user
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
+    status_code: 201
+  register: tenant_admin_login
+  when: auth_required
+
+- name: Check institutional user
+  uri:
+    url: "{{ okapi_url }}/users?query=username%3d%3d{{ inst_user.username }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    status_code: 200
+  register: check_inst_user
+
+- name: Create institutional user
+  uri:
+    url: "{{ okapi_url }}/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    body: |
+      {
+        "id": "{{ 9999999999999999999998 | random | to_uuid }}",
+        "username": "{{ inst_user.username }}",
+        "active": true
+      }
+    status_code: 201
+  when: check_inst_user.json.totalRecords == 0
+  register: create_inst_user
+  changed_when: create_inst_user.status == 201
+
+- name: Get institutional user UUID variable
+  set_fact:
+    inst_user_uuid: "{% if check_inst_user.json.users.0|default(false) %}{{ check_inst_user.json.users.0.id }}{% else %}{{ create_inst_user.json.id }}{% endif %}"
+
+- name: Check institutional user login record
+  uri:
+    url: "{{ okapi_url }}/authn/credentials?query=userId%3d%3d{{ inst_user_uuid }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    status_code: 200
+  register: check_inst_login
+
+- name: Create institutional user login record
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    body: |
+      {
+        "userId": "{{ inst_user_uuid }}",
+        "password": "{{ inst_user.password }}"
+      }
+    status_code: 201
+  when: check_inst_login.json.totalRecords == 0
+  register: create_inst_login
+  changed_when: create_inst_login.status == 201
+
+- name: Check institutional user permissions record
+  uri:
+    url: "{{ okapi_url }}/perms/users?query=userId%3d%3d{{ inst_user_uuid }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    status_code: 200
+  register: check_inst_perms
+
+- name: Create institutional user permissions record
+  uri:
+    url: "{{ okapi_url }}/perms/users"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    body: |
+      {
+        "userId": "{{ inst_user_uuid }}"
+      }
+    status_code: 201
+  when: check_inst_perms.json.totalRecords == 0
+  register: create_inst_perms
+  changed_when: create_inst_perms.status == 201
+
+- name: Get institutional user perms UUID
+  set_fact:
+    inst_perms_uuid: "{% if check_inst_perms.json.permissionUsers.0|default(false) %}{{ check_inst_perms.json.permissionUsers.0.id }}{% else %}{{ create_inst_perms.json.id }}{% endif %}"
+
+- name: Get assigned permissions for institutional user
+  set_fact:
+    inst_user_assigned_perms: "{% if check_inst_perms.json.permissionUsers.0|default(false) %}{{ check_inst_perms.json.permissionUsers.0.permissions }}{% else %}{{ [ ] }}{% endif %}"
+
+- name: Assign permissions to {{ inst_user.username }}
+  uri:
+    url: "{{ okapi_url }}/perms/users/{{ inst_perms_uuid }}/permissions"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      Accept: application/json
+    body: '{ "permissionName" : "{{ item }}" }'
+    body_format: json
+    status_code: 200
+  when: "[ item ]|difference(inst_user_assigned_perms)"
+  register: inst_user_assign_perms
+  with_items: "{{ inst_user_perms }}"
+  changed_when: inst_user_assign_perms.status == 200
+
 # Get module version
 - name: Get tenant modules
   uri:
