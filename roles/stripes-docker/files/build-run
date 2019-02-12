@@ -1,5 +1,7 @@
+OKAPI="${OKAPI:-http://localhost:9130}"
+TENANT="${TENANT:-diku}"
 cd /etc/folio/stripes/
-sudo yarn build output --sourcemap
+sudo yarn build output --okapi "$OKAPI" --tenant "$TENANT" --sourcemap
 docker stop stripes_stripes_1
 docker rm stripes_stripes_1
 docker rmi stripes
