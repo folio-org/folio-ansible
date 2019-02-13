@@ -1,16 +1,15 @@
 ---  
-- name: check if mods are already enabled  
+#- name: wait for vagrant box
+#  wait_for: timeout=60
+  
+- name: Check if mod-users and mod-permissions are already enabled on supertenant 
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item }}"
     status_code: 200, 404
   register: tenant_module_check
   with_items:
-    - mod-users
-    - mod-permissions
-
-- name: dump results for debug
-  debug:
-    var: tenant_module_check
+    - mod-users-15.3.1-SNAPSHOT.67
+    - mod-permissions-5.4.1-SNAPSHOT.36
 
 - name: Enable mod-users and mod-permissions on supertenant
   uri:
@@ -24,7 +23,7 @@
   when: item.status == 404
   with_items: "{{ tenant_module_check.results }}"
 
-- name: check if superuser has already been created
+- name: Check if superuser has already been created on supertenant
   uri:
     url: "{{ okapi_url }}/users/{{ superuser_username | to_uuid }}"
     headers:
@@ -33,7 +32,7 @@
     status_code: 200, 404
   register: superuser_created_check
 
-- name: create superuser in mod-users
+- name: Create superuser in mod-users on supertenant
   uri:
     url: "{{ okapi_url }}/users"
     method: POST
@@ -47,11 +46,7 @@
   changed_when: superuser_mod_users.status == 201
   when: superuser_created_check.status == 404
 
-- name: dump results for debug
-  debug:
-    var: superuser_mod_users
-
-- name: add permissions for superuser
+- name: add permissions for superuser on supertenant
   uri:
     url: "{{ okapi_url }}/perms/users"
     method: POST
@@ -63,5 +58,58 @@
     status_code: 201
   when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
 
-- name: PLACEHOLDER check if mod authtoken is enabled
-  shell: echo "pass"
+- name: Check if mod-login is enabled on supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ mod_login }}"
+    status_code: 200, 404
+  register: mod_login_check
+
+- name: Enable mod-login on supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_login }}" }'
+    status_code: 201
+  register: mod_login_enable
+  changed_when: mod_login_enable.status == 201  
+  when: mod_login_check.status == 404
+
+- name: Check if superuser credentials are created on supertenant
+  uri:
+    url: "{{ okapi_url }}/authn/credentials-existence?userId={{ superuser_username | to_uuid }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    status_code: 200
+  register: superuser_creds_check
+
+- name: Create login credentials for superuser on supertenant
+  uri:
+    url: "{{ okapi_url }}/authn/credentials"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body_format: json
+    body: '{"username": "{{ superuser_username }}", "password": "{{ superuser_password }}"}'
+    status_code: 201
+  register: login_credentials_created
+  when: superuser_creds_check.json.credentialsExist == false
+
+- name: Check if mod-authtoken is enabled on supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ mod_authtoken }}"
+    status_code: 200, 404
+  register: mod_authtoken_check
+
+- name: Enable mod-authtoken on supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    method: POST
+    body_format: json
+    body: '{ "id" : "{{ mod_authtoken }}" }'
+    status_code: 201
+  register: mod_authtoken_enable
+  changed_when: mod_authtoken_enable.status == 201  
+  when: mod_authtoken_check.status == 404

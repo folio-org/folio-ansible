@@ -4,4 +4,6 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 superuser_uuid: some_uuid
 superuser_username: supertenant_admin
 superuser_password: supertenant_pass
-tenant:  supertenant   
+tenant:  supertenant
+mod_login: mod-login-4.7.1-SNAPSHOT.44
+mod_authtoken: mod-authtoken-2.0.5-SNAPSHOT.41
