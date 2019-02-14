@@ -1,15 +1,42 @@
 ---  
-#- name: wait for vagrant box
-#  wait_for: timeout=60
-  
+- name: wait for vagrant box
+  wait_for: timeout=120
+
+- name: Collect module names
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules"
+    status_code: 200
+  register: disco_results
+
+- name: set list of discovered modules
+  set_fact:
+    service_identifiers: "{{ disco_results.json | json_query('[].srvcId')}}"
+
+- name: initialize required mods dictionary
+  set_fact:
+    required_mods: {}
+
+- name: select module versions
+  set_fact:
+    required_mods: "{{required_mods| combine({item.name: (service_identifiers | select('match', item.query) | list | max)}) }}"
+  with_items:
+    - name: mod-login 
+      query: '^mod-login-\d.*\d$'
+    - name: mod-permissions
+      query: '^mod-permissions-\d.*\d$'
+    - name: mod-authtoken
+      query: '^mod-authtoken-\d.*\d$'
+    - name: mod-users
+      query: '^mod-users-\d.*\d$'  
+
 - name: Check if mod-users and mod-permissions are already enabled on supertenant 
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item }}"
     status_code: 200, 404
   register: tenant_module_check
   with_items:
-    - mod-users-15.3.1-SNAPSHOT.67
-    - mod-permissions-5.4.1-SNAPSHOT.36
+    - "{{ required_mods['mod-users'] }}"
+    - "{{ required_mods['mod-permissions'] }}"
 
 - name: Enable mod-users and mod-permissions on supertenant
   uri:
@@ -60,7 +87,7 @@
 
 - name: Check if mod-login is enabled on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ mod_login }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ required_mods['mod-login'] }}"
     status_code: 200, 404
   register: mod_login_check
 
@@ -69,7 +96,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ mod_login }}" }'
+    body: '{ "id" : "{{ required_mods["mod-login"] }}" }'
     status_code: 201
   register: mod_login_enable
   changed_when: mod_login_enable.status == 201  
@@ -84,7 +111,7 @@
     status_code: 200
   register: superuser_creds_check
 
-- name: Create login credentials for superuser on supertenant
+- name: Create login credentials for on supertenant
   uri:
     url: "{{ okapi_url }}/authn/credentials"
     method: POST
@@ -99,7 +126,7 @@
 
 - name: Check if mod-authtoken is enabled on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ mod_authtoken }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ required_mods['mod-authtoken'] }}"
     status_code: 200, 404
   register: mod_authtoken_check
 
@@ -108,7 +135,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     method: POST
     body_format: json
-    body: '{ "id" : "{{ mod_authtoken }}" }'
+    body: '{ "id" : "{{ required_mods["mod-authtoken"] }}" }'
     status_code: 201
   register: mod_authtoken_enable
   changed_when: mod_authtoken_enable.status == 201  
