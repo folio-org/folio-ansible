@@ -164,6 +164,8 @@ configure it:
       }, inline: <<-SHELL
         set -e
         systemctl stop okapi
+        sleep 10
+        docker ps -a -q | xargs --no-run-if-empty docker rm -f
         rm -rf /etc/folio/stripes/output
         /etc/folio/stripes/build-run
         systemctl start okapi
