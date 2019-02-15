@@ -95,7 +95,9 @@
       duplicate_key_error: 400
       files:
         - { load_endpoint: /loan-policy-storage/loan-policies, fileglob: reference-data/loan-policy-storage/loan-policies/*.json, dup_override: 500 }
-        - { load_endpoint: /loan-rules-storage, fileglob: reference-data/loan-rules-storage/*.json, http_method: PUT, updated_code: 204, dup_override: 204 }
+        - { load_endpoint: /patron-notice-policy-storage/patron-notice-policies, fileglob: reference-data/notice-policy-storage/notice-policies/*.json }
+        - { load_endpoint: /request-policy-storage/request-policies, fileglob: reference-data/request-policy-storage/request-policies/*.json }
+        - { load_endpoint: /circulation-rules-storage, fileglob: reference-data/circulation-rules-storage/*.json, http_method: PUT, updated_code: 204, dup_override: 204 }
         - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
     - mod-circulation-sample-data
     - role: module-sample-data
