@@ -19,5 +19,4 @@ tenant:  supertenant
 ```
 
 ## Notes
-
-Right now, we're assuming module descriptors exist for the modules we're enabling on the supertenant. This will need to be addressed. 
+This is not idempotent. Once the Okapi supertenant is secured, roles that assume Okapi is not locked down cannot be re-executed.

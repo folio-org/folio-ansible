@@ -1,7 +1,4 @@
 ---  
-- name: wait for vagrant box
-  wait_for: timeout=120
-
 - name: Collect module names
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
