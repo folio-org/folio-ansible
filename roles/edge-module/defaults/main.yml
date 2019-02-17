@@ -1,0 +1,32 @@
+---
+# defaults
+
+# Okapi setup
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+tenant: diku
+admin_user:
+  username: diku_admin
+  password: admin
+auth_required: no
+
+# Docker setup
+edge_docker_repo: folioci
+edge_conf_dir: /etc/folio/edge
+
+# Institutional user
+inst_user:
+  username: "{{ tenant }}"
+  password: "{{ tenant }}"
+inst_user_perms: [ ]
+
+# Module setup
+# edge_module, and edge_module_publish_port, edge_module_path variables must be defined or the role will fail
+# edge_module: edge-rtac
+# edge_module_publish_port: 9700
+# edge_module_path: /prod/rtac
+edge_module_expose_port: 8081
+edge_module_docker_env:
+# sample Docker env
+# edge_module_docker_env:
+#   JAVA_OPTIONS: "-Xmx256m"

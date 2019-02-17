@@ -29,17 +29,20 @@ Vagrant.configure(2) do |config|
     testing.vm.box = "folio/testing"
     testing.vm.network "forwarded_port", guest: 9130, host: 9130
     testing.vm.network "forwarded_port", guest: 3000, host: 3000
+    testing.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
   config.vm.define "testing-backend", autostart: false do |testing_backend|
     testing_backend.vm.box = "folio/testing-backend"
     testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    testing_backend.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
   config.vm.define "snapshot", autostart: false do |snapshot|
     snapshot.vm.box = "folio/snapshot"
     snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    snapshot.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
   config.vm.define "curriculum", autostart: false do |curriculum|
@@ -82,6 +85,7 @@ Vagrant.configure(2) do |config|
     end
     build_snapshot_core.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot_core.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_snapshot_core.vm.network "forwarded_port", guest: 8000, host: 8000
     build_snapshot_core.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -98,6 +102,7 @@ Vagrant.configure(2) do |config|
       vt.memory = 10240
     end
     build_snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8000
     build_snapshot_backend_core.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -114,6 +119,7 @@ Vagrant.configure(2) do |config|
     end
     build_testing.vm.network "forwarded_port", guest: 9130, host: 9130
     build_testing.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_testing.vm.network "forwarded_port", guest: 8000, host: 8000
     build_testing.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -130,6 +136,7 @@ Vagrant.configure(2) do |config|
       vtb.memory = 10240
     end
     build_testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_backend.vm.network "forwarded_port", guest: 8000, host: 8000
     build_testing_backend.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -144,6 +151,7 @@ Vagrant.configure(2) do |config|
     build_snapshot.vm.box = "bento/ubuntu-16.04"
     build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_snapshot.vm.network "forwarded_port", guest: 8000, host: 8000
     build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -161,6 +169,7 @@ Vagrant.configure(2) do |config|
     end
     build_release_core.vm.network "forwarded_port", guest: 9130, host: 9130
     build_release_core.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_release_core.vm.network "forwarded_port", guest: 8000, host: 8000
     build_release_core.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
