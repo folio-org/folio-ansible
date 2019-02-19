@@ -1,4 +1,4 @@
----  
+---
 - name: Collect module names
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
@@ -17,18 +17,18 @@
   set_fact:
     required_mods: "{{required_mods| combine({item.name: (service_identifiers | select('match', item.query) | list | max)}) }}"
   with_items:
-    - name: mod-login 
+    - name: mod-login
       query: '^mod-login-\d.*\d$'
     - name: mod-permissions
       query: '^mod-permissions-\d.*\d$'
     - name: mod-authtoken
       query: '^mod-authtoken-\d.*\d$'
     - name: mod-users
-      query: '^mod-users-\d.*\d$'  
+      query: '^mod-users-\d.*\d$'
 
-- name: Check if mod-users and mod-permissions are already enabled on supertenant 
+- name: Check if mod-users and mod-permissions are already enabled on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ item }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ item }}"
     status_code: 200, 404
   register: tenant_module_check
   with_items:
@@ -37,13 +37,13 @@
 
 - name: Enable mod-users and mod-permissions on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules"
     method: POST
     body_format: json
     body: '{ "id" : "{{ item.item }}" }'
     status_code: 201
   register: tenant_module_enable
-  changed_when: tenant_module_enable.status == 201  
+  changed_when: tenant_module_enable.status == 201
   when: item.status == 404
   with_items: "{{ tenant_module_check.results }}"
 
@@ -51,7 +51,7 @@
   uri:
     url: "{{ okapi_url }}/users/{{ superuser_username | to_uuid }}"
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     status_code: 200, 404
   register: superuser_created_check
@@ -61,7 +61,7 @@
     url: "{{ okapi_url }}/users"
     method: POST
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     body_format: json
     body: '{ "id": "{{ superuser_username | to_uuid }}", "username": "{{ superuser_username }}", "active": "true"}'
@@ -75,7 +75,7 @@
     url: "{{ okapi_url }}/perms/users"
     method: POST
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     body_format: json
     body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all" ] }'
@@ -84,26 +84,26 @@
 
 - name: Check if mod-login is enabled on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ required_mods['mod-login'] }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ required_mods['mod-login'] }}"
     status_code: 200, 404
   register: mod_login_check
 
 - name: Enable mod-login on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules"
     method: POST
     body_format: json
     body: '{ "id" : "{{ required_mods["mod-login"] }}" }'
     status_code: 201
   register: mod_login_enable
-  changed_when: mod_login_enable.status == 201  
+  changed_when: mod_login_enable.status == 201
   when: mod_login_check.status == 404
 
 - name: Check if superuser credentials are created on supertenant
   uri:
     url: "{{ okapi_url }}/authn/credentials-existence?userId={{ superuser_username | to_uuid }}"
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     status_code: 200
   register: superuser_creds_check
@@ -113,7 +113,7 @@
     url: "{{ okapi_url }}/authn/credentials"
     method: POST
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     body_format: json
     body: '{"username": "{{ superuser_username }}", "password": "{{ superuser_password }}"}'
@@ -123,17 +123,17 @@
 
 - name: Check if mod-authtoken is enabled on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules/{{ required_mods['mod-authtoken'] }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ required_mods['mod-authtoken'] }}"
     status_code: 200, 404
   register: mod_authtoken_check
 
 - name: Enable mod-authtoken on supertenant
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules"
     method: POST
     body_format: json
     body: '{ "id" : "{{ required_mods["mod-authtoken"] }}" }'
     status_code: 201
   register: mod_authtoken_enable
-  changed_when: mod_authtoken_enable.status == 201  
+  changed_when: mod_authtoken_enable.status == 201
   when: mod_authtoken_check.status == 404
