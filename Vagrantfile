@@ -12,17 +12,18 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
-  config.vm.define "stable", autostart: false do |stable|
-    stable.vm.box = "folio/stable"
-    stable.vm.synced_folder ".", "/vagrant", disabled: true
-    stable.vm.network "forwarded_port", guest: 9130, host: 9130
-    stable.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.define "snapshot-core", autostart: false do |snapshot_core|
+    testing.vm.box = "folio/snapshot-core"
+    testing.vm.network "forwarded_port", guest: 9130, host: 9130
+    testing.vm.network "forwarded_port", guest: 3000, host: 3000
+    testing.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
-  config.vm.define "stable-backend", autostart: false do |stable_backend|
-    stable_backend.vm.box = "folio/stable-backend"
-    stable_backend.vm.synced_folder ".", "/vagrant", disabled: true
-    stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
+  config.vm.define "snapshot-backend-core", autostart: false do |snapshot_backend_core|
+    testing.vm.box = "folio/snapshot-backend-core"
+    testing.vm.network "forwarded_port", guest: 9130, host: 9130
+    testing.vm.network "forwarded_port", guest: 3000, host: 3000
+    testing.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
   config.vm.define "testing", autostart: false do |testing|
@@ -49,33 +50,6 @@ Vagrant.configure(2) do |config|
     curriculum.vm.box = "folio/curriculum"
     curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
     curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
-  end
-
-  config.vm.define "build_stable", autostart: false do |build_stable|
-    build_stable.vm.box = "debian/contrib-jessie64"
-    build_stable.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_stable.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_stable.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_stable"],
-        "stable" => ["build_stable"],
-        "stripes" => ["build_stable"]
-      }
-    end
-  end
-
-  config.vm.define "build_stable_backend", autostart: false do |build_stable_backend|
-    build_stable_backend.vm.box = "debian/contrib-jessie64"
-    build_stable_backend.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_stable_backend.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_stable_backend"],
-        "stable-backend" => ["build_stable_backend"],
-        "stripes-build" => ["build_stable_backend"]
-      }
-    end
   end
 
   config.vm.define "build_snapshot_core", autostart: false do |build_snapshot_core|
