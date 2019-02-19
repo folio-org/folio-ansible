@@ -78,7 +78,7 @@
       X-Okapi-Tenant: "supertenant"
       Accept: application/json
     body_format: json
-    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all" ] }'
+    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all", "perms.all" ] }'
     status_code: 201
   when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
 
