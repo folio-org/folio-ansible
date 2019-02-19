@@ -25,8 +25,8 @@
 
 # Configure build for top-down deployment
 # (Okapi dependency resolution)
-- name: Configure snapshot-core build
-  hosts: snapshot-core
+- name: Configure snapshot build
+  hosts: snapshot-core:snapshot
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -39,13 +39,6 @@
     - role: okapi-tenant-deploy
       create_db: no
       module_env: []
-    - create-tenant-admin
-    - tenant-admin-permissions
-
-- name: Configure snapshot build
-  hosts: snapshot
-  roles:
-    - okapi-deploy-config
     - create-tenant-admin
     - tenant-admin-permissions
 
