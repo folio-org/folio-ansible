@@ -2,7 +2,7 @@
 
 - name: create build dir
   become: yes
-  file: 
+  file:
     path: "{{ stripes_conf_dir }}"
     state: directory
 
@@ -11,6 +11,7 @@
   template: src=nginx.conf.j2 dest={{ stripes_conf_dir }}/nginx.conf
   notify: Rebuild container
 
+# Next two plays only used for deprecated okapi-deploy build
 - name: Slurp install.json
   slurp: src={{ folio_conf }}/install.json
   register: install_json_raw
@@ -23,14 +24,10 @@
   when: top_down_install|default(false)
   ignore_errors: yes
 
-- name: Check for install.json
-  stat: path={{ stripes_conf_dir }}/install.json
-  register: install_json
-
 - name: copy Dockerfile to docker build dir
   become: yes
-  template:
-    src: Dockerfile.j2
+  copy:
+    src: Dockerfile
     dest: "{{ stripes_conf_dir }}/Dockerfile"
   notify: Rebuild container
 
@@ -44,7 +41,7 @@
 
 - name: create docker network for stripes
   become: yes
-  docker_network: 
+  docker_network:
     name: stripes-net
 
 - name: Rebuild container on stripes rebuild
@@ -56,4 +53,4 @@
   command: /bin/true
   notify: "Build container"
 
-- meta: flush_handlers 
+- meta: flush_handlers
