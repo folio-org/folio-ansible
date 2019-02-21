@@ -69,4 +69,7 @@ okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 tenant: diku
 deploy_timeout: 900
+
+# Where to save the install.json files
+save_dir: /etc/folio/stripes
 ```
