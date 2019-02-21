@@ -27,6 +27,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-calendar
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
