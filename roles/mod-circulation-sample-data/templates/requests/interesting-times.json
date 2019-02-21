@@ -5,7 +5,7 @@
   "requesterId": "{{ loan_users.json.users.0.id }}",
   "itemId": "bb5a6689-c008-4c96-8f8f-b666850ee12d",
   "fulfilmentPreference": "Hold Shelf",
-  "holdShelfExpirationDate": "2017-01-20",
+  "holdShelfExpirationDate": "2021-09-22T11:16:54Z",
   "status": "Open - Not yet filled",
   "position": 1,
   "item": {
