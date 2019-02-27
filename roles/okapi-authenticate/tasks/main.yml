@@ -1,0 +1,51 @@
+---
+- name: Check if superuser credentials are created on supertenant
+  uri:
+    url: "{{ okapi_url }}/authn/credentials-existence?userId={{ superuser_username | to_uuid }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+    status_code: 200, 400, 403
+  register: superuser_creds_check
+
+- name: debug credential check
+  debug:
+    var: superuser_creds_check
+
+- name: get login token if supertenant is secured
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+    body_format: json
+    body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
+    status_code: 201
+  register: login_result
+
+- name: debug login
+  debug:
+    var: login_result
+       
+  when: superuser_creds_check.status == 403
+
+- name: Set Okapi headers if supertenant is secured
+  set_fact:
+    okapi_supertenant_headers: 
+      tenant: "supertenant"
+      accept: "application/json" 
+      token: "{{ login_result['x_okapi_token'] | default('') }}" 
+
+- name: dump fact
+  debug:
+    var: okapi_supertenant_headers
+
+- name: request to supertenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules"
+    status_code: 200, 404
+    headers: 
+      X-Okapi-Tenant: "{{ okapi_supertenant_headers['tenant'] }}"
+      Accept: "{{ okapi_supertenant_headers['accept'] }}"
+    status_code: 200
