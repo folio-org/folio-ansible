@@ -1,18 +1,18 @@
 ---
-- name: Check if superuser credentials are created on supertenant
+- name: get available interfaces on supertenant
   uri:
-    url: "{{ okapi_url }}/authn/credentials-existence?userId={{ superuser_username | to_uuid }}"
+    url: "{{ okapi_url }}/_/proxy/tenants/supertenant/interfaces"
     headers:
       X-Okapi-Tenant: "supertenant"
       Accept: application/json
-    status_code: 200, 400, 403
-  register: superuser_creds_check
+    status_code: 200
+  register: supertenant_interfaces_response
 
-- name: debug credential check
-  debug:
-    var: superuser_creds_check
+- name: set list of interfaces on supertenant
+  set_fact:
+    supertenant_interfaces: "{{ supertenant_interfaces_response | json_query('json[].id') }}"
 
-- name: get login token if supertenant is secured
+- name: get login token if supertenant is secured (authtoken is present)
   uri:
     url: "{{ okapi_url }}/authn/login"
     method: POST
@@ -23,29 +23,13 @@
     body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
     status_code: 201
   register: login_result
+  when: '"authtoken" in supertenant_interfaces'
 
-- name: debug login
-  debug:
-    var: login_result
-       
-  when: superuser_creds_check.status == 403
-
-- name: Set Okapi headers if supertenant is secured
+- name: Set Okapi token if supertenant is secured
   set_fact:
-    okapi_supertenant_headers: 
-      tenant: "supertenant"
-      accept: "application/json" 
-      token: "{{ login_result['x_okapi_token'] | default('') }}" 
+    supertenant_token: "{{ login_result['x_okapi_token'] }}" 
+  when: '"authtoken" in supertenant_interfaces'
 
-- name: dump fact
+- name: debug token
   debug:
-    var: okapi_supertenant_headers
-
-- name: request to supertenant
-  uri:
-    url: "{{ okapi_url }}/_/proxy/modules"
-    status_code: 200, 404
-    headers: 
-      X-Okapi-Tenant: "{{ okapi_supertenant_headers['tenant'] }}"
-      Accept: "{{ okapi_supertenant_headers['accept'] }}"
-    status_code: 200
+    var: supertenant_token
