@@ -2,6 +2,7 @@
 - name: include okapi-authenticate role
   include_role:
     name: okapi-authenticate
+  when: supertenant_token is not defined
 
 - name: Collect module names
   uri:
@@ -117,7 +118,7 @@
       Accept: application/json
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
     body_format: json
-    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all", "perms.all", "login.all", "users.all" ] }'
+    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all", "okapi.proxy.pull.modules.post", "perms.all", "login.all", "users.all" ] }'
     status_code: 201
   when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
 

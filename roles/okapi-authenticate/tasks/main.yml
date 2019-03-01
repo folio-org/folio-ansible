@@ -29,7 +29,3 @@
   set_fact:
     supertenant_token: "{{ login_result['x_okapi_token'] }}" 
   when: '"authtoken" in supertenant_interfaces'
-
-- name: debug token
-  debug:
-    var: supertenant_token
