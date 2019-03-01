@@ -1,4 +1,10 @@
 ---
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+  
 # Tasks to post a deployment descriptor for a module with a url property
 
 - name: Set module id if version is defined
@@ -9,6 +15,9 @@
 - name: Get module ids if version is not defined
   uri:
     url: "{{ okapi_url }}/_/proxy/modules?filter={{ item.name }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
   register: discovery_module_versions
   when: item.version is not defined
 
@@ -20,6 +29,9 @@
 - name: Check Okapi discovery to avoid multiple entries
   uri:
     url: "{{ okapi_url }}/_/discovery/modules/{{ discovery_module_id }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
     status_code: 200,404
   register: discovery_check_module
 
@@ -27,6 +39,10 @@
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
     method: POST
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json
     body_format: json
     body:
       srvcId: "{{ discovery_module_id }}"
@@ -36,4 +52,3 @@
   register: discovery_post
   changed_when: discovery_post.status == 201
   when: discovery_check_module.status == 404
-

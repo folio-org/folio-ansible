@@ -1,4 +1,10 @@
 ---
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+
 - name: Install prerequisites from apt
   become: yes
   apt: 
@@ -25,6 +31,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ item|to_json }}"
     status_code: 201
@@ -38,6 +46,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ lookup('file', deploy_file) }}"
     timeout: "{{ deploy_timeout }}"
@@ -58,6 +68,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ deploy_json.json }}"
     timeout: "{{ deploy_timeout }}"
@@ -71,6 +83,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ lookup('file', enable_file) }}"
   register: enable_from_file
@@ -90,6 +104,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ enable_json.json }}"
   register: enable_from_url

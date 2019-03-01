@@ -6,6 +6,12 @@
 # wait a few seconds to make sure okapi is up
 - wait_for: timeout=5
 
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+
 #########
 # Setup #
 #########
@@ -90,6 +96,9 @@
 - name: Check module registration
   uri:
     url: "{{ okapi_url }}/_/proxy/modules/{{ item.id }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json, text/plain
     status_code: 200, 404
   with_items: "{{ mod_descrs }}"
   register: mod_reg_status
@@ -98,6 +107,8 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/modules"
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     method: POST
     body_format: json

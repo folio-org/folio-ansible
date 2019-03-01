@@ -2,16 +2,13 @@
 # Role to pull module descriptors from a central repo
 
 # wait a few seconds to make sure okapi is up
-#- wait_for: timeout=10
+- wait_for: timeout=10
 
+# Authenticate to supertenant if required
 - name: include okapi-authenticate role
   include_role:
     name: okapi-authenticate
   when: supertenant_token is not defined
-
-- name: debug token
-  debug:
-    var: supertenant_token
 
 - name: Pull module descriptors
   uri:
