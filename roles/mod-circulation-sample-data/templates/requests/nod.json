@@ -5,7 +5,7 @@
   "requesterId": "{{ loan_users.json.users.1.id }}",
   "itemId": "23f2c8e1-bd5d-4f27-9398-a688c998808a",
   "fulfilmentPreference": "Delivery",
-  "requestExpirationDate": "2017-03-22",
+  "requestExpirationDate": "2021-06-24T14:16:45Z",
   "status": "Open - Not yet filled",
   "position": 1,
   "item": {

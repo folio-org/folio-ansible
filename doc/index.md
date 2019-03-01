@@ -163,15 +163,14 @@ configure it:
         "OKAPI" => "http://example.com:9130"
       }, inline: <<-SHELL
         set -e
-        sed -i -e "s=\\(okapi: *{ *'url': *\\)'[^']*'=\\1'$OKAPI'=" /etc/folio/stripes/node_modules/@folio/platform-core/stripes.config.js
-        systemctl stop okapi
+        systemctl stop okapi-deploy 2>/dev/null || systemctl stop okapi
+        sleep 10
+        docker ps -a -q | xargs --no-run-if-empty docker rm -f
         rm -rf /etc/folio/stripes/output
         /etc/folio/stripes/build-run
-        systemctl start okapi
+        systemctl start okapi-deploy 2>/dev/null || systemctl start okapi
       SHELL
     end
-
-In older Vagrant boxes the stripes.config.js file that sets the Okapi URL was in `/etc/folio/stripes/`.
 
 ## Replace port 9130
 

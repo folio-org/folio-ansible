@@ -23,15 +23,19 @@ Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
 ## System Requirements
 
 For Vagrant deployment:
-* [Vagrant](https://www.vagrantup.com) \>= 1.9.6 (note that the
-  version available in the standard Ubuntu repository is 1.9.1!)
+* [Vagrant](https://www.vagrantup.com) \>= 1.9.6 (note that Ubuntu
+  provides a
+  [broken 2.0.2 version](https://github.com/hashicorp/vagrant/issues/9788)
+  and an outdated 1.9.1 version, install the latest
+  [Debian file from the Vagrant Download page](https://www.vagrantup.com/downloads.html)
+  using `dpkg -i vagrant\_….deb` instead)
 * [VirtualBox](https://www.virtualbox.org)
 
 For Ansible provisioning (to build a dev VM, or to build the demo or
 backend system from scratch)
 * [Ansible](http://docs.ansible.com/ansible/intro_installation.html) \>= 2.3
 
-This installation has been tested on macOS "Sierra", Ubuntu 16.04, and
+This installation has been tested on macOS "Sierra", Ubuntu 16.04 and 18.04, and
 Windows 10. Note that Windows cannot serve as an Ansible control host.
 
 ## Quick Start

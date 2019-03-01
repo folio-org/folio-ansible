@@ -118,7 +118,9 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
-  - name: mod-kb-ebsco
+  - name: mod-kb-ebsco-java
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-vendors
@@ -144,6 +146,8 @@ folio_modules:
   - name: mod-orders-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-orders

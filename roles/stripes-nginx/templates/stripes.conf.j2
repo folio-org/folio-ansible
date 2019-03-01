@@ -1,5 +1,5 @@
 server {
-  listen {{ listen_port }};
+  listen {{ stripes_listen_port }};
   server_name{% for alias in stripes_server_name %} {{ alias }}{% endfor %};
   charset utf-8;
   # Serve index.html for any request not found

@@ -12,12 +12,6 @@ groups in the folio.yml file and in the group_vars directory:
   webpack server
 
 ## In group_vars
-* stable: a set of variable definitions for building a stable FOLIO
-  full stack system out of released components
-
-* stable-backend: a set of variable definitions for building a stable
-  FOLIO backend system out of released components
-
 * testing: a set of variable definitions for building a FOLIO system
   out of the most recent commits to the code
 

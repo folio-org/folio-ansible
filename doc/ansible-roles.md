@@ -9,13 +9,11 @@ is designed to support a few groups as follows:
 * `build_curriculum` -- targets hosts for building a system to support
   the FOLIO developer curriculum
 * `vagrant` -- targets hosts built as stand-alone Vagrant systems
-* `stable` -- targets hosts that run a curated "stable" FOLIO
-  installation
 * `testing` -- targets hosts that run a FOLIO installation based on
   the HEAD of the master branch of the FOLIO component modules
 
 There are Ansible variables files in the `group_vars` directory with
-settings for the `vagrant`, `stable`, and `testing` groups.
+settings for the `vagrant`, and `testing` groups.
 
 The folio.yml playbook uses the following roles:
 
@@ -342,4 +340,3 @@ Depends on stripes-core.
 *Note: without a running Okapi instance and a configured tenant, the
  Users application will not run. Sample user data is available in
  mod-users-data.*
-
