@@ -177,22 +177,29 @@ configure it:
 This is an example how to avoid using port 9130 that may be blocked at
 some institutions. Instead all front-end and back-end requests arrive
 at the same default port (80 for HTTP or 443 for HTTPS). Configure the
-Okapi URL like `http://example.com` or `https://example.com` as explained in
+Okapi URL like
+
+    "OKAPI" => "http://example.com/okapi"
+
+or
+
+    "OKAPI" => "https://example.com/okapi"
+
+as explained in
 the previous section.
 
 An nginx in front of the Vagrant box proxies the requests to ports
-3000 and 9130. This snippet shows how to do it:
+3000 and 9130. This snippet shows how to do it, note the presence/
+absence of the trailing slash:
 
-    # Frontend requests:
-    # index file at / and all *.ico, *,png, *.css, *.js, *.js.map files in the root directory and
-    # the /bootstrap/ and /fonts/ and /img/ and /translations/ directories.
-    location ~ ^(/|/[0-9a-zA-Z.-]+\.(ico|png|css|js|js\.map)|/bootstrap/.*|/fonts/.*|/img/.*|/translations/.*)$ {
-        proxy_pass http://127.0.0.1:3000;
+    # back-end requests:
+    location /okapi/ {
+        proxy_pass http://127.0.0.1:9130/;
     }
 
-    # Backend requests:
+    # front-end requests:
     location / {
-        proxy_pass http://127.0.0.1:9130;
+        proxy_pass http://127.0.0.1:3000;
     }
 
 ## Updating FOLIO components on Vagrant boxes
