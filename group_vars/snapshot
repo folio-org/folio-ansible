@@ -24,6 +24,11 @@ add_modules:
 
 # modules that need to be deployed
 folio_modules:
+  - name: mod-agreements
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-audit
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
@@ -105,6 +110,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-kb-ebsco-java
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-licenses
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
