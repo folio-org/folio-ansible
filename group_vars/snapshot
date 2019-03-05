@@ -11,6 +11,8 @@ stripes_exclude_list:
   - folio_stripes
   - folio_platform-core
   - folio_platform-complete
+  - folio_platform-erm
+  - folio_stripes-erm-components
 add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
