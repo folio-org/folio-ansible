@@ -6,7 +6,10 @@
       X-Okapi-Tenant: "supertenant"
       Accept: application/json
     status_code: 200
+  retries: 5
+  delay: 3
   register: supertenant_interfaces_response
+  until: supertenant_interfaces_response.status == 200
 
 - name: set list of interfaces on supertenant
   set_fact:
