@@ -4,12 +4,6 @@
 # wait a few seconds to make sure okapi is up
 - wait_for: timeout=10
 
-# Authenticate to supertenant if required
-- name: include okapi-authenticate role
-  include_role:
-    name: okapi-authenticate
-  when: supertenant_token is not defined
-
 - name: Pull module descriptors
   uri:
     url: "{{ okapi_url }}/_/proxy/pull/modules"

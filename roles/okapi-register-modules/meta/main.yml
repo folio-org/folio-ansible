@@ -1,3 +1,5 @@
 ---
 dependencies:
-  - { role: common }
+  - role: common
+  - role: okapi-authenticate
+    when: supertenant_token is not defined

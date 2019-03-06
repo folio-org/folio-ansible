@@ -1,9 +1,4 @@
 ---
-- name: include okapi-authenticate role
-  include_role:
-    name: okapi-authenticate
-  when: supertenant_token is not defined
-
 - name: Collect module names
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
