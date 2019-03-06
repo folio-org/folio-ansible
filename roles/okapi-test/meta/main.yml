@@ -1,5 +1,5 @@
 ---
 dependencies:
+  - role: okapi-src
   - role: okapi-authenticate
     when: supertenant_token is not defined
-  - role: okapi-src
