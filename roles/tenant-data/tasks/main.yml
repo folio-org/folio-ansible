@@ -1,8 +1,13 @@
 ---
-
 # sometimes this role is run right after okapi is started.  Wait some
 # interval to ensure okapi is fully started
 - wait_for: timeout=15
+
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
 
 # Role to load a dummy tenant
 - name: Check tenant

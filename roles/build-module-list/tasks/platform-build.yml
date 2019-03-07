@@ -1,4 +1,10 @@
 ---
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+
 # Build the enable_json and deploy_json data structures from Okapi
 # dependency resolution
 - name: Move to Node.js lts

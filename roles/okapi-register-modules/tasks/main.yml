@@ -6,6 +6,12 @@
 # wait a few seconds to make sure okapi is up
 - wait_for: timeout=5
 
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+
 #########
 # Setup #
 #########

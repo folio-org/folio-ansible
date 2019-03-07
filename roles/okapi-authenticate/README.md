@@ -2,12 +2,13 @@
 This role authenticates to the supertenant in the event that the superuser is secured. okapi-authenticate sets the login token as `supertenant_token`. `supertenant_token` can be used in other roles.
 
 ## Calling okapi-authenticate from another role
-Include this role in the `meta/main.yml` file as a dependency for any role that may need to make authenticated calls to the Okapi supertenant. For example:
+Include this role in the as a task for any role that may need to make authenticated calls to the Okapi supertenant. For example:
 ```
----
-dependencies:
-  - role: okapi-authenticate
-    when: supertenant_token is not defined
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
 ```
 Any calls to the Okapi supertenant must include appropriate headers. It's OK to send headers even when they are not required. For example, include these headers for a call to Okapi that requires an authtoken:
 ```

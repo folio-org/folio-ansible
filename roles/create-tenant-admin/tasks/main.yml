@@ -1,4 +1,10 @@
 ---
+# Authenticate to supertenant if required
+- name: include okapi-authenticate role
+  include_role:
+    name: okapi-authenticate
+  when: supertenant_token is not defined
+
 # Role to bootstrap a tenant admin user
 #
 
