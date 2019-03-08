@@ -4,10 +4,6 @@ okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 tenant: diku
 
-# supertenant credentials
-superuser_username: super_admin
-superuser_password: admin
-
 # Define or override one or more of these variables to post install JSON to Okapi.
 # Order of precedence:
 # 1. stripes-platform

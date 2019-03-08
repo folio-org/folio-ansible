@@ -1,23 +1,4 @@
 ---
-# Authenticate to supertenant if required
-- name: login to supertenant if authn interface exists
-  uri:
-    url: "{{ okapi_url }}/authn/login"
-    method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
-    body_format: json
-    body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
-    status_code: 201, 404
-  register: login_result
-  when: supertenant_token is not defined
-
-- name: Set Okapi token if supertenant is secured
-  set_fact:
-    supertenant_token: "{{ login_result['x_okapi_token'] }}"
-  when: login_result.status is defined and login_result.status == 201
-
 # Build the enable_json and deploy_json data structures from Okapi
 # dependency resolution
 - name: Move to Node.js lts
@@ -78,10 +59,6 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
     method: POST
-    headers:
-      X-Okapi-Tenant: supertenant
-      Accept: application/json
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
     body_format: json
     body: "{{ install_list }}"
   register: module_deps

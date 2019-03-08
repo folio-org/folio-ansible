@@ -3,9 +3,6 @@
 - name: Check test module deployment
   uri:
     url: http://localhost:9130/_/proxy/modules/{{ item }}
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
     status_code: 200, 404
   with_items:
     - test-basic
@@ -16,11 +13,7 @@
   uri:
     url: http://localhost:9130/_/proxy/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: "{{ lookup('template', 'test-basic.json.j2') | to_json }}"
     status_code: 201
   when: test_deploy_status.results[0].status == 404
@@ -29,11 +22,7 @@
   uri:
     url: http://localhost:9130/_/proxy/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: "{{ lookup('template', 'test-auth.json.j2') | to_json }}"
     status_code: 201
   when: test_deploy_status.results[1].status == 404
@@ -41,9 +30,6 @@
 - name: Check test module registration
   uri:
     url: http://localhost:9130/_/discovery/modules/{{ item }}
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
     status_code: 200, 404
   with_items:
     - test-basic
@@ -54,11 +40,7 @@
   uri:
     url: http://localhost:9130/_/discovery/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: '{ "srvcId" : "test-basic", "nodeId" : "localhost" }'
     status_code: 201
   when: test_reg_status.results[0].status == 404
@@ -67,11 +49,7 @@
   uri:
     url: http://localhost:9130/_/discovery/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: '{ "srvcId" : "test-auth", "nodeId" : "localhost" }'
     status_code: 201
   when: test_reg_status.results[1].status == 404
@@ -79,9 +57,6 @@
 - name: Check testlib tenant
   uri:
     url: http://localhost:9130/_/proxy/tenants/testlib
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
     status_code: 200, 404
   register: testlib_status
 
@@ -89,11 +64,7 @@
   uri:
     url: http://localhost:9130/_/proxy/tenants
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: '{ "id" : "testlib", "name" : "Test Library", "description" : "Our Own Test Library" }'
     status_code: 201
   when: testlib_status.status == 404
@@ -102,20 +73,12 @@
   uri:
     url: http://localhost:9130/_/proxy/tenants/testlib/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: '{ "id" : "test-basic" }'
 
 - name: Enable test-auth module for testlib
   uri:
     url: http://localhost:9130/_/proxy/tenants/testlib/modules
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
-      Content-Type: application/json
+    HEADER_Content-Type: application/json
     body: '{ "id" : "test-auth" }'

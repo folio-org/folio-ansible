@@ -82,9 +82,6 @@
 - name: Check module registration
   uri:
     url: "{{ stripes_build_okapi_url }}/_/proxy/modules/{{ item.id }}"
-    headers:
-      X-Okapi-Tenant: supertenant
-      Accept: application/json
     status_code: 200, 404
   with_items: "{{ mod_descr_list }}"
   register: mod_reg_status
@@ -94,10 +91,6 @@
   uri:
     url: "{{ stripes_build_okapi_url }}/_/proxy/modules"
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
     body_format: json
     body: "{{ item.1|to_json }}"
     status_code: 201
@@ -110,9 +103,6 @@
 - name: Check tenant-module association
   uri:
     url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
     status_code: 200, 404
   with_items: "{{ mod_descr_list }}"
   register: tenant_modules
@@ -122,10 +112,6 @@
   uri:
     url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
     method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-      Accept: application/json
     body_format: json
     body: '{ "id" : "{{ item.1.id }}" }'
     status_code: 201
