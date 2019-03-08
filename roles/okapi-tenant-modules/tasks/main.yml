@@ -25,8 +25,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ item|to_json }}"
     status_code: 201
@@ -40,8 +38,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ lookup('file', deploy_file) }}"
     timeout: "{{ deploy_timeout }}"
@@ -62,8 +58,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ deploy_json.json }}"
     timeout: "{{ deploy_timeout }}"
@@ -77,8 +71,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ lookup('file', enable_file) }}"
   register: enable_from_file

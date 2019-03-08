@@ -25,8 +25,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ item|to_json }}"
     status_code: 201
@@ -77,8 +75,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ install_deploy }}"
     timeout: "{{ deploy_timeout }}"
@@ -92,8 +88,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ install }}"
   register: install_request

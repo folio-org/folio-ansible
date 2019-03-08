@@ -20,7 +20,6 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/authtoken"
     headers:
-      X-Okapi-Tenant: "supertenant"
       Accept: "application/json, text/plain"
   register: authtoken_module
 
@@ -30,8 +29,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: "application/json, text/plain"
     body: '[ { "id": "{{ authtoken_module.json.0.id }}", "action": "disable" } ]'
   register: authtoken_disable
@@ -143,8 +140,6 @@
         method: POST
         body_format: json
         headers:
-          X-Okapi-Tenant: "supertenant"
-          X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
         body: "{{ authtoken_enable }}"
       register: authtoken_enable_result
