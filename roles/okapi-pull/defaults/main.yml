@@ -5,3 +5,7 @@ mod_descr_repos:
   urls:
     - http://folio-registry.aws.indexdata.com
 okapi_pull_timeout: 300
+
+# supertenant credentials
+superuser_username: super_admin
+superuser_password: admin
