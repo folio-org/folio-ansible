@@ -8,7 +8,3 @@ tenant_name: 'Datalogisk Institut'
 tenant_desc: 'Danish Library Technology Institute'
 
 tenant_json: "{{ lookup('template', 'tenant.json.j2') }}"
-
-# supertenant credentials
-superuser_username: super_admin
-superuser_password: admin

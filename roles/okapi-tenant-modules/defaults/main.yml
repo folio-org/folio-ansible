@@ -25,7 +25,3 @@ deploy_timeout: 600
 # deploy_url:
 # enable_file:
 # enable_url:
-
-# supertenant credentials
-superuser_username: super_admin
-superuser_password: admin

@@ -5,6 +5,3 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_modules: [ ]
 mod_descriptor_repo: http://folio-registry.aws.indexdata.com
 update_launch_descr: no
-# supertenant credentials
-superuser_username: super_admin
-superuser_password: admin

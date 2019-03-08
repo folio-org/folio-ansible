@@ -1,23 +1,4 @@
 ---
-# Authenticate to supertenant if required
-- name: login to supertenant if authn interface exists
-  uri:
-    url: "{{ okapi_url }}/authn/login"
-    method: POST
-    headers:
-      X-Okapi-Tenant: "supertenant"
-      Accept: application/json
-    body_format: json
-    body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
-    status_code: 201, 404
-  register: login_result
-  when: supertenant_token is not defined
-
-- name: Set Okapi token if supertenant is secured
-  set_fact:
-    supertenant_token: "{{ login_result['x_okapi_token'] }}"
-  when: login_result.status is defined and login_result.status == 201
-
 # Role to bootstrap a tenant admin user
 #
 
@@ -39,7 +20,6 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/authtoken"
     headers:
-      X-Okapi-Tenant: "supertenant"
       Accept: "application/json, text/plain"
   register: authtoken_module
 
@@ -49,8 +29,6 @@
     method: POST
     body_format: json
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: "application/json, text/plain"
     body: '[ { "id": "{{ authtoken_module.json.0.id }}", "action": "disable" } ]'
   register: authtoken_disable
@@ -162,8 +140,6 @@
         method: POST
         body_format: json
         headers:
-          X-Okapi-Tenant: "supertenant"
-          X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
         body: "{{ authtoken_enable }}"
       register: authtoken_enable_result
