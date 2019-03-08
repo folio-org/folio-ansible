@@ -9,3 +9,7 @@ admin_user:
   first_name: DIKU
   last_name: ADMINISTRATOR
   email: admin@diku.example.org
+
+# supertenant credentials
+superuser_username: super_admin
+superuser_password: admin
