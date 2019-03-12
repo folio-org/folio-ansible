@@ -48,6 +48,7 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-password-validator
@@ -108,6 +109,8 @@ folio_modules:
   - name: mod-circulation-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
     deploy: yes
 
   - name: mod-circulation
