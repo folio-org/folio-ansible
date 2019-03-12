@@ -2,7 +2,19 @@
 # Use a preconfigured github stripes platform
 with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
+platform_remove_lock: false
 stripes_github_version: HEAD
+
+# set use_refspec to true if specifying a refspec instead of a branch
+from_refspec: false
+# if from_refspec is true, specifiy stripes_github_refspec
+#stripes_github_refspec: 
+#
+# Example using refspec and github:
+#    
+#    stripes_github_refspec: pull/23/head
+#    stripes_github_version: pr-23
+
 platform_remove_lock: false
 
 # OR specify stripes configuration here and configure from ansible templates 
