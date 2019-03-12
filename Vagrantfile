@@ -22,7 +22,6 @@ Vagrant.configure(2) do |config|
   config.vm.define "snapshot-backend-core", autostart: false do |snapshot_backend_core|
     snapshot_backend_core.vm.box = "folio/snapshot-backend-core"
     snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    snapshot_backend_core.vm.network "forwarded_port", guest: 3000, host: 3000
     snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8000
   end
 
@@ -117,6 +116,41 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_testing_backend"],
         "testing" => ["build_testing_backend"],
         "stripes-build" => ["build_testing_backend"]
+      }
+    end
+  end
+
+  config.vm.define "build_testing_core", autostart: false do |build_testing_core|
+    build_testing_core.vm.box = "bento/ubuntu-16.04"
+    build_testing_core.vm.provider "virtualbox" do |vt|
+      vt.memory = 10240
+    end
+    build_testing_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_core.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_testing_core.vm.network "forwarded_port", guest: 8000, host: 8000
+    build_testing_core.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_testing_core"],
+        "testing-core" => ["build_testing_core"],
+        "stripes" => ["build_testing_core"]
+      }
+    end
+  end
+
+  config.vm.define "build_testing_backend_core", autostart: false do |build_testing_backend_core|
+    build_testing_backend_core.vm.box = "bento/ubuntu-16.04"
+    build_testing_backend_core.vm.provider "virtualbox" do |vtb|
+      vtb.memory = 10240
+    end
+    build_testing_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_testing_backend_core.vm.network "forwarded_port", guest: 8000, host: 8000
+    build_testing_backend_core.vm.provision "ansible" do |ansible|
+      ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_testing_backend_core"],
+        "testing-core" => ["build_testing_backend_core"],
+        "stripes-build" => ["build_testing_backend_core"]
       }
     end
   end

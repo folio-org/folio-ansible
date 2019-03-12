@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: snapshot-core:testing:snapshot:release-core:minimal
+- hosts: snapshot-core:testing-core:testing:snapshot:release-core:minimal
   roles:
     - common
     - postgresql
@@ -12,7 +12,7 @@
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
 - name: Configure testing build
-  hosts: testing
+  hosts: testing-core:testing
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -54,7 +54,7 @@
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
-  hosts: snapshot-core:testing:snapshot
+  hosts: snapshot-core:testing-core:testing:snapshot
   roles:
     - role: module-sample-data
       module_name: mod-inventory-storage

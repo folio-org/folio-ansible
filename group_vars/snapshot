@@ -11,6 +11,8 @@ stripes_exclude_list:
   - folio_stripes
   - folio_platform-core
   - folio_platform-complete
+  - folio_platform-erm
+  - folio_stripes-erm-components
 add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
@@ -24,6 +26,11 @@ add_modules:
 
 # modules that need to be deployed
 folio_modules:
+  - name: mod-agreements
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-audit
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
@@ -79,6 +86,16 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-email
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-event-config
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-feesfines
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -105,6 +122,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-kb-ebsco-java
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-licenses
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
@@ -151,6 +173,11 @@ folio_modules:
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+    deploy: yes
+
+  - name: mod-sender
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-source-record-manager
