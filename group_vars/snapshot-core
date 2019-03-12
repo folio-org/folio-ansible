@@ -13,8 +13,7 @@ stripes_exclude_list:
 add_modules:
   - mod-codex-inventory
   - mod-graphql
-  - mod-audit-filter
-  - mod-audit
+
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -22,16 +21,6 @@ add_modules:
 
 # modules that need to be deployed
 folio_modules:
-  - name: mod-audit
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    deploy: yes
-
-  - name: mod-audit-filter
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
   - name: mod-authtoken
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
