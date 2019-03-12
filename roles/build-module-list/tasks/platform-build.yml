@@ -64,7 +64,7 @@
   register: module_deps
   when: not releases_only
 
-- name: Get dependencies for modules from Okapi
+- name: Get release-only dependencies for modules from Okapi
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true&preRelease=false"
     method: POST
