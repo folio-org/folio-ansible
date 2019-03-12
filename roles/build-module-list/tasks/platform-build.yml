@@ -57,21 +57,11 @@
 
 - name: Get dependencies for modules from Okapi
   uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true{% if releases_only %}&preRelease=false{% endif %}"
     method: POST
     body_format: json
     body: "{{ install_list }}"
   register: module_deps
-  when: not releases_only
-
-- name: Get release-only dependencies for modules from Okapi
-  uri:
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true&preRelease=false"
-    method: POST
-    body_format: json
-    body: "{{ install_list }}"
-  register: module_deps
-  when: releases_only
 
 - name: Build module_deps_list, remove modules that are pinned
   set_fact:

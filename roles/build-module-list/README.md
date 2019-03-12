@@ -75,4 +75,7 @@ add_modules: []
 #   - module: mod-authtoken
 #     version: v2.4.6
 pinned_modules: []
+
+# Build with releases only (no prereleases)
+releases_only: no
 ```
