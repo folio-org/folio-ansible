@@ -2,22 +2,21 @@
 # Use a preconfigured github stripes platform
 with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
-platform_remove_lock: false
 stripes_github_version: HEAD
 
 # set use_refspec to true if specifying a refspec instead of a branch
 from_refspec: false
 # if from_refspec is true, specifiy stripes_github_refspec
-#stripes_github_refspec: 
+#stripes_github_refspec:
 #
 # Example using refspec and github:
-#    
+#
 #    stripes_github_refspec: pull/23/head
 #    stripes_github_version: pr-23
 
 platform_remove_lock: false
 
-# OR specify stripes configuration here and configure from ansible templates 
+# OR specify stripes configuration here and configure from ansible templates
 stripes_core_version: "latest"
 stripes_components_version: "latest"
 stripes_modules:
@@ -68,7 +67,7 @@ folio_snapshot_url: 'http://folio-snapshot-stable.aws.indexdata.com'
 
 #
 # Disabled by default
-# 
+#
 npm_proxy: false
 npm_authtoken: ''
 
@@ -85,18 +84,18 @@ releases_only: false
 md_path: './ModuleDescriptors'
 
 # Do NOT attempt to enable the following modules or non-modules. Defaults.
-exclude_mods: 
+exclude_mods:
   - folio_stripes
   - folio_eslint-config-stripes
-  - folio_react-intl-safe-html 
+  - folio_react-intl-safe-html
   - folio_react-big-calendar
 
 # Additional backend modules to add to okapi-install.json that wouldn't be added
 # via Okapi dependency resolution
-# e.g 
+# e.g
 # other_mods:
 #   - mod-codex-inventory
 other_mods: []
 
 
-# 
+#
