@@ -217,6 +217,17 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-erm-usage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-erm-usage-harvester
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
 stripes_github_version: snapshot
