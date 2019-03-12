@@ -1,7 +1,4 @@
 ---
 
 dependencies:
-  - { role: stripes-build,
-            build_install_files: true,
-      when: fetch_install_files == true }
   - { role: yarn }
