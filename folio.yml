@@ -57,11 +57,6 @@
   hosts: snapshot-core:testing-core:testing:snapshot
   roles:
     - mod-inventory-mods
-    - role: module-sample-data
-      module_name: mod-tags
-      repository: "https://github.com/folio-org/mod-tags"
-      files:
-        - { load_endpoint: /tags, fileglob: sample-data/*.json }
 
 # Additional sample data for testing and snapshot
 - name: Load sample data for testing/snapshot builds

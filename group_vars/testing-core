@@ -144,8 +144,9 @@ folio_modules:
   - name: mod-tags
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
-
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core

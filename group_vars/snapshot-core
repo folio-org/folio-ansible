@@ -134,6 +134,8 @@ folio_modules:
   - name: mod-tags
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-template-engine
