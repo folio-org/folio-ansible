@@ -58,18 +58,10 @@
   roles:
     - mod-inventory-mods
     - role: module-sample-data
-      module_name: mod-circulation-storage
-      repository: "https://github.com/folio-org/mod-circulation-storage"
-      duplicate_key_error: 400
-      files:
-        - { load_endpoint: /patron-notice-policy-storage/patron-notice-policies, fileglob: reference-data/notice-policy-storage/notice-policies/*.json }
-    - mod-circulation-sample-data
-    - role: module-sample-data
       module_name: mod-tags
       repository: "https://github.com/folio-org/mod-tags"
       files:
         - { load_endpoint: /tags, fileglob: sample-data/*.json }
-    - mod-auth-demo-users
 
 # Additional sample data for testing and snapshot
 - name: Load sample data for testing/snapshot builds
@@ -163,7 +155,6 @@
     - tenant-admin-permissions
 
 - name: Build Stripes container
-  #hosts: snapshot-core:snapshot:release-core
   hosts: stripes-docker
   roles:
     - stripes-docker

@@ -61,6 +61,7 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-codex-ekb
@@ -139,6 +140,8 @@ folio_modules:
       - "verify.user=true"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-login-saml
@@ -176,6 +179,8 @@ folio_modules:
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-sender
@@ -208,6 +213,9 @@ folio_modules:
   - name: mod-users
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-users-bl
