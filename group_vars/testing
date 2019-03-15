@@ -24,6 +24,8 @@ folio_modules:
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-login
@@ -31,6 +33,8 @@ folio_modules:
       - "verify.user=true"
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-configuration
@@ -41,6 +45,9 @@ folio_modules:
   - name: mod-users
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-inventory-storage
@@ -111,6 +118,7 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-circulation
@@ -164,6 +172,8 @@ folio_modules:
   - name: mod-tags
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-orders-storage
