@@ -16,6 +16,7 @@ stripes_exclude_list:
 add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
+  - mod-erm-usage-harvester
   - mod-graphql
   - mod-audit-filter
   - mod-audit
