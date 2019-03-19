@@ -1,11 +1,12 @@
 # create-tenant-admin
 
-Create a tenant superuser
+Bootstrap an admin user. This role will disable authtoken for a tenant, create a user, permissions user, credentials, and service-points-users record, assigning the permission `permissions.all` to the user, then re-enable mod-authtoken.
 
 ## Prerequisites
 
 * A running Okapi system with the users, login, and permissions interfaces enabled for the tenant.
-  * If authtoken is enabled for the tenant, this role will disable and re-enable it.
+  * If `authtoken` is enabled for the tenant, this role will disable and re-enable it.
+  * If `service-points-users` is enabled for the tenant, this role will create a service-points-users record.
 
 ## Usage
 

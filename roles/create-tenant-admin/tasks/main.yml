@@ -124,6 +124,49 @@
       register: create_login
       changed_when: create_login.status == 201
       when: check_perms.json.totalRecords == 0
+    - name: Check for service-points-users interface
+      uri:
+        url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/service-points-users"
+        headers:
+          Accept: "application/json, text/plain"
+      register: check_sp_users_int
+    - name: Check for service-points-users record
+      uri:
+        url: "{{ okapi_url }}/service-points-users?query=userId%3d%3d{{ admin_user_id }}"
+        headers:
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+      register: check_sp_user
+      when: check_sp_users_int.json|default([])|length > 0
+    - name: Get service points
+      uri:
+        url: "{{ okapi_url }}/service-points"
+        headers:
+          Accept: application/json
+          X-Okapi-Tenant: "{{ tenant }}"
+      register: service_points
+      when: check_sp_users_int.json|default([])|length > 0 and check_sp_user.json.totalRecords == 0
+    - name: Set list of service point ids
+      set_fact: service_points_ids={{ '\"' + service_points|json_query('json.servicepoints[*].id')|join('\", \"') + '\"' }}
+      when: check_sp_users_int.json|default([])|length > 0 and check_sp_user.json.totalRecords == 0
+    - name: Create service points user
+      uri:
+        url: "{{ okapi_url }}/service-points-users"
+        method: POST
+        body_format: json
+        headers:
+          Accept: application/json
+          X-Okapi-Tenant: "{{ tenant }}"
+        status_code: 201,422
+        body: >-
+          {
+          "userId": "{{ admin_user_id }}",
+          "servicePointsIds": [ {{ service_points_ids }} ],
+          "defaultServicePointId": "{{ service_points|json_query('json.servicepoints[*].id')|first }}"
+          }
+      register: create_sp_user
+      changed_when: create_sp_user.status == 201
+      when: check_sp_users_int.json|default([])|length > 0 and check_sp_user.json.totalRecords == 0
   always:
     ####################
     # Enable authtoken #
