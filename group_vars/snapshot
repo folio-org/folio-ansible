@@ -17,6 +17,7 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-data-import-converter-storage
+  - mod-erm-usage-harvester
   - mod-graphql
   - mod-audit-filter
   - mod-audit
@@ -97,6 +98,16 @@ folio_modules:
     deploy: yes
 
   - name: mod-email
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-erm-usage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-erm-usage-harvester
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
@@ -236,6 +247,7 @@ folio_modules:
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
+
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
