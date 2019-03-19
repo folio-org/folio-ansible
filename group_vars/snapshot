@@ -18,6 +18,7 @@ add_modules:
   - mod-codex-ekb
   - mod-erm-usage-harvester
   - mod-graphql
+  - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
 # Sample pinned module
@@ -134,6 +135,11 @@ folio_modules:
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-invoice-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-kb-ebsco-java
