@@ -66,7 +66,7 @@ echo "]" >> $installList
 # Get all module deps from Okapi
 status=$(curl -s -w "%{http_code}" -o /tmp/okapi_output -X POST \
               -H 'X-Okapi-Tenant: supertenant' \
-              -H 'X-Okapi-Token: {{ stripes_okapi_supertenant_token }}' \
+              -H 'X-Okapi-Token: {{ supertenant_token }}' \
               -H 'Content-type: application/json' \
               -d @${installList} \
                ${okapiUrl}/_/proxy/tenants/${tenant}/install?${installOpts})

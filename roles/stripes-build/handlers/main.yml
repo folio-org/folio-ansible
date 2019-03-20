@@ -95,7 +95,7 @@
     url: "{{ stripes_build_okapi_url }}/_/proxy/modules"
     headers:
       X-Okapi-Tenant: supertenant
-      X-Okapi-Token: "{{ stripes_build_okapi_supertenant_token | default('') }}"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     method: POST
     body_format: json
@@ -112,7 +112,7 @@
     url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules/{{ item.id }}"
     headers:
       X-Okapi-Tenant: supertenant
-      X-Okapi-Token: "{{ stripes_build_okapi_supertenant_token | default('') }}"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
   with_items: "{{ mod_descr_list }}"
@@ -124,7 +124,7 @@
     url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
     headers:
       X-Okapi-Tenant: supertenant
-      X-Okapi-Token: "{{ stripes_build_okapi_supertenant_token | default('') }}"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     method: POST
     body_format: json
