@@ -12,6 +12,19 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
+  config.vm.define "test", autostart: false do |test|
+    test.vm.box = "folio/snapshot-backend-core"
+    test.vm.provider "virtualbox" do |vtb|
+      vtb.memory = 10240
+    end
+    test.vm.network "forwarded_port", guest: 9130, host: 9130
+    test.vm.network "forwarded_port", guest: 8000, host: 8000
+    test.vm.provision "ansible" do |ansible|
+      ansible.playbook = "test.yml"
+      ansible.verbose = "v"
+    end
+  end
+
   config.vm.define "snapshot-core", autostart: false do |snapshot_core|
     snapshot_core.vm.box = "folio/snapshot-core"
     snapshot_core.vm.network "forwarded_port", guest: 9130, host: 9130

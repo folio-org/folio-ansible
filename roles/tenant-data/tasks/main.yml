@@ -8,12 +8,19 @@
 - name: Check tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
     status_code: 200, 404
   register: tenant_check
 
 - name: Create tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
     method: POST
     body_format: json
     body: "{{ tenant_json }}"
@@ -26,6 +33,10 @@
 - name: Enable Okapi internal module for tenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
     method: POST
     body_format: json
     body: '{ "id": "okapi" }'

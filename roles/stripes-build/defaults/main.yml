@@ -38,8 +38,10 @@ stripes_conf_dir: /etc/folio/stripes
 stripes_okapi_port: 9130
 disable_auth: false
 stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_okapi_supertenant_token: "{{ stripes_supertenant_token }} | default('') }}"
 # for when the Okapi URL for building is different than for production
 stripes_build_okapi_url: "{{ stripes_okapi_url }}"
+stripes_build_okapi_supertenant_token: "{{ stripes_supertenant_token }} | default('') }}"
 stripes_tenant: diku
 with_sourcemap: true
 node_environment:

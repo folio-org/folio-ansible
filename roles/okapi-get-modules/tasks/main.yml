@@ -3,6 +3,9 @@
 - name: Get modules
   uri:
     url: "{{ okapi_url }}/_/proxy/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
   register: okapi_modules_req
 
 - set_fact: okapi_modules={{ okapi_modules_req | json_query('json[].id') }}

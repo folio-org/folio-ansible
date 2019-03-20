@@ -1,0 +1,10 @@
+---
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+stripes_okapi_port: 9130
+stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
+stripes_build_okapi_url: "{{ stripes_okapi_url }}"
+superuser_username: super_admin
+superuser_password: admin
+stripes_superuser_username: super_admin
+stripes_superuser_password: admin
