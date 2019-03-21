@@ -1,9 +1,5 @@
 ---
 # Common tasks for all roles
-- name: debug 1799
-  debug:
-    msg: "running from branch 1799"
-    
 - name: Update apt-cache if not updated in last sixty minutes
   become: yes
   apt: 

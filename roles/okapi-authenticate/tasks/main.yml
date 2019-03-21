@@ -15,6 +15,9 @@
     body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
     status_code: 201, 404
   register: login_result
+  retries: 5
+  delay: 10
+  until: login_result is not failed
 
 - name: Set Okapi token if supertenant is secured
   set_fact:
