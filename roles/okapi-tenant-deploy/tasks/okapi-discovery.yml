@@ -9,6 +9,9 @@
 - name: Get module ids if version is not defined
   uri:
     url: "{{ okapi_url }}/_/proxy/modules?filter={{ item.name }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json, text/plain
   register: discovery_module_versions
   when: item.version is not defined
 
@@ -20,12 +23,19 @@
 - name: Check Okapi discovery to avoid multiple entries
   uri:
     url: "{{ okapi_url }}/_/discovery/modules/{{ discovery_module_id }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json, text/plain
     status_code: 200,404
   register: discovery_check_module
 
 - name: Post to Okapi discovery
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
     method: POST
     body_format: json
     body:

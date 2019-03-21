@@ -7,6 +7,10 @@
 - name: Pull module descriptors
   uri:
     url: "{{ okapi_url }}/_/proxy/pull/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
     body_format: json
     method: POST
     body: "{{ mod_descr_repos }}"
