@@ -1,6 +1,5 @@
 ---
 # Common tasks for all roles
-
 - name: Update apt-cache if not updated in last sixty minutes
   become: yes
   apt: 

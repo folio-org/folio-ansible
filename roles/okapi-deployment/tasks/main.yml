@@ -22,6 +22,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ item|to_json }}"
     status_code: 201
@@ -50,6 +52,7 @@
   uri:
     url: "{{ okapi_url + '/_/proxy/modules/' + item.name + '-' + item.version }}"
     headers:
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
   when: item.deploy|default(false)
   with_items: "{{ folio_modules }}"
@@ -81,6 +84,7 @@
   uri:
     url: "{{ okapi_url + '/_/discovery/modules/' + item.value.srvcId }}"
     headers:
+      X-Okapi-Tenant: "supertenant"
       Accept: application/json
     status_code: 200, 404
   with_dict: "{{ dep_descrs }}"
@@ -92,6 +96,8 @@
     method: POST
     body_format: json
     headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"      
       Accept: application/json, text/plain
     body: "{{ item.item.value|to_json }}"
     status_code: 201

@@ -26,6 +26,10 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?simulate=true"
     method: POST
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
     body_format: json
     body: "{{ module_list }}"
   register: module_deps

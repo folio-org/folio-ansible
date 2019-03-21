@@ -1,0 +1,28 @@
+---
+# Authenticate to supertenant if required
+
+- name: dump okapi_url
+  debug: var=okapi_url
+
+- name: login and set supertenant token
+  uri:
+    url: "{{ okapi_login_url }}/authn/login"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
+    body_format: json
+    body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
+    status_code: 201, 404
+  register: login_result
+  retries: 5
+  delay: 10
+  until: login_result is not failed
+
+- name: Set Okapi token if supertenant is secured
+  set_fact:
+    supertenant_token: "{{ login_result['x_okapi_token'] }}"
+  when: login_result.status is defined and login_result.status == 201
+
+- name: dump supertenant token
+  debug: var=supertenant_token

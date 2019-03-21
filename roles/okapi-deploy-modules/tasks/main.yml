@@ -91,12 +91,18 @@
 - name: Check module registration
   uri:
     url: "{{ okapi_url }}/_/proxy/modules/{{ item.module_id }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
   with_items: "{{ folio_modules_withid }}"
 
 # Notify restart handler if any module not already deployed
 - name: Check module deployment
   uri:
     url: "{{ okapi_url }}/_/discovery/modules/{{ item.module_id }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
     status_code: 200, 404
   with_items: "{{ folio_modules_withid }}"
   register: module_deployment
