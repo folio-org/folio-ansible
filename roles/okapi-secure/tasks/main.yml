@@ -166,4 +166,5 @@
     status_code: 201
   register: mod_authtoken_enable
   changed_when: mod_authtoken_enable.status == 201
+  notify: supertenant login
   when: mod_authtoken_check.status == 404
