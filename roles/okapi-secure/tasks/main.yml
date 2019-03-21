@@ -168,3 +168,6 @@
   changed_when: mod_authtoken_enable.status == 201
   notify: supertenant login
   when: mod_authtoken_check.status == 404
+
+- name: flush handlers
+  meta: flush_handlers
