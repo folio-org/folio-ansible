@@ -1,7 +1,0 @@
----
-- hosts: all
-  #pre_tasks:
-  # - wait_for: timeout=90
-  roles:
-    - okapi-secure
-    - okapi-authenticate
