@@ -21,6 +21,7 @@ add_modules:
   - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
+  - edge-rtac
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -198,6 +199,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-rtac
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-sender
