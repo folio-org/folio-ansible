@@ -52,6 +52,21 @@
     - create-tenant-admin
     - tenant-admin-permissions
 
+# Edge modules
+- name: Set up edge-rtac
+  hosts: testing:snapshot
+  roles:
+    - role: edge-module
+      edge_module: edge-rtac
+      edge_module_publish_port: 9700
+      edge_module_path: /prod/rtac
+      edge_module_expose_port: 8081
+      edge_module_docker_env:
+        JAVA_OPTIONS: "-Xmx256m"
+      auth_required: yes
+      inst_user_perms:
+        - rtac.all
+
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
   hosts: snapshot-core:testing-core:testing:snapshot

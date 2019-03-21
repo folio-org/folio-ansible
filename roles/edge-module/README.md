@@ -77,4 +77,5 @@ edge_module_docker_env:
 # sample Docker env
 # edge_module_docker_env:
 #   JAVA_OPTIONS: "-Xmx256m"
+edge_module_okapi_url: "{{ okapi_url }}"
 ```

@@ -168,7 +168,7 @@
     image: "{{ edge_docker_repo }}/{{ edge_module }}:{{ edge_module_version }}"
     env: "{{ edge_module_docker_env }}"
     command:
-      - "-Dsecure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
+      - "-Dokapi_url={{ edge_module_okapi_url }} -Dsecure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
     keep_volumes: no
     published_ports: "{{ edge_module_publish_port }}:{{ edge_module_expose_port }}"
     restart_policy: always
