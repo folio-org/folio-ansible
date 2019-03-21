@@ -1,0 +1,29 @@
+---
+- name: Get the module list for the tenant
+  uri:
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    headers:
+      Accept: application/json
+  register: tenant_modules_enabled
+
+- name: Build stripes_install
+  set_fact:
+    stripes_install: "{{ stripes_install|default([]) + [ { 'id': item.id, 'action': 'enable' } ] }}"
+  when: item.id is match("^folio_")
+  with_items: "{{ tenant_modules_enabled.json }}"
+
+- name: Write out stripes-install.json file to config directory
+  become: yes
+  copy: dest={{ folio_conf }}/stripes-install.json content={{ stripes_install|to_nice_json }}
+  when: stripes_install|default(false)
+
+- name: Build okapi_install
+  set_fact:
+    okapi_install: "{{ okapi_install|default([]) + [ { 'id': item.id, 'action': 'enable' } ] }}"
+  when: item.id is match("^mod-") or item.id is match("^okapi-")
+  with_items: "{{ tenant_modules_enabled.json }}"
+
+- name: Write out okapi-install.json file to config directory
+  become: yes
+  copy: dest={{ folio_conf }}/okapi-install.json content={{ okapi_install|to_nice_json }}
+  when: okapi_install|default(false)
