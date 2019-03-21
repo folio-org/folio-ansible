@@ -193,6 +193,8 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: edge-rtac
+
   - name: mod-audit
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
