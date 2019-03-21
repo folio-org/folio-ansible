@@ -2,6 +2,9 @@
 - name: Collect module names
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      Accept: application/json
     status_code: 200
   register: disco_results
 
@@ -59,6 +62,7 @@
     url: "{{ okapi_url }}/users/{{ superuser_username | to_uuid }}"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
   register: superuser_created_check
@@ -81,6 +85,10 @@
 - name: Check if mod-login is enabled on supertenant
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ required_mods['mod-login'] }}"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json
     status_code: 200, 404
   register: mod_login_check
 
@@ -117,6 +125,7 @@
     url: "{{ okapi_url }}/authn/credentials-existence?userId={{ superuser_username | to_uuid }}"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200
   register: superuser_creds_check
