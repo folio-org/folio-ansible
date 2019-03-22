@@ -2,7 +2,7 @@
 
 The [main playbook](../folio.yml) and [Vagrantfile](../Vagrantfile) in
 this repository are targeted to build FOLIO systems using Ansible
-against a Debian Jessie or Ubuntu Xenial host. The Ansible inventory
+against an Ubuntu 16.04 (Xenial) host. The Ansible inventory
 is designed to support a few groups as follows:
 
 * `folio` -- targets hosts for building a full FOLIO system
@@ -17,7 +17,7 @@ settings for the `vagrant`, and `testing` groups.
 
 The folio.yml playbook uses the following roles:
 
-*All roles targeted for Debian 8 (Jessie)/Ubuntu Xenial*
+*All roles targeted for Ubuntu 16.04 (Xenial)*
 
 ## ansible
 Installs Ansible from the Ansible repository
