@@ -10,6 +10,12 @@
   service: name=nginx state=started
   ignore_errors: yes
 
+- name: disable nginx default vhost
+  become: yes
+  file: path=/etc/nginx/sites-enabled/default
+  state: absent
+  notify: Restart nginx
+
 - name: Install edge module configuration for nginx
   become: yes
   template: src=edge.conf.j2 dest=/etc/nginx/sites-available/edge force=no
