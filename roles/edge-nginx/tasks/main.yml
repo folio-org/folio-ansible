@@ -15,7 +15,7 @@
   file: 
     path: /etc/nginx/sites-enabled/default
     state: absent
-    notify: Restart nginx
+  notify: Restart nginx
 
 - name: Install edge module configuration for nginx
   become: yes
