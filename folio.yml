@@ -69,7 +69,7 @@
     - role: edge-module
       edge_module: edge-oai-pmh
       edge_module_publish_port: 9701
-      edge_module_path: /prod/oai-pmh
+      edge_module_path: /oai
       edge_module_expose_port: 8081
       edge_module_docker_env:
         JAVA_OPTIONS: "-Xmx256m"
