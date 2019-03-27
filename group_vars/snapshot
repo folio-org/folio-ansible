@@ -23,6 +23,7 @@ add_modules:
   - mod-audit-filter
   - mod-audit
   - edge-rtac
+  - edge-oai-pmh
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -180,6 +181,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-notify
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-oai-pmh
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes

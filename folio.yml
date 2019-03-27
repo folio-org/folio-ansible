@@ -53,7 +53,7 @@
     - tenant-admin-permissions
 
 # Edge modules
-- name: Set up edge-rtac
+- name: Set up edge modules
   hosts: testing:snapshot
   roles:
     - role: edge-module
@@ -66,6 +66,16 @@
       auth_required: yes
       inst_user_perms:
         - rtac.all
+    - role: edge-module
+      edge_module: edge-oai-pmh
+      edge_module_publish_port: 9701
+      edge_module_path: /oai
+      edge_module_expose_port: 8081
+      edge_module_docker_env:
+        JAVA_OPTIONS: "-Xmx256m"
+      auth_required: yes
+      inst_user_perms:
+        - oai-pmh.all
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
