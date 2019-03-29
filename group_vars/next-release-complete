@@ -27,6 +27,9 @@ folio_modules:
   - name: mod-agreements
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters: 
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-audit
@@ -144,6 +147,9 @@ folio_modules:
   - name: mod-licenses
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-login
