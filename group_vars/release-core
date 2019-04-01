@@ -7,7 +7,6 @@ deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/ok
 enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/stripes-install.json
 update_launch_descr: true
 okapi_version: 2.26.1-1
-save_install: no
 
 
 add_modules:
@@ -24,7 +23,7 @@ folio_modules:
   - name: mod-authtoken
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
+    deploy: yes     
 
   - name: mod-calendar
     docker_env:
@@ -166,9 +165,9 @@ with_sourcemap: no
 
 # Metadata for CI build
 box_tag: folio/Q1-2019
-version: 1.0.0
+version: 2.0.0
 version_descr: |
-  # FOLIO Q1-2019 Release (v1.0.0)
+  # FOLIO Q1-2019 Release (v2.0.0)
 
   Admin login: diku_admin/admin
 
