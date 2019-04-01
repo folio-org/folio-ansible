@@ -9,7 +9,6 @@ add_modules:
   - mod-codex-ekb
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
-  - mod-graphql
   - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
