@@ -26,7 +26,7 @@
     body_format: json
     headers:
       X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"      
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ item|to_json }}"
     status_code: 201
@@ -78,7 +78,7 @@
     body_format: json
     headers:
       X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"      
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ install_deploy }}"
     timeout: "{{ deploy_timeout }}"
@@ -93,7 +93,7 @@
     body_format: json
     headers:
       X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}"      
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ install }}"
   register: install_request
@@ -105,14 +105,14 @@
   file:
     path: "{{ save_dir }}"
     state: directory
-  when: install|default(false) or install_deploy|default(false)
+  when: save_install and (install|default(false) or install_deploy|default(false))
 
 - name: Save okapi-install.json
   become: yes
   copy: dest={{ save_dir }}/okapi-install.json content={{ install_deploy|to_nice_json }}
-  when: install_deploy|default(false)
+  when: save_install and (install_deploy|default(false))
 
 - name: Save stripes-install.json
   become: yes
   copy: dest={{ save_dir }}/stripes-install.json content={{ install|to_nice_json }}
-  when: install|default(false)
+  when: save_install and (install|default(false))

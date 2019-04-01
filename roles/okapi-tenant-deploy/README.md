@@ -71,5 +71,6 @@ tenant: diku
 deploy_timeout: 900
 
 # Where to save the install.json files
+save_install: yes
 save_dir: /etc/folio/stripes
 ```
