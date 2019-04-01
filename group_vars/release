@@ -3,8 +3,8 @@
 auth_required: true
 load_mods_larger: true
 enable_okapi: true
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/stripes-install.json
 update_launch_descr: true
 okapi_version: 2.26.1-1
 
@@ -30,7 +30,7 @@ folio_modules:
   - name: mod-agreements
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    tenant_parameters: 
+    tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
@@ -48,7 +48,7 @@ folio_modules:
   - name: mod-authtoken
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes     
+    deploy: yes
 
   - name: mod-calendar
     docker_env:

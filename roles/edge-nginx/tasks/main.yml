@@ -3,12 +3,11 @@
 
 - name: Install nginx from apt
   become: yes
-  apt: name=nginx
-
-- name: Ensure nginx is running
-  become: yes
-  service: name=nginx state=started
-  ignore_errors: yes
+  apt: 
+    name: nginx
+    state: present
+  environment: 
+    RUNLEVEL: 1 
 
 - name: disable nginx default vhost
   become: yes
@@ -16,6 +15,11 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
   notify: Restart nginx
+
+- name: Ensure nginx is running
+  become: yes
+  service: name=nginx state=started
+  ignore_errors: yes
 
 - name: Install edge module configuration for nginx
   become: yes
