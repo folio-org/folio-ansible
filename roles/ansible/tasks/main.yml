@@ -2,11 +2,11 @@
 # Role to install ansible
 - name: Install prerequisites
   become: yes
-  apt: name={{ item }}
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - python-apt 
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - python-apt
 
 - name: Install software-properties-common on Ubuntu Xenial
   become: yes

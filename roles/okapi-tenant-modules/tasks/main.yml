@@ -1,15 +1,13 @@
 ---
 - name: Install prerequisites from apt
   become: yes
-  apt: 
-    name: "{{ item }}"
-    state: present
-  with_items: 
-    - libpq-dev
-    - python-psycopg2  
-    - postgresql-client
+  apt:
+    name:
+      - libpq-dev
+      - python-psycopg2
+      - postgresql-client
   when: create_db
-  
+
 - name: Create modules db
   postgresql_db:
     login_host: "{{ pg_host }}"
@@ -50,7 +48,7 @@
   when: deploy_file|default(false)
 
 - name: Get install JSON from URL for deployment
-  uri: 
+  uri:
     url: "{{ deploy_url }}"
     method: GET
   register: deploy_json
@@ -86,7 +84,7 @@
   when: enable_file|default(false)
 
 - name: Get install JSON from URL for enabling modules (no deployment)
-  uri: 
+  uri:
     url: "{{ enable_url }}"
     method: GET
   register: enable_json
