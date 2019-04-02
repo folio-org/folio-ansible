@@ -145,6 +145,9 @@
 - name: Get tenant modules
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
+    headers:
+      X-Okapi-Tenant: supertenant
+      Accept: application/json
   register: tenant_modules
 
 - name: Get ID of module for tenant
