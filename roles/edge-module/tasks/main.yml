@@ -150,6 +150,10 @@
       Accept: application/json
   register: tenant_modules
 
+- name: Reset tenant_module_id
+  set_fact:
+    tenant_module_id: ''
+
 - name: Get ID of module for tenant
   set_fact:
     tenant_module_id: "{{ item.id }}"
@@ -157,7 +161,7 @@
   with_items: "{{ tenant_modules.json }}"
 
 - fail: msg="{{ edge_module }} not initialized for {{ tenant }}"
-  when: tenant_module_id is not defined
+  when: tenant_module_id == ''
 
 - name: Get version
   set_fact:
