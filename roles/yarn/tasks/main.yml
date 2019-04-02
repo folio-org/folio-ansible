@@ -2,12 +2,12 @@
 # Role to install the yarn package manager for Node
 - name: Install prereqs from apt
   become: yes
-  apt: name={{ item }}
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - python-apt
-    - ssl-cert
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - python-apt
+      - ssl-cert
 
 - name: Install apt key for yarn
   become: yes
@@ -19,5 +19,6 @@
 
 - name: Install yarn from apt
   become: yes
-  apt: name=yarn
-
+  apt:
+    name:
+      - yarn

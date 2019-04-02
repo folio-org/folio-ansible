@@ -2,10 +2,10 @@
 # Role to install sdkman for a given user
 - name: Install prerequisites from apt
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - unzip
-    - zip
+  apt:
+    name:
+      - unzip
+      - zip
 
 - name: Install sdkman
   become: yes
@@ -13,4 +13,3 @@
   shell: curl -s "https://get.sdkman.io" | bash
   args:
     creates: /home/{{ sdkman_user }}/.sdkman
-
