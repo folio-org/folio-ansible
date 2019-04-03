@@ -29,26 +29,6 @@ add_modules:
 # module that need to be deployed
 
 folio_modules:
-  - name: edge-oai-pmh
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: edge-orders
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: edge-patron
-    docker_env: 
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-  
-  - name: edge-rtac
-    docker_env: 
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
   - name: mod-agreements
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
