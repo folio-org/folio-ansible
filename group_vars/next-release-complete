@@ -12,8 +12,11 @@ add_modules:
   - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
+  - mod-gobi
   - edge-rtac
   - edge-oai-pmh
+  - edge-patron
+  - edge-orders
 
 # Sample pinned module
 # pinned_modules:
@@ -120,6 +123,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-gobi
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-inventory
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -188,6 +196,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-password-validator
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-patron
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
