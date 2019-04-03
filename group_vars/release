@@ -18,6 +18,8 @@ add_modules:
   - mod-audit
   - edge-rtac
   - edge-oai-pmh
+  - edge-patron
+  - edge-orders
 
 # Sample pinned module
 # pinned_modules:
@@ -27,6 +29,26 @@ add_modules:
 # module that need to be deployed
 
 folio_modules:
+  - name: edge-oai-pmh
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: edge-orders
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: edge-patron
+    docker_env: 
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+  
+  - name: edge-rtac
+    docker_env: 
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-agreements
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -124,6 +146,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-gobi
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-inventory
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -192,6 +219,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-password-validator
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-patron
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
