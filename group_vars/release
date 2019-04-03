@@ -16,6 +16,7 @@ add_modules:
   - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
+  - mod-gobi
   - edge-rtac
   - edge-oai-pmh
   - edge-patron
