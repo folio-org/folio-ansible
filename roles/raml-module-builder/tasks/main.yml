@@ -2,9 +2,9 @@
 # Role to build the raml-module-builder framework
 - name: Install prereqs
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
+  apt:
+    name:
+      - git
 
 - name: Clone raml-module-builder repository
   git: repo=https://github.com/folio-org/raml-module-builder.git dest={{ raml_module_builder_home }}

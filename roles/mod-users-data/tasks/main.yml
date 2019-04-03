@@ -89,10 +89,10 @@
 
 - name: install perl cpanm via yum
   become: yes
-  yum: 
+  yum:
     name: "{{ item }}"
     state: present
-  with_items: 
+  with_items:
     - perl-App-cpanminus
     - perl-JSON
     - libuuid-devel
@@ -102,7 +102,7 @@
   become: yes
   cpanm:
     name: "{{ item }}"
-    notest: true 
+    notest: true
   with_items:
     - Data::Faker
     - UUID::Tiny
@@ -111,22 +111,20 @@
 
 - name: Install prereqs perl packages for user generation via apt
   become: yes
-  apt: 
-    name: "{{ item }}"
-    state: present
-  with_items: 
-    - libjson-perl
-    - libjson-xs-perl
-    - libdata-faker-perl
-    - libuuid-tiny-perl
-    - libdate-calc-perl
+  apt:
+    name:
+      - libjson-perl
+      - libjson-xs-perl
+      - libdata-faker-perl
+      - libuuid-tiny-perl
+      - libdate-calc-perl
   when: ansible_os_family == 'Debian'
 
 - name: Copy gen-folio-users utility
   become: yes
-  copy: 
-    src: gen-folio-users 
-    dest: /usr/local/bin/gen-folio-users 
+  copy:
+    src: gen-folio-users
+    dest: /usr/local/bin/gen-folio-users
     mode: 0755
 
 - name: Create tmp directory to do our user generation work
@@ -148,7 +146,7 @@
   changed_when: false
 
 - name: Slurp user files
-  slurp: 
+  slurp:
     src: "{{ tmpdir_userdata.path }}/{{ item }}"
   with_items: "{{ userfiles.stdout_lines }}"
   register: userfiles_content

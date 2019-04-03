@@ -2,19 +2,19 @@
 # Role to deploy a Docker server
 - name: Install prereqs from apt
   become: yes
-  apt: name={{ item }}
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - python-virtualenv
-    - python-pip
-    - python-apt
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - python-virtualenv
+      - python-pip
+      - python-apt
 
 - name: Install docker-py and docker-compose from pip
   become: yes
-  pip: 
+  pip:
     name: "{{ item.name }}"
-    version: "{{ item.version }}" 
+    version: "{{ item.version }}"
     state: present
   with_items:
      - { name: 'docker-py', version: '1.10.6' }
@@ -51,7 +51,7 @@
 
 - name: install Docker daemon.json config
   become: yes
-  copy: 
+  copy:
     src: daemon.json
     dest: /etc/docker/daemon.json
     owner: root

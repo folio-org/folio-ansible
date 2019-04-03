@@ -2,12 +2,10 @@
 - name: Install prerequisites from apt
   become: yes
   apt:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - libpq-dev
-    - python-psycopg2
-    - postgresql-client
+    name:
+      - libpq-dev
+      - python-psycopg2
+      - postgresql-client
   when: create_db
 
 - name: Create modules db

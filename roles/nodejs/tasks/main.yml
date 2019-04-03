@@ -2,10 +2,10 @@
 # Install nodejs and mocha
 - name: Install nodejs and npm from apt
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - nodejs
-    - npm
+  apt:
+    name:
+      - nodejs
+      - npm
 
 - name: Install n and mocha from npm
   become: yes
