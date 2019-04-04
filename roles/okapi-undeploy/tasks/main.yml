@@ -2,12 +2,12 @@
 # Role to install a simple script to undeploy all instances of an Okapi module
 - name: Install prerequisites from apt
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - libwww-perl
-    - libjson-xs-perl
-    - libjson-perl
-    - curl
+  apt:
+    name:
+      - libwww-perl
+      - libjson-xs-perl
+      - libjson-perl
+      - curl
 
 - name: Set up Okapi home directory
   become: yes

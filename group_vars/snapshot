@@ -18,12 +18,15 @@ add_modules:
   - mod-codex-ekb
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
+  - mod-gobi
   - mod-graphql
   - mod-invoice-storage
   - mod-audit-filter
   - mod-audit
-  - edge-rtac
   - edge-oai-pmh
+  - edge-orders
+  - edge-patron
+  - edge-rtac
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -126,6 +129,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-finance-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
+  - name: mod-gobi
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes

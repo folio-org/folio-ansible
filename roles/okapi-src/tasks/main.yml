@@ -2,10 +2,10 @@
 # Role to deploy an Okapi server from source to a Debian Jessie box
 - name: Install prereqs
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
-    - curl
+  apt:
+    name:
+      - git
+      - curl
 
 - name: Clone Okapi repository
   become: yes

@@ -2,15 +2,15 @@
 # Role to set up a PostgreSQL server for FOLIO
 - name: Install prereqs from apt
   become: yes
-  apt: name={{ item }}
-  with_items:
-    - apt-transport-https
-    - ca-certificates
-    - python-virtualenv
-    - python-psycopg2
-    - python-pip
-    - python-apt
-    - ssl-cert
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - python-virtualenv
+      - python-psycopg2
+      - python-pip
+      - python-apt
+      - ssl-cert
 
 - name: Install apt key for PostgreSQL
   become: yes
@@ -22,10 +22,10 @@
 
 - name: Install postgresql from apt
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - postgresql-9.6
-    - postgresql-contrib-9.6
+  apt:
+    name:
+      - postgresql-9.6
+      - postgresql-contrib-9.6
 
 - name: Configure postgresql to listen on all interfaces
   become: yes
@@ -37,11 +37,11 @@
 
 - name: Set max number of postgresql connections
   become: yes
-  lineinfile: 
+  lineinfile:
     dest: /etc/postgresql/9.6/main/postgresql.conf
     regexp: '^max_connections\s*=\s*\d+.*$'
     line: "max_connections = {{ pg_max_conn }}"
-    backrefs: yes 
+    backrefs: yes
   notify: Restart postgresql
 
 - name: Configure postgresql to allow connections from all addresses
@@ -52,14 +52,14 @@
   notify: Restart postgresql
 
 # For now, this must be a SUPERUSER (cf. DMOD-250)
-- name: Create a postgres admin user that can create roles and databases 
+- name: Create a postgres admin user that can create roles and databases
   become: yes
   become_user: postgres
-  postgresql_user: 
+  postgresql_user:
     name: "{{ pg_admin_user }}"
     password: "{{ pg_admin_password }}"
     encrypted: yes
     # role_attr_flags: CREATEDB,CREATEROLE,LOGIN
     role_attr_flags: SUPERUSER
-    
+
 - meta: flush_handlers

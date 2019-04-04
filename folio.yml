@@ -53,8 +53,31 @@
     - tenant-admin-permissions
 
 # Edge modules
+- name: Set up Okapi to support edge modules
+  hosts: testing-core:testing
+  roles:
+    - role: okapi-register-modules
+      folio_modules:
+        - name: mod-oai-pmh
+          docker_env:
+            - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+        - name: mod-rtac
+          docker_env:
+            - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+        - name: edge-oai-pmh
+        - name: edge-rtac
+    - role: okapi-tenant-deploy
+      folio_modules:
+        - name: mod-oai-pmh
+          deploy: yes
+        - name: mod-rtac
+          deploy: yes
+        - name: edge-oai-pmh
+        - name: edge-rtac
+    - tenant-admin-permissions
+
 - name: Set up edge modules
-  hosts: testing:snapshot
+  hosts: testing-core:testing:snapshot
   roles:
     - role: edge-module
       edge_module: edge-rtac
@@ -77,9 +100,9 @@
       inst_user_perms:
         - oai-pmh.all
 
-# Sample data for snapshot-core, testing, snapshot
+# Sample data for snapshot-core, testing, snapshot, release-core
 - name: Load sample data for testing/snapshot builds
-  hosts: snapshot-core:testing-core:testing:snapshot
+  hosts: snapshot-core:testing-core:testing:snapshot:release-core
   roles:
     - mod-inventory-mods
 
@@ -100,65 +123,6 @@
         - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
         - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
         - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
-
-# Sample data for release-core build
-- name: Load sample data for release-core build
-  hosts: release-core
-  roles:
-    - role: module-sample-data
-      module_name: mod-inventory-storage
-      repository: "https://github.com/folio-org/mod-inventory-storage"
-      module_version: v14.0.0
-      duplicate_key_error: 400
-      files:
-        - { load_endpoint: /alternative-title-types, fileglob: reference-data/alternative-title-types/*.json }
-        - { load_endpoint: /call-number-types, fileglob: reference-data/call-number-types/*.json }
-        - { load_endpoint: /classification-types, fileglob: reference-data/classification-types/*.json }
-        - { load_endpoint: /contributor-name-types, fileglob: reference-data/contributor-name-types/*.json }
-        - { load_endpoint: /contributor-types, fileglob: reference-data/contributor-types/*.json }
-        - { load_endpoint: /electronic-access-relationships, fileglob: reference-data/electronic-access-relationships/*.json }
-        - { load_endpoint: /holdings-note-types, fileglob: reference-data/holdings-note-types/*.json }
-        - { load_endpoint: /holdings-types, fileglob: reference-data/holdings-types/*.json }
-        - { load_endpoint: /identifier-types, fileglob: reference-data/identifier-types/*.json }
-        - { load_endpoint: /ill-policies, fileglob: reference-data/ill-policies/*.json }
-        - { load_endpoint: /instance-formats, fileglob: reference-data/instance-formats/*.json }
-        - { load_endpoint: /instance-relationship-types, fileglob: reference-data/instance-relationship-types/*.json }
-        - { load_endpoint: /instance-statuses, fileglob: reference-data/instance-statuses/*.json }
-        - { load_endpoint: /instance-types, fileglob: reference-data/instance-types/*.json }
-        - { load_endpoint: /item-note-types, fileglob: reference-data/item-note-types/*.json }
-        - { load_endpoint: /loan-types, fileglob: reference-data/loan-types/*.json }
-        - { load_endpoint: /location-units/institutions, fileglob: reference-data/location-units/institutions/*.json, dup_override: 422 }
-        - { load_endpoint: /location-units/campuses, fileglob: reference-data/location-units/campuses/*.json, dup_override: 422 }
-        - { load_endpoint: /location-units/libraries, fileglob: reference-data/location-units/libraries/*.json,  dup_override: 422 }
-        - { load_endpoint: /locations, fileglob: reference-data/locations/*.json, dup_override: 422 }
-        - { load_endpoint: /material-types, fileglob: reference-data/material-types/*.json, dup_override: 422 }
-        - { load_endpoint: /modes-of-issuance, fileglob: reference-data/modes-of-issuance/*.json }
-        - { load_endpoint: /service-points, fileglob: reference-data/service-points/*.json, dup_override: 422 }
-        - { load_endpoint: /statistical-code-types, fileglob: reference-data/statistical-code-types/*.json, dup_override: 422 }
-        - { load_endpoint: /statistical-codes, fileglob: reference-data/statistical-codes/*.json }
-        - { load_endpoint: /instance-storage/instances, fileglob: sample-data/instances/*.json }
-        - { load_endpoint: /instance-storage/instances/$filename/source-record/marc-json, fileglob: sample-data/instance-source-records/*.json, http_method: PUT, dup_override: 204, updated_code: 204 }
-        - { load_endpoint: /holdings-storage/holdings, fileglob: sample-data/holdingsrecords/*.json }
-        - { load_endpoint: /item-storage/items, fileglob: sample-data/items/*.json }
-        - { load_endpoint: /instance-storage/instance-relationships, fileglob: sample-data/instance-relationships/*.json }
-    - mod-inventory-mods
-    - role: module-sample-data
-      module_name: mod-circulation-storage
-      module_version: v6.2.0
-      repository: "https://github.com/folio-org/mod-circulation-storage"
-      duplicate_key_error: 400
-      files:
-        - { load_endpoint: /loan-policy-storage/loan-policies, fileglob: reference-data/loan-policy-storage/loan-policies/*.json, dup_override: 500 }
-        - { load_endpoint: /loan-rules-storage, fileglob: reference-data/loan-rules-storage/*.json, http_method: PUT, updated_code: 204 }
-        - { load_endpoint: /cancellation-reason-storage/cancellation-reasons, fileglob: reference-data/cancellation-reason-storage/cancellation-reasons/*.json }
-    - mod-circulation-sample-data
-    - role: module-sample-data
-      module_name: mod-tags
-      module_version: v0.2.0
-      repository: "https://github.com/folio-org/mod-tags"
-      files:
-        - { load_endpoint: /tags, fileglob: sample-data/*.json }
-    - mod-auth-demo-users
 
 # Set up stripes
 - name: Build stripes webpack, assign permissions

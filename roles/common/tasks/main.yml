@@ -2,7 +2,7 @@
 # Common tasks for all roles
 - name: Update apt-cache if not updated in last sixty minutes
   become: yes
-  apt: 
+  apt:
     update-cache: yes
     cache_valid_time: 3600
 
@@ -20,32 +20,30 @@
 
 - name: Install prerequisites from apt
   become: yes
-  apt: name={{ item }} state=present
-  with_items:
-    - git
-    - curl
-    - apt-transport-https
-    - ca-certificates
-    - unzip
-    - jq
+  apt:
+    name:
+      - git
+      - curl
+      - apt-transport-https
+      - ca-certificates
+      - unzip
+      - jq
 
 - name: Install postgresql client things on all nodes
   become: yes
-  apt: 
-    name: "{{ item }}"
-    state: present
-  with_items: 
-    - libpq-dev
-    - python-psycopg2  
-    - postgresql-client
+  apt:
+    name:
+      - libpq-dev
+      - python-psycopg2
+      - postgresql-client
 
 - name: Set up FOLIO apt repo GPG key
   become: yes
-  apt_key: 
+  apt_key:
     id: "{{ folio_apt_key_id }}"
     url: "{{ folio_apt_key_url }}"
     state: present
-  
+
 - name: Configure FOLIO apt repository
   become: yes
   apt_repository:
