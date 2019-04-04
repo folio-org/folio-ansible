@@ -53,8 +53,31 @@
     - tenant-admin-permissions
 
 # Edge modules
+- name: Set up Okapi to support edge modules
+  hosts: testing-core:testing
+  roles:
+    - role: okapi-register-modules
+      folio_modules:
+        - name: mod-oai-pmh
+          docker_env:
+            - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+        - name: mod-rtac
+          docker_env:
+            - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+        - name: edge-oai-pmh
+        - name: edge-rtac
+    - role: okapi-tenant-deploy
+      folio_modules:
+        - name: mod-oai-pmh
+          deploy: yes
+        - name: mod-rtac
+          deploy: yes
+        - name: edge-oai-pmh
+        - name: edge-rtac
+    - tenant-admin-permissions
+
 - name: Set up edge modules
-  hosts: testing:snapshot
+  hosts: testing-core:testing:snapshot
   roles:
     - role: edge-module
       edge_module: edge-rtac
