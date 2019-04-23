@@ -4,6 +4,9 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 
+# proxy edge modules - folio-elb
+include_edge: true
+
 # used in build-module-list role
 stripes_exclude_list:
   - folio_eslint-config-stripes
