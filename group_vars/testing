@@ -13,7 +13,7 @@ enable_okapi: true
 update_launch_descr: true
 
 # proxy edge modules - folio-elb
-include_edge: true
+include_edge_elb: true
 
 # set the default postgres connection pool per module/tenant
 pg_max_pool_size: 5
