@@ -5,7 +5,7 @@ enable_okapi: true
 update_launch_descr: true
 
 # proxy edge modules - folio-elb
-include_edge: true
+include_edge_elb: true
 
 add_modules:
   - mod-codex-inventory
