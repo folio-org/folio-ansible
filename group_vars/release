@@ -9,7 +9,7 @@ update_launch_descr: true
 okapi_version: 2.26.1-1
 
 # proxy edge modules - folio-elb
-include_edge: true
+include_edge_elb: true
 
 add_modules:
   - mod-codex-inventory
