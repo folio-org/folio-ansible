@@ -4,6 +4,9 @@ load_mods_larger: false
 enable_okapi: true
 update_launch_descr: true
 
+# proxy edge modules - folio-elb
+include_edge: true
+
 add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
