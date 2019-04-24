@@ -106,24 +106,6 @@
   roles:
     - mod-inventory-mods
 
-# Additional sample data for testing and snapshot
-- name: Load sample data for testing/snapshot builds
-  hosts: testing:snapshot
-  roles:
-    - role: module-sample-data
-      module_name: mod-vendors
-      repository: "https://github.com/folio-org/mod-vendors"
-      files:
-        - { load_endpoint: /vendor-storage/vendors, fileglob: sample-data/vendors/*.json }
-    - role: module-sample-data
-      module_name: mod-finance-storage
-      repository: "https://github.com/folio-org/mod-finance-storage"
-      files:
-        - { load_endpoint: /fiscal_year, fileglob: sample-data/fiscal-years/*.json }
-        - { load_endpoint: /ledger, fileglob: sample-data/ledgers/*.json }
-        - { load_endpoint: /fund, fileglob: sample-data/funds/*.json }
-        - { load_endpoint: /budget, fileglob: sample-data/budgets/*.json }
-
 # Set up stripes
 - name: Build stripes webpack, assign permissions
   hosts: stripes-build

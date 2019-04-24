@@ -160,6 +160,8 @@ folio_modules:
   - name: mod-vendors
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-organizations-storage
@@ -173,6 +175,9 @@ folio_modules:
   - name: mod-finance-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-feesfines
