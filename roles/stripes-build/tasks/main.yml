@@ -92,15 +92,6 @@
   when: npm_proxy == true
   notify: "Rebuild stripes"
 
-- name: copy build-install-files.sh
-  become: yes
-  template:
-    src: build-install-files.sh.j2
-    dest: "{{ stripes_conf_dir }}/build-install-files.sh"
-    mode: 0755
-  when: build_install_files == true
-  notify: "Rebuild stripes"
-
 - name: Ensure modules are registered
   command: /bin/true
   when: okapi_register_modules == true
