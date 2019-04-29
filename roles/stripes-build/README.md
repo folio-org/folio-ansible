@@ -1,3 +1,20 @@
+# stripes-build
+This role builds the stripes frontend bundle. Optionally use with the stripes-docker role to serve the webpack from a Docker container.
+
+## Basic usage
+Below is a playbook illustrating how to build the frontend from the snapshot branch of platform-complete.
+```yml
+---
+- hosts: all
+  roles:
+    - role: stripes-build
+      stripes_github_project: https://github.com/folio-org/platform-complete
+      stripes_github_version: snapshot
+      platform_remove_lock: false
+```
+
+## Defaults
+```yml
 ---
 # Use a preconfigured github stripes platform
 with_github: true
@@ -70,3 +87,4 @@ folio_snapshot_url: 'https://folio-snapshot-stable.aws.indexdata.com'
 #
 npm_proxy: false
 npm_authtoken: ''
+```
