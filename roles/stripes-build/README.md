@@ -80,33 +80,11 @@ folio_npm_repo: npm-folio
 
 # Use existing stripes platform yarn.lock
 use_folio_snapshot: false
-folio_snapshot_url: 'http://folio-snapshot-stable.aws.indexdata.com'
+folio_snapshot_url: 'https://folio-snapshot-stable.aws.indexdata.com'
 
 #
 # Disabled by default
 #
 npm_proxy: false
 npm_authtoken: ''
-
-## Other build-modules-list related options. Assumes build_install_files is set to 'true'
-
-# Build okapi-install.json with releases only - no snapshots.  Default 'false'
-releases_only: false
-
-# Path to stripes module descriptors
-md_path: './ModuleDescriptors'
-
-# Do NOT attempt to enable the following modules or non-modules. Defaults.
-exclude_mods:
-  - folio_stripes
-  - folio_eslint-config-stripes
-  - folio_react-intl-safe-html
-  - folio_react-big-calendar
-
-# Additional backend modules to add to okapi-install.json that wouldn't be added
-# via Okapi dependency resolution
-# e.g
-# other_mods:
-#   - mod-codex-inventory
-other_mods: []
 ```
