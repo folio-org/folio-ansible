@@ -23,8 +23,8 @@ add_modules:
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
-  - mod-invoice
   - mod-invoice-storage
+  - mod-invoice
   - mod-audit-filter
   - mod-audit
   - edge-oai-pmh
@@ -161,12 +161,12 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-invoice
+  - name: mod-invoice-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
-  - name: mod-invoice-storage
+  - name: mod-invoice
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
