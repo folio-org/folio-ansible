@@ -9,7 +9,7 @@ This role will set up an nginx configuration to listen on a port and proxy reque
 ```yaml
 ---
 # defaults
-edge_listen_port: 8000
+edge_listen_port: 8130
 edge_server_name:
   - "{{ ansible_default_ipv4.address }}"
 ```
