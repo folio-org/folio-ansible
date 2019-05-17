@@ -41,7 +41,7 @@ stripes_modules:
   - { name: "@folio/items", version: "latest" }
   - { name: "@folio/scan", version: "latest" }
   - { name: "@folio/trivial", version: "latest" }
-  - { name: "@folio/organization", version: "latest" }
+  - { name: "@folio/tenant-settings", version: "latest" }
   - { name: "@folio/developer", version: "latest" }
   - { name: "@folio/plugin-markdown-editor", version: "latest" }
   - { name: "@folio/plugin-markdown-better", version: "latest" }
