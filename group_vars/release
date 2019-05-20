@@ -6,7 +6,7 @@ enable_okapi: true
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/stripes-install.json
 update_launch_descr: true
-okapi_version: 2.26.1-1
+okapi_version: 2.29.1-1
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
