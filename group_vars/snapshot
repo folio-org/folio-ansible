@@ -44,12 +44,12 @@ folio_modules:
   - name: mod-audit
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    deploy: no
+    deploy: yes
 
   - name: mod-audit-filter
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: no
+    deploy: yes
 
   - name: mod-authtoken
     docker_env:
