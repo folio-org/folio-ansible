@@ -16,16 +16,16 @@ update_launch_descr: true
 pg_max_pool_size: 5
 
 folio_modules:
-  - name: mod-authtoken
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
   - name: mod-permissions
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx512m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-authtoken
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
   - name: mod-login
