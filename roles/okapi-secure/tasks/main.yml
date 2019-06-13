@@ -66,7 +66,7 @@
       Accept: application/json
     status_code: 200, 404
   register: superuser_created_check
-  retries: 5
+  retries: 10
   delay: 3
   until: superuser_created_check is not failed
 
