@@ -66,6 +66,10 @@
       Accept: application/json
     status_code: 200, 404
   register: superuser_created_check
+  retries: 5
+  delay: 3
+  until: superuser_created_check is not failed
+
 
 - name: Create superuser in mod-users on supertenant
   uri:
