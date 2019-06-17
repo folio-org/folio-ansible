@@ -31,15 +31,6 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
-  - name: mod-login
-    docker_cmd:
-      - "verify.user=true"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
   - name: mod-configuration
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -50,6 +41,15 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx384m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
@@ -206,16 +206,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-orders
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: mod-audit
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
-    deploy: yes
-
-  - name: mod-audit-filter
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
