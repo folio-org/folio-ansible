@@ -186,6 +186,14 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-organizations-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-password-validator
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -248,12 +256,4 @@ folio_modules:
   - name: mod-users-bl
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: mod-vendors
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
     deploy: yes
