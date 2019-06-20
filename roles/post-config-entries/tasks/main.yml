@@ -1,0 +1,34 @@
+---
+- name: login to tenant
+  uri:
+    #url: "{{ okapi_url }}/authn/login"
+    url: "http://localhost:9130/authn/login"
+    method: POST
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body_format: json
+    body: "{'username': '{{ admin_user.username }}', 'password': '{{ admin_user.password }}' }"
+    status_code: 201, 404
+  register: login_result
+  retries: 5
+  delay: 10
+  until: login_result is not failed
+
+- name: Set Okapi token 
+  set_fact:
+    tenant_token: "{{ login_result['x_okapi_token'] }}"
+  when: login_result.status is defined and login_result.status == 201
+
+- name: post mod-email configuration
+  uri:
+    url: http://localhost:9130/configurations/entries
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_token | default('') }}"
+    body: "{{ lookup('template', item) }}" 
+    status_code: 201, 422
+  with_items: "{{ config_entry_list }}"
