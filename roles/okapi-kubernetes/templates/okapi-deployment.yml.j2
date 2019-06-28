@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: "{{ deployment_name }}"
+  labels:
+    app: "{{ app_label }}"
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ app_label }}"
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: "{{ app_label }}"
+    spec:
+      containers:
+        - name: okapi
+          image: folioci/okapi
+          args:
+            - cluster -hazelcast-config-file /etc/hazelcast.xml
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: JAVA_OPTIONS
+            value: >
+              -Djava.awt.headless=true -Dstorage=postgres 
+              -Dpostgres_host={{ pg_host }} 
+              -Dpostgres_port={{ pg_port }}
+              -Dpostgres_user={{ okapi_db_user }} 
+              -Dpostgres_password={{ okapi_db_password }} 
+              -Dpostgres_database={{ okapi_db_database }}
+              -Dokapi_url={{ okapi_url }}
+              -Dnodename=$(POD_NAME)
+          ports:
+          - containerPort: 9130
+            protocol: TCP
+          - containerPort: 5701
+            protocol: TCP
+          volumeMounts:
+          - name: "hazelcast"
+            mountPath: "/etc/hazelcast.xml"
+            subPath: "hazelcast.xml"
+      volumes:
+      - name: "hazelcast"
+        configMap:
+          name: "hazelcast"
