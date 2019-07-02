@@ -108,6 +108,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
     deploy: yes
 
+  - name: mod-feesfines
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+    deploy: yes
+
   - name: mod-circulation-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
@@ -132,11 +137,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-codex-mux
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-    deploy: yes
-
-  - name: mod-feesfines
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
