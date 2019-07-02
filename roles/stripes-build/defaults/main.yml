@@ -41,7 +41,7 @@ stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_p
 # for when the Okapi URL for building is different than for production
 stripes_build_okapi_url: "{{ stripes_okapi_url }}"
 stripes_tenant: diku
-with_sourcemap: true
+with_sourcemap: false
 node_environment:
   NODE_ENV: production
 build_webpack: true
