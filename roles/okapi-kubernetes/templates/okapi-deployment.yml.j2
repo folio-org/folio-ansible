@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: okapi
-          image: folioci/okapi
+          image: {{ okapi_docker_repository }}/{{ okapi_docker_image }}:{{ okapi_docker_tag }}
           args:
             - cluster -hazelcast-config-file /etc/hazelcast.xml
           env:

@@ -10,6 +10,9 @@ okapi_url: http://okapi:9130
 okapi_db_user: okapi
 okapi_db_password: okapi25
 okapi_db_database: okapi
+okapi_docker_repository: folioci
+okapi_docker_image: okapi
+okapi_docker_tag: latest
 
 pg_admin_user: pgadminuser
 pg_admin_password: pgadminpass
