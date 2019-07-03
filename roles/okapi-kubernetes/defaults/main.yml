@@ -1,0 +1,24 @@
+---
+namespace: default
+kubeconfig: ~/.kube/config
+
+app_label: okapi
+
+deployment_name: okapi
+
+okapi_url: http://okapi:9130
+okapi_db_user: okapi
+okapi_db_password: okapi25
+okapi_db_database: okapi
+okapi_docker_repository: folioci
+okapi_docker_image: okapi
+okapi_docker_tag: latest
+
+pg_admin_user: pgadminuser
+pg_admin_password: pgadminpass
+pg_host: localhost
+pg_port: 5432
+
+
+service_name: okapi
+service_type: ClusterIP
