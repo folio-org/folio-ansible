@@ -8,7 +8,7 @@ metadata:
     external-dns.alpha.kubernetes.io/target: "{{ ingress_alb_target }}"
 spec:
   rules:
-    - host: "{{ ingress_name }}.ci.folio.org"
+    - host: "{{ ingress_dns }}"
       http:
         paths:
           - path: /

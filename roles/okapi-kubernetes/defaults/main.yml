@@ -9,6 +9,7 @@ app_label: okapi
 deployment_name: okapi
 ingress_alb_target: none
 ingress_name: okapi
+ingress_dns: none 
 
 okapi_url: http://okapi:9130
 okapi_db_user: okapi
