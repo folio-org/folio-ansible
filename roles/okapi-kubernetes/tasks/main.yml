@@ -9,6 +9,7 @@
     password: "{{ okapi_db_password }}"
     role_attr_flags: CREATEDB
     no_password_changes: yes
+  when: create_db
 
 - name: Create Okapi db
   postgresql_db:
@@ -17,6 +18,7 @@
     login_password: "{{ okapi_db_password }}"
     name: "{{ okapi_db_database }}"
     owner: "{{ okapi_db_user }}"
+  when: create_db
 
 - name: create hazelcast service account
   k8s:
@@ -37,3 +39,9 @@
   k8s:
     state: present
     definition: "{{ lookup('template', 'okapi-deployment.yml.j2') }}"
+
+- name: create okapi ingress
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'okapi-ingress.yml.j2') }}"
+  when: create_ingress

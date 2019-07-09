@@ -2,9 +2,13 @@
 namespace: default
 kubeconfig: ~/.kube/config
 
-app_label: okapi
+create_db: false
+create_ingress: false
 
+app_label: okapi
 deployment_name: okapi
+ingress_alb_target: none
+ingress_name: okapi
 
 okapi_url: http://okapi:9130
 okapi_db_user: okapi

@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "{{ ingress_name }}"
+  namespace: "{{ namespace }}"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    external-dns.alpha.kubernetes.io/target: "{{ ingress_alb_target }}"
+spec:
+  rules:
+    - host: "{{ ingress_name }}.ci.folio.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: "{{ service_name }}"
+              servicePort: 9130
+
