@@ -10,6 +10,8 @@
     role_attr_flags: CREATEDB
     no_password_changes: yes
   when: create_db
+  tags:
+    - create_db
 
 - name: Create Okapi db
   postgresql_db:
@@ -19,6 +21,8 @@
     name: "{{ okapi_db_database }}"
     owner: "{{ okapi_db_user }}"
   when: create_db
+  tags:
+    - create_db
 
 - name: create hazelcast service account
   k8s:
