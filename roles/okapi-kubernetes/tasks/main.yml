@@ -1,4 +1,9 @@
 ---
+- name: clean up any existing db creation jobs
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'db-create-job.yml.j2') }}"
+
 - name: create db creation configmap
   k8s:
     state: present
@@ -39,3 +44,4 @@
   k8s:
     state: absent
     definition: "{{ lookup('template', 'db-create-configmap.yml.j2') }}"
+

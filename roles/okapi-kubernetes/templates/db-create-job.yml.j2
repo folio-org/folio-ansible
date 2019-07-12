@@ -12,7 +12,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: db-create
-          image: "{{ okapi_docker_repository }}"/db_create:latest
+          image: folioci/db_create:latest
           envFrom:
           - configMapRef:
               name: db-create
