@@ -168,7 +168,7 @@ stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
 node_environment:
-  NODE_ENV:
+  NODE_ENV: production
 
 # Metadata for CI build
 version: 1.0.0
