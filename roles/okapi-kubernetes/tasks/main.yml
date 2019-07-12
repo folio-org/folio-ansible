@@ -1,28 +1,13 @@
 ---
-- name: Create Okapi postgresql user
-  postgresql_user:
-    db: postgres
-    login_host: "{{ pg_host }}"
-    login_user: "{{ pg_admin_user }}"
-    login_password: "{{ pg_admin_password }}"
-    name: "{{ okapi_db_user }}"
-    password: "{{ okapi_db_password }}"
-    role_attr_flags: CREATEDB
-    no_password_changes: yes
-  when: create_db
-  tags:
-    - create_db
+- name: create db creation configmap
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'db-create-configmap.yml.j2') }}"
 
-- name: Create Okapi db
-  postgresql_db:
-    login_host: "{{ pg_host }}"
-    login_user: "{{ okapi_db_user }}"
-    login_password: "{{ okapi_db_password }}"
-    name: "{{ okapi_db_database }}"
-    owner: "{{ okapi_db_user }}"
-  when: create_db
-  tags:
-    - create_db
+- name: create db creation job
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'db-create-job.yml.j2') }}"
 
 - name: create hazelcast service account
   k8s:
@@ -49,3 +34,8 @@
     state: present
     definition: "{{ lookup('template', 'okapi-ingress.yml.j2') }}"
   when: create_ingress
+
+- name: clean up db creation configmap
+  k8s:
+    state: absent
+    definition: "{{ lookup('template', 'db-create-configmap.yml.j2') }}"
