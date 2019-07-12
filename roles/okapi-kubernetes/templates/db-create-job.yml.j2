@@ -1,0 +1,18 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-create
+  labels:
+    app: db-create
+  namespace: "{{ namespace }}"
+spec:
+  ttlSecondsAfterFinished: 100
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: db-create
+          image: folioci/db_create:latest
+          envFrom:
+          - configMapRef:
+              name: db-create

@@ -19,11 +19,16 @@ okapi_docker_repository: folioci
 okapi_docker_image: okapi
 okapi_docker_tag: latest
 
+hazelcast_version: 3.12
+
+folio_db_user: folio
+folio_db_password: folio25
+folio_db_database: folio_modules
+
 pg_admin_user: pgadminuser
 pg_admin_password: pgadminpass
 pg_host: localhost
 pg_port: 5432
-
 
 service_name: okapi
 service_type: ClusterIP
