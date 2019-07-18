@@ -22,13 +22,22 @@
 #   when: create_db
 
 # Create Secret for required connection
-- name: create Secret DB Connection
-  k8s:
-    state: present
-    definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
+# - name: create Secret DB Connection
+#   k8s:
+#     state: "{{ k8s_state }}"
+#     definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
 
-- name: Debug
-  debug: msg="{{ lookup('template', 'db-secrets.yml.j2') }}"
+- name: Pull Latest Module Options
+  uri:
+    url: "{{folio_options_url}}"
+    return_content: yes
+  register: result
+
+- name: Set Module Descriptor 
+  set_fact:
+    module_options: "{{ result.content | from_yaml }}"
+
+
 
 # template module deployment and service 
 - include_tasks: module.yml

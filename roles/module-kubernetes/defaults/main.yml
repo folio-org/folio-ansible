@@ -22,14 +22,18 @@ module_list:
 
 # Mod descriptor registry
 folio_registry: http://folio-registry.aws.indexdata.com
-
+folio_options_url: https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot
 # DB connection
 db_database: okapi_modules
 db_maxpoolsize: 20
 db_password: password
 db_username: folio_admin
 
-# Label
-modules_label: module
+db_secret_name: db-connect
 
+# Services
 service_type: ClusterIP
+
+# Set to present or absent
+# Create or clean up State
+k8s_state: present

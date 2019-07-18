@@ -1,8 +1,5 @@
 ---
-- name: Module Name
-  debug:
-    msg: "outer Module ID={{ module_item }} "
-
+# Split Module ID into Module and Tag
 - name: Determine Module Tag
   shell: python -c "print('-'.join('{{ module_item }}'.split('-')[-2:])) if 'SNAPSHOT' in '{{module_item}}' else print('{{module_item}}'.split('-')[-1])";
   register: command_output
@@ -19,47 +16,78 @@
   set_fact:
     module: "{{ command_output.stdout }}"
 
-- name: Debug
-  debug: msg="module={{module}} tag={{tag}}"
-
-# Module_descriptor
+# Pull Module_descriptor
 - name: Get Module Descriptor
   uri:
     url: "{{folio_registry}}/_/proxy/modules/{{module_item}}?full=true"
     return_content: yes
   register: result
-
 - name: Set Module Descriptor 
   set_fact:
     module_descriptor: "{{ result.json }}"
 
 # This section can be removed once metadata is propagated to all Mod Descriptors.
 # Check most resent Module Descriptor for additional Metadata Section
-- name: Pull Latestest Module Descriptor
-  uri:
-    url: "{{folio_registry}}/_/proxy/modules?filter={{module}}&latest=1&full=true"
-    return_content: yes
-  register: result
+# - name: Pull Latestest Module Descriptor
+#   uri:
+#     url: "{{folio_registry}}/_/proxy/modules?filter={{module}}&latest=1&full=true"
+#     return_content: yes
+#   register: result
 
-- name: Set Module Descriptor 
+# - name: Set Module Descriptor 
+#   set_fact:
+#     module_descriptor_metadata: "{{ result.json | first  }}"
+
+# - name: Set Module Descriptor 
+#   set_fact:
+#     module_descriptor_metadata: "{{ module_descriptor_metadata.metadata }}"
+
+# - name: Debug
+#   debug: msg="{{ module_descriptor_metadata }}"
+
+# # Memory if Data not in Descriptor defaults to -Xmx256m
+# - name: Set Memory from Desciptor
+#   set_fact:
+#     java_mem: "{% if module_descriptor.metadata.containerMemory %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
+# # End of Metadata merge from most resent Module descriptor
+
+# Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
+- name: Set Memory from Desciptor
   set_fact:
-    module_descriptor_metadata: "{{ result.json | first  }}"
+    java_mem: "{% if module_descriptor.metadata.containerMemory is defined %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
 
-- name: Set Module Descriptor 
+# Check folio-org/folio-ansible repository from latest group_vars/snapshot  
+# Pull Java options for backend module
+- name: Query docker_env for module name
   set_fact:
-    module_descriptor_metadata: "{{ module_descriptor_metadata.metadata }}"
+    module_option: "{{ module_options | json_query(query) | first | default([]) }}"
+  vars:
+    query: "folio_modules[?name=='{{ module }}'].docker_env"
+- name: Query for Value
+  set_fact:
+    java_option: "{{ module_option | json_query(query) | first | default('')}}"
+  vars:
+    query: "[?name=='JAVA_OPTIONS'].value"
 
-- name: Debug
-  debug: msg="{{ module_descriptor_metadata }}"
+- name: Get Java Options not associated with Memory
+  shell: python -c "data=[ i for i in '{{ java_option }}'.split(' ') if not i.startswith('-Xmx')]; print(' '.join(data)) if data else print('')"
+  register: command_output
 
+# set JAVA_OPTIONS
+- name: Set JAVA_OPTIONS 
+  set_fact:
+    java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
 
-# End of Metadata merge from most resent Module descriptor
+# Default all Backend Modules to get DB ENV values
 
-# Create Service 
-- name: create Service 
-  k8s:
-    state: "{{ k8s_state }}"
-    definition: "{{ lookup('template', 'module-service.yml.j2') }}"
+# Add when all MOD Descriptors have metadata.databaseConnection defined
+# Need to set variables and change Deployment template 
+
+# # Create Service 
+# - name: create Service 
+#   k8s:
+#     state: "{{ k8s_state }}"
+#     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
 
 - name: ensure file exists
   copy:
@@ -67,8 +95,8 @@
     dest: ./dep.yaml
     force: yes
     
-# Create Deployment
-- name: create Deployment
-  k8s:
-    state: "{{ k8s_state }}"
-    definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+# # Create Deployment
+# - name: create Deployment
+#   k8s:
+#     state: "{{ k8s_state }}"
+#     definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
