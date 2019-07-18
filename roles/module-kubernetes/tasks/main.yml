@@ -1,0 +1,37 @@
+---
+# Create module database (database)
+# - name: Create Okapi postgresql user
+#   postgresql_user:
+#     db: postgres
+#     login_host: "{{ pg_host }}"
+#     login_user: "{{ pg_admin_user }}"
+#     login_password: "{{ pg_admin_password }}"
+#     name: "{{ db_username }}"
+#     password: "{{ db_password }}"
+#     role_attr_flags: CREATEDB
+#     no_password_changes: yes
+#   when: create_db
+
+# - name: Create Module db
+#   postgresql_db:
+#     login_host: "{{ pg_host }}"
+#     login_user: "{{ db_username }}"
+#     login_password: "{{ db_password }}"
+#     name: "{{ db_database }}"
+#     owner: "{{ db_username}}"
+#   when: create_db
+
+# Create Secret for required connection
+- name: create Secret DB Connection
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
+
+- name: Debug
+  debug: msg="{{ lookup('template', 'db-secrets.yml.j2') }}"
+
+# template module deployment and service 
+- include_tasks: module.yml
+  loop: "{{ module_list }}"
+  loop_control:
+    loop_var: module_item

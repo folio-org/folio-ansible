@@ -1,0 +1,74 @@
+---
+- name: Module Name
+  debug:
+    msg: "outer Module ID={{ module_item }} "
+
+- name: Determine Module Tag
+  shell: python -c "print('-'.join('{{ module_item }}'.split('-')[-2:])) if 'SNAPSHOT' in '{{module_item}}' else print('{{module_item}}'.split('-')[-1])";
+  register: command_output
+
+- name: Set Module Tag Variable
+  set_fact:
+    tag: "{{ command_output.stdout }}"
+
+- name: Determine Module Name 
+  shell: python -c "print('{{ module_item }}'[:'{{ module_item }}'.find('{{tag}}')-1])"
+  register: command_output
+
+- name: Set Module Name Variable
+  set_fact:
+    module: "{{ command_output.stdout }}"
+
+- name: Debug
+  debug: msg="module={{module}} tag={{tag}}"
+
+# Module_descriptor
+- name: Get Module Descriptor
+  uri:
+    url: "{{folio_registry}}/_/proxy/modules/{{module_item}}?full=true"
+    return_content: yes
+  register: result
+
+- name: Set Module Descriptor 
+  set_fact:
+    module_descriptor: "{{ result.json }}"
+
+# This section can be removed once metadata is propagated to all Mod Descriptors.
+# Check most resent Module Descriptor for additional Metadata Section
+- name: Pull Latestest Module Descriptor
+  uri:
+    url: "{{folio_registry}}/_/proxy/modules?filter={{module}}&latest=1&full=true"
+    return_content: yes
+  register: result
+
+- name: Set Module Descriptor 
+  set_fact:
+    module_descriptor_metadata: "{{ result.json | first  }}"
+
+- name: Set Module Descriptor 
+  set_fact:
+    module_descriptor_metadata: "{{ module_descriptor_metadata.metadata }}"
+
+- name: Debug
+  debug: msg="{{ module_descriptor_metadata }}"
+
+
+# End of Metadata merge from most resent Module descriptor
+
+# Create Service 
+- name: create Service 
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'module-service.yml.j2') }}"
+
+- name: ensure file exists
+  copy:
+    content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+    dest: ./dep.yaml
+    force: yes
+    
+# Create Deployment
+- name: create Deployment
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
