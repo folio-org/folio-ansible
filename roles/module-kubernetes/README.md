@@ -19,7 +19,7 @@ This role deploys FOLIO backend modules within a kubernetes namespace.    This r
         - mod-users-15.7.0-SNAPSHOT.85
 ```
 ### Command line Options
-With the CI/CD process can run this role from the command line. Publish each backend module to cluster after creation/push to docker hub. Run using [example-variables.json](./example-variables.json)
+With the CI/CD process, can run this role from the command line. Publish each backend module to cluster after creation/push to docker hub. Run using [example-variables.json](./example-variables.json)
 
       $ ansible localhost -m include_role -a name=module-kubernetes -e '@example-variables.json'
 
