@@ -26,31 +26,6 @@
   set_fact:
     module_descriptor: "{{ result.json }}"
 
-# This section can be removed once metadata is propagated to all Mod Descriptors.
-# Check most resent Module Descriptor for additional Metadata Section
-# - name: Pull Latestest Module Descriptor
-#   uri:
-#     url: "{{folio_registry}}/_/proxy/modules?filter={{module}}&latest=1&full=true"
-#     return_content: yes
-#   register: result
-
-# - name: Set Module Descriptor 
-#   set_fact:
-#     module_descriptor_metadata: "{{ result.json | first  }}"
-
-# - name: Set Module Descriptor 
-#   set_fact:
-#     module_descriptor_metadata: "{{ module_descriptor_metadata.metadata }}"
-
-# - name: Debug
-#   debug: msg="{{ module_descriptor_metadata }}"
-
-# # Memory if Data not in Descriptor defaults to -Xmx256m
-# - name: Set Memory from Desciptor
-#   set_fact:
-#     java_mem: "{% if module_descriptor.metadata.containerMemory %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
-# # End of Metadata merge from most resent Module descriptor
-
 # Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
 - name: Set Memory from Desciptor
   set_fact:
@@ -78,25 +53,25 @@
   set_fact:
     java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
 
-# Default all Backend Modules to get DB ENV values
+# DATABASE set default all Backend Modules to get DB ENV values
 
 # Add when all MOD Descriptors have metadata.databaseConnection defined
 # Need to set variables and change Deployment template 
 
-# # Create Service 
-# - name: create Service 
-#   k8s:
-#     state: "{{ k8s_state }}"
-#     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
+# Create Service 
+- name: create Service 
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'module-service.yml.j2') }}"
 
-- name: ensure file exists
-  copy:
-    content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
-    dest: ./dep.yaml
-    force: yes
+# - name: Check Local file for formating issues
+#   copy:
+#     content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+#     dest: ./dep.yaml
+#     force: yes
     
-# # Create Deployment
-# - name: create Deployment
-#   k8s:
-#     state: "{{ k8s_state }}"
-#     definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+# Create Deployment
+- name: create Deployment
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
