@@ -4,14 +4,9 @@
 namespace: default
 kubeconfig: ~/.kube/config
 
-# Okapi Variables (Role: okapi_kubernetes) from DB Connection
+# Okapi Variables from Anisble Role: okapi_kubernetes
 pg_host: localhost
 pg_port: 5432
-pg_admin_user: admin
-pg_admin_password: password
-okapi_db_user: okapi
-okapi_db_password: okapi25
-okapi_db_database: okapi
 okapi_url: http://okapi:9130
 ingress_dns: okapi-demo2.ci.folio.org
 
@@ -29,6 +24,7 @@ db_maxpoolsize: 20
 db_password: password
 db_username: folio_admin
 
+# Kubernetes Secret Name for Backend Module DB ENV 
 db_secret_name: db-connect
 
 # Services
