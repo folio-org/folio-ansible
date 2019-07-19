@@ -60,19 +60,13 @@
   set_fact:
     mod_database: "{% if module_descriptor.metadata.databaseConnection is defined %}{{ module_descriptor.metadata.databaseConnection }}{% else %}true{% endif %}"
 
-# Create Service 
+# Create Kubernetes Service 
 - name: create Service 
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
-
-- name: Check Local file for formating issues
-  copy:
-    content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
-    dest: ./dep.yaml
-    force: yes
     
-# Create Deployment
+# Create Kubernetes Deployment
 - name: create Deployment
   k8s:
     state: "{{ k8s_state }}"
@@ -98,7 +92,7 @@
     body_format: json
   ignore_errors: True
 
-# - name: Check Local file for formating issues
+# - name: DEBUG check template formating issues
 #   copy:
 #     content: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
 #     dest: ./dep.yaml

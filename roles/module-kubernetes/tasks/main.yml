@@ -12,7 +12,7 @@
     return_content: yes
   register: result
 
-- name: Set Module Descriptor 
+- name: Set Module Options 
   set_fact:
     module_options: "{{ result.content | from_yaml }}"
 
