@@ -16,7 +16,7 @@
   set_fact:
     module: "{{ command_output.stdout }}"
 
-# Pull Module_descriptor
+# Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
     url: "{{folio_registry}}/_/proxy/modules/{{module_item}}?full=true"
@@ -32,12 +32,12 @@
     java_mem: "{% if module_descriptor.metadata.containerMemory is defined %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
 
 # Check folio-org/folio-ansible repository from latest group_vars/snapshot  
-# Pull Java options for backend module
 - name: Query docker_env for module name
   set_fact:
     module_option: "{{ module_options | json_query(query) | first | default([]) }}"
   vars:
     query: "folio_modules[?name=='{{ module }}'].docker_env"
+
 - name: Query for Value
   set_fact:
     java_option: "{{ module_option | json_query(query) | first | default('')}}"
@@ -53,10 +53,12 @@
   set_fact:
     java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
 
-# DATABASE set default all Backend Modules to get DB ENV values
-
-# Add when all MOD Descriptors have metadata.databaseConnection defined
-# Need to set variables and change Deployment template 
+# set DATABASE variable 
+# if metadata.databaseConnection not set - default set to true 
+# When all modules that need DB connection have set metadata.databaseConnection change the default to false
+- name: Set Memory from Desciptor
+  set_fact:
+    mod_database: "{% if module_descriptor.metadata.databaseConnection is defined %}{{ module_descriptor.metadata.databaseConnection }}{% else %}true{% endif %}"
 
 # Create Service 
 - name: create Service 
@@ -64,14 +66,40 @@
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
 
-# - name: Check Local file for formating issues
-#   copy:
-#     content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
-#     dest: ./dep.yaml
-#     force: yes
+- name: Check Local file for formating issues
+  copy:
+    content: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+    dest: ./dep.yaml
+    force: yes
     
 # Create Deployment
 - name: create Deployment
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
+
+# POST module descriptor to Okapi
+- name: POST module descriptor to Okapi
+  uri:
+    url: "https://{{ ingress_dns }}/_/proxy/modules" 
+    method: POST
+    body: "{{ module_descriptor | to_json}}"
+    status_code: [200,201]
+    body_format: json
+  ignore_errors: True
+
+# POST deployment descriptor tp Okapi
+- name: POST deployment descriptor tp Okapi
+  uri:
+    url: "https://{{ ingress_dns }}/_/discovery/modules" 
+    method: POST
+    body: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
+    status_code: [200,201]
+    body_format: json
+  ignore_errors: True
+
+# - name: Check Local file for formating issues
+#   copy:
+#     content: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
+#     dest: ./dep.yaml
+#     force: yes

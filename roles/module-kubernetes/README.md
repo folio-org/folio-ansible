@@ -1,5 +1,5 @@
 # Backend Module Kubernetes
-This role deploys FOLIO backend modules within a kubernetes namespace.   It will provision a database on the specified postgres host if one does not already exist. This role assumes there is a Kubernetes cluster and Postgres instance available. Configure connection information for Kubernetes in `~/.kube/config`.
+This role deploys FOLIO backend modules within a kubernetes namespace.    This role assumes there is a Kubernetes cluster and Postgres instance with database already created. Configure connection information for Kubernetes in `~/.kube/config`.
 
 ## Usage
 ```yml
@@ -20,63 +20,37 @@ This role deploys FOLIO backend modules within a kubernetes namespace.   It will
 namespace: default
 kubeconfig: ~/.kube/config
 
-app_label: okapi
-
-deployment_name: okapi
-
-okapi_url: http://okapi:9130
+# Okapi Variables (Role: okapi_kubernetes) from DB Connection
+pg_host: localhost
+pg_port: 5432
+pg_admin_user: admin
+pg_admin_password: password
 okapi_db_user: okapi
 okapi_db_password: okapi25
 okapi_db_database: okapi
+okapi_url: http://okapi:9130
+ingress_dns: okapi-demo2.ci.folio.org
 
-pg_admin_user: pgadminuser
-pg_admin_password: pgadminpass
-pg_host: localhost
-pg_port: 5432
+# New Varibles for this ROLE
+# Backend Modules
+module_list:
+  - mod-users-15.7.0-SNAPSHOT.85
 
+# Mod descriptor registry
+folio_registry: http://folio-registry.aws.indexdata.com
+folio_options_url: https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot
+# DB connection
+db_database: okapi_modules
+db_maxpoolsize: 20
+db_password: password
+db_username: folio_admin
 
-service_name: okapi
+db_secret_name: db-connect
+
+# Services
 service_type: ClusterIP
+
+# Set to present or absent
+k8s_state: present
+
 ```
-
-
-
-If 
-
-NOTES
-registry="http://folio-registry.aws.indexdata.com"
-query="/_/proxy/modules?filter={0}&latest=1&full=true"
-for item in modules:
-def meta_module(module_id):
-    meta={}
-    #itm=item['id']
-    meta['id']=module_id
-    meta['tag']="-".join(meta['id'].split('-')[-2:]) if 'SNAPSHOT' in meta['id'] else meta['id'].split('-')[-1]
-    meta['module']=meta['id'][ : meta['id'].find(meta['tag'])-1]
-    md=requests.get("{0}{1}".format(registry,query.format(meta['module'])))
-    md=md.json()[0]
-    meta['container_memory']=deep_get(md,"metadata.containerMemory")
-    meta['database_connection']=deep_get(md,"metadata.databaseConnection")
-    try:
-      meta['port']=next(iter(deep_get(md,"launchDescriptor.dockerArgs.HostConfig.PortBindings")))
-    except:
-      meta['port']='8081/tcp'
-      meta['warning']="Port not found in Module Descriptor. Used default port  8081"
-    print(meta)
-
---python3
-from functools import reduce
-
-def deep_get(_dict, keys, default=None):
-    """
-    Deep get on python dictionary. Key is in dot notation.
-    Returns value if found. Default returned if not found.
-    Default can be set to another deep_get function.
-    """
-    keys=keys.split('.')
-    def _reducer(d, key):
-        if isinstance(d, dict):
-            return d.get(key, default)
-        return default
-    return reduce(_reducer, keys, _dict)
-

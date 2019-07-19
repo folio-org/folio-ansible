@@ -18,9 +18,11 @@ spec:
       containers:
         - name: "{{ module_item.replace('.','-').lower() }}"
           image: {{ module_descriptor.launchDescriptor.dockerImage }}
+          {% if mod_database -%}
           envFrom:
           - secretRef:
               name: {{ db_secret_name }}
+          {% endif -%}
           env:
           - name: POD_NAME
             valueFrom:
@@ -30,5 +32,6 @@ spec:
             value: {{ java_options }}
           ports:
           {% for key, value in module_descriptor.launchDescriptor.dockerArgs.HostConfig.PortBindings.items() %}{%- set ports = key.split('/') -%}
-          - port: {{ ports[0] }}
+          - containerPort: {{ ports[0] }}
+            protocol: TCP
           {% endfor %}

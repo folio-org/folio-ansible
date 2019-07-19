@@ -1,32 +1,11 @@
 ---
-# Create module database (database)
-# - name: Create Okapi postgresql user
-#   postgresql_user:
-#     db: postgres
-#     login_host: "{{ pg_host }}"
-#     login_user: "{{ pg_admin_user }}"
-#     login_password: "{{ pg_admin_password }}"
-#     name: "{{ db_username }}"
-#     password: "{{ db_password }}"
-#     role_attr_flags: CREATEDB
-#     no_password_changes: yes
-#   when: create_db
+# # Create Secret for required connection
+- name: create Secret DB Connection
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
 
-# - name: Create Module db
-#   postgresql_db:
-#     login_host: "{{ pg_host }}"
-#     login_user: "{{ db_username }}"
-#     login_password: "{{ db_password }}"
-#     name: "{{ db_database }}"
-#     owner: "{{ db_username}}"
-#   when: create_db
-
-# Create Secret for required connection
-# - name: create Secret DB Connection
-#   k8s:
-#     state: "{{ k8s_state }}"
-#     definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
-
+# Pull folio-org/folio-ansible repository from latest group_vars/snapshot
 - name: Pull Latest Module Options
   uri:
     url: "{{folio_options_url}}"
@@ -37,9 +16,7 @@
   set_fact:
     module_options: "{{ result.content | from_yaml }}"
 
-
-
-# template module deployment and service 
+# loop over module_list variables to deploy backend module deployment and service 
 - include_tasks: module.yml
   loop: "{{ module_list }}"
   loop_control:
