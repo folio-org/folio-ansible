@@ -1,0 +1,10 @@
+---
+# pg_admin credentials should be for a superuser
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_maint_db: postgres
+module_admin_user: folio_module_admin
+module_admin_password: folio_module_admin
+module_database: okapi_modules

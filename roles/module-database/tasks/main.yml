@@ -1,0 +1,30 @@
+---
+# Provision PostgreSQL database for module data
+
+- name: Install prerequisites from apt
+  become: yes
+  apt:
+    name: [libpq-dev, python-psycopg2, postgresql-client]
+    state: present
+
+# For now, this must be a SUPERUSER (cf. RMB-360)
+- name: Create a postgres admin user that can create roles and databases
+  postgresql_user:
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ pg_maint_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    name: "{{ module_admin_user }}"
+    password: "{{ module_admin_password }}"
+    encrypted: yes
+    # role_attr_flags: CREATEDB,CREATEROLE,LOGIN
+    role_attr_flags: SUPERUSER
+
+- name: Create module database
+  postgresql_db:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ module_admin_user }}"
+    login_password: "{{ module_admin_password }}"
+    name: "{{ module_database }}"
+    owner: "{{ module_admin_user }}"
