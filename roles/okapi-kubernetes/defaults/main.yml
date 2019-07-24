@@ -25,8 +25,6 @@ folio_db_user: folio
 folio_db_password: folio25
 folio_db_database: folio_modules
 
-pg_admin_user: pgadminuser
-pg_admin_password: pgadminpass
 pg_host: localhost
 pg_port: 5432
 

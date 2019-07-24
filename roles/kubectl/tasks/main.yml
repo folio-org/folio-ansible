@@ -1,0 +1,29 @@
+---
+- name: Fail if kubeconfig variables are not set
+  fail:
+    msg: >
+      {{ item }} is unset, aborting. Set {{ item }} 
+      or environment variable {{ item | upper }}
+  when: item.item is undefined
+  with_items:
+    - kubernetes_token
+    - kubernetes_user
+
+- name: download kubectl
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-release/release/v1.15.0/bin/linux/amd64/kubectl
+    dest: /usr/local/bin/kubectl
+    mode: '0755'
+  become: true
+    
+- name: create kube config directory
+  file:
+    path: "{{ user_home }}/.kube"
+    state: directory
+    mode: 0755
+
+- name: create kubectl config file
+  template:
+    src: config.yml.j2
+    dest: "{{ user_home }}/.kube/config"
+  delegate_to: localhost
