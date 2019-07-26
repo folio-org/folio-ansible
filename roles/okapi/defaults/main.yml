@@ -15,10 +15,11 @@ okapi_host: "{{ ansible_default_ipv4.address }}"
 # change to 'postgres' for postgres backend
 okapi_storage: inmemory
 
-pg_host: localhost
+pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
+pg_maint_db: postgres
 okapidb_user: okapi
 okapidb_password: okapi25
 okapidb_name: okapi
@@ -32,7 +33,7 @@ carbon_port: 2003
 # either here or at the host or group var level.  These are mostly
 # needed for advanced configuration or running Okapi in 'cluster' mode
 # on AWS.
-# 
+#
 # Set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
 # you are running on ec2 instances
 hazelcast_aws_conf: false

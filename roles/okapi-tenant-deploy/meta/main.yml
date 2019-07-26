@@ -1,0 +1,7 @@
+---
+dependencies:
+  - role: create-database
+    vars:
+      db_admin_user: "{{ pg_admin_user }}"
+      db_admin_password: "{{ pg_admin_password }}"
+    when: create_db

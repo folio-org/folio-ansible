@@ -1,12 +1,4 @@
 ---
-- name: Create modules db
-  include_role:
-    name: module-database
-  vars:
-    module_admin_user: "{{ pg_admin_user }}"
-    module_admin_password: "{{ pg_admin_password }}"
-  when: create_db
-
 - name: Set Okapi environment
   uri:
     url: "{{ okapi_url }}/_/env"
