@@ -12,9 +12,9 @@ ingress_name: okapi
 ingress_dns: none 
 
 okapi_url: http://okapi:9130
-okapi_db_user: okapi
-okapi_db_password: okapi25
-okapi_db_database: okapi
+okapidb_user: okapi
+okapidb_password: okapi25
+okapidb_name: okapi
 okapi_docker_repository: folioci
 okapi_docker_image: okapi
 okapi_docker_tag: latest
@@ -25,9 +25,8 @@ folio_db_user: folio
 folio_db_password: folio25
 folio_db_database: folio_modules
 
-pg_admin_user: pgadminuser
-pg_admin_password: pgadminpass
 pg_host: localhost
+pg_maint_db: postgres
 pg_port: 5432
 
 service_name: okapi

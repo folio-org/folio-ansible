@@ -24,12 +24,11 @@ app_label: okapi
 deployment_name: okapi
 
 okapi_url: http://okapi:9130
-okapi_db_user: okapi
-okapi_db_password: okapi25
-okapi_db_database: okapi
+okapidb_user: okapi
+okapidb_password: okapi25
+okapidb_name: okapi
 
-pg_admin_user: pgadminuser
-pg_admin_password: pgadminpass
+pg_maint_db: postgres
 pg_host: localhost
 pg_port: 5432
 
