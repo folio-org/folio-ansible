@@ -8,7 +8,6 @@ kubeconfig: ~/.kube/config
 pg_host: localhost
 pg_port: 5432
 okapi_url: http://okapi:9130
-ingress_dns: okapi-demo2.ci.folio.org
 
 # New Varibles for this ROLE
 # Backend Modules

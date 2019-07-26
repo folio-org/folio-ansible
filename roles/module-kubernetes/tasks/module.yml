@@ -8,7 +8,7 @@
   set_fact:
     tag: "{{ command_output.stdout }}"
 
-- name: Determine Module Name 
+- name: Determine Module Name
   shell: python -c "print('{{ module_item }}'[:'{{ module_item }}'.find('{{tag}}')-1])"
   register: command_output
 
@@ -22,7 +22,7 @@
     url: "{{folio_registry}}/_/proxy/modules/{{module_item}}?full=true"
     return_content: yes
   register: result
-- name: Set Module Descriptor 
+- name: Set Module Descriptor
   set_fact:
     module_descriptor: "{{ result.json }}"
 
@@ -31,7 +31,7 @@
   set_fact:
     java_mem: "{% if module_descriptor.metadata.containerMemory is defined %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
 
-# Check folio-org/folio-ansible repository from latest group_vars/snapshot  
+# Check folio-org/folio-ansible repository from latest group_vars/snapshot
 - name: Query docker_env for module name
   set_fact:
     module_option: "{{ module_options | json_query(query) | first | default([]) }}"
@@ -49,23 +49,23 @@
   register: command_output
 
 # set JAVA_OPTIONS
-- name: Set JAVA_OPTIONS 
+- name: Set JAVA_OPTIONS
   set_fact:
     java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
 
-# set DATABASE variable 
-# if metadata.databaseConnection not set - default set to true 
+# set DATABASE variable
+# if metadata.databaseConnection not set - default set to true
 # When all modules that need DB connection have set metadata.databaseConnection change the default to false
 - name: Set Memory from Desciptor
   set_fact:
     mod_database: "{% if module_descriptor.metadata.databaseConnection is defined %}{{ module_descriptor.metadata.databaseConnection }}{% else %}true{% endif %}"
 
-# Create Kubernetes Service 
-- name: create Service 
+# Create Kubernetes Service
+- name: create Service
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
-    
+
 # Create Kubernetes Deployment
 - name: create Deployment
   k8s:
@@ -75,7 +75,7 @@
 # POST module descriptor to Okapi
 - name: POST module descriptor to Okapi
   uri:
-    url: "https://{{ ingress_dns }}/_/proxy/modules" 
+    url: "{{ okapi_url }}/_/proxy/modules"
     method: POST
     body: "{{ module_descriptor | to_json}}"
     status_code: [200,201]
@@ -85,7 +85,7 @@
 # POST deployment descriptor tp Okapi
 - name: POST deployment descriptor tp Okapi
   uri:
-    url: "https://{{ ingress_dns }}/_/discovery/modules" 
+    url: "{{ okapi_url }}/_/discovery/modules"
     method: POST
     body: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
     status_code: [200,201]
