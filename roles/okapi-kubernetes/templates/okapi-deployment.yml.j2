@@ -30,9 +30,9 @@ spec:
               -Djava.awt.headless=true -Dstorage=postgres 
               -Dpostgres_host={{ pg_host }} 
               -Dpostgres_port={{ pg_port }}
-              -Dpostgres_user={{ okapi_db_user }} 
-              -Dpostgres_password={{ okapi_db_password }} 
-              -Dpostgres_database={{ okapi_db_database }}
+              -Dpostgres_user={{ okapidb_user }} 
+              -Dpostgres_password={{ okapidb_password }} 
+              -Dpostgres_database={{ okapidb_name }}
               -Dokapi_url={{ okapi_url }}
               -Dnodename=$(POD_NAME)
           ports:
