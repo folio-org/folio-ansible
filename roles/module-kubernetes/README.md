@@ -1,6 +1,19 @@
 # Backend Module Kubernetes
 This role deploys FOLIO backend modules within a kubernetes namespace.    This role assumes there is a Kubernetes cluster, Postgres instance, and databases/users already created. Cluster configure connection information for Kubernetes in `~/.kube/config`.
 
+The role sets up database connection information for the modules based on the requirements of the [RAML Module Builder](https://github.com/folio-org/raml-module-builder). The database connection information is in the form of a secret that is read into the container environment. RMB requires that the environment variables be:
+
+```yaml
+stringData:
+  DB_DATABASE: {{ db_database }}
+  DB_HOST: {{ pg_host }}
+  DB_MAXPOOLSIZE: "{{ db_maxpoolsize }}"
+  DB_PASSWORD: {{ db_password }}
+  DB_PORT: "{{ pg_port }}"
+  DB_USERNAME: {{ db_username }}
+```
+
+The role will optionally create a database for module data and a secret for the module environment.
 
 ## Usage
 
@@ -43,14 +56,21 @@ module_list:
 folio_registry: http://folio-registry.aws.indexdata.com
 folio_options_url: https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot
 # DB connection
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_maint_db: postgres
 db_database: okapi
 db_maxpoolsize: 20
 db_password: password
 db_username: folio_admin
-# Kubernetes Secret Name for Backend Module DB ENV 
+# Kubernetes Secret Name for Backend Module DB ENV
 db_secret_name: db-connect
 # Services
 service_type: ClusterIP
 # Set to present or absent
 k8s_state: present
+
+# Optional tasks
+create_db: yes
+create_secret: yes
 ```
