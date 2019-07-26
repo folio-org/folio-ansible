@@ -1,22 +1,4 @@
 ---
-- name: Install prerequisites from apt
-  become: yes
-  apt:
-    name:
-      - libpq-dev
-      - python-psycopg2
-      - postgresql-client
-  when: create_db
-
-- name: Create modules db
-  postgresql_db:
-    login_host: "{{ pg_host }}"
-    login_user: "{{ pg_admin_user }}"
-    login_password: "{{ pg_admin_password }}"
-    name: "{{ module_database }}"
-    owner: "{{ pg_admin_user }}"
-  when: create_db
-
 - name: Set Okapi environment
   uri:
     url: "{{ okapi_url }}/_/env"
