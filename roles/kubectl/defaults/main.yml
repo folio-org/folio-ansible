@@ -1,0 +1,5 @@
+kubernetes_server: https://rancher.dev.folio.org/k8s/clusters/c-nfjdd
+kubernetes_cluster: folio-eks-oregon-1
+kubernetes_user: "{{ lookup('env', 'KUBERNETES_USER') }}"
+kubernetes_token: "{{ lookup('env', 'KUBERNETES_TOKEN') }}"
+user_home: "{{ lookup('env', 'HOME') }}"

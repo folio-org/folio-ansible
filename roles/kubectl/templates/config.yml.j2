@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Config
+clusters:
+- name: "{{ kubernetes_cluster }}"
+  cluster:
+    server: "{{ kubernetes_server }}"
+
+users:
+- name: "{{ kubernetes_user }}"
+  user:
+    token: {{ kubernetes_token }}
+
+contexts:
+- name: "{{ kubernetes_cluster }}"
+  context:
+    user: "{{ kubernetes_user }}"
+    cluster: "{{ kubernetes_cluster }}"
+
+current-context: "{{ kubernetes_cluster }}"
+
