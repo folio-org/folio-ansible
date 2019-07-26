@@ -4,4 +4,5 @@ dependencies:
     vars:
       db_admin_user: "{{ pg_admin_user }}"
       db_admin_password: "{{ pg_admin_password }}"
+      database_name: "{{ module_database }}"
     when: create_db
