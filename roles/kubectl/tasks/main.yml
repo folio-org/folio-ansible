@@ -1,13 +1,7 @@
 ---
-- name: Fail if kubeconfig variables are not set
-  fail:
-    msg: >
-      {{ item }} is unset, aborting. Set {{ item }} 
-      or environment variable {{ item | upper }}
-  when: item.item is undefined
-  with_items:
-    - kubernetes_token
-    - kubernetes_user
+- name: debug k8s user
+  debug:
+    var: kubernetes_user
 
 - name: download kubectl
   get_url:
