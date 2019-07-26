@@ -4,6 +4,7 @@
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
+  when: create_secret
 
 # Pull folio-org/folio-ansible repository from latest group_vars/snapshot
 - name: Pull Latest Module Options
@@ -12,11 +13,11 @@
     return_content: yes
   register: result
 
-- name: Set Module Options 
+- name: Set Module Options
   set_fact:
     module_options: "{{ result.content | from_yaml }}"
 
-# loop over module_list variables to deploy backend module deployment and service 
+# loop over module_list variables to deploy backend module deployment and service
 - include_tasks: module.yml
   loop: "{{ module_list }}"
   loop_control:
