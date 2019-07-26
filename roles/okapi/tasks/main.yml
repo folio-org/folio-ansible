@@ -9,27 +9,6 @@
       - python-apt
       - ssl-cert
 
-- name: Create Okapi postgresql user
-  postgresql_user:
-    db: postgres
-    login_host: "{{ pg_host }}"
-    login_user: "{{ pg_admin_user }}"
-    login_password: "{{ pg_admin_password }}"
-    name: "{{ okapidb_user }}"
-    password: "{{ okapidb_password }}"
-    role_attr_flags: CREATEDB
-    no_password_changes: yes
-  when: okapi_storage == "postgres"
-
-- name: Create Okapi db
-  postgresql_db:
-    login_host: "{{ pg_host }}"
-    login_user: "{{ okapidb_user }}"
-    login_password: "{{ okapidb_password }}"
-    name: "{{ okapidb_name }}"
-    owner: "{{ okapidb_user }}"
-  when: okapi_storage == "postgres"
-
 - name: Install okapi debian package
   become: yes
   apt:
