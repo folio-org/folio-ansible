@@ -54,7 +54,7 @@
 
 # Edge modules
 - name: Set up Okapi to support edge modules
-  hosts: testing-core:testing
+  hosts: testing
   roles:
     - role: okapi-register-modules
       folio_modules:
@@ -77,7 +77,7 @@
     - tenant-admin-permissions
 
 - name: Set up edge modules
-  hosts: testing-core:testing:snapshot
+  hosts: testing:snapshot
   roles:
     - role: edge-module
       edge_module: edge-rtac
