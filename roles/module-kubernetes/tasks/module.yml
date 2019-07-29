@@ -19,7 +19,7 @@
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
-    url: "{% if okapi_pull is true %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item}}?full=true"
+    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item}}?full=true"
     return_content: yes
   register: result
 - name: Set Module Descriptor
