@@ -73,4 +73,5 @@ k8s_state: present
 # Optional tasks
 create_db: yes
 create_secret: yes
+okapi_pull: yes
 ```

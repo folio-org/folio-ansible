@@ -81,6 +81,7 @@
     status_code: [200,201]
     body_format: json
   ignore_errors: True
+  when: okapi_pull is not true
 
 # POST deployment descriptor tp Okapi
 - name: POST deployment descriptor tp Okapi
