@@ -1,0 +1,42 @@
+---
+# defaults file for module-kubernetes
+
+namespace: default
+kubeconfig: ~/.kube/config
+
+# Okapi Variables from Anisble Role: okapi_kubernetes
+pg_host: localhost
+pg_port: 5432
+okapi_url: http://okapi:9130
+
+# New Varibles for this ROLE
+# Backend Modules
+module_list:
+  - mod-users-15.7.0-SNAPSHOT.85
+
+# Mod descriptor registry
+folio_registry: http://folio-registry.aws.indexdata.com
+folio_options_url: https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot
+# DB connection
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_maint_db: postgres
+db_database: okapi
+db_maxpoolsize: 20
+db_password: password
+db_username: folio_admin
+
+# Kubernetes Secret Name for Backend Module DB ENV
+db_secret_name: db-connect
+
+# Services
+service_type: ClusterIP
+
+# Set to present or absent
+# Create or clean up State
+k8s_state: present
+
+# Optional tasks
+create_db: yes
+create_secret: yes
+okapi_pull: yes

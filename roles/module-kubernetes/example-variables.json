@@ -1,0 +1,19 @@
+{
+    "namespace": "okapi-demo",
+    "kubeconfig": "~/.kube/config",
+    "pg_host": "folio-eks-oregon-1.cdxr1geeeqbb.us-west-2.rds.amazonaws.com",
+    "pg_port": 5432,
+    "db_database": "okapi_modules",
+    "db_maxpoolsize": 20,
+    "db_password": "password",
+    "db_username": "okapi",
+    "db_secret_name": "db-connect",
+    "okapi_url": "http://okapi:9130",
+    "ingress_dns": "okapi-demo2.ci.folio.org",
+    "folio_registry": "http://folio-registry.aws.indexdata.com",
+    "folio_options_url": "https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot",
+    "db_secret_name": "db-connect",
+    "service_type": "ClusterIP",
+    "k8s_state":"present",
+    "module_list": ["mod-users-15.7.0-SNAPSHOT.85"]
+}

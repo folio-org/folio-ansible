@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: {{ module_item.replace('.','-').lower() }}
+  labels:
+    app: {{ module_item.replace('.','-').lower() }}
+  namespace: "{{ namespace }}"
+spec:
+  selector:
+    matchLabels:
+      app: "{{ module_item.replace('.','-').lower() }}"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "{{ module_item.replace('.','-').lower() }}"
+    spec:
+      containers:
+        - name: "{{ module_item.replace('.','-').lower() }}"
+          image: {{ module_descriptor.launchDescriptor.dockerImage }}
+          {% if mod_database -%}
+          envFrom:
+          - secretRef:
+              name: {{ db_secret_name }}
+          {% endif -%}
+          env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: JAVA_OPTIONS
+            value: {{ java_options }}
+          ports:
+          {% for key, value in module_descriptor.launchDescriptor.dockerArgs.HostConfig.PortBindings.items() %}{%- set ports = key.split('/') -%}
+          - containerPort: {{ ports[0] }}
+            protocol: TCP
+          {% endfor %}

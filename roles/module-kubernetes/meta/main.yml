@@ -1,0 +1,17 @@
+---
+dependencies:
+  - role: create-database
+    vars:
+      pg_maint_db: postgres
+      db_admin_user: "{{ db_username }}"
+      db_admin_password: "{{ pg_admin_password }}"
+      database_name: "{{ db_database }}"
+    when: create_db
+  - role: okapi-pull
+    vars:
+      okapi_url: "{{ okapi_url }}"
+      mod_descr_repos:
+        urls:
+          - "{{ folio_registry }}"
+      okapi_pull_timeout: 300
+    when: okapi_pull
