@@ -12,6 +12,6 @@ dependencies:
       okapi_url: {{ okapi_url }}
       mod_descr_repos:
         urls:
-          - http://folio-registry.aws.indexdata.com
+          - {{ folio_registry }}
       okapi_pull_timeout: 300
     when: okapi_pull
