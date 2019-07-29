@@ -19,7 +19,7 @@
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
-    url: "{{folio_registry}}/_/proxy/modules/{{module_item}}?full=true"
+    url: "{% if okapi_pull is true %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item}}?full=true"
     return_content: yes
   register: result
 - name: Set Module Descriptor
@@ -72,26 +72,55 @@
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-deployment.yml.j2') }}"
 
+- name: Check module registration
+  uri:
+    url: "{{ okapi_url }}/_/proxy/modules/{{ module_item }}"
+    headers:
+     X-Okapi-Tenant: "supertenant"
+     Accept: application/json, text/plain
+    status_code: 200, 404
+  register: mod_reg_status
+
 # POST module descriptor to Okapi
 - name: POST module descriptor to Okapi
   uri:
     url: "{{ okapi_url }}/_/proxy/modules"
     method: POST
     body: "{{ module_descriptor | to_json}}"
-    status_code: [200,201]
+    status_code: 201
     body_format: json
-  ignore_errors: True
-  when: okapi_pull is not true
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
+  register: mod_reg
+  changed_when: mod_reg.status == 201
+  when: okapi_pull is not true and mod_reg_status.results.status == 404
 
-# POST deployment descriptor tp Okapi
-- name: POST deployment descriptor tp Okapi
+- name: Check module deployment
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ module_item }}"
+    headers:
+     X-Okapi-Tenant: "supertenant"
+     Accept: application/json, text/plain
+    status_code: 200, 404
+  register: mod_dep_status
+
+# POST deployment descriptor to Okapi
+- name: POST deployment descriptor to Okapi
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
     method: POST
     body: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
-    status_code: [200,201]
+    status_code: 201
     body_format: json
-  ignore_errors: True
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
+  register: mod_dep
+  changed_when: mod_dep.status == 201
+  when: mod_dep_status.results.status == 404
 
 # - name: DEBUG check template formating issues
 #   copy:
