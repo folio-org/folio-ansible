@@ -29,7 +29,7 @@
 # Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
 - name: Set Memory from Desciptor
   set_fact:
-    java_mem: "{% if module_descriptor.metadata.containerMemory is defined %}-Xmx{{ module_descriptor.metadata.containerMemory }}m{% else %}-Xmx256m{% endif %}"
+    java_mem: "-Xmx{{ module_descriptor | json_query('metadata.containerMemory') | ternary('', '256') }}m"
 
 # Check folio-org/folio-ansible repository from latest group_vars/snapshot
 - name: Query docker_env for module name
@@ -58,7 +58,7 @@
 # When all modules that need DB connection have set metadata.databaseConnection change the default to false
 - name: Set Memory from Desciptor
   set_fact:
-    mod_database: "{% if module_descriptor.metadata.databaseConnection is defined %}{{ module_descriptor.metadata.databaseConnection }}{% else %}true{% endif %}"
+    mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | ternary('', 'true') }}"
 
 # Create Kubernetes Service
 - name: create Service
@@ -95,7 +95,7 @@
       Accept: application/json, text/plain
   register: mod_reg
   changed_when: mod_reg.status == 201
-  when: okapi_pull is not true and mod_reg_status.results.status == 404
+  when: not okapi_pull and mod_reg_status.status == 404
 
 - name: Check module deployment
   uri:
@@ -120,7 +120,7 @@
       Accept: application/json, text/plain
   register: mod_dep
   changed_when: mod_dep.status == 201
-  when: mod_dep_status.results.status == 404
+  when: mod_dep_status.status == 404
 
 # - name: DEBUG check template formating issues
 #   copy:
