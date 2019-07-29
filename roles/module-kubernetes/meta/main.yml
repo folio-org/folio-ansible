@@ -9,9 +9,9 @@ dependencies:
     when: create_db
   - role: okapi-pull
     vars:
-      okapi_url: {{ okapi_url }}
+      okapi_url: "{{ okapi_url }}"
       mod_descr_repos:
         urls:
-          - {{ folio_registry }}
+          - "{{ folio_registry }}"
       okapi_pull_timeout: 300
     when: okapi_pull
