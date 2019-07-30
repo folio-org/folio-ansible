@@ -50,7 +50,7 @@
     line: "host  all  all  0.0.0.0/0  md5"
   notify: Restart postgresql
 
-# This is the pg_admin_user that will be used in module-database role
+# This is the pg_admin_user that will be used in create-database role
 - name: Create a postgres admin user that can create roles and databases
   become: yes
   become_user: postgres
