@@ -20,14 +20,14 @@ Invoke the role in a playbook, e.g.:
 ```yaml
 - hosts: my-folio-test
   roles:
-    - role: module-database
+    - role: create-database
 ```
 
 Or include it as a dependency in a role, e.g.:
 
 ```yaml
 dependencies:
-  - { role: module-database }
+  - { role: create-database }
 ```
 
 ## Variables
