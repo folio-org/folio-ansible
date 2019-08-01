@@ -153,6 +153,7 @@ stripes_github_project: https://github.com/folio-org/platform-core
 stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
+with_sourcemap: true
 # mod descrs are built by `yarn install` in folio-testing-platform
 # build_module_descriptors: false
 okapi_register_modules: true
