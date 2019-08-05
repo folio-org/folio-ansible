@@ -29,7 +29,7 @@
 # Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
 - name: Set Memory from Desciptor
   set_fact:
-    java_mem: "-Xmx{{ module_descriptor | json_query('metadata.containerMemory') | ternary('', '256') }}m"
+    java_mem: "-Xmx256m"
 
 # Check folio-org/folio-ansible repository from latest group_vars/snapshot
 - name: Query docker_env for module name
