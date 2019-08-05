@@ -6,6 +6,7 @@
   apt:
     name: [libpq-dev, python-psycopg2, postgresql-client]
     state: present
+  when: folio_install_type == "single_server"
 
 # For now, this must be a SUPERUSER (cf. RMB-360)
 - name: Create a postgres admin user that can create roles and databases

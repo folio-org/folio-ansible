@@ -1,4 +1,7 @@
 ---
+# choose single_server or kubernetes
+folio_install_type: single_server
+
 folio_user: folio
 folio_group: folio
 

@@ -6,6 +6,16 @@
     name:
       - nodejs
       - npm
+  when: folio_install_type == "single_server"
+
+- name: Install nodejs and npm from apk
+  become: yes
+  apk:
+    name:
+      - nodejs
+      - npm
+    update_cache: yes
+  when: folio_install_type == "kubernetes"
 
 - name: Install n and mocha from npm
   become: yes
@@ -13,3 +23,4 @@
   with_items:
     - "n"
     - mocha
+  when: folio_install_type == "single_server"

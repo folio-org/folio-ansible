@@ -8,17 +8,30 @@
       - ca-certificates
       - python-apt
       - ssl-cert
+  when: folio_install_type == "single_server"
 
 - name: Install apt key for yarn
   become: yes
   apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+  when: folio_install_type == "single_server"
 
 - name: Install apt repository for yarn
   become: yes
   apt_repository: repo="deb https://dl.yarnpkg.com/debian/ stable main"
+  when: folio_install_type == "single_server"
 
 - name: Install yarn from apt
   become: yes
   apt:
     name:
       - yarn
+  when: folio_install_type == "single_server"
+
+- name: Install yarn from apk
+  become: yes
+  apk:
+    name:
+      - yarn
+    update_cache: yes
+  when: folio_install_type == "kubernetes"
+

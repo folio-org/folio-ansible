@@ -4,6 +4,7 @@ kubeconfig: ~/.kube/config
 
 create_db: false
 create_ingress: false
+create_rbac: false
 
 app_label: okapi
 deployment_name: okapi

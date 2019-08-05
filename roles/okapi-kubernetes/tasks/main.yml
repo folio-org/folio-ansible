@@ -3,6 +3,7 @@
   k8s:
     state: present
     definition: "{{ lookup('template', 'rbac.yml.j2') }}"
+  when: create_rbac == "true"
 
 - name: create okapi service
   k8s:
