@@ -1,5 +1,5 @@
 {
-    "srvcId": "{{ module_item }}", 
+    "srvcId": "{{ module_item.name }}-{{ module_item.version }}", 
     "instId": "{{ module_item }}",
-    "url": "http://{{ module_item.replace('.','-').lower() }}:{{ (module_descriptor.launchDescriptor.dockerArgs.HostConfig.PortBindings.keys()| first).split('/')[0] }}"
+    "url": "http://{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}:{{ (module_descriptor.launchDescriptor.dockerArgs.HostConfig.PortBindings.keys()| first).split('/')[0] }}"
 }

@@ -17,8 +17,26 @@
   set_fact:
     module_options: "{{ result.content | from_yaml }}"
 
-# loop over module_list variables to deploy backend module deployment and service
-- include_tasks: module.yml
-  loop: "{{ module_list }}"
+- name: debug folio_modules
+  debug:
+    var: module_item
+  loop: "{{ folio_modules }}"
   loop_control:
     loop_var: module_item
+  when: module_item.deploy is defined and module_item.deploy
+
+- name: get deployed mods
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules"
+  register: deployed_modules_req
+
+- name: set deployed modules list
+  set_fact:
+    deployed_modules: "{{ deployed_modules_req.json | json_query('[].srvcId') }}"
+
+# loop over module_list variables to deploy backend module deployment and service
+- include_tasks: module.yml
+  loop: "{{ folio_modules }}"
+  loop_control:
+    loop_var: module_item
+  when: module_item.deploy is defined and module_item.deploy

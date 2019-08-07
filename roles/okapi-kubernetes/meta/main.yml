@@ -3,6 +3,8 @@ dependencies:
   - role: create-database
     vars:
       pg_host: "{{ pg_host }}"
+      pg_admin_user: "{{ pg_admin_user }}"
+      pg_admin_password: "{{ pg_admin_password }}"
       db_admin_user: "{{ okapidb_user }}"
       db_admin_password: "{{ okapidb_password }}"
       database_name: "{{ okapidb_name }}"
