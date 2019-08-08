@@ -1,0 +1,12 @@
+- name: enable modules
+  uri:
+    url: https://okapi-demo2.ci.folio.org/_/proxy/tenants/diku/modules
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
+    body: "{{ item|to_json }}"
+    status_code: 201
+
