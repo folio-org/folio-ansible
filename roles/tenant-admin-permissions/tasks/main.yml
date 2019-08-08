@@ -1,20 +1,20 @@
 ---
 # Note: admin user must be bootstrapped and have mod-permissions perms
 # Requires mod-permissions >= 5.1.0
-- name: Login as {{ admin_user.username }}
-  uri:
-    url: "{{ okapi_login_url }}/authn/login"
-    method: POST
-    headers:
-      X-Okapi-Tenant: "{{ tenant }}"
-      Accept: application/json
-    body_format: json
-    body: "{'username': '{{ admin_user.username }}', 'password': '{{ admin_user.password }}' }"
-    status_code: 201
-  register: login_result
-  retries: 5
-  delay: 10
-  until: login_result is not failed
+#- name: Login as {{ admin_user.username }}
+#  uri:
+#    url: "{{ okapi_login_url }}/authn/login"
+#    method: POST
+#    headers:
+#      X-Okapi-Tenant: "{{ tenant }}"
+#      Accept: application/json
+#    body_format: json
+#    body: "{'username': '{{ admin_user.username }}', 'password': '{{ admin_user.password }}' }"
+#    status_code: 201
+#  register: login_result
+#  retries: 5
+#  delay: 10
+#  until: login_result is not failed
 
 - name: Get all permissionSets not included in other permissionSets
   # cql query for childOf==[]
@@ -24,7 +24,8 @@
     headers:
       Accept: "application/json, text/plain"
       X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ login_result['x-okapi-token'] | default('') }}"
+      #X-Okapi-Token: "{{ login_result['x-okapi-token'] | default('') }}"
+      X-Okapi-Token: "{{ okapi_token }}"
   register: all_permissions
 
 - name: Fail if all permissions not retrieved
