@@ -77,7 +77,7 @@
       Accept: application/json, text/plain
     body: "{{ install }}"
   register: install_request
-  changed_when: install_request.status == 200
+  #changed_when: install_request.status == 200
   when: install|default(false)
 
 - name: Create directory for saving install files
