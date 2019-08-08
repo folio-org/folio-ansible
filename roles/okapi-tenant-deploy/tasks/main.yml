@@ -63,7 +63,7 @@
     body: "{{ install_deploy }}"
     timeout: "{{ deploy_timeout }}"
   register: deploy_request
-  changed_when: deploy_request.status == 200
+  #changed_when: deploy_request.status == 200
   when: install_deploy|default(false)
 
 - name: Post install list for enabling modules (no deployment)
