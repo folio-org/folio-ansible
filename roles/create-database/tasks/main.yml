@@ -21,7 +21,7 @@
     encrypted: yes
     role_attr_flags: CREATEDB,CREATEROLE,LOGIN
 
-- name: grant {{ db_admin_user }} role to {{ pg_admin_user }} (rds)
+- name: grant new role to pg admin user (rds)
   postgresql_query:
     login_host: "{{ pg_host }}"
     port: "{{ pg_port }}"
