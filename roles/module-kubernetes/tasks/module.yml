@@ -1,22 +1,5 @@
 ---
 
-# Split Module ID into Module and Tag
-#- name: Determine Module Tag
-#  shell: python -c "print('-'.join('{{ module_item }}'.split('-')[-2:])) if 'SNAPSHOT' in '{{module_item}}' else print('{{module_item}}'.split('-')[-1])";
-#  register: command_output
-#
-#- name: Set Module Tag Variable
-#  set_fact:
-#    tag: "{{ command_output.stdout }}"
-#
-#- name: Determine Module Name
-#  shell: python -c "print('{{ module_item }}'[:'{{ module_item }}'.find('{{tag}}')-1])"
-#  register: command_output
-#
-#- name: Set Module Name Variable
-#  set_fact:
-#    module: "{{ command_output.stdout }}"
-#
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
@@ -45,7 +28,6 @@
   set_fact:
     module_option: "{{ module_options | json_query(query) | first | default([]) }}"
   vars:
-    #query: "folio_modules[?name=='{{ module }}'].docker_env"
     query: "folio_modules[?name=='{{ module_item.name }}'].docker_env"
 
 - name: Query for Value
