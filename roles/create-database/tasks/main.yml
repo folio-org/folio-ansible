@@ -21,6 +21,16 @@
     encrypted: yes
     role_attr_flags: CREATEDB,CREATEROLE,LOGIN
 
+- name: grant "{{ db_admin_user }}" role to "{{ pg_admin_user }}" (rds)
+  postgresql_query:
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ pg_maint_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    query: "grant {{ db_admin_user }} to {{ pg_admin_user }}"
+  when: folio_install_type == "kubernetes"
+
 - name: Create module database
   postgresql_db:
     login_host: "{{ pg_host }}"
