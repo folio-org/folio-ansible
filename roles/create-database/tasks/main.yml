@@ -19,8 +19,7 @@
     name: "{{ db_admin_user }}"
     password: "{{ db_admin_password }}"
     encrypted: yes
-    # role_attr_flags: CREATEDB,CREATEROLE,LOGIN
-    role_attr_flags: rds_superuser, CREATEDB, CREATEROLE, LOGIN
+    role_attr_flags: CREATEDB,CREATEROLE,LOGIN
 
 - name: Create module database
   postgresql_db:
