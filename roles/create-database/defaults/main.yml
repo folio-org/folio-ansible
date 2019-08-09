@@ -8,3 +8,4 @@ pg_maint_db: postgres
 db_admin_user: folio_module_admin
 db_admin_password: folio_module_admin
 database_name: okapi_modules
+folio_install_type: single_server
