@@ -1,65 +1,28 @@
 ---
-
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
-    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item.name}}-{{module_item.version }}?full=true"
+    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}?full=true"
     return_content: yes
   register: result
 - name: Set Module Descriptor
   set_fact:
     module_descriptor: "{{ result.json }}"
 
-- name: debug module_descriptor
-  debug:
-    var: module_descriptor.metadata.containerMemory
-
-# Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
-- name: Set Memory from Desciptor
-  set_fact:
-    java_mem: "-Xmx256m"
-
-- name: debug java_mem
-  debug:
-    var: java_mem
-
-## Check folio-org/folio-ansible repository from latest group_vars/snapshot
-- name: Query docker_env for module name
-  set_fact:
-    module_option: "{{ module_options | json_query(query) | first | default([]) }}"
-  vars:
-    query: "folio_modules[?name=='{{ module_item.name }}'].docker_env"
-
-- name: Query for Value
-  set_fact:
-    java_option: "{{ module_option | json_query(query) | first | default('')}}"
-  vars:
-    query: "[?name=='JAVA_OPTIONS'].value"
-
-- name: Get Java Options not associated with Memory
-  shell: python -c "data=[ i for i in '{{ java_option }}'.split(' ') if not i.startswith('-Xmx')]; print(' '.join(data)) if data else print('')"
-  register: command_output
-
 # set JAVA_OPTIONS
 - name: Set JAVA_OPTIONS
   set_fact:
-    java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
-
-- name: debug java_options
-  debug:
-    var: java_options
+    java_options: "{{ module_item | json_query(query) | default(default_opts, true) }}"
+  vars:
+    query: "docker_env[?name == 'JAVA_OPTIONS'].value"
+    default_opts: "-Xmx256m"
 
 # set DATABASE variable
 # if metadata.databaseConnection not set - default set to true
 # When all modules that need DB connection have set metadata.databaseConnection change the default to false
 - name: Set Memory from Desciptor
   set_fact:
-    #mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | ternary('', 'true') }}"
-    mod_database: "true"
-
-- name: debug vars
-  debug:
-    var: module_item
+    mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | default(true, true) }}"
 
 - name: debug template
   debug:
@@ -70,10 +33,6 @@
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
-
-- name: debug template
-  debug:
-    msg: "{{ lookup('template', 'module-deployment.yml.j2') }}"
 
 # Create Kubernetes Deployment
 - name: create Deployment
@@ -106,22 +65,14 @@
   changed_when: mod_reg.status == 201
   when: not okapi_pull and mod_reg_status.status == 404
 
-#- name: Check module deployment
-#  uri:
-#    url: "{{ okapi_url }}/_/discovery/modules/{{ module_item.name }}-{{ module_item.version }}"
-#    headers:
-#     X-Okapi-Tenant: "supertenant"
-#     Accept: application/json, text/plain
-#    status_code: 200, 404
-#  register: mod_dep_status
-
-- name: test 
-  set_fact:
-    mod_name: "{{ module_item.name }}-{{ module_item.version }}"
-
-- name: check mod name
-  debug:
-    var: mod_name
+- name: Check module deployment
+  uri:
+    url: "{{ okapi_url }}/_/discovery/modules/{{ module_item.name }}-{{ module_item.version }}"
+    headers:
+     X-Okapi-Tenant: "supertenant"
+     Accept: application/json, text/plain
+    status_code: 200, 404
+  register: mod_dep_status
 
 # POST deployment descriptor to Okapi
 - name: POST deployment descriptor to Okapi
