@@ -35,7 +35,7 @@
   shell: 'psql -U {{ pg_admin_user }} -h {{ pg_host }} {{ pg_maint_db}} -c "grant {{ db_admin_user }} to {{ pg_admin_user }}"'
   environment:
     PGPASSWORD: "{{ pg_admin_password }}"
-  when: folio_isntall_type == "kubernetes
+  when: folio_isntall_type == "kubernetes"
 
 - name: Create module database
   postgresql_db:
