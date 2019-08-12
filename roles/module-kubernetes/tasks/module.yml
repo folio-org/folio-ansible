@@ -38,7 +38,7 @@
 
 - name: Check module registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/modules/{{ module_item.name }}-{{ module_item.version }}"
+    url: "{{ okapi_url }}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
     headers:
      X-Okapi-Tenant: "supertenant"
      Accept: application/json, text/plain
@@ -76,6 +76,8 @@
   register: mod_dep
   changed_when: mod_dep.status == 201
   when: mod_name not in deployed_modules
+  vars:
+    mod_name: "{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
 
 # - name: DEBUG check template formating issues
 #   copy:
