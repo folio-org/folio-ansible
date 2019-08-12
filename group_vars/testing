@@ -119,6 +119,12 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     deploy: yes
 
+  - name: mod-source-record-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: "test.mode", value: "true" }
+    deploy: yes
+
   - name: mod-inventory
     docker_env:
       - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
@@ -183,12 +189,6 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-Xmx256m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-source-record-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-oai-pmh
