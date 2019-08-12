@@ -15,10 +15,6 @@
   set_fact:
     deployed_modules: "{{ deployed_modules_req.json | json_query('[].srvcId') }}"
 
-- name: debug folio_modules
-  debug:
-    var: folio_modules
-
 # loop over module_list variables to deploy backend module deployment and service
 - include_tasks: module.yml
   loop: "{{ folio_modules }}"

@@ -24,10 +24,6 @@
   set_fact:
     mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | default(true, true) }}"
 
-- name: debug template
-  debug:
-    msg: "{{ lookup('template', 'module-service.yml.j2') }}"
-
 # Create Kubernetes Service
 - name: create Service
   k8s:
@@ -65,15 +61,6 @@
   changed_when: mod_reg.status == 201
   when: not okapi_pull and mod_reg_status.status == 404
 
-- name: Check module deployment
-  uri:
-    url: "{{ okapi_url }}/_/discovery/modules/{{ module_item.name }}-{{ module_item.version }}"
-    headers:
-     X-Okapi-Tenant: "supertenant"
-     Accept: application/json, text/plain
-    status_code: 200, 404
-  register: mod_dep_status
-
 # POST deployment descriptor to Okapi
 - name: POST deployment descriptor to Okapi
   uri:
@@ -88,9 +75,7 @@
       Accept: application/json, text/plain
   register: mod_dep
   changed_when: mod_dep.status == 201
-  #when: mod_name not in deployed_modules
-  #when: mod_dep_status.status == 404
-  ignore_errors: yes
+  when: mod_name not in deployed_modules
 
 # - name: DEBUG check template formating issues
 #   copy:
