@@ -4,8 +4,6 @@ folio_install_type: single_server
 
 folio_user: folio
 folio_group: folio
-folio_install_type: single_server
-
 
 folio_apt_repo_url: https://repository.folio.org/packages/ubuntu
 folio_apt_key_id: 469A4045
