@@ -1,3 +1,4 @@
 ---
 dependencies:
-  - { role: common }
+  - role: common
+    when: folio_install_type == "single_server"

@@ -5,3 +5,5 @@ version_descr: |
   Very minimal FOLIO system with just Okapi
 
   Okapi version: 1.7.0
+
+folio_install_type: single_server

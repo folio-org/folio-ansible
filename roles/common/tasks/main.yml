@@ -5,22 +5,18 @@
   apt:
     update-cache: yes
     cache_valid_time: 3600
-  when: folio_install_type == "single_server"
 
 - name: create folio group
   become: yes
   group: name={{ folio_group }} system=yes
-  when: folio_install_type == "single_server"
 
 - name: create folio user
   become: yes
   user: name={{ folio_user }} system=yes group={{ folio_group }}
-  when: folio_install_type == "single_server"
 
 - name: Add ansible user to folio group
   become: yes
   user: name={{ ansible_user }} groups={{ folio_group }}
-  when: folio_install_type == "single_server"
 
 - name: Install prerequisites from apt
   become: yes
@@ -32,7 +28,6 @@
       - ca-certificates
       - unzip
       - jq
-  when: folio_install_type == "single_server"
 
 - name: Install postgresql client things on all nodes
   become: yes
@@ -41,7 +36,6 @@
       - libpq-dev
       - python-psycopg2
       - postgresql-client
-  when: folio_install_type == "single_server"
 
 - name: Set up FOLIO apt repo GPG key
   become: yes
@@ -49,7 +43,6 @@
     id: "{{ folio_apt_key_id }}"
     url: "{{ folio_apt_key_url }}"
     state: present
-  when: folio_install_type == "single_server"
 
 - name: Configure FOLIO apt repository
   become: yes
@@ -58,4 +51,3 @@
     filename: folioci
     state: present
   with_items: "{{ folio_apt_repos }}"
-  when: folio_install_type == "single_server"

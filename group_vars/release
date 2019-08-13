@@ -3,6 +3,7 @@
 auth_required: true
 load_mods_larger: true
 enable_okapi: true
+folio_install_type: single_server
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/stripes-install.json
 update_launch_descr: true
