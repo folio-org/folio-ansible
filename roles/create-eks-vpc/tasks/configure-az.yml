@@ -1,0 +1,126 @@
+---
+
+# create one public subnet
+- name: create public VPC subnet
+  ec2_vpc_subnet:
+    state: present
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_id }}"
+    map_public: yes
+    cidr: "{{ public_subnet_cidr }}"
+    az: "{{ az }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-public"
+      kubernetes.io/role/elb: 1
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_public_subnet
+
+# get public subnet id
+- name: set fact -  public subnet id
+  set_fact:
+    public_subnet_id: "{{ create_public_subnet.subnet.id }}"
+
+# create first private subnet for kubernetes
+- name: create private VPC subnet
+  ec2_vpc_subnet:
+    state: present
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_id }}"
+    map_public: no
+    cidr: "{{ private_subnet_cidr_1 }}"
+    az: "{{ az }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-private-1"
+      kubernetes.io/role/internal-elb: 1
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_private_subnet_1
+
+# create second private subnet for DB/RDS
+- name: create private VPC subnet for RDS
+  ec2_vpc_subnet:
+    state: present
+    region: "{{ aws_region }}"
+    vpc_id: "{{ vpc_id }}"
+    map_public: no
+    cidr: "{{ private_subnet_cidr_2 }}"
+    az: "{{ az }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-private-2"
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_private_subnet_2
+
+# get private subnet ids
+- name: set fact -  private subnet ids
+  set_fact:
+    private_subnet_1_id: "{{ create_private_subnet_1.subnet.id }}"
+    private_subnet_2_id: "{{ create_private_subnet_2.subnet.id }}"
+
+# create the NAT gateway in the public subnet.
+- name: create a NAT gateway in each public subnet
+  ec2_vpc_nat_gateway:
+    state: present
+    subnet_id: "{{ public_subnet_id }}"
+    region: "{{ aws_region }}"
+    wait: yes
+    if_exist_do_not_create: true
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_nat_gateway
+
+# get NAT gateway resource id
+- name: set fact - nat_gateway_id
+  set_fact:
+    nat_gateway_id: "{{ create_nat_gateway.nat_gateway_id }}"
+
+# tag NAT gateway
+- name: tag nat gateway
+  ec2_tag:
+    region: "{{ aws_region }}"
+    state: present
+    resource: "{{ nat_gateway_id }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-nat"
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+
+# create route table for public subnet. use the VPC igw
+- name: create route table for public subnet
+  ec2_vpc_route_table:
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ aws_region }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-public-rt"
+    subnets:
+      - "{{ public_subnet_id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ vpc_gateway_id }}"
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+
+# create route tables for private subnet. use nat gateway
+- name: create route tables for private subnet
+  ec2_vpc_route_table:
+    state: present
+    vpc_id: "{{ vpc_id }}"
+    region: "{{ aws_region }}"
+    tags:
+      Name: "{{ vpc_name }}-{{ az }}-private-rt"
+    subnets:
+      - "{{ private_subnet_1_id }}"
+      - "{{ private_subnet_2_id }}"
+    routes:
+      - dest: 0.0.0.0/0
+        gateway_id: "{{ nat_gateway_id }}"
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
