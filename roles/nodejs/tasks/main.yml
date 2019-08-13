@@ -23,4 +23,4 @@
   with_items:
     - "n"
     - mocha
-  when: folio_install_type == "kubernetes"
+  when: folio_install_type == "single_server"
