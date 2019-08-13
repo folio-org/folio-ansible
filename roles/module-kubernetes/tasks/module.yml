@@ -1,64 +1,28 @@
 ---
-# Split Module ID into Module and Tag
-- name: Determine Module Tag
-  shell: python -c "print('-'.join('{{ module_item }}'.split('-')[-2:])) if 'SNAPSHOT' in '{{module_item}}' else print('{{module_item}}'.split('-')[-1])";
-  register: command_output
-
-- name: Set Module Tag Variable
-  set_fact:
-    tag: "{{ command_output.stdout }}"
-
-- name: Determine Module Name
-  shell: python -c "print('{{ module_item }}'[:'{{ module_item }}'.find('{{tag}}')-1])"
-  register: command_output
-
-- name: Set Module Name Variable
-  set_fact:
-    module: "{{ command_output.stdout }}"
-
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
-    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item}}?full=true"
+    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}?full=true"
     return_content: yes
   register: result
 - name: Set Module Descriptor
   set_fact:
     module_descriptor: "{{ result.json }}"
 
-# Check JAVA Memory for JAVA_OPTIONS (defaults: -Xmx256m)
-- name: Set Memory from Desciptor
-  set_fact:
-    java_mem: "-Xmx{{ module_descriptor | json_query('metadata.containerMemory') | ternary('', '256') }}m"
-
-# Check folio-org/folio-ansible repository from latest group_vars/snapshot
-- name: Query docker_env for module name
-  set_fact:
-    module_option: "{{ module_options | json_query(query) | first | default([]) }}"
-  vars:
-    query: "folio_modules[?name=='{{ module }}'].docker_env"
-
-- name: Query for Value
-  set_fact:
-    java_option: "{{ module_option | json_query(query) | first | default('')}}"
-  vars:
-    query: "[?name=='JAVA_OPTIONS'].value"
-
-- name: Get Java Options not associated with Memory
-  shell: python -c "data=[ i for i in '{{ java_option }}'.split(' ') if not i.startswith('-Xmx')]; print(' '.join(data)) if data else print('')"
-  register: command_output
-
 # set JAVA_OPTIONS
 - name: Set JAVA_OPTIONS
   set_fact:
-    java_options: "{{ java_mem.strip() }} {{ command_output.stdout.strip()}}"
+    java_options: "{{ module_item | json_query(query) | default(default_opts, true) }}"
+  vars:
+    query: "docker_env[?name == 'JAVA_OPTIONS'].value"
+    default_opts: "-Xmx256m"
 
 # set DATABASE variable
 # if metadata.databaseConnection not set - default set to true
 # When all modules that need DB connection have set metadata.databaseConnection change the default to false
 - name: Set Memory from Desciptor
   set_fact:
-    mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | ternary('', 'true') }}"
+    mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | default(true, true) }}"
 
 # Create Kubernetes Service
 - name: create Service
@@ -74,7 +38,7 @@
 
 - name: Check module registration
   uri:
-    url: "{{ okapi_url }}/_/proxy/modules/{{ module_item }}"
+    url: "{{ okapi_url }}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
     headers:
      X-Okapi-Tenant: "supertenant"
      Accept: application/json, text/plain
@@ -97,15 +61,6 @@
   changed_when: mod_reg.status == 201
   when: not okapi_pull and mod_reg_status.status == 404
 
-- name: Check module deployment
-  uri:
-    url: "{{ okapi_url }}/_/discovery/modules/{{ module_item }}"
-    headers:
-     X-Okapi-Tenant: "supertenant"
-     Accept: application/json, text/plain
-    status_code: 200, 404
-  register: mod_dep_status
-
 # POST deployment descriptor to Okapi
 - name: POST deployment descriptor to Okapi
   uri:
@@ -120,7 +75,9 @@
       Accept: application/json, text/plain
   register: mod_dep
   changed_when: mod_dep.status == 201
-  when: mod_dep_status.status == 404
+  when: mod_name not in deployed_modules
+  vars:
+    mod_name: "{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
 
 # - name: DEBUG check template formating issues
 #   copy:

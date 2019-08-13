@@ -2,6 +2,7 @@
 auth_required: true
 load_mods_larger: false
 enable_okapi: true
+folio_install_type: single_server
 update_launch_descr: true
 
 # proxy edge modules - folio-elb

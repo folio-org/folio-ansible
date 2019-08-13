@@ -4,6 +4,7 @@ kubeconfig: ~/.kube/config
 
 create_db: false
 create_ingress: false
+create_rbac: false
 
 app_label: okapi
 deployment_name: okapi
@@ -24,6 +25,7 @@ hazelcast_version: 3.12
 folio_db_user: folio
 folio_db_password: folio25
 folio_db_database: folio_modules
+folio_install_type: kubernetes
 
 pg_host: localhost
 pg_maint_db: postgres

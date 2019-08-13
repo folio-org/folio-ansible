@@ -1,4 +1,5 @@
 ---
 dependencies:
-  - { role: common }
-  - { role: tenant-data }
+  - role: common
+    when: folio_install_type == "single_server"
+  - role: tenant-data

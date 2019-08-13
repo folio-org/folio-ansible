@@ -1,6 +1,7 @@
 ---
 dependencies:
-  - { role: common }
-  - { role: openjdk-8 }
-  - { role: maven-3 }
+  - role: common
+    when: folio_install_type == "single_server"
+  - role: openjdk-8
+  - role: maven-3
 

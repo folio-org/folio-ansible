@@ -1,24 +1,23 @@
 ---
-# # Create Secret for required connection
+# Create Secret for required connection
 - name: create Secret DB Connection
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
   when: create_secret
 
-# Pull folio-org/folio-ansible repository from latest group_vars/snapshot
-- name: Pull Latest Module Options
+- name: get deployed mods
   uri:
-    url: "{{folio_options_url}}"
-    return_content: yes
-  register: result
+    url: "{{ okapi_url }}/_/discovery/modules"
+  register: deployed_modules_req
 
-- name: Set Module Options
+- name: set deployed modules list
   set_fact:
-    module_options: "{{ result.content | from_yaml }}"
+    deployed_modules: "{{ deployed_modules_req.json | json_query('[].srvcId') }}"
 
 # loop over module_list variables to deploy backend module deployment and service
 - include_tasks: module.yml
-  loop: "{{ module_list }}"
+  loop: "{{ folio_modules }}"
   loop_control:
     loop_var: module_item
+  when: module_item.deploy is defined and module_item.deploy

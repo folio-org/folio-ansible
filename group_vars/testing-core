@@ -8,6 +8,7 @@ hierarchical_locations: true
 load_mods_larger: true
 shelf_locations: false
 enable_okapi: true
+folio_install_type: single_server
 
 # used in okapi-tenant-deploy
 update_launch_descr: true
