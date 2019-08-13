@@ -1,0 +1,42 @@
+---
+
+# create VPC
+- name: create VPC
+  ec2_vpc_net:
+    name: "{{ vpc_name }}"
+    cidr_block: "{{ vpc_cidr }}"
+    region: "{{ aws_region }}"
+    dns_hostnames: yes
+    dns_support: yes
+    state: present
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_vpc
+
+# get VPC IP
+- name: "set fact: VPC ID"
+  set_fact:
+    vpc_id: "{{ create_vpc.vpc.id }}"
+
+# create the internet gateway for VPC
+- name: create internet gateway
+  ec2_vpc_igw:
+    region: "{{ aws_region }}"
+    state: present
+    vpc_id: "{{ vpc_id }}"
+    tags:
+      Name: "{{ vpc_name }}-igw"
+    aws_access_key: "{{ aws_access_key | default(omit) }}"
+    aws_secret_key: "{{ aws_secret_key | default(omit) }}"
+    security_token: "{{ sts_security_token | default(omit) }}"
+  register: create_gateway
+
+- name: "set fact for igw id"
+  set_fact:
+    vpc_gateway_id: "{{ create_gateway.gateway_id }}"
+
+# configure network in each AZ
+- name: configure AZ network
+  include: configure-az.yml az={{ item.key }} public_subnet_cidr={{ item.value.public_cidr }} private_subnet_cidr_1={{ item.value.private_cidr_1 }} private_subnet_cidr_2={{ item.value.private_cidr_2 }}
+  with_dict: "{{ availability_zones }}"
