@@ -8,6 +8,16 @@
     state: present
   when: folio_install_type == "single_server"
 
+- name: set role attribute flags
+  set_fact:
+    role_flags: CREATEDB,CREATEROLE,LOGIN
+  when: rds
+
+- name: set role attribute flags
+  set_fact:
+    role_flags: SUPERUSER
+  when: not rds
+
 # For now, this must be a SUPERUSER (cf. RMB-360)
 - name: Create a postgres admin user that can create roles and databases
   postgresql_user:
@@ -19,10 +29,16 @@
     name: "{{ db_admin_user }}"
     password: "{{ db_admin_password }}"
     encrypted: yes
-    role_attr_flags: CREATEDB,CREATEROLE,LOGIN
+    role_attr_flags: "{{ role_flags }}"
 
 - name: grant new role to pg admin user (rds)
   shell: 'psql -U {{ pg_admin_user }} -h {{ pg_host }} {{ pg_maint_db}} -c "grant {{ db_admin_user }} to {{ pg_admin_user }}"'
+  environment:
+    PGPASSWORD: "{{ pg_admin_password }}"
+  when: folio_install_type == "kubernetes"
+
+- name: grant rds_superuser to db_admin_user
+  shell: 'psql -U {{ pg_admin_user }} -h {{ pg_host }} {{ pg_maint_db}} -c "grant rds_superuser to {{ db_admin_user }}"'
   environment:
     PGPASSWORD: "{{ pg_admin_password }}"
   when: folio_install_type == "kubernetes"
