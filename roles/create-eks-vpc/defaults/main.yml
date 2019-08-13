@@ -1,0 +1,21 @@
+---
+# Defaults
+aws_region: us-east-1
+vpc_name: folio-eks
+vpc_cidr: 172.16.0.0/16
+# available_zones variable can contain an arbitrary number of dictionaries
+availability_zones:
+  us-east-1a:
+    public_cidr: 172.16.1.0/24
+    private_cidr_1: 172.16.2.0/24
+    private_cidr_2: 172.16.3.0/24
+  us-east-1b:
+    public_cidr: 172.16.4.0/24
+    private_cidr_1: 172.16.5.0/24
+    private_cidr_2: 172.16.6.0/24
+
+# Optional variables for AWS security credentials
+# Can be set or passed in from other tasks/roles
+# aws_access_key:
+# aws_secret_key:
+# sts_security_token:
