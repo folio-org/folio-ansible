@@ -1,4 +1,4 @@
 ---
-
 dependencies:
-  - { role: yarn }
+  - role: yarn
+    when: stripes_platform is defined
