@@ -16,7 +16,7 @@
 
 - name: Post deployment descriptors for remote modules
   include_tasks: okapi-discovery.yml
-  when: item.url is defined
+  when: folio_install_type == "single_server" and item.url is defined
   with_items: "{{ folio_modules }}"
 
 - name: Build tenant parameter list
@@ -42,13 +42,13 @@
 - name: Build install list for modules with deployment
   set_fact:
     install_deploy: "{{ install_deploy|default([]) + [ install_obj|combine({'id': item.name + '-' + item.version}) ] if item.version is defined else install_deploy|default([]) + [ install_obj|combine({'id': item.name}) ] }}"
-  when: item.url is not defined and item.deploy is defined and item.deploy is sameas true
+  when: folio_install_type == "single_server" and item.url is not defined and item.deploy is defined and item.deploy is sameas true
   with_items: "{{ folio_modules }}"
 
 - name: Build install list for modules without deployment
   set_fact:
     install: "{{ install|default([]) + [ install_obj|combine({'id': item.name + '-' + item.version}) ] if item.version is defined else install|default([]) + [ install_obj|combine({'id': item.name}) ] }}"
-  when: item.url is defined or item.deploy is not defined or item.deploy is sameas false
+  when: folio_install_type == "kubernetes" or item.url is defined or item.deploy is not defined or item.deploy is sameas false
   with_items: "{{ folio_modules }}"
 
 - name: Post install list for deployment and enabling
