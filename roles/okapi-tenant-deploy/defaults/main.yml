@@ -22,6 +22,7 @@ module_env:
 # These environment variables can be overridden by the docker_env property of the folio_modules entries
 
 # Okapi setup
+folio_install_type: single_server
 folio_modules: []
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
