@@ -61,6 +61,10 @@
   changed_when: mod_reg.status == 201
   when: not okapi_pull and mod_reg_status.status == 404
 
+- name: debug deployment descriptor
+  debug:
+    msg: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
+
 # POST deployment descriptor to Okapi
 - name: POST deployment descriptor to Okapi
   uri:
@@ -79,6 +83,3 @@
   vars:
     mod_name: "{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
 
- - name: DEBUG check template formating issues
-   debug:
-     msg: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
