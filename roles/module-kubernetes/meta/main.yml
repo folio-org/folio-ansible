@@ -6,6 +6,7 @@ dependencies:
       db_admin_user: "{{ db_username }}"
       db_admin_password: "{{ pg_admin_password }}"
       database_name: "{{ db_database }}"
+      rds: true
     when: create_db
   - role: okapi-pull
     vars:

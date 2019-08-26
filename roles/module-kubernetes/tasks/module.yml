@@ -12,9 +12,9 @@
 # set JAVA_OPTIONS
 - name: Set JAVA_OPTIONS
   set_fact:
-    java_options: "{{ module_item | json_query(query) | default(default_opts, true) }}"
+    java_options: "{{ module_descriptor | json_query(query) | default(default_opts, true) }}"
   vars:
-    query: "docker_env[?name == 'JAVA_OPTIONS'].value"
+    query: "env[?name == 'JAVA_OPTIONS'].value"
     default_opts: "-Xmx256m"
 
 # set DATABASE variable
@@ -79,8 +79,3 @@
   vars:
     mod_name: "{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
 
-# - name: DEBUG check template formating issues
-#   copy:
-#     content: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
-#     dest: ./dep.yaml
-#     force: yes
