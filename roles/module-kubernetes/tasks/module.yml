@@ -79,8 +79,6 @@
   vars:
     mod_name: "{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}"
 
-# - name: DEBUG check template formating issues
-#   copy:
-#     content: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
-#     dest: ./dep.yaml
-#     force: yes
+ - name: DEBUG check template formating issues
+   debug:
+     msg: "{{ lookup('template', 'deployment-descriptor.json.j2') | to_json}}"
