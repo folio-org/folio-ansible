@@ -5,6 +5,7 @@ metadata:
   labels:
     app: {{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}
     module: {{ module_item.name }}
+    folio_role: backend-module
   namespace: "{{ namespace }}"
 spec:
   selector:
