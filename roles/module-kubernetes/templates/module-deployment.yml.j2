@@ -4,6 +4,7 @@ metadata:
   name: {{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}
   labels:
     app: {{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}
+    module: {{ module_item.name }}
   namespace: "{{ namespace }}"
 spec:
   selector:
