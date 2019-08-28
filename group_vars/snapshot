@@ -26,6 +26,7 @@ add_modules:
   - mod-graphql
   - mod-invoice-storage
   - mod-invoice
+  - mod-finance
   - edge-oai-pmh
   - edge-orders
   - edge-patron
