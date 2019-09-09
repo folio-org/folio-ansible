@@ -181,6 +181,7 @@
     restart_policy: always
     state: started
     volumes: "{{ edge_conf_dir }}:/mnt"
+    memory: "{{ edge_module_memory }}"
 
 # Set up nginx proxy
 - name: Configure nginx
