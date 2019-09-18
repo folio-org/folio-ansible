@@ -40,7 +40,7 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     deploy: yes
 
   - name: mod-authtoken
