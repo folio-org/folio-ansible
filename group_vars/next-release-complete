@@ -13,12 +13,16 @@ add_modules:
   - mod-codex-ekb
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
-  - mod-invoice-storage
   - mod-gobi
+  - mod-oai-pmh
+  - mod-patron
+  - mod-rtac
+  - mod-user-import
   - edge-rtac
   - edge-oai-pmh
   - edge-patron
   - edge-orders
+  - edge-sip2
 
 # Sample pinned module
 # pinned_modules:
@@ -30,7 +34,7 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -75,6 +79,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-configuration
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-data-import
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
@@ -126,6 +135,19 @@ folio_modules:
     deploy: yes
 
   - name: mod-inventory-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-invoice
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-invoice-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
@@ -242,6 +264,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-template-engine
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-user-import
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
