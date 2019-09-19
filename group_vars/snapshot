@@ -40,7 +40,7 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
     deploy: yes
 
   - name: mod-authtoken
@@ -173,7 +173,7 @@ folio_modules:
 
   - name: mod-licenses
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
     deploy: yes
 
   - name: mod-login
