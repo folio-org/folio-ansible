@@ -4,10 +4,10 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q1-2019/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q3.2-2019/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q3.2-2019/stripes-install.json
 update_launch_descr: true
-okapi_version: 2.26.1-1
+okapi_version: 2.32.0-1
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
@@ -25,6 +25,7 @@ add_modules:
   - edge-oai-pmh
   - edge-patron
   - edge-orders
+  - edge-sip2
 
 # Sample pinned module
 # pinned_modules:
@@ -36,7 +37,7 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -95,6 +96,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
+  - name: mod-data-import
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
   - name: mod-data-import-converter-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
@@ -142,6 +148,19 @@ folio_modules:
     deploy: yes
 
   - name: mod-inventory-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-invoice
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-invoice-storage
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
@@ -203,6 +222,13 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-organizations-storage
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-password-validator
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
@@ -254,6 +280,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
+  - name: mod-user-import
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
   - name: mod-users
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
@@ -278,7 +309,7 @@ folio_modules:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: q1-2019
+stripes_github_version: q3.2-2019
 folio_npm_repo: npm-folio
 okapi_register_modules: no
 okapi_enable_modules: no
@@ -286,11 +317,11 @@ platform_remove_lock: no
 with_sourcemap: no
 
 # Metadata for CI build
-box_tag: folio/Q1-2019
-version: 2.0.0
+box_tag: folio/Q3.2-2019
+version: 3.2.0
 version_descr: |
-  # FOLIO Q1-2019 Release (v2.0.0)
+  # FOLIO Daisy Release (v3.2.0)
 
   Admin login: diku_admin/admin
 
-  Q1-2019 release version of the FOLIO platform, built from core Q1-2019 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+  Q3.2-2019 release version of the FOLIO platform, built from Q3.2-2019 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
