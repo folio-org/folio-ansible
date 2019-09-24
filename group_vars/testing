@@ -190,6 +190,11 @@ folio_modules:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
+  - name: mod-marccat
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
+    deploy: yes
+
   - name: mod-tags
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
