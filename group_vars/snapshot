@@ -27,7 +27,6 @@ add_modules:
   - mod-invoice-storage
   - mod-invoice
   - mod-finance
-  - mod-marccat
   - edge-oai-pmh
   - edge-orders
   - edge-patron
@@ -189,11 +188,6 @@ folio_modules:
   - name: mod-login-saml
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
-    deploy: yes
-
-  - name: mod-marccat
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
     deploy: yes
 
   - name: mod-notes
