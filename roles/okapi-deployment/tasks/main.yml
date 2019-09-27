@@ -59,9 +59,15 @@
   when: item.deploy|default(false) and item.docker_cmd is defined
   with_items: "{{ folio_modules }}"
 
+- name: Add dockerArgs/HostConfig/Memory to dep_descrs
+  set_fact:
+    dep_descrs_mem: "{{ dep_descrs_mem|default({})|combine({item.name: {'descriptor': {'dockerArgs': {'HostConfig': {'Memory': item.docker_mem}}}}}) }}"
+  when: item.deploy|default(false) and item.docker_mem is defined
+  with_items: "{{ folio_modules }}"
+
 - name: Combine dep_descrs dicts
   set_fact:
-    dep_descrs: "{{ dep_descrs|combine(dep_descrs_env|default({}), dep_descrs_cmd|default({}), recursive=True) }}"
+    dep_descrs: "{{ dep_descrs|combine(dep_descrs_env|default({}), dep_descrs_cmd|default({}), dep_descrs_mem|default({}), recursive=True) }}"
 
 - name: Check for module deployment
   uri:
