@@ -32,8 +32,10 @@ Invoke the role in a playbook, e.g.:
           docker_env:
             - { name: JAVA_OPTIONS, value: "-Xmx256m" }
           # override dockerPull, unfortunately for legacy purposes needs to be a string
-          # anything other than "true" is false 
+          # anything other than "true" is false
           okapi_docker_pull: "true"
+          # override dockerArgs/HostConfig/Memory key
+          docker_mem: 536870912
 ```
 
 For legacy reasons, the role puts the variable `folio_modules_withid` into the environment for other roles and tasks to use (it is used by the deprecated `okapi-deploy-modules` role).
