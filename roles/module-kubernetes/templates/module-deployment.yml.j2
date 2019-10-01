@@ -16,6 +16,8 @@ spec:
     metadata:
       labels:
         app: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"
+        module: {{ module_item.name }}
+        folio_role: backend-module
     spec:
       containers:
         - name: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"

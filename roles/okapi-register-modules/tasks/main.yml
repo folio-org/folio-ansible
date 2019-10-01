@@ -26,6 +26,10 @@
   set_fact:
     mod_descrs_pull: []
 
+- name: Init mod_descrs_mem
+  set_fact:
+    mod_descrs_mem: []
+
 - name: Init folio_modules_withid
   set_fact:
     folio_modules_withid: []
@@ -52,7 +56,7 @@
 
 # Update launch descriptors with customizations from folio_modules list
 # could be extended to support swapping exec for dockerImage, etc.
-# For now just supports env variables, dockerCMD, and dockerPull
+# For now just supports env variables, dockerArgs/HostConfig/Memory, dockerCMD, and dockerPull
 - name: Update env for embedded launch descriptors
   set_fact:
     mod_descrs_env: "{{ mod_descrs_env|default([]) }} + [ {% if mod_descrs[item.0].launchDescriptor is defined and item.1.docker_env is defined %}{{ mod_descrs[item.0]|combine({'launchDescriptor': {'env': item.1.docker_env}},recursive=True) }}{% else %}{{ mod_descrs[item.0] }}{% endif %} ]"
@@ -71,9 +75,15 @@
   with_indexed_items: "{{ folio_modules }}"
   when: update_launch_descr
 
+- name: Update dockerArgs/HostConfig/Memory for embedded launch descriptors
+  set_fact:
+    mod_descrs_mem: "{{ mod_descrs_mem|default([]) }} + [ {% if mod_descrs_pull[item.0].launchDescriptor is defined and item.1.docker_mem is defined %}{{ mod_descrs_pull[item.0]|combine({'launchDescriptor': {'dockerArgs': {'HostConfig': {'Memory': item.1.docker_mem}}}},recursive=True) }}{% else %}{{ mod_descrs_pull[item.0] }}{% endif %} ]"
+  with_indexed_items: "{{ folio_modules }}"
+  when: update_launch_descr
+
 - name: Reset mod_descrs variable
   set_fact:
-    mod_descrs: "{{ mod_descrs_pull }}"
+    mod_descrs: "{{ mod_descrs_mem }}"
   when: update_launch_descr
 
 # This task can be removed when okapi-deploy-modules role is removed

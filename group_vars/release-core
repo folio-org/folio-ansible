@@ -4,10 +4,10 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2019/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q3.2-2019/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q3.2-2019/stripes-install.json
 update_launch_descr: true
-okapi_version: 2.26.1-1
+okapi_version: 2.32.0-1
 save_install: no
 
 
@@ -24,22 +24,22 @@ add_modules:
 folio_modules:
   - name: mod-authtoken
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-calendar
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-circulation
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-circulation-storage
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -47,42 +47,42 @@ folio_modules:
 
   - name: mod-codex-inventory
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-codex-mux
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-configuration
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-email
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-event-config
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-feesfines
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-inventory
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Dorg.folio.metadata.inventory.storage.type=okapi" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m -Dorg.folio.metadata.inventory.storage.type=okapi" }
     deploy: yes
 
   - name: mod-inventory-storage
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -92,58 +92,58 @@ folio_modules:
     docker_cmd:
       - "verify.user=true"
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-login-saml
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-notes
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-notify
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-password-validator
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-permissions
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx512m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx512m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-sender
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-tags
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-template-engine
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-users
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx384m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx384m" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -151,14 +151,14 @@ folio_modules:
 
   - name: mod-users-bl
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
 
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core
-stripes_github_version: q1-2019
+stripes_github_version: q3.2-2019
 folio_npm_repo: npm-folio
 okapi_register_modules: no
 okapi_enable_modules: no
@@ -166,11 +166,11 @@ platform_remove_lock: no
 with_sourcemap: no
 
 # Metadata for CI build
-box_tag: folio/Q1-2019
+box_tag: folio/Q3.2-2019
 version: 1.0.0
 version_descr: |
-  # FOLIO Q1-2019 Release (v1.0.0)
+  # FOLIO Q3.2-2019 "Daisy" Release (v1.0.0)
 
   Admin login: diku_admin/admin
 
-  Q1-2019 release version of the FOLIO platform, built from core Q1-2019 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+  Q3.2-2019 release version of the FOLIO platform, built from core Q3.2-2019 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
