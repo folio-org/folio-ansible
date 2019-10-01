@@ -20,6 +20,7 @@ stripes_exclude_list:
 add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
+  - mod-courses
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
   - mod-gobi
@@ -82,6 +83,11 @@ folio_modules:
     deploy: yes
 
   - name: mod-configuration
+    docker_env:
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-courses
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
