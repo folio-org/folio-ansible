@@ -89,7 +89,7 @@ folio_modules:
 
   - name: mod-courses
     docker_env:
-      - { name: JAVA_OPTIONS, value: "-Xmx256m" }
+      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-data-import
