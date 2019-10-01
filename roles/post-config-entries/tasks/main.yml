@@ -1,8 +1,7 @@
 ---
 - name: login to tenant
   uri:
-    #url: "{{ okapi_url }}/authn/login"
-    url: "http://localhost:9130/authn/login"
+    url: "{{ okapi_url }}/authn/login"
     method: POST
     headers:
       X-Okapi-Tenant: "{{ tenant }}"
@@ -22,7 +21,7 @@
 
 - name: post mod-email configuration
   uri:
-    url: http://localhost:9130/configurations/entries
+    url: "{{ okapi_url }}/configurations/entries"
     method: POST
     body_format: json
     headers:
