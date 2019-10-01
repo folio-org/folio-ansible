@@ -1,4 +1,5 @@
 ---
+
 - name: login to tenant
   uri:
     url: "{{ okapi_url }}/authn/login"
@@ -25,6 +26,7 @@
     method: POST
     body_format: json
     headers:
+      Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
       X-Okapi-Token: "{{ tenant_token | default('') }}"
