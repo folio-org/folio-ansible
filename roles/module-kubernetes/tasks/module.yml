@@ -2,7 +2,7 @@
 # Pull Module Descriptor
 - name: Get Module Descriptor
   uri:
-    url: "{% if okapi_pull %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}?full=true"
+    url: "{% if okapi_pull or preview %}{{ okapi_url }}{% else %}{{ folio_registry }}{% endif %}/_/proxy/modules/{{module_item.name}}{% if module_item.version %}-{{module_item.version }}{% endif %}?full=true"
     return_content: yes
   register: result
 - name: Set Module Descriptor

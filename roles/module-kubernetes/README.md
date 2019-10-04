@@ -74,4 +74,7 @@ k8s_state: present
 create_db: yes
 create_secret: yes
 okapi_pull: yes
+
+# set to true for deployment of pr preview module
+preview: false
 ```
