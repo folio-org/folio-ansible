@@ -76,6 +76,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json, text/plain
     body: "{{ install }}"
+    timeout: "{{ deploy_timeout }}"
   register: install_request
   changed_when: install_request.status == 200
   when: install|default(false)
