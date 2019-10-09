@@ -74,6 +74,7 @@
     url: "{{ okapi_url + '/_/discovery/modules/' + item.value.srvcId }}"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
   with_dict: "{{ dep_descrs }}"

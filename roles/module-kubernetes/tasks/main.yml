@@ -9,6 +9,10 @@
 - name: get deployed mods
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
   register: deployed_modules_req
 
 - name: set deployed modules list
