@@ -175,3 +175,4 @@
 
 - name: flush handlers
   meta: flush_handlers
+  when: not user_only
