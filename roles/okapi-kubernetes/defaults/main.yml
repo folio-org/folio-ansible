@@ -33,3 +33,5 @@ pg_port: 5432
 
 service_name: okapi
 service_type: ClusterIP
+ 
+sa_name: default
