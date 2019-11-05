@@ -19,12 +19,13 @@ spec:
         - name: okapi
           image: {{ okapi_docker_repository }}/{{ okapi_docker_image }}:{{ okapi_docker_tag }}
           args:
-            - cluster -hazelcast-config-file /etc/hazelcast.xml
+            - cluster -hazelcast-config-file /etc/hazelcast.xml -cluster-host $(POD_IP)
           env:
-          - name: POD_NAME
+          - name: POD_IP
             valueFrom:
               fieldRef:
-                fieldPath: metadata.name
+                apiVersion: v1
+                fieldPath: status.podIP
           - name: JAVA_OPTIONS
             value: >
               -Djava.awt.headless=true -Dstorage=postgres
@@ -33,8 +34,8 @@ spec:
               -Dpostgres_user={{ okapidb_user }}
               -Dpostgres_password={{ okapidb_password }}
               -Dpostgres_database={{ okapidb_name }}
+              -Dhost={{ app_label }}
               -Dokapiurl={{ okapi_url }}
-              -Dnodename=$(POD_NAME)
           ports:
           - containerPort: 9130
             protocol: TCP
