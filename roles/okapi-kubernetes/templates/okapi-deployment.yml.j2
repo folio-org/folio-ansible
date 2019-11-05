@@ -24,8 +24,8 @@ spec:
           - name: POD_IP
             valueFrom:
               fieldRef:
-              apiVersion: v1
-              fieldPath: status.podIP
+                apiVersion: v1
+                fieldPath: status.podIP
           - name: JAVA_OPTIONS
             value: >
               -Djava.awt.headless=true -Dstorage=postgres

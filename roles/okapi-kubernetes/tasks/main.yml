@@ -5,7 +5,7 @@
     definition: "{{ lookup('template', 'rbac.yml.j2') }}"
   when: create_rbac == "true"
 
-- name: create okapi pod serviec account
+- name: create okapi pod service account
   k8s:
     state: present
     definition: "{{ lookup('template', 'okapi-sa.yml.j2') }}"
