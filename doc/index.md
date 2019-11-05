@@ -94,31 +94,64 @@ it for module deployment.
 ## Running backend modules on your host system
 
 You can make a service running on your host system available to the
-Okapi system running in a Vagrant VM by taking advantage of the
-standard Vagrant NAT networking setup. Services on your host system
-are accessible to the guest VM at IP `10.0.2.2` (the NAT default
-gateway). To enable a module running locally as a new module for the
-default tenant:
+Okapi system running in a Vagrant VM by configuring a "host-only"
+private network in VirtualBox and reconfiguring Okapi on the VM to use
+the private network IP as its `X-Okapi-URL` header. To set this up:
 
-1. Build and run the module locally on an available port on the host
-   machine.
+1. Set up a "host only" network in VirtualBox that your VM can connect
+   to. See the
+   [VirtualBox Documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly)
+   for details. This will set up a private network on your host with
+   your host as the first address in the address space.
 
-2. Post a module descriptor for the local module to the Okapi running
+2. Update the Vagrantfile for your Vagrant VM to add a new network
+   adapter. The default (NAT) network adapter will still be created as
+   eth0. The host-only network will be on eth1. Your Vagrantfile will
+   need to look something like this (the `ip` key is for you to assign
+   an IP address on the host-only network):
+
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "folio/snapshot-backend-core"
+  config.vm.network "private_network", ip: "192.168.56.101"
+end
+```
+
+3. Bring up the VM with `vagrant up` and log into it with `vagrant
+   ssh`. `ip a l` should show you 2 network interfaces, eth0 with
+   address 10.0.2.15 and eth1 with the address you assign from the
+   host-only network.
+
+4. Take down Okapi on the VM with `sudo systemctl stop okapi`.
+
+5. Update the Okapi configuration file
+   `/etc/folio/okapi/okapi.conf`. Change the value of the `okapiurl`
+   property from `http://10.0.2.15:9130` to the newly assigned
+   host-only network address (in the example above,
+   `http://192.168.56.101:9130`). Restart Okapi with `sudo systemctl
+   start okapi`.
+
+6. Build and run the module locally on an available port on the host
+   machine. Your module will have access to the PostgreSQL database on
+   the guest VM if needed, at the assigned address (in the example,
+   `192.168.56.101:5432`).
+
+7. Post a module descriptor for the local module to the Okapi running
    in the Vagrant VM, using the Okapi `/_/proxy/modules` endpoint.
 
-3. Post a deployment descriptor for the local module with a URL
-   pointing to the default gateway, using the Okapi
+8. Post a deployment descriptor for the local module with a URL
+   pointing to the host-only gateway, using the Okapi
    `/_/discovery/modules` endpoint. For example:
 
 ```json
 {
   "srvcId": "mod-mymod-0.1.0",
   "instId": "mod-mymod-on-host",
-  "url": "http://10.0.2.2:8081"
+  "url": "http://192.168.56.1:8081"
 }
 ```
 
-4. Enable the module for the default tenant by posting to the Okapi
+9. Enable the module for the default tenant by posting to the Okapi
    `/_/proxy/tenants/diku/install` endpoint. For example:
 
 ```json
