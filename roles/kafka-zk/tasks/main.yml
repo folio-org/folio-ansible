@@ -1,0 +1,21 @@
+- name: create kafka-zk project directroy
+  file:
+    path: /opt/kafka-zk
+    state: directory
+  become: yes
+
+- name: copy docker-compose config
+  copy:
+    src: docker-compose.yml
+    dest: /opt/kafka-zk/docker-compose.yml
+  become: yes
+
+- name: start kafka and zookeeper containers
+  docker_service:
+    project_src: /opt/kafka-zk
+  become: yes
+  register: kafka_zk_output
+
+- name: show kafka zk result
+  debug:
+    var: kafka_zk_output
