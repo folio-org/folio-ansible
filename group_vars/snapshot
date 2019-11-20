@@ -46,8 +46,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-authtoken
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-calendar
@@ -78,8 +76,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-configuration
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
@@ -180,15 +176,11 @@ folio_modules:
   - name: mod-login
     docker_cmd:
       - "verify.user=true"
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-login-saml
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-marccat
@@ -235,8 +227,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-permissions
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
@@ -274,16 +264,12 @@ folio_modules:
     deploy: yes
 
   - name: mod-users
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-users-bl
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
 # Variables for building UI
