@@ -1,0 +1,2 @@
+kafka_port: 9092
+zk_port: 2181
