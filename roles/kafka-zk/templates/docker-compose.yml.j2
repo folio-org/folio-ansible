@@ -1,0 +1,24 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "{{ zk_port }}:2181"
+    mem_limit: 256m
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "{{ kafka_port }}:9092"
+    mem_limit: 256m
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LOG_RETENTION_BYTES=-1
+      - KAFKA_LOG_RETENTION_HOURS=-1
+
