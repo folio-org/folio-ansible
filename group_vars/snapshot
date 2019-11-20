@@ -18,7 +18,6 @@ stripes_exclude_list:
   - folio_platform-erm
   - folio_stripes-erm-components
 add_modules:
-  - mod-audit-filter
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-courses
