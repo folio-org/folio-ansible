@@ -33,6 +33,7 @@ add_modules:
   - edge-orders
   - edge-patron
   - edge-rtac
+  - mod-audit-filter
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -43,6 +44,12 @@ folio_modules:
   - name: mod-agreements
     docker_env:
       - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
+    deploy: yes
+
+  - name: mod-audit
+    deploy: yes
+
+  - name: mod-audit-filter
     deploy: yes
 
   - name: mod-authtoken
