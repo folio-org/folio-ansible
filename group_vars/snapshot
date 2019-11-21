@@ -184,8 +184,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-marccat
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-notes
