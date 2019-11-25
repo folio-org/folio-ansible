@@ -89,14 +89,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-data-import
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-data-import-converter-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-email
@@ -223,23 +218,15 @@ folio_modules:
     deploy: yes
 
   - name: mod-rtac
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-sender
     deploy: yes
 
   - name: mod-source-record-manager
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-source-record-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-tags
