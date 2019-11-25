@@ -59,13 +59,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-circulation
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-circulation-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -104,8 +100,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-email
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-erm-usage
@@ -119,8 +113,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-event-config
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-feesfines
@@ -148,13 +140,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-inventory
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Dorg.folio.metadata.inventory.storage.type=okapi" }
     deploy: yes
 
   - name: mod-inventory-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
@@ -227,8 +215,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-password-validator
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-permissions
@@ -242,8 +228,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-sender
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-source-record-manager
@@ -264,8 +248,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-template-engine
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-users
