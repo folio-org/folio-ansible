@@ -73,7 +73,7 @@
 - name: Post install list for enabling modules (no deployment)
   uri:
     #url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{% if tenant_param_querystr|default(false) %}?tenantParameters={{ tenant_param_querystr }}{% endif %}"
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?tenantParameters=tenantParameters=loadReference%3Dtrue"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install
     method: POST
     body_format: json
     headers:
