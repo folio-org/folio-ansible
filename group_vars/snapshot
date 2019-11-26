@@ -68,8 +68,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-codex-ekb
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-codex-inventory
@@ -84,8 +82,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-courses
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-data-import
@@ -98,13 +94,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-erm-usage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-erm-usage-harvester
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-event-config
@@ -185,8 +177,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-oai-pmh
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-orders
