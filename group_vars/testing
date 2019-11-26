@@ -89,8 +89,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-courses
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-source-record-storage
