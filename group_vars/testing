@@ -83,8 +83,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-user-import
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-calendar
@@ -119,8 +117,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-codex-ekb
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-codex-mux
@@ -161,8 +157,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-oai-pmh
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: edge-oai-pmh
