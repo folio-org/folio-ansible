@@ -121,8 +121,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-kb-ebsco-java
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-marccat
@@ -137,16 +135,12 @@ folio_modules:
     deploy: yes
 
   - name: mod-finance-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-finance
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-tags
@@ -167,8 +161,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-orders
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
 # Variables for building UI
