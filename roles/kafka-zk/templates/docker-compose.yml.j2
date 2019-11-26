@@ -10,6 +10,7 @@ services:
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
+    restart: always
     ports:
       - "{{ kafka_port }}:9092"
     mem_limit: 256m
