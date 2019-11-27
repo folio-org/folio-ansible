@@ -115,6 +115,7 @@
   uri:
     url: "{{ stripes_build_okapi_url }}/_/proxy/tenants/{{ stripes_tenant }}/modules"
     headers:
+      Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: supertenant
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
