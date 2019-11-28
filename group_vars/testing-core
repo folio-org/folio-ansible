@@ -22,17 +22,17 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-users
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-authtoken
     deploy: yes
 
   - name: mod-configuration
     tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-users
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
