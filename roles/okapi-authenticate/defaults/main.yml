@@ -1,5 +1,6 @@
 ---
 okapi_port: 9130
 okapi_login_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+supertenant: supertenant
 superuser_username: super_admin
 superuser_password: admin

@@ -5,7 +5,7 @@
     url: "{{ okapi_login_url }}/authn/login"
     method: POST
     headers:
-      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Tenant: "{{ supertenant }}"
       Accept: application/json
     body_format: json
     body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
