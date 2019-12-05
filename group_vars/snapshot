@@ -42,8 +42,6 @@ add_modules:
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
     deploy: yes
 
   - name: mod-audit
@@ -139,8 +137,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-licenses
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
     deploy: yes
 
   - name: mod-login
