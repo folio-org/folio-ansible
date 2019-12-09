@@ -33,7 +33,6 @@ add_modules:
   - edge-orders
   - edge-patron
   - edge-rtac
-  - mod-audit-filter
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -42,12 +41,6 @@ add_modules:
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
-    deploy: yes
-
-  - name: mod-audit
-    deploy: yes
-
-  - name: mod-audit-filter
     deploy: yes
 
   - name: mod-authtoken
