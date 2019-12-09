@@ -23,12 +23,3 @@
   debug:
     var: kafka_zk_output
   when: folio_install_type == "single_server"
-
-- name: create alias for kafka
-  lineinfile:
-    path: /etc/hosts
-    line: "127.0.2.2 kafka"
-    create: yes
-  become: yes
-  when: folio_install_type == "single_server"
-
