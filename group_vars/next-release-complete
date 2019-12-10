@@ -73,7 +73,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-data-import-converter-storage
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-email
@@ -181,11 +180,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-source-record-manager
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-source-record-storage
-      - { name: "test.mode", value: "true" }
     deploy: yes
 
   - name: mod-tags
