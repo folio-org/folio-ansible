@@ -60,11 +60,7 @@
     - role: okapi-register-modules
       folio_modules:
         - name: mod-oai-pmh
-          docker_env:
-            - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
         - name: mod-rtac
-          docker_env:
-            - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
         - name: edge-oai-pmh
         - name: edge-rtac
     - role: okapi-tenant-deploy
@@ -86,7 +82,6 @@
       edge_module_path: /prod/rtac
       edge_module_expose_port: 8081
       edge_module_docker_env:
-        JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m"
       auth_required: yes
       inst_user_perms:
         - rtac.all
@@ -96,7 +91,6 @@
       edge_module_path: /oai
       edge_module_expose_port: 8081
       edge_module_docker_env:
-        JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m"
       auth_required: yes
       inst_user_perms:
         - oai-pmh.all
