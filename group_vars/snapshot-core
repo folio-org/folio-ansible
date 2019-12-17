@@ -14,6 +14,7 @@ stripes_exclude_list:
 add_modules:
   - mod-codex-inventory
   - mod-graphql
+  - mod-pubsub
   - edge-rtac
 
 # Sample pinned module
@@ -86,6 +87,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-notify
+    deploy: yes
+
+  - name: mod-pubsub
     deploy: yes
 
   - name: mod-password-validator

@@ -159,6 +159,9 @@ folio_modules:
   - name: mod-orders
     deploy: yes
 
+  - name: mod-pubsub
+    deploy: yes
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
 stripes_github_version: snapshot
