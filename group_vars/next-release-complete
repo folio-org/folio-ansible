@@ -42,8 +42,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-calendar
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-circulation
