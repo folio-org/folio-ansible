@@ -6,14 +6,12 @@ services:
     restart: always
     ports:
       - "{{ zk_port }}:2181"
-    mem_limit: 256m
   kafka:
     image: wurstmeister/kafka
     container_name: kafka
     restart: always
     ports:
       - "{{ kafka_port }}:9092"
-    mem_limit: 256m
     environment:
       - KAFKA_ADVERTISED_HOST_NAME={{ kafka_host }}
       - KAFKA_ADVERTISED_PORT=9092
