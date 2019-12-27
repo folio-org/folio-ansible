@@ -15,6 +15,8 @@ ingress_alb_target: none
 ingress_name: okapi
 ingress_dns: none 
 
+kafka_host: "{{ ansible_default_ipv4.address }}"
+
 okapi_url: http://okapi:9130
 okapidb_user: okapi
 okapidb_password: okapi25

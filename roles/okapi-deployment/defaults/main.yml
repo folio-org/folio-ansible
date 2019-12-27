@@ -1,7 +1,5 @@
 ---
 # defaults
-# kafka setup
-kafka_host: "{{ ansible_default_ipv4.address }}"
 # Database setup
 create_db: yes
 pg_admin_user: folio_admin
@@ -10,10 +8,6 @@ pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_maint_db: postgres
 pg_max_pool_size: 5
-# Okapi setup
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-node_id: "{{ ansible_default_ipv4.address }}"
 module_database: okapi_modules
 # If the module_env list is populated, it will set global module environment variables
 # These environment variables can be overridden by the docker_env property of the folio_modules entries
@@ -24,5 +18,11 @@ module_env:
   - { name: DB_USERNAME, value: "{{ pg_admin_user }}" }
   - { name: DB_PASSWORD, value: "{{ pg_admin_password }}" }
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
-  - { name: KAFKA_HOST, value: "{{ ansible_default_ipv4.address }}" }
-  - { name: OKAPI_URL, value: "{{ okapi_url }}" }
+
+# Okapi setup
+okapi_port: 9130
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+node_id: "{{ ansible_default_ipv4.address }}"
+
+# Kafka setup
+kafka_host: "{{ ansible_default_ipv4.address }}"
