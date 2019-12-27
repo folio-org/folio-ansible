@@ -42,8 +42,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-calendar
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
 
   - name: mod-circulation
@@ -59,6 +57,7 @@ folio_modules:
     deploy: yes
 
   - name: mod-codex-inventory
+    # Awaits FOLIO-2394
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
@@ -88,6 +87,7 @@ folio_modules:
     deploy: yes
 
   - name: mod-feesfines
+    # Awaits FOLIO-2394
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
@@ -133,6 +133,7 @@ folio_modules:
     deploy: yes
 
   - name: mod-login-saml
+    # Awaits FOLIO-2394
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
@@ -192,6 +193,7 @@ folio_modules:
     deploy: yes
 
   - name: mod-user-import
+    # Awaits FOLIO-2394
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
     deploy: yes
