@@ -23,6 +23,7 @@ module_env:
 
 # Kafka setup
 kafka_host: "{{ ansible_default_ipv4.address }}"
+kafka_port: 9092
 
 # Okapi setup
 folio_install_type: single_server

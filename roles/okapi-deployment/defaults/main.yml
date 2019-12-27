@@ -26,3 +26,4 @@ node_id: "{{ ansible_default_ipv4.address }}"
 
 # Kafka setup
 kafka_host: "{{ ansible_default_ipv4.address }}"
+kafka_port: 9092
