@@ -73,8 +73,8 @@
 - name: Post install list for enabling modules (no deployment)
   uri:
     # temporarily disable loading sample/ref data MODINVSTOR-397
-    #url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{% if tenant_param_querystr|default(false) %}?tenantParameters={{ tenant_param_querystr }}{% endif %}"
-    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
+    url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install{% if tenant_param_querystr|default(false) %}?tenantParameters={{ tenant_param_querystr }}{% endif %}"
+    #url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install"
     method: POST
     body_format: json
     headers:
