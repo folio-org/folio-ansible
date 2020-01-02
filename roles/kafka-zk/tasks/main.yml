@@ -23,17 +23,3 @@
   debug:
     var: kafka_zk_output
   when: folio_install_type == "single_server"
-
-- name: set kafka ip
-  set_fact:
-    kafka_ip: "{{ kafka_zk_output.ansible_facts.kafka.kafka.networks.kafkazk_default.IPAddress }}"
-  when: folio_install_type == "single_server"
-
-- name: create alias for kafka
-  lineinfile:
-    path: /etc/hosts
-    line: "{{ kafka_ip }} kafka"
-    create: yes
-  become: yes
-  when: folio_install_type == "single_server"
-

@@ -33,7 +33,6 @@ add_modules:
   - edge-orders
   - edge-patron
   - edge-rtac
-  - mod-audit-filter
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -42,14 +41,6 @@ add_modules:
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
-    deploy: yes
-
-  - name: mod-audit
-    deploy: yes
-
-  - name: mod-audit-filter
     deploy: yes
 
   - name: mod-authtoken
@@ -106,21 +97,15 @@ folio_modules:
     deploy: yes
 
   - name: mod-finance-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-finance
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-gobi
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-graphql
@@ -136,23 +121,15 @@ folio_modules:
     deploy: yes
 
   - name: mod-invoice-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-invoice
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-kb-ebsco-java
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-licenses
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-server -Xmx384M -XX:MaxMetaspaceSize=192M -XX:MaxDirectMemorySize=128M -XX:+PrintFlagsFinal" }
     deploy: yes
 
   - name: mod-login
@@ -180,21 +157,15 @@ folio_modules:
     deploy: yes
 
   - name: mod-orders
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     deploy: yes
 
   - name: mod-organizations-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-orders-storage
-    docker_env:
-      - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap" }
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
