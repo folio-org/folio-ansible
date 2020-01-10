@@ -15,6 +15,10 @@ spec:
       labels:
         app: "{{ app_label }}"
     spec:
+{% if sa_name != "default" %}
+      serviceAccount: "{{ sa_name }}"
+      serviceAccountName: "{{ sa_name }}"
+{% endif %}
       containers:
         - name: okapi
           image: {{ okapi_docker_repository }}/{{ okapi_docker_image }}:{{ okapi_docker_tag }}
