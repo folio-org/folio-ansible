@@ -22,10 +22,14 @@ spec:
       containers:
         - name: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"
           image: {{ module_descriptor.launchDescriptor.dockerImage }}
-          {% if mod_database -%}
           envFrom:
+          {% if mod_database -%}
           - secretRef:
               name: {{ db_secret_name }}
+          {% endif -%}
+          {% if module_item.name == "mod-pubsub" -%}
+          - secretRef:
+              name: {{ kafka_secret_name }}
           {% endif -%}
           env:
           - name: POD_NAME

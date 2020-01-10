@@ -25,9 +25,11 @@ db_database: okapi
 db_maxpoolsize: 20
 db_password: password
 db_username: folio_admin
+kafka_host: kafka
 
-# Kubernetes Secret Name for Backend Module DB ENV
+# Kubernetes Secret Names for Backend Module DB and Kafka ENV
 db_secret_name: db-connect
+kafka_secret_name: kafka-connect
 
 # Services
 service_type: ClusterIP
