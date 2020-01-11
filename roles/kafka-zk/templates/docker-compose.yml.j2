@@ -13,10 +13,10 @@ services:
     ports:
       - "{{ kafka_port }}:9092"
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME={{ kafka_host }}
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
       - KAFKA_ADVERTISED_PORT=9092
       - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
-      - KAFKA_ZOOKEEPER_CONNECT={{ zk_host }}:2181
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - KAFKA_BROKER_ID=1
       - KAFKA_LOG_RETENTION_BYTES=-1
       - KAFKA_LOG_RETENTION_HOURS=-1
