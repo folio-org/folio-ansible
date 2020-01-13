@@ -6,6 +6,12 @@
     definition: "{{ lookup('template', 'db-secrets.yml.j2') }}"
   when: create_secret
 
+- name: create Secret Kafka Connection
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'kafka-secret.yml.j2') }}"
+  when: create_secret
+
 - name: get deployed mods
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"

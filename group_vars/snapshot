@@ -29,6 +29,7 @@ add_modules:
   - mod-invoice
   - mod-finance
   - mod-marccat
+  - mod-pubsub
   - edge-oai-pmh
   - edge-orders
   - edge-patron
@@ -177,6 +178,16 @@ folio_modules:
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
+
+  - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-rtac
     deploy: yes

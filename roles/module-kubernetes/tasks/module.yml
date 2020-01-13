@@ -20,7 +20,7 @@
 # set DATABASE variable
 # if metadata.databaseConnection not set - default set to true
 # When all modules that need DB connection have set metadata.databaseConnection change the default to false
-- name: Set Memory from Desciptor
+- name: Set database from Desciptor
   set_fact:
     mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | default(true, true) }}"
 

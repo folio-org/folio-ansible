@@ -110,6 +110,16 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core
 stripes_github_version: snapshot
