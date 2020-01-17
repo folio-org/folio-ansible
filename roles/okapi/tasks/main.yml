@@ -15,9 +15,9 @@
     name: "okapi{% if okapi_version %}={{ okapi_version }}{% endif %}"
     state: present
 
-- name: Add okapi user to folio group
+- name: Add okapi user to docker group
   become: yes
-  user: name=okapi groups={{ folio_group }}
+  user: name=okapi groups=docker
 
 - name: Enable external hazelcast config if AWS
   set_fact:

@@ -26,6 +26,7 @@ okapidb_user: okapi
 okapidb_password: okapi25
 okapidb_name: okapi
 okapi_dockerurl: http://localhost:4243
+docker_tcp: false
 
 okapi_metrics: 0
 carbon_host: localhost

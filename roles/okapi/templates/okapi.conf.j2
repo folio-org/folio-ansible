@@ -61,8 +61,10 @@ postgres_user={{ okapidb_user }}          # default
 postgres_password={{ okapidb_password }}  # default
 postgres_database={{ okapidb_name }}      # default
 
-# Define Docker URL if we are deploying modules via Docker. 
+{% if docker_tcp %}
+# Define Docker URL if we are deploying modules via Docker using a tcp socket. 
 dockerurl={{ okapi_dockerurl }}
+{% endif %}
 
 # Tell Okapi its own official URL.  This gets passed to the 
 # modules as X-Okapi-Url header, and the modules can use this 
