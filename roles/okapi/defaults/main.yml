@@ -15,8 +15,6 @@ okapi_host: "{{ ansible_default_ipv4.address }}"
 # change to 'postgres' for postgres backend
 okapi_storage: inmemory
 
-folio_group: folio
-
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_admin_user: folio_admin
