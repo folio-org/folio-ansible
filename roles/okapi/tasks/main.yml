@@ -15,6 +15,10 @@
     name: "okapi{% if okapi_version %}={{ okapi_version }}{% endif %}"
     state: present
 
+- name: Add okapi user to folio group
+  become: yes
+  user: name=okapi groups={{ folio_group }}
+
 - name: Enable external hazelcast config if AWS
   set_fact:
     okapi_cluster_config_file: '"-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"'
