@@ -82,9 +82,6 @@ folio_modules:
   - name: mod-calendar
     deploy: yes
 
-  - name: mod-source-record-storage
-    deploy: yes
-
   - name: mod-pubsub
     deploy: yes
     docker_env:
@@ -94,6 +91,9 @@ folio_modules:
         value: "{{ kafka_port }}"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+
+  - name: mod-source-record-storage
+    deploy: yes
 
   - name: mod-inventory
     deploy: yes
