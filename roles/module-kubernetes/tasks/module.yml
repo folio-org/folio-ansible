@@ -23,6 +23,10 @@
     query: "launchDescriptor.dockerArgs.HostConfig.Memory"
     default_opts: 357913941
 
+- name: Set memory request
+  set_fact:
+    memory_request: "{{ (memory_limit | float * 0.66) | int }}"
+
 # if DB_HOST variable is set in launchDescritpor, attach db config secret
 - name: test for DB variables
   set_fact:
@@ -30,13 +34,11 @@
   vars:
     query: "launchDescriptor.env[?name == 'DB_HOST'].value"
 
-# Create Kubernetes Service
 - name: create Service
   k8s:
     state: "{{ k8s_state }}"
     definition: "{{ lookup('template', 'module-service.yml.j2') }}"
 
-# Create Kubernetes Deployment
 - name: create Deployment
   k8s:
     state: "{{ k8s_state }}"

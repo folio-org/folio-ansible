@@ -22,6 +22,11 @@ spec:
       containers:
         - name: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"
           image: {{ module_descriptor.launchDescriptor.dockerImage }}
+          resources:
+            requests:
+              memory: {{ memory_request }}
+            limits:
+              memory: {{ memory_limit }}
           envFrom:
           {% if db_tst -%}
           - secretRef:
