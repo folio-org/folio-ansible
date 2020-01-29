@@ -23,7 +23,7 @@ spec:
         - name: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"
           image: {{ module_descriptor.launchDescriptor.dockerImage }}
           envFrom:
-          {% if mod_database -%}
+          {% if db_tst -%}
           - secretRef:
               name: {{ db_secret_name }}
           {% endif -%}

@@ -9,20 +9,26 @@
   set_fact:
     module_descriptor: "{{ result.json }}"
 
-# set JAVA_OPTIONS
 - name: Set JAVA_OPTIONS
   set_fact:
     java_options: "{{ module_descriptor | json_query(query) | default(default_opts, true) }}"
   vars:
-    query: "env[?name == 'JAVA_OPTIONS'].value"
+    query: "launchDescriptor.env[?name == 'JAVA_OPTIONS'].value | [0]"
     default_opts: "-Xmx256m"
 
-# set DATABASE variable
-# if metadata.databaseConnection not set - default set to true
-# When all modules that need DB connection have set metadata.databaseConnection change the default to false
-- name: Set database from Desciptor
+- name: Set memory limits
   set_fact:
-    mod_database: "{{ module_descriptor | json_query('metadata.databaseConnection') | default(true, true) }}"
+    memory_limit: "{{ module_descriptor | json_query(query) | default(default_opts, true) }}"
+  vars:
+    query: "launchDescriptor.dockerArgs.HostConfig.Memory"
+    default_opts: 357913941
+
+# if DB_HOST variable is set in launchDescritpor, attach db config secret
+- name: test for DB variables
+  set_fact:
+    db_tst: "{{ module_descriptor | json_query(query) }}"
+  vars:
+    query: "launchDescriptor.env[?name == 'DB_HOST'].value"
 
 # Create Kubernetes Service
 - name: create Service
