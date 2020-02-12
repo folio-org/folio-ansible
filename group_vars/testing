@@ -101,6 +101,12 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
+  - name: mod-data-import-converter-storage
+    deploy: yes
+
+  - name: mod-source-record-manager
+    deploy: yes
+
   - name: mod-source-record-storage
     deploy: yes
 
