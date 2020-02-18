@@ -58,6 +58,9 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-data-export
+    deploy: yes
+    
   - name: mod-password-validator
     deploy: yes
 
