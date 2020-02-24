@@ -58,9 +58,6 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-data-export
-    deploy: yes
-    
   - name: mod-password-validator
     deploy: yes
 
@@ -105,6 +102,9 @@ folio_modules:
         value: "{{ okapi_url }}"
 
   - name: mod-source-record-storage
+    deploy: yes
+
+  - name: mod-data-export
     deploy: yes
 
   - name: mod-inventory
