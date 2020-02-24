@@ -30,6 +30,7 @@ add_modules:
   - mod-finance
   - mod-marccat
   - mod-pubsub
+  - mod-data-export
   - edge-oai-pmh
   - edge-orders
   - edge-patron
@@ -74,6 +75,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-courses
+    deploy: yes
+
+  - name: mod-data-export
     deploy: yes
 
   - name: mod-data-import
