@@ -24,6 +24,8 @@
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
   register: all_permissions
 
+- debug: var=all_permissions
+
 - name: Fail if all permissions not retrieved
   fail:
     msg: "Retrieved permissions don't match total permissions count"
