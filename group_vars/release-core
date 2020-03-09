@@ -7,7 +7,7 @@ folio_install_type: single_server
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q3.2-2019/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q3.2-2019/stripes-install.json
 update_launch_descr: true
-okapi_version: 2.32.0-1
+okapi_version: 2.35.1-1
 save_install: no
 
 
@@ -58,6 +58,8 @@ folio_modules:
   - name: mod-configuration
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
     deploy: yes
 
   - name: mod-email

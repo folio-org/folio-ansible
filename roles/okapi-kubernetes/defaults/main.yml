@@ -5,6 +5,9 @@ kubeconfig: ~/.kube/config
 create_db: false
 create_ingress: false
 create_rbac: false
+# service account that will
+# get hazelcast role binding
+sa_name: default
 
 app_label: okapi
 deployment_name: okapi
@@ -33,3 +36,4 @@ pg_port: 5432
 
 service_name: okapi
 service_type: ClusterIP
+ 

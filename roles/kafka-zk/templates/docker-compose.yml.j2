@@ -1,0 +1,25 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "{{ zk_port }}:2181"
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    restart: always
+    ports:
+      - "{{ kafka_port }}:9092"
+      - "29092:29092"
+    environment:
+      KAFKA_LISTENERS: INTERNAL://:9092,LOCAL://:29092
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://{{ kafka_host }}:9092,LOCAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LOCAL:PLAINTEXT,INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG_RETENTION_BYTES: -1
+      KAFKA_LOG_RETENTION_HOURS: -1

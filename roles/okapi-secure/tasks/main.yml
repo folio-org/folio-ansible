@@ -4,6 +4,7 @@
     url: "{{ okapi_url }}/_/discovery/modules"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200
   register: disco_results
@@ -175,3 +176,4 @@
 
 - name: flush handlers
   meta: flush_handlers
+  when: not user_only

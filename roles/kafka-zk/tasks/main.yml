@@ -1,0 +1,25 @@
+- name: create kafka-zk project directroy
+  file:
+    path: /opt/kafka-zk
+    state: directory
+  become: yes
+  when: folio_install_type == "single_server"
+
+- name: copy docker-compose config
+  template:
+    src: docker-compose.yml.j2
+    dest: /opt/kafka-zk/docker-compose.yml
+  become: yes
+  when: folio_install_type == "single_server"
+
+- name: start kafka and zookeeper containers
+  docker_service:
+    project_src: /opt/kafka-zk
+  become: yes
+  register: kafka_zk_output
+  when: folio_install_type == "single_server"
+
+- name: show kafka zk result
+  debug:
+    var: kafka_zk_output
+  when: folio_install_type == "single_server"
