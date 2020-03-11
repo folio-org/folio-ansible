@@ -106,6 +106,13 @@ folio_modules:
 
   - name: mod-data-export
     deploy: yes
+    docker_cmd:
+      - "bucket.name={{ data_export_bucket_name | default('') }}"
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID 
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
 
   - name: mod-inventory
     deploy: yes
