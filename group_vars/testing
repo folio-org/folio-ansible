@@ -141,6 +141,11 @@ folio_modules:
   - name: mod-marccat
     deploy: yes
 
+  - name: mod-ncip
+    deploy: yes
+
+  - name: edge-ncip
+
   - name: mod-organizations-storage
     tenant_parameters:
       - { name: loadReference, value: "true" }
