@@ -29,8 +29,10 @@ add_modules:
   - mod-invoice
   - mod-finance
   - mod-marccat
+  - mod-ncip
   - mod-pubsub
   - mod-data-export
+#  - edge-ncip
   - edge-oai-pmh
   - edge-orders
   - edge-patron
@@ -157,6 +159,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-marccat
+    deploy: yes
+
+  - name: mod-ncip
     deploy: yes
 
   - name: mod-notes
