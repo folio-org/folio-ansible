@@ -144,7 +144,7 @@ folio_modules:
   - name: mod-ncip
     deploy: yes
 
-  - name: edge-ncip
+#  - name: edge-ncip
 
   - name: mod-organizations-storage
     tenant_parameters:
