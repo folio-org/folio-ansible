@@ -108,12 +108,3 @@
 # filter out any aws keys
 - debug:
     msg: "{{ deploy_module.stderr | regex_replace('(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])', '***') | regex_replace('(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])', '***') }}"
-  when: deploy_module.stderr != ""
-
-- debug:
-    msg: "{{ deploy_module.stdout | regex_replace('(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])', '***') | regex_replace('(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])', '***') }}"
-  when: deploy_module.stdout != ""
-
-- fail:
-    msg: "error on Deploy modules task"
-  when: deploy_module.stderr != ""
