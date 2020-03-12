@@ -18,12 +18,14 @@
   include_tasks: okapi-discovery.yml
   when: folio_install_type == "single_server" and item.url is defined
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Build tenant parameter list
   set_fact:
     tenant_parameters: "{{ tenant_parameters|default([]) + item.tenant_parameters }}"
   when: item.tenant_parameters|default(false)
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Discard duplicates in tenant parameter list
   set_fact:
@@ -44,12 +46,14 @@
     install_deploy: "{{ install_deploy|default([]) + [ install_obj|combine({'id': item.name + '-' + item.version}) ] if item.version is defined else install_deploy|default([]) + [ install_obj|combine({'id': item.name}) ] }}"
   when: folio_install_type == "single_server" and item.url is not defined and item.deploy is defined and item.deploy is sameas true
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Build install list for modules without deployment
   set_fact:
     install: "{{ install|default([]) + [ install_obj|combine({'id': item.name + '-' + item.version}) ] if item.version is defined else install|default([]) + [ install_obj|combine({'id': item.name}) ] }}"
   when: folio_install_type == "kubernetes" or item.url is defined or item.deploy is not defined or item.deploy is sameas false
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Post install list for deployment and enabling
   uri:

@@ -40,30 +40,35 @@
   when: item.deploy|default(false)
   with_items: "{{ folio_modules }}"
   register: mod_descrs
+  no_log: true
 
 - name: Build base dep_descrs dict
   set_fact:
     dep_descrs: "{{ dep_descrs|default({})|combine({item.item.name: { 'srvcId': item.json.id, 'nodeId': node_id, 'descriptor': item.json.launchDescriptor } }) }}"
   when: item.json is defined
   with_items: "{{ mod_descrs.results }}"
+  no_log: true
 
 - name: Add env to dep_descrs
   set_fact:
     dep_descrs_env: "{{ dep_descrs_env|default({})|combine({item.name: {'descriptor': {'env': item.docker_env}}}) }}"
   when: item.deploy|default(false) and item.docker_env is defined
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Add dockerCMD to dep_descrs
   set_fact:
     dep_descrs_cmd: "{{ dep_descrs_cmd|default({})|combine({item.name: {'descriptor': {'dockerCMD': item.docker_cmd}}}) }}"
   when: item.deploy|default(false) and item.docker_cmd is defined
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Add dockerArgs/HostConfig/Memory to dep_descrs
   set_fact:
     dep_descrs_mem: "{{ dep_descrs_mem|default({})|combine({item.name: {'descriptor': {'dockerArgs': {'HostConfig': {'Memory': item.docker_mem}}}}}) }}"
   when: item.deploy|default(false) and item.docker_mem is defined
   with_items: "{{ folio_modules }}"
+  no_log: true
 
 - name: Combine dep_descrs dicts
   set_fact:
@@ -79,6 +84,7 @@
     status_code: 200, 404
   with_dict: "{{ dep_descrs }}"
   register: module_deploy_check
+  no_log: true
 
 - name: Deploy modules
   uri:
@@ -96,3 +102,18 @@
   changed_when: deploy_module.status == 201
   when: item.status == 404
   with_items: "{{ module_deploy_check.results }}"
+  no_log: true
+  ignore_errors: true
+
+# filter out any aws keys
+- debug:
+    msg: "{{ deploy_module.stderr | regex_replace('(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])', '***') | regex_replace('(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])', '***') }}"
+  when: deploy_module.stderr != ""
+
+- debug:
+    msg: "{{ deploy_module.stdout | regex_replace('(?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])', '***') | regex_replace('(?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=])', '***') }}"
+  when: deploy_module.stdout != ""
+
+- fail:
+    msg: "error on Deploy modules task"
+  when: deploy_module.stderr != ""
