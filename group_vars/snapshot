@@ -32,7 +32,7 @@ add_modules:
   - mod-ncip
   - mod-pubsub
   - mod-data-export
-#  - edge-ncip
+  - edge-ncip
   - edge-oai-pmh
   - edge-orders
   - edge-patron
