@@ -14,10 +14,12 @@ add_modules:
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
   - mod-gobi
+  - mod-ncip
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
   - mod-user-import
+  - edge-ncip
   - edge-rtac
   - edge-oai-pmh
   - edge-patron
@@ -136,6 +138,9 @@ folio_modules:
     # Awaits FOLIO-2394
     docker_env:
       - { name: JAVA_OPTIONS, value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx256m" }
+    deploy: yes
+
+  - name: mod-ncip
     deploy: yes
 
   - name: mod-notes
