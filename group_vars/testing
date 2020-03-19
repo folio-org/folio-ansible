@@ -91,13 +91,35 @@ folio_modules:
   - name: mod-courses
     deploy: yes
 
+  - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
   - name: mod-source-record-storage
     deploy: yes
+
+  - name: mod-data-export
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
 
   - name: mod-inventory
     deploy: yes
 
   - name: mod-feesfines
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
     deploy: yes
 
   - name: mod-circulation
@@ -125,6 +147,11 @@ folio_modules:
 
   - name: mod-marccat
     deploy: yes
+
+  - name: mod-ncip
+    deploy: yes
+
+  - name: edge-ncip
 
   - name: mod-organizations-storage
     tenant_parameters:

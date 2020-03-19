@@ -13,6 +13,7 @@ config_entry_list:
 
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+stripes_url: "http://{{ ansible_default_ipv4.address }}"
 
 tenant: diku
 admin_user:

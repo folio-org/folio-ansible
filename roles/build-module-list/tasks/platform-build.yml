@@ -48,7 +48,7 @@
 
 - name: Add additional modules to install_list
   set_fact:
-    install_list: "{{ install_list }} + [ { 'id': item, 'action': 'enable' } ]"
+    install_list: "{{ install_list + [ { 'id': item, 'action': 'enable' } ] }}"
   with_items: "{{ add_modules }}"
 
 - name: Add pinned modules to install_list
