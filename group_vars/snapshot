@@ -21,17 +21,17 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-courses
+  - mod-data-export
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
+  - mod-finance
   - mod-gobi
   - mod-graphql
   - mod-invoice-storage
   - mod-invoice
-  - mod-finance
   - mod-marccat
   - mod-ncip
   - mod-pubsub
-  - mod-data-export
   - edge-ncip
   - edge-oai-pmh
   - edge-orders
@@ -178,14 +178,14 @@ folio_modules:
   - name: mod-orders
     deploy: yes
 
-  - name: mod-organizations-storage
+  - name: mod-orders-storage
     tenant_parameters:
-      - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-orders-storage
+  - name: mod-organizations-storage
     tenant_parameters:
+      - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
