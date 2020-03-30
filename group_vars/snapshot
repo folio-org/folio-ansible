@@ -207,6 +207,9 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
+  - name: mod-quick-marc
+    deploy: yes
+
   - name: mod-rtac
     deploy: yes
 
