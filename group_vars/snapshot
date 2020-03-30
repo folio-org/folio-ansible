@@ -32,6 +32,7 @@ add_modules:
   - mod-marccat
   - mod-ncip
   - mod-pubsub
+  - mod-quick-marc
   - edge-ncip
   - edge-oai-pmh
   - edge-orders
