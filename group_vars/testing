@@ -101,10 +101,10 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
-  - name: mod-quick-marc
+  - name: mod-source-record-storage
     deploy: yes
 
-  - name: mod-source-record-storage
+  - name: mod-quick-marc
     deploy: yes
 
   - name: mod-data-export
