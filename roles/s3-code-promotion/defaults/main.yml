@@ -1,0 +1,13 @@
+---
+# defaults file for s3-code-promotion
+
+# source variable is either S3 bucket (S3://bucket-name)
+# Can also use local filesystem (/example/foo)
+source: "s3://test-folio.colorado.edu"
+
+# destination variable is either S3 bucket (S3://bucket-name)
+destination: "s3://folio.colorado.edu"
+# Optional variables for AWS security credentials
+# Can be set or passed in from other tasks/roles
+# aws_access_key:
+# aws_secret_key:

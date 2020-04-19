@@ -1,0 +1,18 @@
+---
+# tasks file for s3-code-promotion
+# "variable1.find('v=' ~ value) == -1"
+- name: Just get the list from default pip
+  command: pip list | grep awscli
+  register: result
+  no_log: True
+
+- name: Install AWS CLI
+  when: not result
+  pip:
+    name: awscli
+
+- name: Sync S3 Buckstts
+  command: "aws s3 sync --delete {{ source }} {{ destination }}"
+  environment:
+    AWS_ACCESS_KEY: "{{ aws_access_key | default(omit) }}"
+    AWS_SECRET_KEY: "{{ aws_secret_key | default(omit) }}"
