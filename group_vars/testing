@@ -107,6 +107,9 @@ folio_modules:
   - name: mod-inventory
     deploy: yes
 
+  - name: mod-data-import-converter-storage
+    deploy: yes
+
   - name: mod-source-record-manager
     deploy: yes
 
