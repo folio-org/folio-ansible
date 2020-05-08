@@ -104,6 +104,9 @@ folio_modules:
   - name: mod-source-record-storage
     deploy: yes
 
+  - name: mod-source-record-manager
+    deploy: yes
+
   - name: mod-quick-marc
     deploy: yes
 
