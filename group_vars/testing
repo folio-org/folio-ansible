@@ -104,6 +104,9 @@ folio_modules:
   - name: mod-source-record-storage
     deploy: yes
 
+  - name: mod-inventory
+    deploy: yes
+
   - name: mod-source-record-manager
     deploy: yes
 
@@ -119,9 +122,6 @@ folio_modules:
         value: "{{ data_export_aws_secret | default('') }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
-
-  - name: mod-inventory
-    deploy: yes
 
   - name: mod-feesfines
     tenant_parameters:
