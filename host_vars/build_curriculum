@@ -1,5 +1,0 @@
----
-folio_user: vagrant
-folio_group: vagrant
-docker_users:
-  - vagrant

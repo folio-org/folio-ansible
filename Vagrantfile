@@ -45,12 +45,6 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
-  config.vm.define "curriculum", autostart: false do |curriculum|
-    curriculum.vm.box = "folio/curriculum"
-    curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
-    curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
-  end
-
   config.vm.define "build_snapshot_core", autostart: false do |build_snapshot_core|
     build_snapshot_core.vm.box = "bento/ubuntu-16.04"
     build_snapshot_core.vm.provider "virtualbox" do |vt|
@@ -185,16 +179,6 @@ Vagrant.configure(2) do |config|
         "release-core" => ["build_release_core"],
         "stripes-docker" => ["build_release_core"]
       }
-    end
-  end
-
-  config.vm.define "build_curriculum", autostart: false do |build_curriculum|
-    build_curriculum.vm.box = "debian/contrib-jessie64"
-    build_curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_curriculum.vm.synced_folder ".", "/vagrant", disabled: true
-    build_curriculum.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
     end
   end
 

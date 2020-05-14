@@ -129,29 +129,3 @@
   roles:
     - vagrant-tidy
 
-# Provision a host to support FOLIO Developer Curriculum
-- hosts: build_curriculum
-  roles:
-    - common
-    - openjdk-8
-    - maven-3
-    - nodejs
-    - yarn
-    - ansible
-    - docker-engine
-
-  tasks:
-    - name: Move to Node.js 6.X lts
-      become: yes
-      shell: n lts && touch /etc/.set_nodedefault_ansible
-      args:
-        creates: /etc/.set_nodedefault_ansible
-
-    - name: Setup Ansible inventory for localhost
-      become: yes
-      lineinfile:
-        dest: /etc/ansible/hosts
-        line: localhost ansible_connection=local
-
-    - name: Clone curriculum repository
-      git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum
