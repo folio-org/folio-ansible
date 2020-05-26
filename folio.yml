@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: snapshot-core:testing-core:testing:snapshot:release-core:minimal
+- hosts: snapshot-core:testing-core:testing:snapshot:release-core:release:minimal
   roles:
     - common
     - postgresql
@@ -43,8 +43,8 @@
     - create-tenant-admin
     - tenant-admin-permissions
 
-- name: Configure release-core build
-  hosts: release-core
+- name: Configure release build
+  hosts: release-core:release
   roles:
     - build-module-list
     - okapi-register-modules
@@ -95,7 +95,7 @@
       inst_user_perms:
         - oai-pmh.all
 
-# Sample data for snapshot-core, testing, snapshot, release-core
+# Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
   hosts: snapshot-core:testing-core:testing:snapshot
   roles:
