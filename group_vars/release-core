@@ -7,7 +7,8 @@ folio_install_type: single_server
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2020/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q1-2020/stripes-install.json
 update_launch_descr: true
-okapi_version: 2.38.0-1
+okapi_version: 2.40.0-1
+save_install: no
 
 # proxy edge modules - folio-elb
 include_edge_elb: false
@@ -16,10 +17,10 @@ include_edge_elb: false
 tenant_parameters:
   - name: loadReference
     value: "true"
-  - name: loadSample 
-    value: "true" 
+  - name: loadSample
+    value: "true"
 
-# Some modules require special initialization parameters.  
+# Some modules require special initialization parameters.
 folio_modules:
   - name: mod-pubsub
     deploy: yes
@@ -41,10 +42,10 @@ platform_remove_lock: no
 with_sourcemap: no
 
 # Metadata for CI build
-box_tag: folio/Q1-2020
-version: 5.0.0
+box_tag: folio/release-core
+version: 1.0.0
 version_descr: |
-  # FOLIO Fameflower Core Release (v5.0.0)
+  # FOLIO Fameflower Core Release (v1.0.0)
 
   Admin login: diku_admin/admin
 
