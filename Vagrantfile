@@ -177,7 +177,7 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_release_core"],
         "release-core" => ["build_release_core"],
-        "stripes-docker" => ["build_release_core"]
+        "stripes" => ["build_release_core"]
       }
     end
   end

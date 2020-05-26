@@ -97,7 +97,7 @@
 
 # Sample data for snapshot-core, testing, snapshot, release-core
 - name: Load sample data for testing/snapshot builds
-  hosts: snapshot-core:testing-core:testing:snapshot:release-core
+  hosts: snapshot-core:testing-core:testing:snapshot
   roles:
     - mod-inventory-mods
 
@@ -128,4 +128,3 @@
 - hosts: packer
   roles:
     - vagrant-tidy
-
