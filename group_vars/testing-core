@@ -98,6 +98,9 @@ folio_modules:
   - name: mod-inventory
     deploy: yes
 
+  - name: mod-patron-blocks
+    deploy: yes
+
   - name: mod-feesfines
     tenant_parameters:
       - { name: loadReference, value: "true" }
