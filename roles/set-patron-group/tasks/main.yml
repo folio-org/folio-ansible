@@ -1,7 +1,4 @@
 ---
-# wait a few seconds to make sure modules are spun up
-- wait_for: timeout=5
-
 - name: Login as {{ admin_user.username }}
   uri:
     url: "{{ okapi_url }}/authn/login"
