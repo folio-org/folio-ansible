@@ -1,19 +1,16 @@
 ---
-# wait a few seconds to make sure modules are spun up
-- wait_for: timeout=5
-
 - name: Login as {{ admin_user.username }}
-  uri: 
+  uri:
     url: "{{ okapi_url }}/authn/login"
     method: POST
     body_format: json
-    headers: 
+    headers:
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
     body: "{ 'username' : '{{ admin_user.username }}', 'password' : '{{ admin_user.password }}' }"
     status_code: 201
   register: tenant_admin_login
-  when: auth_required
+  changed_when: tenant_admin_login.status == 201
 
 - name: Configure RM API credentials
   uri:
@@ -27,5 +24,5 @@
       Accept: application/json
     body: '{ "data": { "type": "kbCredentials", "attributes": { "name": "{{ tenant }}", "apiKey": "{{ rmapi_key }}", "url": "{{ rmapi_url }}", "customerId": "{{ rmapi_custid }}" } } }'
     status_code: 201,422
-  register: mod_codex_ekb_credentials 
+  register: mod_codex_ekb_credentials
   changed_when: mod_codex_ekb_credentials.status == 201
