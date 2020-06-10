@@ -1,4 +1,6 @@
 ---
+- wait_for: timeout=5
+
 - name: Login as {{ admin_user.username }}
   uri:
     url: "{{ okapi_url }}/authn/login"
