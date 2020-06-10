@@ -1,6 +1,4 @@
 ---
-- wait_for: timeout=5
-
 - name: Login as {{ admin_user.username }}
   uri:
     url: "{{ okapi_url }}/authn/login"
@@ -23,8 +21,20 @@
       Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
-      Accept: application/json
-    body: '{ "data": { "type": "kbCredentials", "attributes": { "name": "{{ tenant }}", "apiKey": "{{ rmapi_key }}", "url": "{{ rmapi_url }}", "customerId": "{{ rmapi_custid }}" } } }'
+      Accept: application/vnd.api+json
+      Content-Type: application/vnd.api+json
+    body: |
+      {
+        "data": {
+          "type": "kbCredentials",
+          "attributes": {
+            "name": "{{ tenant }}",
+            "apiKey": "{{ rmapi_key }}",
+            "url": "{{ rmapi_url }}",
+            "customerId": "{{ rmapi_custid }}"
+          }
+        }
+      }
     status_code: 201,422
   register: mod_codex_ekb_credentials
   changed_when: mod_codex_ekb_credentials.status == 201
