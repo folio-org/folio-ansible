@@ -17,10 +17,7 @@
     update_cache: yes
   when: folio_install_type == "kubernetes"
 
-- name: Install n and mocha from npm
+- name: Install n from npm
   become: yes
-  npm: name={{ item }} global=yes state=present
-  with_items:
-    - "n"
-    - mocha
+  npm: name="n" global=yes state=present
   when: folio_install_type == "single_server"

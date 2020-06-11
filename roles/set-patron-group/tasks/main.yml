@@ -1,0 +1,56 @@
+---
+- name: Login as {{ admin_user.username }}
+  uri:
+    url: "{{ okapi_url }}/authn/login"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+    body: "{'username': '{{ admin_user.username }}', 'password': '{{ admin_user.password }}' }"
+    status_code: 201
+  register: login_result
+  changed_when: login_result.status == 201
+
+- name: Get patron groups
+  uri:
+    url: "{{ okapi_url }}/groups"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ login_result['x_okapi_token'] }}"
+  register: patron_groups_result
+
+- name: Get group UUID
+  set_fact:
+    group_id: "{{ patron_groups_result.json | json_query(group_query) | first }}"
+  vars:
+    group_query: "usergroups[?group=='{{ group_name }}'].id"
+
+- name: Get admin user record
+  uri:
+    url: "{{ okapi_url }}/users?query=username%3d%3d{{ admin_user.username }}"
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ login_result['x_okapi_token'] }}"
+  register: admin_user_result
+
+- name: Add patron group to user record
+  set_fact:
+    admin_user_update: "{{ admin_user_result.json.users[0] | combine({ 'patronGroup': group_id }) }}"
+
+- name: Update admin user
+  uri:
+    url: "{{ okapi_url }}/users/{{ admin_user_update.id }}"
+    method: PUT
+    headers:
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: text/plain
+      X-Okapi-Token: "{{ login_result['x_okapi_token'] }}"
+    body_format: json
+    body: "{{ admin_user_update }}"
+    status_code: 204
+  register: admin_user_update_result
+  changed_when: admin_user_update_result.status == 204
+
