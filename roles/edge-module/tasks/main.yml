@@ -62,7 +62,7 @@
 
 - name: Check institutional user login record
   uri:
-    url: "{{ okapi_url }}/authn/credentials?query=userId%3d%3d{{ inst_user_uuid }}"
+    url: "{{ okapi_url }}/authn/credentials-existence?userId={{ inst_user_uuid }}"
     headers:
       X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
@@ -85,7 +85,7 @@
         "password": "{{ inst_user.password }}"
       }
     status_code: 201
-  when: check_inst_login.json.totalRecords == 0
+  when: check_inst_login.json.credentialsExist == false
   register: create_inst_login
   changed_when: create_inst_login.status == 201
 
