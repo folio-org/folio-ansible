@@ -28,7 +28,7 @@
         "data": {
           "type": "kbCredentials",
           "attributes": {
-            "name": "{{ tenant }}",
+            "name": "Knowledge Base",
             "apiKey": "{{ rmapi_key }}",
             "url": "{{ rmapi_url }}",
             "customerId": "{{ rmapi_custid }}"
