@@ -79,7 +79,7 @@
       when: check_user.json.totalRecords == 0
     - name: Check for login record
       uri:
-        url: "{{ okapi_url }}/authn/credentials?query=userId%3d%3d{{ admin_user_id }}"
+        url: "{{ okapi_url }}/authn/credentials-existence?userId={{ admin_user_id }}"
         headers:
           Accept: "application/json, text/plain"
           X-Okapi-Tenant: "{{ tenant }}"
@@ -100,7 +100,7 @@
         status_code: 201
       register: create_login
       changed_when: create_login.status == 201
-      when: check_login.json.totalRecords == 0
+      when: check_login.json.credentialsExist == false
     - name: Check for permissions record
       uri:
         url: "{{ okapi_url }}/perms/users?query=userId%3d%3d{{ admin_user_id }}"
