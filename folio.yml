@@ -23,6 +23,7 @@
     - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
 # Configure build for top-down deployment
 # (Okapi dependency resolution)
@@ -42,6 +43,7 @@
       module_env: []
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
 - name: Configure release build
   hosts: release-core:release
@@ -52,6 +54,7 @@
     - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
 # Edge modules
 - name: Set up Okapi to support edge modules
@@ -100,7 +103,6 @@
   hosts: snapshot-core:testing-core:testing:snapshot
   roles:
     - mod-inventory-mods
-    - set-patron-group
 
 # Set up stripes
 - name: Build stripes webpack, assign permissions

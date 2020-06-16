@@ -44,3 +44,8 @@
   register: tenant_admin_permissions
   with_items: "{{ all_permissions.json.permissions }}"
   changed_when: tenant_admin_permissions.status == 200
+
+# This is horrible
+- name: Wait for permissions cache to update for admin user
+  wait_for: timeout=60
+  when: tenant_admin_permissions.changed|default(false)
