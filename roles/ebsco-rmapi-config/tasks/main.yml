@@ -14,8 +14,8 @@
 
 - name: Configure RM API credentials
   uri:
-    url: "{{ okapi_url }}/eholdings/kb-credentials"
-    method: POST
+    url: "{{ okapi_url }}/eholdings/kb-credentials/80898dee-449f-44dd-9c8e-37d5eb469b1d"
+    method: PUT
     body_format: json
     headers:
       Authtoken-Refresh-Cache: "true"
@@ -35,6 +35,6 @@
           }
         }
       }
-    status_code: 201,422
+    status_code: 204
   register: mod_codex_ekb_credentials
-  changed_when: mod_codex_ekb_credentials.status == 201
+  changed_when: mod_codex_ekb_credentials.status == 204
