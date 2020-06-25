@@ -13,7 +13,7 @@
     status_code: 201
   register: tenant_admin_login
 
-- name: Get all permissionSets not included in other permissionSets excluding okapi
+- name: "Get all permissionSets not included in other permissionSets excluding okapi (childOf==[] not permissionName=okapi.* not permissionName=SYS#*)"
   # cql query for (childOf==[] not permissionName=okapi.* not permissionName=SYS#*)
   uri:
     url: "{{ okapi_url }}/perms/permissions?query=%28childOf%3D%3D%5B%5D%20not%20permissionName%3Dokapi.%2A%20not%20permissionName%3DSYS%23%2A%29&length=3000"
