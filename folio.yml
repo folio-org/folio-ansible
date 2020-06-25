@@ -1,7 +1,7 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: snapshot-core:testing-core:testing:snapshot:release-core:minimal
+- hosts: snapshot-core:testing-core:testing:snapshot:release-core:release:minimal
   roles:
     - common
     - postgresql
@@ -23,6 +23,7 @@
     - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
 # Configure build for top-down deployment
 # (Okapi dependency resolution)
@@ -42,9 +43,10 @@
       module_env: []
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
-- name: Configure release-core build
-  hosts: release-core
+- name: Configure release build
+  hosts: release-core:release
   roles:
     - build-module-list
     - okapi-register-modules
@@ -52,6 +54,7 @@
     - okapi-tenant-deploy
     - create-tenant-admin
     - tenant-admin-permissions
+    - set-patron-group
 
 # Edge modules
 - name: Set up Okapi to support edge modules
@@ -95,9 +98,9 @@
       inst_user_perms:
         - oai-pmh.all
 
-# Sample data for snapshot-core, testing, snapshot, release-core
+# Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
-  hosts: snapshot-core:testing-core:testing:snapshot:release-core
+  hosts: snapshot-core:testing-core:testing:snapshot
   roles:
     - mod-inventory-mods
 
@@ -128,30 +131,3 @@
 - hosts: packer
   roles:
     - vagrant-tidy
-
-# Provision a host to support FOLIO Developer Curriculum
-- hosts: build_curriculum
-  roles:
-    - common
-    - openjdk-8
-    - maven-3
-    - nodejs
-    - yarn
-    - ansible
-    - docker-engine
-
-  tasks:
-    - name: Move to Node.js 6.X lts
-      become: yes
-      shell: n lts && touch /etc/.set_nodedefault_ansible
-      args:
-        creates: /etc/.set_nodedefault_ansible
-
-    - name: Setup Ansible inventory for localhost
-      become: yes
-      lineinfile:
-        dest: /etc/ansible/hosts
-        line: localhost ansible_connection=local
-
-    - name: Clone curriculum repository
-      git: repo=https://github.com/folio-org/curriculum dest={{ ansible_env.HOME }}/curriculum

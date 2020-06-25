@@ -104,6 +104,18 @@ folio_modules:
   - name: mod-source-record-storage
     deploy: yes
 
+  - name: mod-inventory
+    deploy: yes
+
+  - name: mod-data-import-converter-storage
+    deploy: yes
+
+  - name: mod-source-record-manager
+    deploy: yes
+
+  - name: mod-quick-marc
+    deploy: yes
+
   - name: mod-data-export
     deploy: yes
     docker_env:
@@ -114,12 +126,12 @@ folio_modules:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
 
-  - name: mod-inventory
-    deploy: yes
-
   - name: mod-feesfines
     tenant_parameters:
       - { name: loadReference, value: "true" }
+    deploy: yes
+
+  - name: mod-patron-blocks
     deploy: yes
 
   - name: mod-circulation
@@ -157,6 +169,9 @@ folio_modules:
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-organizations
     deploy: yes
 
   - name: mod-finance-storage

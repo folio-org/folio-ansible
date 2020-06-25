@@ -45,10 +45,18 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
-  config.vm.define "curriculum", autostart: false do |curriculum|
-    curriculum.vm.box = "folio/curriculum"
-    curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
-    curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.define "release-core", autostart: false do |snapshot|
+    snapshot.vm.box = "folio/release-core"
+    snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
+    snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
+  end
+
+  config.vm.define "release", autostart: false do |snapshot|
+    snapshot.vm.box = "folio/release"
+    snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
+    snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
+    snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
   config.vm.define "build_snapshot_core", autostart: false do |build_snapshot_core|
@@ -183,18 +191,26 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_release_core"],
         "release-core" => ["build_release_core"],
-        "stripes-docker" => ["build_release_core"]
+        "stripes" => ["build_release_core"]
       }
     end
   end
 
-  config.vm.define "build_curriculum", autostart: false do |build_curriculum|
-    build_curriculum.vm.box = "debian/contrib-jessie64"
-    build_curriculum.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_curriculum.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_curriculum.vm.synced_folder ".", "/vagrant", disabled: true
-    build_curriculum.vm.provision "ansible" do |ansible|
+  config.vm.define "build_release", autostart: false do |build_release|
+    build_release.vm.box = "bento/ubuntu-16.04"
+    build_release.vm.provider "virtualbox" do |vrel|
+      vrel.memory = 10240
+    end
+    build_release.vm.network "forwarded_port", guest: 9130, host: 9130
+    build_release.vm.network "forwarded_port", guest: 3000, host: 3000
+    build_release.vm.network "forwarded_port", guest: 8000, host: 8130
+    build_release.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.groups = {
+        "vagrant" => ["build_release"],
+        "release" => ["build_release"],
+        "stripes" => ["build_release"]
+      }
     end
   end
 

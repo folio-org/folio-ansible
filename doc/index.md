@@ -51,11 +51,6 @@ used to generate prebuilt Vagrant boxes, available on
   -- a minimal FOLIO system with just Okapi and no modules or sample data
   loaded.
 
-* [folio/curriculum](https://app.vagrantup.com/folio/boxes/curriculum)
-  -- a box built to support the
-  [FOLIO Developer Curriculum](https://dev.folio.org/tutorials/curriculum/),
-  with prerequisites installed.
-
 All Vagrant boxes come with sample user and inventory data. The
 modules are enabled for the sample tenant, "diku".
 

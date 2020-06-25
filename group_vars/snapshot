@@ -21,17 +21,20 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-courses
+  - mod-data-export
   - mod-data-import-converter-storage
   - mod-erm-usage-harvester
+  - mod-finance
   - mod-gobi
   - mod-graphql
   - mod-invoice-storage
   - mod-invoice
-  - mod-finance
   - mod-marccat
   - mod-ncip
+  - mod-organizations
+  - mod-patron-blocks
   - mod-pubsub
-  - mod-data-export
+  - mod-quick-marc
   - edge-ncip
   - edge-oai-pmh
   - edge-orders
@@ -178,18 +181,24 @@ folio_modules:
   - name: mod-orders
     deploy: yes
 
+  - name: mod-orders-storage
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-organizations
+    deploy: yes
+
   - name: mod-organizations-storage
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-orders-storage
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
+  - name: mod-password-validator
     deploy: yes
 
-  - name: mod-password-validator
+  - name: mod-patron-blocks
     deploy: yes
 
   - name: mod-permissions
@@ -206,6 +215,9 @@ folio_modules:
         value: "{{ kafka_port }}"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+
+  - name: mod-quick-marc
+    deploy: yes
 
   - name: mod-rtac
     deploy: yes

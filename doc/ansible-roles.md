@@ -6,8 +6,6 @@ against an Ubuntu 16.04 (Xenial) host. The Ansible inventory
 is designed to support a few groups as follows:
 
 * `folio` -- targets hosts for building a full FOLIO system
-* `build_curriculum` -- targets hosts for building a system to support
-  the FOLIO developer curriculum
 * `vagrant` -- targets hosts built as stand-alone Vagrant systems
 * `testing` -- targets hosts that run a FOLIO installation based on
   the HEAD of the master branch of the FOLIO component modules

@@ -1,6 +1,6 @@
 ---
 # add a version for the package, e.g. "2.17.0-1"
-okapi_version:
+okapi_version: "2.40.0-1"
 okapi_role: cluster
 # 'eth0' is the default ec2 network interface. May be different on other systems
 okapi_interface: eth0
