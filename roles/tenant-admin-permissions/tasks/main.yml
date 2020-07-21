@@ -24,8 +24,9 @@
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
   register: all_permissions
 
+# changing from 'fail' to 'debug'.  See https://issues.folio.org/MODPERMS-86
 - name: Fail if all permissionSets not retrieved
-  fail:
+  debug:
     msg: "Retrieved permissions ({{ all_permissions.json.permissions|default([])|length }}) don't match total permissions count ({{ all_permissions.json.totalRecords|default('no totalRecords key') }})"
   when: all_permissions.json.permissions|length != all_permissions.json.totalRecords
 
