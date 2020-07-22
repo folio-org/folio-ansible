@@ -1,103 +1,41 @@
+---
 # Variables for building a FOLIO release
 auth_required: true
-load_mods_larger: false
 enable_okapi: true
 folio_install_type: single_server
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/master/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-core/master/stripes-install.json
 update_launch_descr: true
+save_install: no
 
-add_modules:
-  - mod-codex-inventory
+# proxy edge modules - folio-elb
+include_edge_elb: false
 
-# Sample pinned module
-# pinned_modules:
-#   - module: mod-authtoken
-#     version: v2.0.0
+# load ref and sample data
+tenant_parameters:
+  - name: loadReference
+    value: "true"
+  - name: loadSample
+    value: "true"
 
-# module that need to be deployed
-
+# Some modules require special initialization parameters.
 folio_modules:
-  - name: mod-authtoken
+  - name: mod-pubsub
     deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
-  - name: mod-calendar
-    deploy: yes
+# Variables for building UI
+stripes_github_project: https://github.com/folio-org/platform-core
+stripes_github_version: master
+folio_npm_repo: npm-folio
+okapi_register_modules: no
+okapi_enable_modules: no
+platform_remove_lock: no
+with_sourcemap: no
 
-  - name: mod-circulation
-    deploy: yes
-
-  - name: mod-circulation-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-codex-inventory
-    deploy: yes
-
-  - name: mod-codex-mux
-    deploy: yes
-
-  - name: mod-configuration
-    deploy: yes
-
-  - name: mod-email
-    deploy: yes
-
-  - name: mod-event-config
-    deploy: yes
-
-  - name: mod-feesfines
-    deploy: yes
-
-  - name: mod-inventory
-    deploy: yes
-
-  - name: mod-inventory-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-login
-    docker_cmd:
-      - "verify.user=true"
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-login-saml
-    deploy: yes
-
-  - name: mod-notes
-    deploy: yes
-
-  - name: mod-notify
-    deploy: yes
-
-  - name: mod-password-validator
-    deploy: yes
-
-  - name: mod-permissions
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-sender
-    deploy: yes
-
-  - name: mod-tags
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-template-engine
-    deploy: yes
-
-  - name: mod-users
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-users-bl
-    deploy: yes

@@ -1,201 +1,51 @@
+---
 # Variables for building a FOLIO release
 auth_required: true
-load_mods_larger: false
 enable_okapi: true
 folio_install_type: single_server
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/master/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/master/stripes-install.json
 update_launch_descr: true
+save_install: no
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
 
-add_modules:
-  - mod-codex-inventory
-  - mod-codex-ekb
-  - mod-data-import-converter-storage
-  - mod-erm-usage-harvester
-  - mod-gobi
-  - mod-ncip
-  - mod-oai-pmh
-  - mod-patron
-  - mod-rtac
-  - mod-user-import
-  - edge-ncip
-  - edge-rtac
-  - edge-oai-pmh
-  - edge-patron
-  - edge-orders
-  - edge-sip2
+# load ref and sample data
+tenant_parameters:
+  - name: loadReference
+    value: "true"
+  - name: loadSample
+    value: "true"
 
-# Sample pinned module
-# pinned_modules:
-#   - module: mod-authtoken
-#     version: v2.0.0
-
-# module that need to be deployed
-
+# Some modules require special initialization parameters.
 folio_modules:
-  - name: mod-agreements
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
+  - name: mod-data-export
     deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
 
-  - name: mod-authtoken
+  - name: mod-pubsub
     deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
-  - name: mod-calendar
-    deploy: yes
+# Variables for building UI
+stripes_github_project: https://github.com/folio-org/platform-complete
+stripes_github_version: master
+folio_npm_repo: npm-folio
+okapi_register_modules: no
+okapi_enable_modules: no
+platform_remove_lock: no
+with_sourcemap: no
 
-  - name: mod-circulation
-    deploy: yes
-
-  - name: mod-circulation-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-codex-ekb
-    deploy: yes
-
-  - name: mod-codex-inventory
-    deploy: yes
-
-  - name: mod-codex-mux
-    deploy: yes
-
-  - name: mod-configuration
-    deploy: yes
-
-  - name: mod-data-import
-    deploy: yes
-
-  - name: mod-data-import-converter-storage
-    deploy: yes
-
-  - name: mod-email
-    deploy: yes
-
-  - name: mod-erm-usage
-    deploy: yes
-
-  - name: mod-erm-usage-harvester
-    deploy: yes
-
-  - name: mod-event-config
-    deploy: yes
-
-  - name: mod-feesfines
-    deploy: yes
-
-  - name: mod-finance-storage
-    deploy: yes
-
-  - name: mod-gobi
-    deploy: yes
-
-  - name: mod-inventory
-    deploy: yes
-
-  - name: mod-inventory-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-invoice
-    deploy: yes
-
-  - name: mod-invoice-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-kb-ebsco-java
-    deploy: yes
-
-  - name: mod-licenses
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-login
-    docker_cmd:
-      - "verify.user=true"
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-login-saml
-    deploy: yes
-
-  - name: mod-ncip
-    deploy: yes
-
-  - name: mod-notes
-    deploy: yes
-
-  - name: mod-notify
-    deploy: yes
-
-  - name: mod-oai-pmh
-    deploy: yes
-
-  - name: mod-orders
-    deploy: yes
-
-  - name: mod-orders-storage
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-organizations-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-password-validator
-    deploy: yes
-
-  - name: mod-patron
-    deploy: yes
-
-  - name: mod-permissions
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-rtac
-    deploy: yes
-
-  - name: mod-sender
-    deploy: yes
-
-  - name: mod-source-record-manager
-    deploy: yes
-
-  - name: mod-source-record-storage
-    deploy: yes
-
-  - name: mod-tags
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-template-engine
-    deploy: yes
-
-  - name: mod-user-import
-    deploy: yes
-
-  - name: mod-users
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-users-bl
-    deploy: yes
