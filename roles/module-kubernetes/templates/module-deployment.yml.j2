@@ -22,6 +22,9 @@ spec:
       containers:
         - name: "{{ module_item.name }}-{{ module_item.version.replace('.','-').lower() }}"
           image: {{ module_descriptor.launchDescriptor.dockerImage }}
+          {% if module_item.name.startswith('edge') and module_item.name != "edge-sip2" -%}
+          args: ["-Dokapi_url={{ okapi_url }}", "-Dsecure_store={{ edge_secure_store }}", "-Dsecure_store_props={{ edge_secure_store_props }}"]
+          {% endif -%}
           resources:
             requests:
               memory: {{ memory_request }}
@@ -47,4 +50,13 @@ spec:
           {% for key, value in module_descriptor.launchDescriptor.dockerArgs.HostConfig.PortBindings.items() %}{%- set ports = key.split('/') -%}
           - containerPort: {{ ports[0] }}
             protocol: TCP
-          {% endfor %}
+          {% endfor -%}
+          {% if module_item.name.startswith('edge') and module_item.name != "edge-sip2" -%}
+          volumeMounts:
+          - name: {{ edge_vault_volume_name }}
+            mountPath: {{ edge_vault_mount_path }}
+      volumes:
+        - name: {{ edge_vault_volume_name }}
+          secret:
+            secretName: {{ edge_secret_name }}
+      {% endif -%}

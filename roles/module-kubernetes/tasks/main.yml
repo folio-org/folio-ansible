@@ -12,6 +12,16 @@
     definition: "{{ lookup('template', 'kafka-secret.yml.j2') }}"
   when: create_secret
 
+- set_fact:
+    vault_properties: "{{ lookup('template', 'vault-properties.j2') | b64encode }}"
+  when: create_secret
+
+- name: create Secret Vault Connection
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'vault-properties-secret.j2') }}"
+  when: create_secret
+
 - name: get deployed mods
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"
