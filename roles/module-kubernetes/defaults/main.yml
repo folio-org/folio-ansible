@@ -46,3 +46,16 @@ okapi_pull: yes
 
 # set to true for deployment of pr preview module
 preview: false
+
+# Edge Module (Common Edge Modules) Vault Configs - Not SIP2
+edge_vault: true
+edge_secure_store: Vault
+vault_token: default-token
+vault_addr: http://vault.vault.svc.cluster.local:8200 
+
+edge_secret_name: edge-vault
+edge_vault_volume_name: edge-vault-volume
+#Both variables below use to mount volume and specify file.
+# Change both with the same mount place 
+edge_vault_mount_path: /mnt
+edge_secure_store_props: /mnt/vault.properties

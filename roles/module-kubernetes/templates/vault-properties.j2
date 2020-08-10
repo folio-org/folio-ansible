@@ -1,0 +1,34 @@
+secureStore.type=Vault
+
+# token for accessing vault, may be a root token
+# e.g. 52046e42-0679-e707-cd99-3694c6a8d4e9
+token={{ vault_token }}
+
+# key used for unsealing the vault (not yet implemented)
+# e.g. MnqOjQIwznFh1ddIBQfvm1munynyiAnizDRA+FMHlqE=
+#key={VAULT_KEY}
+
+# the address of your vault
+# Default: http://127.0.0.1:8200
+address={{ vault_addr }}
+
+# whether or not to use SSL [true|false]
+# Default: false
+#enableSSL=false
+#
+# NOTE: JKS-based config trumps PEM-based config. If you provide both JKS and PEM configs,
+# then the JKS config will be used.
+# You cannot "mix-and-match", providing a JKS-based truststore and PEM-based client auth data.
+#
+# the path to an X.509 certificate in unencrypted PEM format, using UTF-8 encoding
+#ssl.pem.path={PEM_PATH}
+#
+# the path to a JKS truststore file containing Vault server certs that can be trusted
+#ssl.truststore.jks.path={TRUSTSTORE_PATH}
+#
+# the path to a JKS keystore file containing a client cert and private key
+#ssl.keystore.jks.path={KEYSTORE_PATH}
+#
+# the password used to access the JKS keystore (optional)
+#ssl.keystore.password={KEYWORD_PASSWORD}
+
