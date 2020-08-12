@@ -14,10 +14,19 @@ The folling instructions are for edge modules that use edge-common. edige-sip2 i
         Salt: <salt generated value>
         Tenant ID: diku
         Username: diku
+6. Set up vault secret store with salt path
 
-6. Vault CLI create secret for the vaules above (run wihtin Vault Container or Vault Client)
+        $ ault secrets enable -path <salt generated value> kv
+        
+        
+7. Vault CLI create secret for the vaules above (run wihtin Vault Container or Vault Client)
 
-        $ vault kv put kv/<salt generated value>/<tenant> diku=diku
+        $ vault kv put <salt generated value>/<tenant> <username>=<username>
+        
+8. Check Vault was created
+
+        $ vault kv get  <salt generated value>/<tenant>
+        $ vault kv get <salt generated value>/<tenant> | jq -r .data.data.<username>
 
 7. [API key](https://github.com/folio-org/edge-common#api-key-sources) vault secret is present will allow activity. Institutional user has to have `rtac.all` permissions. This example was for edge-rtac, permissions will need to be updated for each edge module!
 
