@@ -106,12 +106,10 @@ folio_modules:
   - name: mod-patron-blocks
     deploy: yes
 
-  - name: mod-circulation
+  - name: mod-notes
     deploy: yes
 
-  - name: mod-notes
-#    docker_env:
-#      - { name: JAVA_OPTIONS, value: "-XX:MaxRAMPercentage=66.0" }
+  - name: mod-circulation
     deploy: yes
 
   - name: mod-codex-inventory
