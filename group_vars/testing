@@ -10,6 +10,9 @@ shelf_locations: false
 enable_okapi: true
 folio_install_type: single_server
 
+# remove this to unpin okapi
+okapi_version: 3.1.2-1
+
 # used in okapi-tenant-deploy
 update_launch_descr: true
 
