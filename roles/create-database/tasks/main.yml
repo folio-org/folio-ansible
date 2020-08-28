@@ -4,7 +4,7 @@
 - name: Install prerequisites from apt
   become: yes
   apt:
-    name: [libpq-dev, python-psycopg2, postgresql-client]
+    name: [libpq-dev, python3-psycopg2, postgresql-client]
     state: present
   when: folio_install_type == "single_server"
 

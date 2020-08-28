@@ -6,17 +6,17 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - python-apt
+      - python3-apt
 
-- name: Install software-properties-common on Ubuntu Xenial
+- name: Install software-properties-common on Ubuntu
   become: yes
   apt: name=software-properties-common
-  when: ansible_distribution_release == "xenial"
+  when: ansible_distribution_release == "Ubuntu"
 
-- name: Add Ansible repo on Ubuntu Xenial
+- name: Add Ansible repo on Ubuntu
   become: yes
   apt_repository: repo="ppa:ansible/ansible"
-  when: ansible_distribution_release == "xenial"
+  when: ansible_distribution_release == "Ubuntu"
 
 - name: Install apt key for Ansible repo on Debian Jessie
   become: yes

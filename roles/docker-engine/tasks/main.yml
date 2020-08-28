@@ -6,9 +6,9 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - python-virtualenv
-      - python-pip
-      - python-apt
+      - python3-virtualenv
+      - python3-pip
+      - python3-apt
 
 - name: Install docker-py and docker-compose from pip
   become: yes
@@ -19,10 +19,6 @@
   with_items:
      - { name: 'docker-py', version: '1.10.6' }
      - { name: 'docker-compose', version: '1.9.0' }
-
-- name: Install python-apt
-  become: yes
-  apt: name=python-apt state=present
 
 - name: Install apt key for Docker
   become: yes

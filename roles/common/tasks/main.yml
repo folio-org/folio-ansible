@@ -34,7 +34,7 @@
   apt:
     name:
       - libpq-dev
-      - python-psycopg2
+      - python3-psycopg2
       - postgresql-client
 
 - name: Set up FOLIO apt repo GPG key
