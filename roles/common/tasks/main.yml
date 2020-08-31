@@ -28,6 +28,7 @@
       - ca-certificates
       - unzip
       - jq
+      - acl
 
 - name: Install postgresql client things on all nodes
   become: yes
