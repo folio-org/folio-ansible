@@ -80,7 +80,7 @@ folio_npm_repo: npm-folio
 
 # Use existing stripes platform yarn.lock
 use_folio_snapshot: false
-folio_snapshot_url: 'https://folio-snapshot-stable.aws.indexdata.com'
+folio_snapshot_url: 'https://folio-snapshot-stable.dev.folio.org'
 
 #
 # Disabled by default
