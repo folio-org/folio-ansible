@@ -4,7 +4,7 @@
   become: yes
   apt:
     name:
-      - python-apt
+      - python3-apt
       - openjdk-8-jdk
 
 - name: Make Java 8 the system default

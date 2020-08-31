@@ -1,7 +1,20 @@
 ---
 # Ansible playbook to deploy Okapi and FOLIO modules
 # Provision a host as a backend FOLIO system
-- hosts: snapshot-core:testing-core:testing:snapshot:release-core:release:minimal
+- hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  tasks:
+    - name: Bootstrap Python 3
+      raw: test -e /usr/bin/python3 || (apt -qqy update && apt install -qy python3-minimal)
+      register: python3_output
+      changed_when: python3_output.stdout != ""
+    - name: Use Python 3 for Ansible
+      set_fact:
+        ansible_python_interpreter: /usr/bin/python3
+
+- hosts: all
   roles:
     - common
     - postgresql
@@ -125,8 +138,12 @@
 
 # Roles for packaging
 - hosts: vagrant
-  roles:
-    - maven-3
+  tasks:
+    - name: Install maven
+      become: yes
+      apt:
+        name:
+          - maven
 
 - hosts: packer
   roles:

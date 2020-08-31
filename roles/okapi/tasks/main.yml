@@ -6,7 +6,7 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - python-apt
+      - python3-apt
       - ssl-cert
 
 - name: Install okapi debian package
