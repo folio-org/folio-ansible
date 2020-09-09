@@ -21,28 +21,24 @@ stripes_exclude_list:
   - folio_platform-erm
   - folio_stripes-erm-components
 add_modules:
-  - mod-codex-inventory
-  - mod-codex-ekb
-  - mod-courses
-  - mod-data-export
-  - mod-data-import-converter-storage
-  - mod-erm-usage-harvester
-  - mod-finance
-  - mod-gobi
-  - mod-graphql
-  - mod-invoice-storage
-  - mod-invoice
-  - mod-marccat
-  - mod-ncip
-  - mod-organizations
-  - mod-patron-blocks
-  - mod-pubsub
-  - mod-quick-marc
   - edge-ncip
-  - edge-oai-pmh
   - edge-orders
+  - edge-oai-pmh
   - edge-patron
   - edge-rtac
+  # MISSING: edge-sip2
+  - mod-codex-inventory
+  - mod-codex-ekb
+  - mod-data-import-converter-storage
+  - mod-erm-usage-harvester
+  - mod-gobi
+  - mod-graphql
+  - mod-ncip
+  - mod-oai-pmh
+  - mod-patron
+  - mod-rtac
+  - mod-user-import
+  - mod-audit
 # Sample pinned module
 # pinned_modules:
 #   - module: mod-authtoken
@@ -51,6 +47,9 @@ add_modules:
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
+    deploy: yes
+
+  - name: mod-audit
     deploy: yes
 
   - name: mod-authtoken
@@ -240,6 +239,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-template-engine
+    deploy: yes
+
+  - name: mod-user-import
     deploy: yes
 
   - name: mod-users
