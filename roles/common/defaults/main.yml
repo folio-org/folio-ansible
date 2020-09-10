@@ -12,6 +12,8 @@ folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archiv
 #   focal - releases only, Java 11+ based (Okapi v4.x on)
 # Default is to configure just the 'xenial' and 'focal' repos which
 # are the most stable.  If you want snapshots, add 'testing' to this list.
-folio_apt_repos:
-  - xenial
+#folio_apt_repos:
+#  - xenial
 #  - focal
+folio_apt_repos:
+  - focal
