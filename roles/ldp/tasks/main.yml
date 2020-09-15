@@ -1,0 +1,64 @@
+---
+# see https://github.com/library-data-platform/ldp/blob/master/doc/Admin_Guide.md
+# use create-database role to make admin user, and assign role to pg admin user if RDS
+- name: Create database and ldp admin user for ldp tenants
+  include_role:
+    name: create-database
+  vars:
+    db_admin_user: "{{ pg_admin_user }}"
+    db_admin_password: "{{ pg_admin_password }}"
+    database_name: "{{ item.ldp_db }}"
+    db_admin_user: "{{ item.ldp_admin_user }}"
+    db_admin_password: "{{ item.ldp_admin_password }}"
+  with_items: "{{ ldp_tenants }}"
+
+# create additional config and ldp users
+- name: Create ldpconfig user for {{ item.name }}
+  postgresql_user:
+    user: "{{ item.ldpconfig_user }}"
+    password: "{{ item.ldpconfig_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ item.ldp_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+  with_items: "{{ ldp_tenants }}"
+
+- name: Create ldp user for {{ item.name }}
+  postgresql_user:
+    user: "{{ item.ldp_user }}"
+    password: "{{ item.ldp_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ item.ldp_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+  with_items: "{{ ldp_tenants }}"
+
+# assign perms for additional users
+- name: GRANT USAGE ON SCHEMA public TO {{ item.ldpconfig_user }}
+  postgresql_privs:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    db: "{{ item.ldp_db }}"
+    type: schema
+    obj: public
+    roles: "{{ item.ldpconfig_user }}"
+    privs: USAGE
+    state: present
+
+- name: GRANT USAGE ON SCHEMA public TO {{ item.ldp_user }}
+  postgresql_privs:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    db: "{{ item.ldp_db }}"
+    type: schema
+    obj: public
+    roles: "{{ item.ldp_user }}"
+    privs: USAGE
+    state: present
+

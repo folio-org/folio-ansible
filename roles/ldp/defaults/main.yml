@@ -1,0 +1,17 @@
+---
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_maint_db: postgres
+
+ldp_tenants:
+  - name: diku
+    ldp_db: diku_ldp
+    ldp_admin_user: diku_ldpadmin
+    ldp_admin_password: diku_ldpadmin9367
+    ldpconfig_user: diku_ldpconfig
+    ldpconfig_password: diku_ldpconfig9367
+    ldp_user: diku_ldp
+    ldp_password: diku_ldp9367
+
