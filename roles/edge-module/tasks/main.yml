@@ -130,8 +130,8 @@
     url: "{{ okapi_url }}/perms/users/{{ inst_perms_uuid }}/permissions"
     method: POST
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}" 
       Accept: application/json
     body: '{ "permissionName" : "{{ item }}" }'
     body_format: json
