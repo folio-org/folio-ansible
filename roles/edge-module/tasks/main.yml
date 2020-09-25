@@ -130,8 +130,8 @@
     url: "{{ okapi_url }}/perms/users/{{ inst_perms_uuid }}/permissions"
     method: POST
     headers:
-      X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}" 
+      X-Okapi-Tenant: "{{ tenant }}"
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
       Accept: application/json
     body: '{ "permissionName" : "{{ item }}" }'
     body_format: json
@@ -146,8 +146,8 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     headers:
-      X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token|default('token') }}"
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}" 
       Accept: application/json
   register: tenant_modules
 
