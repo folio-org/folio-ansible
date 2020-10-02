@@ -16,4 +16,4 @@ folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archiv
 #  - xenial
 #  - focal
 folio_apt_repos:
-  - xenial
+  - focal
