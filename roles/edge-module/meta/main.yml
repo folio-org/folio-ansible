@@ -1,3 +1,4 @@
 ---
 dependencies:
   - { role: edge-nginx }
+  - { role: okapi-authenticate }

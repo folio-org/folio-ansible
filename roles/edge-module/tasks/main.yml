@@ -146,7 +146,8 @@
   uri:
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     headers:
-      X-Okapi-Tenant: supertenant
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}" 
       Accept: application/json
   register: tenant_modules
 
