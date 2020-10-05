@@ -35,6 +35,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ item }}"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
   register: tenant_module_check
@@ -154,6 +155,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/supertenant/modules/{{ required_mods['mod-authtoken'] }}"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
   register: mod_authtoken_check
