@@ -1,0 +1,15 @@
+{
+    "deployment_environment": "production",
+    "ldp_database": {
+        "odbc_database": "{{ ldp_db }}",
+    },
+    "enable_sources": ["{{ tenant }}"],
+    "sources": {
+        "{{ tenant }}": {
+            "okapi_url": "{{ okapi_url }}",
+            "okapi_tenant": "{{ tenant }}",
+            "okapi_user": "{{ admin_user.username }}",
+            "okapi_password": "{{ admin_user.password }}"
+        }
+    }
+}

@@ -7,58 +7,140 @@
   vars:
     db_admin_user: "{{ pg_admin_user }}"
     db_admin_password: "{{ pg_admin_password }}"
-    database_name: "{{ item.ldp_db }}"
-    db_admin_user: "{{ item.ldp_admin_user }}"
-    db_admin_password: "{{ item.ldp_admin_password }}"
-  with_items: "{{ ldp_tenants }}"
+    database_name: "{{ ldp_db }}"
+    db_admin_user: "{{ ldp_admin_user }}"
+    db_admin_password: "{{ ldp_admin_password }}"
 
 # create additional config and ldp users
-- name: Create ldpconfig user for {{ item.name }}
+- name: Create ldpconfig user for {{ tenant }}
   postgresql_user:
-    user: "{{ item.ldpconfig_user }}"
-    password: "{{ item.ldpconfig_password }}"
+    user: "{{ ldpconfig_user }}"
+    password: "{{ ldpconfig_password }}"
     login_host: "{{ pg_host }}"
     port: "{{ pg_port }}"
-    db: "{{ item.ldp_db }}"
+    db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
-  with_items: "{{ ldp_tenants }}"
 
-- name: Create ldp user for {{ item.name }}
+- name: Create ldp user for {{ tenant }}
   postgresql_user:
-    user: "{{ item.ldp_user }}"
-    password: "{{ item.ldp_password }}"
+    user: "{{ ldp_user }}"
+    password: "{{ ldp_password }}"
     login_host: "{{ pg_host }}"
     port: "{{ pg_port }}"
-    db: "{{ item.ldp_db }}"
+    db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
-  with_items: "{{ ldp_tenants }}"
 
 # assign perms for additional users
-- name: GRANT USAGE ON SCHEMA public TO {{ item.ldpconfig_user }}
+- name: GRANT USAGE ON SCHEMA public TO {{ ldpconfig_user }}
   postgresql_privs:
     login_host: "{{ pg_host }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
     port: "{{ pg_port }}"
-    db: "{{ item.ldp_db }}"
+    db: "{{ ldp_db }}"
     type: schema
     obj: public
-    roles: "{{ item.ldpconfig_user }}"
+    roles: "{{ ldpconfig_user }}"
     privs: USAGE
     state: present
 
-- name: GRANT USAGE ON SCHEMA public TO {{ item.ldp_user }}
+- name: GRANT USAGE ON SCHEMA public TO {{ ldp_user }}
   postgresql_privs:
     login_host: "{{ pg_host }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
     port: "{{ pg_port }}"
-    db: "{{ item.ldp_db }}"
+    db: "{{ ldp_db }}"
     type: schema
     obj: public
-    roles: "{{ item.ldp_user }}"
+    roles: "{{ ldp_user }}"
     privs: USAGE
     state: present
 
+- name: Create directory for conf files
+  file:
+    path: /etc/ldp
+    state: directory
+  become: yes
+
+- name: template odbc.ini
+  template:
+    src: odbc.ini.j2
+    dest: /etc/ldp/odbc.ini
+    mode: 0644
+  become: yes
+
+- name: template odbcinst.ini
+  template:
+    src: odbcinst.ini.j2
+    dest: /etc/ldp/odbcinst.ini
+    mode: 0644
+  become: yes
+
+- name: template ldpconf.json
+  template:
+    src: ldpconf.json.j2
+    dest: /etc/ldp/ldpconf.json
+    mode: 0644
+  become: yes
+
+- name: ps info
+  postgresql_info:
+    db: ldp
+  become: yes
+  become_user: postgres
+  register: pg_info
+
+- debug: var=pg_info
+- name: Select query to db acme with positional arguments and non-default credentials
+  postgresql_query:
+    db: ldp
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
+  register: check_init
+
+- name: debug init
+  debug: var=check_init
+
+- debug: msg="INIT IS ALREADY DONE"
+  when: check_init.query_result[0].exists
+
+- debug: msg="INIT IS NOT DONE"
+  when: not check_init.query_result[0].exists
+
+- name: run ldp init
+  docker_container:
+    name: ldp_init
+    image: "{{ ldp_docker_image }}"
+    command: "init-database -D /var/lib/ldp --profile folio"
+    #entrypoint: "/bin/cat"
+    #command: "/var/lib/ldp/ldpconf.json"
+    detach: false
+    volumes:
+      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
+      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
+      - "/etc/ldp/ldpconf.json:/var/lib/ldp/ldpconf.json"
+  become: yes
+  when: not check_init.query_result[0].exists
+
+- name: pause for init container
+  pause:
+    seconds: 3
+  when: not check_init.query_result[0].exists
+
+- name: run ldp server
+  docker_container:
+    name: ldp_server
+    image: folioci/ldp:latest
+    command: "server -D /var/lib/ldp"
+    volumes:
+      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
+      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
+      - "/etc/ldp/ldpconf.json:/var/lib/ldp/ldpconf.json"
+    restart: yes
+  register: server_result
+  become: yes

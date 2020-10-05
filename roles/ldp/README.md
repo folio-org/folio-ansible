@@ -1,3 +1,11 @@
+# ldp
+Provisions LDP. This sets up an LDP database in postgres, plus an LDP server running in a docker container. See the [LDP Admin Guide](https://github.com/library-data-platform/ldp/blob/master/doc/Admin_Guide.md) for more details.
+
+## Requirements
+This role expects the postgres and docker-engine roles to have been previously executed. This role is inteded for single server type builds.
+
+## Defaults
+```
 ---
 okapi_port: "9130"
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
@@ -16,6 +24,7 @@ admin_user:
   password: admin
 
 tenant: diku
+
 ldp_docker_image: folioci/ldp:latest
 ldp_db: ldp
 ldp_admin_user: ldpadmin
@@ -24,4 +33,4 @@ ldpconfig_user: ldpconfig
 ldpconfig_password: diku_ldpconfig9367
 ldp_user: ldp
 ldp_password: diku_ldp9367
-
+```
