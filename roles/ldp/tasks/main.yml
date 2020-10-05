@@ -86,15 +86,7 @@
     mode: 0644
   become: yes
 
-- name: ps info
-  postgresql_info:
-    db: ldp
-  become: yes
-  become_user: postgres
-  register: pg_info
-
-- debug: var=pg_info
-- name: Select query to db acme with positional arguments and non-default credentials
+- name: test if init has already been run
   postgresql_query:
     db: ldp
     login_host: "{{ pg_host }}"
@@ -102,15 +94,6 @@
     login_password: "{{ pg_admin_password }}"
     query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
   register: check_init
-
-- name: debug init
-  debug: var=check_init
-
-- debug: msg="INIT IS ALREADY DONE"
-  when: check_init.query_result[0].exists
-
-- debug: msg="INIT IS NOT DONE"
-  when: not check_init.query_result[0].exists
 
 - name: run ldp init
   docker_container:
