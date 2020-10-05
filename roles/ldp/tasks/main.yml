@@ -112,7 +112,7 @@
     volumes:
       - "/etc/ldp/odbc.ini:/root/.odbc.ini"
       - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
-      - "/var/lib/ldp:/var/lib/ldp"
+      - "/var/lib/ldp:/var/lib/ldp:rw"
   become: yes
   when: not check_init.query_result[0].exists
 
@@ -129,7 +129,7 @@
     volumes:
       - "/etc/ldp/odbc.ini:/root/.odbc.ini"
       - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
-      - "/var/lib/ldp:/var/lib/ldp"
+      - "/var/lib/ldp:/var/lib/ldp:rw"
     restart: yes
   register: server_result
   become: yes
