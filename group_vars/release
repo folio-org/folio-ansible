@@ -7,6 +7,9 @@ folio_install_type: single_server
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q2-2020/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q2-2020/stripes-install.json
 update_launch_descr: true
+# Need to use xenial repo for Okapi 3.X
+folio_apt_repos:
+  - xenial
 okapi_version: 3.1.2-1
 save_install: no
 
