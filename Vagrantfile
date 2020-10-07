@@ -179,7 +179,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_release_core", autostart: false do |build_release_core|
-    build_release_core.vm.box = "bento/ubuntu-20.04"
+    build_release_core.vm.box = "bento/ubuntu-16.04"
     build_release_core.vm.provider "virtualbox" do |vr|
       vr.memory = 10240
     end
@@ -197,7 +197,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_release", autostart: false do |build_release|
-    build_release.vm.box = "bento/ubuntu-20.04"
+    build_release.vm.box = "bento/ubuntu-16.04"
     build_release.vm.provider "virtualbox" do |vrel|
       vrel.memory = 10240
     end
