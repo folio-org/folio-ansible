@@ -33,6 +33,7 @@ add_modules:
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
+  - mod-ldp
   - mod-ncip
   - mod-oai-pmh
   - mod-patron
@@ -148,6 +149,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-kb-ebsco-java
+    deploy: yes
+
+  - name: mod-ldp
     deploy: yes
 
   - name: mod-licenses
