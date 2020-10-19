@@ -4,6 +4,7 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
+ldp_password: diku_ldp9367
 
 # remove this to unpin okapi
 okapi_version: 4.1.7-1
@@ -153,6 +154,9 @@ folio_modules:
 
   - name: mod-ldp
     deploy: yes
+    docker_env:
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: "{{ ldp_password }}"
 
   - name: mod-licenses
     deploy: yes
