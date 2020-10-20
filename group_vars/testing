@@ -205,10 +205,13 @@ folio_modules:
   - name: mod-audit
     deploy: yes
 
+  - name: mod-ldp
+    deploy: yes
+
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: snapshot
+stripes_github_version: FOLIO-2711
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
 with_sourcemap: true
