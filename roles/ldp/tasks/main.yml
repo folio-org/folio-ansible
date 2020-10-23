@@ -105,7 +105,6 @@
     login_password: "{{ pg_admin_password }}"
     query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
   register: check_init
-  when: not server_only
 
 - name: run ldp init
   docker_container:
@@ -119,6 +118,10 @@
       - "/var/lib/ldp:/var/lib/ldp:rw"
   become: yes
   when: not check_init.query_result[0].exists and not server_only
+
+- name: warn init is not complete server only
+  debug: msg="LDP database has not been initialized"
+  when: not check_init.query_result[0].exists and server_only
 
 - name: pause for init container
   pause:
