@@ -10,6 +10,7 @@
     database_name: "{{ ldp_db }}"
     db_admin_user: "{{ ldp_admin_user }}"
     db_admin_password: "{{ ldp_admin_password }}"
+  when: not server_only
 
 # create additional config and ldp users
 - name: Create ldpconfig user for {{ tenant }}
@@ -21,6 +22,7 @@
     db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
+  when: not server_only
 
 - name: Create ldp user for {{ tenant }}
   postgresql_user:
@@ -31,6 +33,7 @@
     db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
+  when: not server_only
 
 # assign perms for additional users
 - name: GRANT USAGE ON SCHEMA public TO {{ ldpconfig_user }}
@@ -45,6 +48,7 @@
     roles: "{{ ldpconfig_user }}"
     privs: USAGE
     state: present
+  when: not server_only
 
 - name: GRANT USAGE ON SCHEMA public TO {{ ldp_user }}
   postgresql_privs:
@@ -58,6 +62,7 @@
     roles: "{{ ldp_user }}"
     privs: USAGE
     state: present
+  when: not server_only
 
 - name: Create directory for ini files
   file:
@@ -100,26 +105,25 @@
     login_password: "{{ pg_admin_password }}"
     query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
   register: check_init
+  when: not server_only
 
 - name: run ldp init
   docker_container:
     name: ldp_init
     image: "{{ ldp_docker_image }}"
     command: "init-database -D /var/lib/ldp --profile folio"
-    #entrypoint: "/bin/cat"
-    #command: "/var/lib/ldp/ldpconf.json"
     detach: false
     volumes:
       - "/etc/ldp/odbc.ini:/root/.odbc.ini"
       - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
       - "/var/lib/ldp:/var/lib/ldp:rw"
   become: yes
-  when: not check_init.query_result[0].exists
+  when: not check_init.query_result[0].exists and not server_only
 
 - name: pause for init container
   pause:
     seconds: 3
-  when: not check_init.query_result[0].exists
+  when: not check_init.query_result[0].exists and not server_only
 
 - name: run ldp server
   docker_container:
@@ -133,3 +137,4 @@
     restart: yes
   register: server_result
   become: yes
+  when: not init_only
