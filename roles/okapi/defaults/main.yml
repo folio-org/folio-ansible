@@ -11,6 +11,7 @@ okapi_port_start: 9131
 okapi_port_end: 9661
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 okapi_host: "{{ ansible_default_ipv4.address }}"
+okapi_nodename: "{{ ansible_default_ipv4.address }}"
 
 # change to 'postgres' for postgres backend
 okapi_storage: inmemory
@@ -24,6 +25,9 @@ okapidb_user: okapi
 okapidb_password: okapi25
 okapidb_name: okapi
 okapi_dockerurl: http://localhost:4243
+# dockerRegistries property
+# List of objects, see https://github.com/folio-org/okapi/blob/master/doc/guide.md#okapi-configuration
+okapi_docker_registries: []
 
 okapi_metrics: 0
 carbon_host: localhost
