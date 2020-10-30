@@ -27,7 +27,10 @@ okapidb_name: okapi
 okapi_dockerurl: http://localhost:4243
 # dockerRegistries property
 # List of objects, see https://github.com/folio-org/okapi/blob/master/doc/guide.md#okapi-configuration
-okapi_docker_registries: []
+# no default - sample below
+# okapi_docker_registries:
+#   - username: dockerUser
+#     password: ...
 
 okapi_metrics: 0
 carbon_host: localhost

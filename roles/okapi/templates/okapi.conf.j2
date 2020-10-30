@@ -133,6 +133,8 @@ vertx_cache_dir_base="/tmp/vertx-cache-okapi"
 #]
 #'
 # In Ansible build, allow override from build environment variable
+{% if lookup('env','DOCKER_REGISTRIES')|default(false,true) or okapi_docker_registries|default(false) %}
 docker_registries='
 {{ lookup("env","DOCKER_REGISTRIES")|default(okapi_docker_registries|to_nice_json,true) }}
 '
+{% endif %}
