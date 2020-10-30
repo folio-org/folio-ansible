@@ -22,7 +22,10 @@
 
 - name: Install okapi.env
   become: yes
-  template: src=okapi.env.j2 dest=/etc/default/okapi
+  template:
+    src: okapi.env.j2
+    dest: /etc/default/okapi
+    backup: yes
   notify: okapi restart
 
 - name: Install okapi.conf
@@ -32,7 +35,8 @@
     dest: /etc/folio/okapi/okapi.conf
     owner: okapi
     group: okapi
-    mode: 0644
+    mode: 0640
+    backup: yes
   notify: okapi restart
 
 - name: Install hazelcast.xml
@@ -43,9 +47,9 @@
     owner: okapi
     group: okapi
     mode: 0640
+    backup: yes
   when: hazelcast_aws_conf
   notify: okapi restart
-
 
 - meta: flush_handlers
 
