@@ -117,6 +117,11 @@
   roles:
     - mod-inventory-mods
 
+- name: Add sample users for permissions testing
+  hosts: testing:snapshot:release
+  roles:
+    - add-users
+
 # Set up stripes
 - name: Build stripes webpack, assign permissions
   hosts: stripes-build
