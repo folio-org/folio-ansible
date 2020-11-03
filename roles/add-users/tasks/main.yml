@@ -1,0 +1,19 @@
+---
+- name: Install prerequisites from apt
+  become: yes
+  apt:
+    name:
+      - git
+
+- name: Move node to latest LTS for Ansible user
+  shell: n lts
+
+- name: Clone folio-tools repository
+  git:
+    repo: "https://github.com/folio-org/folio-tools"
+    dest: folio-tools
+
+- name: Run add-users.js against Okapi
+  shell:
+    cmd: "node add-users.js --username \"{{ admin_user.username }}\" --password \"{{ admin_user.password }}\" --tenant \"{{ tenant }}\" --okapi \"{{ okapi_url }}\" --psets psets"
+    chdir: folio-tools/add-users
