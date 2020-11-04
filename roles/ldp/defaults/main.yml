@@ -25,3 +25,5 @@ ldpconfig_password: diku_ldpconfig9367
 ldp_user: ldp
 ldp_password: diku_ldp9367
 
+init_only: False
+server_only: False

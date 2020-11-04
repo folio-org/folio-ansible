@@ -33,6 +33,7 @@ add_modules:
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
+  - mod-ldp
   - mod-ncip
   - mod-oai-pmh
   - mod-patron
@@ -149,6 +150,14 @@ folio_modules:
 
   - name: mod-kb-ebsco-java
     deploy: yes
+
+  - name: mod-ldp
+    deploy: yes
+    docker_env:
+      - name: SPRING_DATASOURCE_PASSWORD
+        value: "{{ ldp_password }}"
+      - name: SPRING_DATASOURCE_URL
+        value: "jdbc:postgresql://{{ pg_host }}/ldp"
 
   - name: mod-licenses
     deploy: yes
