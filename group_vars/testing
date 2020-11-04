@@ -208,7 +208,7 @@ folio_modules:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: FOLIO-2711
+stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
 with_sourcemap: true
