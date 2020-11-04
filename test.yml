@@ -1,9 +1,0 @@
----
-# Ansible playbook to deploy Okapi and FOLIO modules
-# Provision a host as a backend FOLIO system
-- hosts: all
-  gather_facts: no
-  roles:
-    - name: test
-      server_only: true
-
