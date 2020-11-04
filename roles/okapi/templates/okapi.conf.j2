@@ -83,7 +83,7 @@ storage="{{ okapi_storage }}"
 {% if okapi_storage == "postgres" %}
 postgres_host="{{ pg_host }}"               # default 'localhost'
 postgres_port="{{ pg_port }}"               # default postgres port
-postgres_user="{{ okapidb_user }}"          # default 'okapi'
+postgres_username="{{ okapidb_user }}"          # default 'okapi'
 postgres_password="{{ okapidb_password }}"  # default 'okapi25'
 postgres_database="{{ okapidb_name }}"      # default 'okapi'
 {% else %}
