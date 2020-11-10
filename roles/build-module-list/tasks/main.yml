@@ -41,6 +41,13 @@
   with_items: "{{ enable_json.json }}"
   when: stripes_platform is not defined and enable_json|default(false) and enable_json.json is defined
 
+- name: Add url to items
+  set_fact:
+    tmp_folio_modules: "{{ tmp_folio_modules|default([]) + [item|combine({'url': 'http://'+item.name, 'deploy': false})] }}"
+  with_items:
+    - "{{ tmp_folio_modules }}"
+  when: folio_install_type == "rancher"
+
 - name: Combine with existing folio_modules list for custom settings
   set_fact:
     tmp_folio_modules_combined: "{{ tmp_folio_modules_combined|default([]) + [ item|combine(folio_modules|default([])|selectattr('name','equalto',item.name)|first|default({})) ] }}"
