@@ -16,7 +16,7 @@
 
 - name: Post deployment descriptors for remote modules
   include_tasks: okapi-discovery.yml
-  when: folio_install_type == "single_server" and item.url is defined
+  when: folio_install_type == "single_server" or folio_install_type == "rancher" and item.url is defined
   with_items: "{{ folio_modules }}"
 
 - name: Build tenant parameter list
