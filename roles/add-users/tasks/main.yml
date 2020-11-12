@@ -5,7 +5,8 @@
     name:
       - git
 
-- name: Move node to latest LTS for Ansible user
+- name: Move node to latest LTS
+  become: yes
   shell: n lts
 
 - name: Clone folio-tools repository
