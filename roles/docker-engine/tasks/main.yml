@@ -72,3 +72,18 @@
   become: yes
   service: name=docker state=restarted
   when: docker_opts.changed
+
+- name: Check for Docker config
+  become: yes
+  stat:
+    path: "~/.docker/config.json"
+  register: stat_docker_config
+  when: docker_image_repo|default(false)
+
+- name: Log in to Docker image repository
+  become: yes
+  docker_login:
+    registry_url: "{{ docker_image_repo.registry_url|default(omit) }}"
+    username: "{{ docker_image_repo.username }}"
+    password: "{{ docker_image_repo.password }}"
+  when: docker_image_repo|default(false) and not stat_docker_config.exists|default(false)
