@@ -4,3 +4,9 @@ docker_users:
 
 folioci: false
 
+# no default for these, if undefined use unauthenticated sessions to
+# Docker Hub for image pulls
+# docker_image_repo:
+#   registry_url: "https://index.docker.io/v1/"
+#   username: myDockerUser
+#   password: secret
