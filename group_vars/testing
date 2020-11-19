@@ -37,6 +37,16 @@ folio_modules:
   - name: mod-authtoken
     deploy: yes
 
+  - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: KAFKA_HOST
+        value: "{{ kafka_host }}"
+      - name: KAFKA_PORT
+        value: "{{ kafka_port }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
   - name: mod-configuration
     tenant_parameters:
       - { name: loadSample, value: "true" }
@@ -93,16 +103,6 @@ folio_modules:
 
   - name: mod-courses
     deploy: yes
-
-  - name: mod-pubsub
-    deploy: yes
-    docker_env:
-      - name: KAFKA_HOST
-        value: "{{ kafka_host }}"
-      - name: KAFKA_PORT
-        value: "{{ kafka_port }}"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
 
   - name: mod-source-record-storage
     deploy: yes
