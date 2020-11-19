@@ -31,6 +31,13 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-authtoken
     deploy: yes
 
@@ -45,13 +52,6 @@ folio_modules:
         value: "{{ okapi_url }}"
 
   - name: mod-configuration
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-login
-    docker_cmd:
-      - "verify.user=true"
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
