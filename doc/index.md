@@ -223,11 +223,13 @@ absence of the trailing slash:
     # back-end requests:
     location /okapi/ {
         proxy_pass http://127.0.0.1:9130/;
+        proxy_redirect default;
     }
 
     # front-end requests:
     location / {
         proxy_pass http://127.0.0.1:3000;
+        proxy_redirect default;
     }
 
 ## Updating FOLIO components on Vagrant boxes
