@@ -147,7 +147,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/modules"
     headers:
       X-Okapi-Tenant: "supertenant"
-      X-Okapi-Token: "{{ supertenant_token | default('') }}" 
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
   register: tenant_modules
 
@@ -185,6 +185,10 @@
     memory: "{{ edge_module_memory }}"
 
 # Set up nginx proxy
+- name: Turn edge_module_path into a list
+  set_fact: edge_module_path={{ [ edge_module_path ] }}
+  when: edge_module_path|type_debug != "list"
+
 - name: Configure nginx
   become: yes
   blockinfile:
@@ -196,5 +200,6 @@
         proxy_pass http://localhost:{{ edge_module_publish_port }};
       }
   notify: Restart nginx
+  loop: "{{ edge_module_path }}"
 
 - meta: flush_handlers
