@@ -22,6 +22,7 @@ inst_user_perms: [ ]
 
 # Module setup
 # edge_module, and edge_module_publish_port, edge_module_path variables must be defined or the role will fail
+# edge_module_path can take either a single value or a list
 # edge_module: edge-rtac
 # edge_module_publish_port: 9700
 # edge_module_path: /prod/rtac
