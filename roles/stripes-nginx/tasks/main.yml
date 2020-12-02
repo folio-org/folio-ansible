@@ -14,6 +14,29 @@
   stat: path=/etc/folio/okapi/install.json
   register: stat_install_json
 
+- name: create nginx ssl dir
+  become: yes
+  file:
+    dest: /etc/nginx/ssl
+    mode: 700
+    owner: nginx
+    state: directory
+  when: {{ stripes_enable_https }}
+
+- name: copy certificate and key to nginx config dir
+  become: yes
+  copy:
+    src: {{ item }}
+    dest: "/etc/nginx/ssl/{{ item }}"
+    mode: 500
+    owner: nginx
+  with_items:
+    - {{ stripes_certificate_file }}
+    - {{ stripes_certificate_key_file }}
+  when: {{ stripes_enable_https }}
+
+
+
 - name: Install stripes configuration for nginx
   become: yes
   template: src=stripes.conf.j2 dest=/etc/nginx/sites-available/stripes

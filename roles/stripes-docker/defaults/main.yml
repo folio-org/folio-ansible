@@ -2,9 +2,17 @@
 
 folio_conf: /etc/folio
 stripes_conf_dir: /etc/folio/stripes
-# host address to map container to. '127.0.0.1' by default  
+# host address to map container to. '127.0.0.1' by default
 stripes_host_address: '127.0.0.1'
 # Port to serve stripes container, default 80
-stripes_port: 80
+stripes_listen_port: 80
+stripes_enable_https: no
+stripes_certificate_file: null
+stripes_certificate_key_file: null
 stripes_rebuild: false
 nginx_servername: localhost
+stripes_server_name:
+  -  "{{ ansible_default_ipv4.address }}"
+nginx_proxy_okapi: no
+nginx_proxy_okapi_url: "http://{{ ansible_default_ipv4.address }}:9130"
+

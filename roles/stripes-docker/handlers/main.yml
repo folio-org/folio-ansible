@@ -16,21 +16,21 @@
   become: yes
   docker_service:
     project_name: stripes
-    definition: 
+    definition:
       version: '2'
-      services: 
+      services:
         stripes:
           build: "{{ stripes_conf_dir }}"
           image: stripes
-          ports: 
-            - "{{ stripes_host_address }}:{{ stripes_port }}:80"
-          networks:  
+          ports:
+            - "{{ stripes_host_address }}:{{ stripes_listen_port }}:{{ stripes_listen_port }}"
+          networks:
             stripes-net:
               aliases:
                 - stripes-serv
           restart: always
-      networks: 
-        stripes-net: 
+      networks:
+        stripes-net:
           external: true
     state: present
   register: stripes_container_status

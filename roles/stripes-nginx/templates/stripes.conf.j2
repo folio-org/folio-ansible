@@ -1,7 +1,14 @@
 server {
-  listen {{ stripes_listen_port }};
+  listen {{ stripes_listen_port }}{%if stripes_enable_https %} ssl{% endif %};
   server_name{% for alias in stripes_server_name %} {{ alias }}{% endfor %};
   charset utf-8;
+  gzip on;
+  gzip_types  text/plain application/javascript application/x-javascript text/javascript text/xml text/css;
+  {%if stripes_enable_https %}
+  ssl on;
+  ssl_certificate {{ stripes_certificate_file }}
+  ssl_certificate_key {{ stripes_certificate_key_file }}
+  {% endif %}
   # Serve index.html for any request not found
   location / {
     # Set path
