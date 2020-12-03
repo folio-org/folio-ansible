@@ -5,9 +5,8 @@ server {
   gzip on;
   gzip_types  text/plain application/javascript application/x-javascript text/javascript text/xml text/css;
   {%if stripes_enable_https %}
-  ssl on;
-  ssl_certificate {{ stripes_certificate_file|basename }}
-  ssl_certificate_key {{ stripes_certificate_key_file|basename }}
+  ssl_certificate ssl/{{ stripes_certificate_file|basename }};
+  ssl_certificate_key ssl/{{ stripes_certificate_key_file|basename }};
   {% endif %}
   # Serve index.html for any request not found
   location / {
