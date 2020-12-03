@@ -1,8 +1,8 @@
 FROM nginx:stable-alpine
 
 {%if stripes_enable_https %}
-COPY --chown nginx:nginx {{ stripes_certificate_file }} /etc/nginx/ssl/{{ stripes_certificate_file }}
-COPY --chown nginx:nginx {{ stripes_certificate_key_file }} /etc/nginx/ssl/{{ stripes_certificate_key_file }}
+COPY --chown nginx:nginx {{ stripes_certificate_file|basename }} /etc/nginx/ssl/{{ stripes_certificate_file|basename }}
+COPY --chown nginx:nginx {{ stripes_certificate_key_file|basename }} /etc/nginx/ssl/{{ stripes_certificate_key_file|basename }}
 {% endif %}
 COPY output /usr/share/nginx/html
 COPY yarn.lock *install.json /usr/share/nginx/html/

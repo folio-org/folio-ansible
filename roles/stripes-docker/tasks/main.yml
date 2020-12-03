@@ -27,12 +27,12 @@
 - name: copy certificate and key to docker build dir
   become: yes
   copy:
-    src: {{ item }}
-    dest: "{{ stripes_conf_dir }}/{{ item }}"
+    src: "{{ item }}"
+    dest: "{{ stripes_conf_dir }}/{{ item|basename }}"
   with_items:
-    - {{ stripes_certificate_file }}
-    - {{ stripes_certificate_key_file }}
-  when: {{ stripes_enable_https }}
+    - "{{ stripes_certificate_file }}"
+    - "{{ stripes_certificate_key_file }}"
+  when: stripes_enable_https == true
 
 - name: copy Dockerfile to docker build dir
   become: yes

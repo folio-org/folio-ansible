@@ -21,19 +21,19 @@
     mode: 700
     owner: nginx
     state: directory
-  when: {{ stripes_enable_https }}
+  when: stripes_enable_https == true
 
 - name: copy certificate and key to nginx config dir
   become: yes
   copy:
-    src: {{ item }}
-    dest: "/etc/nginx/ssl/{{ item }}"
+    src: "{{ item }}"
+    dest: "/etc/nginx/ssl/{{ item|basename }}"
     mode: 500
     owner: nginx
   with_items:
-    - {{ stripes_certificate_file }}
-    - {{ stripes_certificate_key_file }}
-  when: {{ stripes_enable_https }}
+    - "{{ stripes_certificate_file }}"
+    - "{{ stripes_certificate_key_file }}"
+  when: stripes_enable_https == true
 
 
 

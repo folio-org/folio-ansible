@@ -15,7 +15,7 @@ The primary audiences for this project are:
 
 ## License
 
-Copyright (C) 2016-2019 The Open Library Foundation
+Copyright (C) 2016-2020 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
@@ -71,6 +71,88 @@ For more information, see [Vagrant VMs and Ansible roles](doc/index.md).
 
 In addition, this project includes a [Vagrantfile](Vagrantfile) for
 creating different environments.
+
+## Deployment on a server or virtual machine
+
+### Deploy host requirement
+
+* Linux or MacOSX
+* Ansible installed
+* ssh configured to access the server - preferred using ssh-keys
+
+### Server requirements
+
+* Ubuntu 16.04 for Folio Fameflower
+* Ubuntu 20.04 or Debian 10 for Folio Honeysuckle
+* Python installed
+* For SSL you need
+    * Certificate file and a Key file without Password
+    * FQDN
+
+### Installation
+
+To install Folio using the folio.yml Ansible playbook, you have to create a
+inventory file. You also have to configure some parameters. You can put
+these in the inventory file, in group vars files or in host vars files. In this
+example we use the inventory. The contents of the file `inventory.yml`:
+
+    all:
+      hosts:
+        my-host.domain.com:
+          superuser_username: opkapi_superuser
+          superuser_password: superpassword
+      children:
+        release:
+          my-host.domain.com:
+            save_dir: /etc/folio/savedir
+            okapi_interface: ens3
+            okapi_storage: postgres
+            tenant: mytenant
+            tenant_name: "My Organisation"
+            tenant_description: "Description of my Organisation"
+            okapi_role: dev
+        stripes:
+          my-host.domain.com:
+            stripes_host_address: 0.0.0.0
+            stripes_okapi_url: http://my-host.domain.com:9130
+            stripes_tenant: mytenant
+
+Next we can install Folio using the `folio.yml` playbook:
+    ansible-playbook -u ubuntu -i inventory.yml folio.yml
+
+To learn more about the parameters, you should have a look at the playbook,
+to see which roles are executed and in the documentation of the roles.
+
+Another example includes deployment of Stripes to use https instead of http:
+
+    all:
+      hosts:
+        my-host.domain.com:
+          superuser_username: opkapi_superuser
+          superuser_password: superpassword
+      children:
+        release:
+          my-host.domain.com:
+            save_dir: /etc/folio/savedir
+            okapi_interface: ens3
+            okapi_storage: postgres
+            tenant: mytenant
+            tenant_name: "My Organisation"
+            tenant_description: "Description of my Organisation"
+            okapi_role: dev
+        stripes:
+          my-host.domain.com:
+            stripes_host_address: 0.0.0.0
+            stripes_okapi_url: http://my-host.domain.com:9130
+            stripes_tenant: mytenant
+            stripes_enable_https: yes
+            stripes_certificate_file: /path/to/certificate.pem
+            stripes_certificate_key_file: /path/to/key.pem
+            nginx_proxy_okapi: yes
+            stripes_listen_port: 443
+            stripes_server_name: my-host.domain.com
+
+
 
 ## Documentation
 
