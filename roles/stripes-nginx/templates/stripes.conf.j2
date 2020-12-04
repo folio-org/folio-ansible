@@ -32,6 +32,7 @@ server {
   {% endif %}
   {% if nginx_proxy_okapi %}
   location /okapi {
+    client_max_body_size {{ nginx_proxy_upload_max_size }};
     rewrite ^/okapi/(.*) /$1 break;
     proxy_pass {{ nginx_proxy_okapi_url }};
   }
