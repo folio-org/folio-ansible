@@ -102,8 +102,6 @@ example we use the inventory. The contents of the inventory file `inventory.yml`
     all:
       hosts:
         my-host.domain.com:
-          superuser_username: opkapi_superuser
-          superuser_password: superpassword
       children:
         release:
           hosts:
@@ -130,13 +128,12 @@ To learn more about the parameters, you should have a look at the
 playbook `folio.yml`, to see which roles are executed and in the
 documentation of the roles.
 
-Another example includes deployment of Stripes to use https instead of http:
+Another example includes deployment of Stripes to use https instead of http,
+securing okapis supertenant and the tenant admin user.
 
     all:
       hosts:
         my-host.domain.com:
-          superuser_username: opkapi_superuser
-          superuser_password: superpassword
       children:
         release:
           hosts:
@@ -148,6 +145,9 @@ Another example includes deployment of Stripes to use https instead of http:
               tenant_name: "My Organisation"
               tenant_description: "Description of my Organisation"
               okapi_role: dev
+              admin_user:
+                username: my_admin
+                password: tenantadminpassword
         stripes:
           hosts:
             my-host.domain.com:
@@ -160,6 +160,11 @@ Another example includes deployment of Stripes to use https instead of http:
               nginx_proxy_okapi: yes
               stripes_listen_port: 443
               stripes_server_name: my-host.domain.com
+        production:
+          hosts:
+            my-host.domain.com:
+              superuser_username: opkapi_superuser
+              superuser_password: superpassword
 
 
 
