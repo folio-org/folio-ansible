@@ -24,17 +24,27 @@
   when: top_down_install|default(false)
   ignore_errors: yes
 
-- name: copy Dockerfile to docker build dir
+- name: copy certificate and key to docker build dir
   become: yes
   copy:
-    src: Dockerfile
+    src: "{{ item }}"
+    dest: "{{ stripes_conf_dir }}/{{ item|basename }}"
+  with_items:
+    - "{{ stripes_certificate_file }}"
+    - "{{ stripes_certificate_key_file }}"
+  when: stripes_enable_https == true
+
+- name: copy Dockerfile to docker build dir
+  become: yes
+  template:
+    src: Dockerfile.j2
     dest: "{{ stripes_conf_dir }}/Dockerfile"
   notify: Rebuild container
 
 - name: copy build-run to build dir
   become: yes
-  copy:
-    src: build-run
+  template:
+    src: build-run.j2
     dest: "{{ stripes_conf_dir }}/build-run"
     mode: 0755
   notify: Rebuild container
