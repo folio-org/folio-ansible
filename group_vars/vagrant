@@ -13,4 +13,4 @@ docker_users:
   - folio
   - vagrant
 stripes_host_address: 0.0.0.0
-stripes_port: 3000
+stripes_listen_port: 3000

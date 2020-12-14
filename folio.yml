@@ -142,6 +142,17 @@
   roles:
     - stripes-docker
 
+- name: Install Stripes on local installed nginx
+  hosts: stripes-nginx
+  roles:
+    - stripes-nginx
+    - tenant-admin-permissions
+
+- name: Secure Okapi Supertenant
+  hosts: production
+  roles:
+    - okapi-secure
+
 # Roles for packaging
 - hosts: vagrant
   tasks:

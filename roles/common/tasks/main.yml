@@ -16,7 +16,7 @@
 
 - name: Add ansible user to folio group
   become: yes
-  user: name={{ ansible_user }} groups={{ folio_group }}
+  user: name={{ ansible_user }} groups={{ folio_group }} append=yes
 
 - name: Install prerequisites from apt
   become: yes
