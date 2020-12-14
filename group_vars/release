@@ -4,13 +4,13 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q2-2020/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q2-2020/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/q3-2020/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/q3-2020/stripes-install.json
 update_launch_descr: true
 # Need to use xenial repo for Okapi 3.X
 folio_apt_repos:
-  - xenial
-okapi_version: 3.1.2-1
+  - focal
+okapi_version: 4.3.3-1
 save_install: no
 
 # proxy edge modules - folio-elb
@@ -47,7 +47,7 @@ folio_modules:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: q2-2020
+stripes_github_version: q3-2020
 folio_npm_repo: npm-folio
 okapi_register_modules: no
 okapi_enable_modules: no
@@ -58,8 +58,8 @@ with_sourcemap: no
 box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Goldenrod Release (v1.0.0)
+  # FOLIO Honeysuckle Release (v1.0.0)
 
   Admin login: diku_admin/admin
 
-  Q2-2020 release version of the FOLIO platform, built from Q2-2020 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+  Q3-2020 release version of the FOLIO platform, built from Q3-2020 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
