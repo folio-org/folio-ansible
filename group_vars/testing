@@ -47,10 +47,6 @@ folio_modules:
   - name: mod-pubsub
     deploy: yes
     docker_env:
-      - name: KAFKA_HOST
-        value: "{{ kafka_host }}"
-      - name: KAFKA_PORT
-        value: "{{ kafka_port }}"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
