@@ -10,7 +10,7 @@ update_launch_descr: true
 # Need to use xenial repo for Okapi 3.X
 folio_apt_repos:
   - focal
-okapi_version: 4.3.3-1
+okapi_version: 4.4.2-1
 save_install: no
 
 # proxy edge modules - folio-elb
@@ -44,8 +44,10 @@ with_sourcemap: no
 box_tag: folio/release-core
 version: 1.0.0
 version_descr: |
-  # FOLIO Honeysuckle core Release (v1.0.0)
+  # FOLIO Honeysuckle Core Release (v1.0.2)
 
   Admin login: diku_admin/admin
 
   Q3-2020 release version of the FOLIO core platform, built from Q3-2020 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
+
+  Using Okapi 4.4.2 instead of official release version 4.3.3 due to https://issues.folio.org/browse/OKAPI-966
