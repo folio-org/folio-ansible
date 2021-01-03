@@ -117,6 +117,9 @@ folio_modules:
   - name: mod-codex-mux
     deploy: yes
 
+  - name: mod-remote-storage
+    deploy: yes
+
   - name: mod-tags
     tenant_parameters:
       - { name: loadSample, value: "true" }

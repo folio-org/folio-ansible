@@ -198,6 +198,9 @@ folio_modules:
   - name: mod-orders
     deploy: yes
 
+  - name: mod-remote-storage
+    deploy: yes
+
   - name: mod-audit
     deploy: yes
 
