@@ -226,6 +226,9 @@ folio_modules:
   - name: mod-quick-marc
     deploy: yes
 
+  - name: mod-remote-storage
+    deploy: yes
+
   - name: mod-rtac
     deploy: yes
 
