@@ -10,6 +10,9 @@ shelf_locations: false
 enable_okapi: true
 folio_install_type: single_server
 
+# remove this to unpin okapi
+#okapi_version: 4.1.7-1
+
 # used in okapi-tenant-deploy
 update_launch_descr: true
 
@@ -31,17 +34,23 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-authtoken
-    deploy: yes
-
-  - name: mod-configuration
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
 
-  - name: mod-login
-    docker_cmd:
-      - "verify.user=true"
+  - name: mod-authtoken
+    deploy: yes
+
+  - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
+  - name: mod-configuration
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
@@ -91,16 +100,6 @@ folio_modules:
   - name: mod-courses
     deploy: yes
 
-  - name: mod-pubsub
-    deploy: yes
-    docker_env:
-      - name: KAFKA_HOST
-        value: "{{ kafka_host }}"
-      - name: KAFKA_PORT
-        value: "{{ kafka_port }}"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
-
   - name: mod-source-record-storage
     deploy: yes
 
@@ -134,12 +133,10 @@ folio_modules:
   - name: mod-patron-blocks
     deploy: yes
 
-  - name: mod-circulation
+  - name: mod-notes
     deploy: yes
 
-  - name: mod-notes
-#    docker_env:
-#      - { name: JAVA_OPTIONS, value: "-XX:MaxRAMPercentage=66.0" }
+  - name: mod-circulation
     deploy: yes
 
   - name: mod-graphql
@@ -200,6 +197,13 @@ folio_modules:
 
   - name: mod-orders
     deploy: yes
+
+  - name: mod-remote-storage
+    deploy: yes
+
+  - name: mod-audit
+    deploy: yes
+
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete

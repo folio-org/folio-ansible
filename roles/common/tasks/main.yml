@@ -16,7 +16,7 @@
 
 - name: Add ansible user to folio group
   become: yes
-  user: name={{ ansible_user }} groups={{ folio_group }}
+  user: name={{ ansible_user }} groups={{ folio_group }} append=yes
 
 - name: Install prerequisites from apt
   become: yes
@@ -28,13 +28,14 @@
       - ca-certificates
       - unzip
       - jq
+      - acl
 
 - name: Install postgresql client things on all nodes
   become: yes
   apt:
     name:
       - libpq-dev
-      - python-psycopg2
+      - python3-psycopg2
       - postgresql-client
 
 - name: Set up FOLIO apt repo GPG key

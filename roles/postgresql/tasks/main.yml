@@ -6,10 +6,10 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - python-virtualenv
-      - python-psycopg2
-      - python-pip
-      - python-apt
+      - python3-virtualenv
+      - python3-psycopg2
+      - python3-pip
+      - python3-apt
       - ssl-cert
 
 - name: Install apt key for PostgreSQL

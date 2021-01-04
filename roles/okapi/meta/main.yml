@@ -2,7 +2,6 @@
 dependencies:
   - role: common
     when: folio_install_type == "single_server"
-  - role: openjdk-8
   - role: create-database
     vars:
       db_admin_user: "{{ okapidb_user }}"

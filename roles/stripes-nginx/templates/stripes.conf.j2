@@ -1,7 +1,13 @@
 server {
-  listen {{ stripes_listen_port }};
+  listen {{ stripes_listen_port }}{%if stripes_enable_https %} ssl{% endif %};
   server_name{% for alias in stripes_server_name %} {{ alias }}{% endfor %};
   charset utf-8;
+  gzip on;
+  gzip_types  text/plain application/javascript application/x-javascript text/javascript text/xml text/css;
+  {%if stripes_enable_https %}
+  ssl_certificate ssl/{{ stripes_certificate_file|basename }};
+  ssl_certificate_key ssl/{{ stripes_certificate_key_file|basename }};
+  {% endif %}
   # Serve index.html for any request not found
   location / {
     # Set path
@@ -26,6 +32,7 @@ server {
   {% endif %}
   {% if nginx_proxy_okapi %}
   location /okapi {
+    client_max_body_size {{ nginx_proxy_upload_max_size }};
     rewrite ^/okapi/(.*) /$1 break;
     proxy_pass {{ nginx_proxy_okapi_url }};
   }

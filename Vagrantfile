@@ -60,7 +60,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_snapshot_core", autostart: false do |build_snapshot_core|
-    build_snapshot_core.vm.box = "bento/ubuntu-16.04"
+    build_snapshot_core.vm.box = "bento/ubuntu-20.04"
     build_snapshot_core.vm.provider "virtualbox" do |vt|
       vt.memory = 10240
     end
@@ -78,7 +78,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_snapshot_backend_core", autostart: false do |build_snapshot_backend_core|
-    build_snapshot_backend_core.vm.box = "bento/ubuntu-16.04"
+    build_snapshot_backend_core.vm.box = "bento/ubuntu-20.04"
     build_snapshot_backend_core.vm.provider "virtualbox" do |vt|
       vt.memory = 10240
     end
@@ -94,7 +94,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing", autostart: false do |build_testing|
-    build_testing.vm.box = "bento/ubuntu-16.04"
+    build_testing.vm.box = "bento/ubuntu-20.04"
     build_testing.vm.provider "virtualbox" do |vt|
       vt.memory = 10240
     end
@@ -112,7 +112,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
-    build_testing_backend.vm.box = "bento/ubuntu-16.04"
+    build_testing_backend.vm.box = "bento/ubuntu-20.04"
     build_testing_backend.vm.provider "virtualbox" do |vtb|
       vtb.memory = 10240
     end
@@ -129,7 +129,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing_core", autostart: false do |build_testing_core|
-    build_testing_core.vm.box = "bento/ubuntu-16.04"
+    build_testing_core.vm.box = "bento/ubuntu-20.04"
     build_testing_core.vm.provider "virtualbox" do |vt|
       vt.memory = 10240
     end
@@ -147,7 +147,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_testing_backend_core", autostart: false do |build_testing_backend_core|
-    build_testing_backend_core.vm.box = "bento/ubuntu-16.04"
+    build_testing_backend_core.vm.box = "bento/ubuntu-20.04"
     build_testing_backend_core.vm.provider "virtualbox" do |vtb|
       vtb.memory = 10240
     end
@@ -164,7 +164,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_snapshot", autostart: false do |build_snapshot|
-    build_snapshot.vm.box = "bento/ubuntu-16.04"
+    build_snapshot.vm.box = "bento/ubuntu-20.04"
     build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     build_snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
@@ -215,7 +215,7 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_minimal", autostart: false do |build_minimal|
-    build_minimal.vm.box = "debian/contrib-jessie64"
+    build_minimal.vm.box = "bento/ubuntu-20.04"
     build_minimal.vm.network "forwarded_port", guest: 9130, host: 9130
     build_minimal.vm.synced_folder ".", "/vagrant", disabled: true
     build_minimal.vm.provision "ansible" do |ansible|

@@ -6,9 +6,14 @@ folio_apt_repo_url: https://repository.folio.org/packages/ubuntu
 folio_apt_key_id: 469A4045
 folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archive-key.asc
 
-# there are currently two FOLIO repositories - 'testing' and xenial'
-# 'xenial' contains releases only while 'testing' includes dev
-# snapshots.   Default is to configure just the 'xenial' repo which
-# the most stable.  If you want both, add 'testing' to this list.
-folio_apt_repos: 
-  - xenial
+# there are currently 3 FOLIO repositories - 'testing', 'xenial', and 'focal'
+#   testing - includes dev snapshots
+#   xenial - releases only, Java 8 based (through Okapi v3.x)
+#   focal - releases only, Java 11+ based (Okapi v4.x on)
+# Default is to configure just the 'xenial' and 'focal' repos which
+# are the most stable.  If you want snapshots, add 'testing' to this list.
+#folio_apt_repos:
+#  - xenial
+#  - focal
+folio_apt_repos:
+  - focal

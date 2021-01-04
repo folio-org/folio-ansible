@@ -1,0 +1,143 @@
+---
+# see https://github.com/library-data-platform/ldp/blob/master/doc/Admin_Guide.md
+# use create-database role to make admin user, and assign role to pg admin user if RDS
+- name: Create database and ldp admin user for ldp tenants
+  include_role:
+    name: create-database
+  vars:
+    db_admin_user: "{{ pg_admin_user }}"
+    db_admin_password: "{{ pg_admin_password }}"
+    database_name: "{{ ldp_db }}"
+    db_admin_user: "{{ ldp_admin_user }}"
+    db_admin_password: "{{ ldp_admin_password }}"
+  when: not server_only
+
+# create additional config and ldp users
+- name: Create ldpconfig user for {{ tenant }}
+  postgresql_user:
+    user: "{{ ldpconfig_user }}"
+    password: "{{ ldpconfig_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ ldp_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+  when: not server_only
+
+- name: Create ldp user for {{ tenant }}
+  postgresql_user:
+    user: "{{ ldp_user }}"
+    password: "{{ ldp_password }}"
+    login_host: "{{ pg_host }}"
+    port: "{{ pg_port }}"
+    db: "{{ ldp_db }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+  when: not server_only
+
+# assign perms for additional users
+- name: GRANT USAGE ON SCHEMA public TO {{ ldpconfig_user }}
+  postgresql_privs:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    db: "{{ ldp_db }}"
+    type: schema
+    obj: public
+    roles: "{{ ldpconfig_user }}"
+    privs: USAGE
+    state: present
+  when: not server_only
+
+- name: GRANT USAGE ON SCHEMA public TO {{ ldp_user }}
+  postgresql_privs:
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    db: "{{ ldp_db }}"
+    type: schema
+    obj: public
+    roles: "{{ ldp_user }}"
+    privs: USAGE
+    state: present
+  when: not server_only
+
+- name: Create directory for ini files
+  file:
+    path: /etc/ldp
+    state: directory
+  become: yes
+
+- name: template odbc.ini
+  template:
+    src: odbc.ini.j2
+    dest: /etc/ldp/odbc.ini
+    mode: 0644
+  become: yes
+
+- name: template odbcinst.ini
+  template:
+    src: odbcinst.ini.j2
+    dest: /etc/ldp/odbcinst.ini
+    mode: 0644
+  become: yes
+
+- name: Create directory ldp data dir
+  file:
+    path: /var/lib/ldp
+    state: directory
+  become: yes
+
+- name: template ldpconf.json
+  template:
+    src: ldpconf.json.j2
+    dest: /var/lib/ldp/ldpconf.json
+    mode: 0644
+  become: yes
+
+- name: test if init has already been run
+  postgresql_query:
+    db: ldp
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
+  register: check_init
+
+- name: run ldp init
+  docker_container:
+    name: ldp_init
+    image: "{{ ldp_docker_image }}"
+    command: "init-database -D /var/lib/ldp --profile folio"
+    detach: false
+    volumes:
+      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
+      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
+      - "/var/lib/ldp:/var/lib/ldp:rw"
+  become: yes
+  when: not check_init.query_result[0].exists and not server_only
+
+- name: warn init is not complete server only
+  debug: msg="LDP database has not been initialized"
+  when: not check_init.query_result[0].exists and server_only
+
+- name: pause for init container
+  pause:
+    seconds: 3
+  when: not check_init.query_result[0].exists and not server_only
+
+- name: run ldp server
+  docker_container:
+    name: ldp_server
+    image: folioci/ldp:latest
+    command: "server -D /var/lib/ldp"
+    volumes:
+      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
+      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
+      - "/var/lib/ldp:/var/lib/ldp:rw"
+    restart: yes
+  register: server_result
+  become: yes
+  when: not init_only

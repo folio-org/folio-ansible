@@ -1,5 +1,5 @@
 #
-# FOLIO Okapi configuration 
+# FOLIO Okapi configuration
 #
 
 #  Okapi requires exactly one command to be given depending on how
@@ -10,73 +10,131 @@
 # 'deployment' - for okapi deployment only. Clustered mode
 # 'proxy' -  for proxy + discovery. Clustered mode
 #
-# 
-role={{ okapi_role }}
+#
+role="{{ okapi_role }}"
 
-# 'cluster' config options 
+# 'cluster' config options
 #
 # -hazelcast-config-cp file -- Read config from class path
 # -hazelcast-config-file file -- Read config from local file
 # -hazelcast-config-url url -- Read config from URL
 #
-cluster_config={{ okapi_cluster_config_file }}
+{% if okapi_role == "cluster" %}
+cluster_config="{{ okapi_cluster_config_file }}"
+{% else %}
+#cluster_config="-hazelcast-config-file /etc/folio/okapi/hazelcast.xml"
+{% endif %}
 
-# Specify the network interface Vertx cluster should bind to. 
-# By default, it will bind to all network interfaces.  This may have 
+# Specify the network interface Vertx cluster should bind to.
+# By default, it will bind to all network interfaces.  This may have
 # unintended consequences.
-cluster_interface={{ okapi_interface }}
+{% if okapi_role == "cluster" %}
+cluster_interface="{{ okapi_interface }}"
+{% else %}
+#cluster_interface="eth0"
+{% endif %}
 
-# Specify which port the cluster should bind to for cluster 
-# communication.  (Note: This different from '5701' which is used for 
-# cluster discovery).  If not set, a random port will be used. 
-cluster_port={{ okapi_cluster_port }}
+# Specify which port the cluster should bind to for cluster
+# communication.  (Note: This different from '5701' which is used for
+# cluster discovery).  If not set, a random port will be used.
+{% if okapi_role == "cluster" %}
+cluster_port="{{ okapi_cluster_port }}"
+{% else %}
+#cluster_port="9001"
+{% endif %}
 
-# Enable the sending of various metrics to a Carbon back end. 
-# Boolean '0' or '1'. Set to '1' to enable and set Carbon/Graphite 
+# Enable the sending of various metrics to a Carbon back end.
+# Boolean '0' or '1'. Set to '1' to enable and set Carbon/Graphite
 # host and port.
 enable_metrics={{ okapi_metrics }}
-carbon_host={{ carbon_host }}
-carbon_port={{ carbon_port }}
+carbon_host="{{ carbon_host }}"
+carbon_port="{{ carbon_port }}"
 
 # Default okapi port
-port={{ okapi_port }}   
+port="{{ okapi_port }}"
 
 # Define port range for modules. Default range: 9131-9141.
-port_start={{ okapi_port_start }}
-port_end={{ okapi_port_end }}
+port_start="{{ okapi_port_start }}"
+port_end="{{ okapi_port_end }}"
 
-# Hostname to be used in the URLs returned by the deployment service. 
+# Hostname to be used in the URLs returned by the deployment service.
 # Defaults to 'localhost'
-host={{ okapi_host }}
+host="{{ okapi_host }}"
 
-# Define the storage back end - 'postgres' or 'inmemory' 
+# Set '-Dnodename'.  Required for deployment persistence when
+# running Okapi in cluster mode.  Defaults to `/bin/hostname`
+{% if okapi_role == "cluster" %}
+nodename="{{ okapi_nodename|default('`/bin/hostname`') }}"
+{% else %}
+#nodename=
+{% endif %}
+
+# Define the storage back end - 'postgres' or 'inmemory'
 # ('postgres' only valid when 'role' is set to 'cluster' or 'dev')
 # (valid only when 'role' is set to 'dev' or 'cluster')
-storage={{ okapi_storage }}
+# If set to 'postgres', make sure the okapi database has been
+# created and okapi user has been configured in the postgres
+# instance and then run:
+#   /usr/share/folio/okapi/bin/okapi.sh --initdb
+# to initialize the okapi database for restarting okapi.
+storage="{{ okapi_storage }}"
 
 # Set Postgres parameters.  Ignored unless 'storage="postgres"'
-postgres_host={{ pg_host }}               # default 'localhost'
-postgres_port={{ pg_port }}               # default postgres port
-postgres_user={{ okapidb_user }}          # default
-postgres_password={{ okapidb_password }}  # default
-postgres_database={{ okapidb_name }}      # default
+{% if okapi_storage == "postgres" %}
+postgres_host="{{ pg_host }}"               # default 'localhost'
+postgres_port="{{ pg_port }}"               # default postgres port
+postgres_username="{{ okapidb_user }}"          # default 'okapi'
+postgres_password="{{ okapidb_password }}"  # default 'okapi25'
+postgres_database="{{ okapidb_name }}"      # default 'okapi'
+{% else %}
+postgres_host="localhost"   # default 'localhost'
+postgres_port="5432"        # default postgres port
+postgres_username="okapi"   # default
+postgres_password="okapi25" # default
+postgres_database="okapi"   # default
+{% endif %}
 
-# Define Docker URL if we are deploying modules via Docker. 
-dockerurl={{ okapi_dockerurl }}
+# Define Docker URL if we are deploying modules via Docker.
+dockerurl="{{ okapi_dockerurl }}"
 
-# Tell Okapi its own official URL.  This gets passed to the 
-# modules as X-Okapi-Url header, and the modules can use this 
+# Tell Okapi its own official URL.  This gets passed to the
+# modules as X-Okapi-Url header, and the modules can use this
 # to make further requests to Okapi.  Defaults to 'http://localhost:9130'
-# or whatever port specified. There should be no trailing slash, but if 
-# there happens to be one, Okapi will remove it. 
-okapiurl={{ okapi_url }}
+# or whatever port specified. There should be no trailing slash, but if
+# there happens to be one, Okapi will remove it.
+okapiurl="{{ okapi_url }}"
 
 # Okapi Logging options
 #
 # Define logging level.  Defaults to 'INFO'; other valid values are 'DEBUG',
-# 'TRACE', 'WARN', and 'ERROR' 
+# 'TRACE', 'WARN', and 'ERROR'
 loglevel="INFO"
 
-# Specify external log4j configuration file.  Otherwise logging defaults 
+# Specify external log4j2 configuration file.  Otherwise logging defaults
 # to STDOUT.  If defined, 'loglevel' is ignored.
 log4j_config="/etc/folio/okapi/log4j2.properties"
+
+# Vert.x cache for classpath resource files
+# https://vertx.io/docs/vertx-core/java/#classpath
+vertx_cache_dir_base="/tmp/vertx-cache-okapi"
+
+# Set dockerRegistries for Okapi to pull images
+# Default is to leave unset (pull images from Docker Hub unauthenticated)
+# See https://github.com/folio-org/okapi/blob/master/doc/guide.md#okapi-configuration
+# JSON-encoded array of objects
+# Sample configuration:
+# docker_registries='
+#[
+#  {
+#    "username": "dockeruser",
+#    "password": "secret",
+#    "email": "foo@example.com"
+#  }
+#]
+#'
+# In Ansible build, allow override from build environment variable
+{% if lookup('env','DOCKER_REGISTRIES')|default(false,true) or okapi_docker_registries|default(false) %}
+docker_registries='
+{{ lookup("env","DOCKER_REGISTRIES")|default(okapi_docker_registries|default([])|to_nice_json,true) }}
+'
+{% endif %}

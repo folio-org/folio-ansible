@@ -6,9 +6,9 @@
     name:
       - apt-transport-https
       - ca-certificates
-      - python-virtualenv
-      - python-pip
-      - python-apt
+      - python3-virtualenv
+      - python3-pip
+      - python3-apt
 
 - name: Install docker-py and docker-compose from pip
   become: yes
@@ -19,10 +19,6 @@
   with_items:
      - { name: 'docker-py', version: '1.10.6' }
      - { name: 'docker-compose', version: '1.9.0' }
-
-- name: Install python-apt
-  become: yes
-  apt: name=python-apt state=present
 
 - name: Install apt key for Docker
   become: yes
@@ -76,3 +72,18 @@
   become: yes
   service: name=docker state=restarted
   when: docker_opts.changed
+
+- name: Check for Docker config
+  become: yes
+  stat:
+    path: "~/.docker/config.json"
+  register: stat_docker_config
+  when: docker_image_repo|default(false)
+
+- name: Log in to Docker image repository
+  become: yes
+  docker_login:
+    registry_url: "{{ docker_image_repo.registry_url|default(omit) }}"
+    username: "{{ docker_image_repo.username }}"
+    password: "{{ docker_image_repo.password }}"
+  when: docker_image_repo|default(false) and not stat_docker_config.exists|default(false)

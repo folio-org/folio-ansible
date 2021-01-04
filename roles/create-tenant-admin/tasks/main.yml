@@ -21,6 +21,7 @@
     url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/authtoken"
     headers:
       X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: "application/json, text/plain"
   register: authtoken_module
 
@@ -131,6 +132,8 @@
       uri:
         url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/interfaces/service-points-users"
         headers:
+          X-Okapi-Tenant: "supertenant"
+          X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
       register: check_sp_users_int
     - name: Check for service-points-users record
