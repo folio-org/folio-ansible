@@ -123,6 +123,15 @@
   roles:
     - add-users
 
+- name: Add testing_admin user for diku with okapi.all permissions
+  hosts: snapshot-core:snapshot:testing-core:testing:release-core:release
+  roles:
+    - role: create-user
+      username: testing_admin
+      password: admin
+      permissions:
+        - okapi.all
+
 # Set up stripes
 - name: Build stripes webpack, assign permissions
   hosts: stripes-build
