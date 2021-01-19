@@ -48,7 +48,7 @@ okapi_pull: no
 preview: false
 
 # Edge Secure Store
-edge_secure_store: Ephemiral
+edge_secure_store: Ephemeral
 edge_secret_name: edge-properties
 edge_volume_name: edge-volume
 
