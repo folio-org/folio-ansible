@@ -172,9 +172,6 @@ folio_modules:
   - name: mod-login-saml
     deploy: yes
 
-  - name: mod-marccat
-    deploy: yes
-
   - name: mod-ncip
     deploy: yes
 
@@ -224,6 +221,9 @@ folio_modules:
         value: "{{ okapi_url }}"
 
   - name: mod-quick-marc
+    deploy: yes
+
+  - name: mod-remote-storage
     deploy: yes
 
   - name: mod-rtac

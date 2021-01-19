@@ -54,6 +54,16 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
 
+  - name: mod-data-export
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
+
   - name: mod-email
     deploy: yes
 
@@ -110,6 +120,9 @@ folio_modules:
   - name: mod-permissions
     tenant_parameters:
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-remote-storage
     deploy: yes
 
   - name: mod-rtac

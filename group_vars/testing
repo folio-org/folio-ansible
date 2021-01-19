@@ -154,9 +154,6 @@ folio_modules:
   - name: mod-kb-ebsco-java
     deploy: yes
 
-  - name: mod-marccat
-    deploy: yes
-
   - name: mod-ncip
     deploy: yes
 
