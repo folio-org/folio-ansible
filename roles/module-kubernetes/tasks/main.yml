@@ -13,13 +13,13 @@
   when: create_secret
 
 - set_fact:
-    vault_properties: "{{ lookup('template', 'vault-properties.j2') | b64encode }}"
+    secure_store_properties: "{{ lookup('template', 'ss-{{ edge_secure_store | lower }}-properties.j2') | b64encode }}"
   when: create_secret
 
-- name: create Secret Vault Connection
+- name: create Secret Edge Secret Store
   k8s:
     state: "{{ k8s_state }}"
-    definition: "{{ lookup('template', 'vault-properties-secret.j2') }}"
+    definition: "{{ lookup('template', 'secure-store-secret.j2') }}"
   when: create_secret
 
 - name: get deployed mods

@@ -2,7 +2,7 @@
 # defaults file for module-kubernetes
 
 namespace: default
-kubeconfig: ~/.kube/config
+kubeconfig: ~/.kube/config-test
 
 # Okapi Variables from Anisble Role: okapi_kubernetes
 pg_host: localhost
@@ -40,22 +40,37 @@ service_type: ClusterIP
 k8s_state: present
 
 # Optional tasks
-create_db: yes
+create_db: no
 create_secret: yes
-okapi_pull: yes
+okapi_pull: no
 
 # set to true for deployment of pr preview module
 preview: false
 
-# Edge Module (Common Edge Modules) Vault Configs - Not SIP2
-edge_vault: true
-edge_secure_store: Vault
+# Edge Secure Store
+edge_secure_store: Ephemiral
+edge_secret_name: edge-properties
+edge_volume_name: edge-volume
+
+# Common Edge Modules Configs
+# Ephemiral
+institutional_users:
+  - username: test
+    password: test1234
+    tenant: diku
+
+# Vault
+#edge_vault: true
+#edge_secure_store: Vault
 vault_token: default-token
 vault_addr: http://vault.vault.svc.cluster.local:8200 
 
-edge_secret_name: edge-vault
-edge_vault_volume_name: edge-vault-volume
-#Both variables below use to mount volume and specify file.
-# Change both with the same mount place 
-edge_vault_mount_path: /mnt
-edge_secure_store_props: /mnt/vault.properties
+
+#Both variables below use to mount volume and specify file. 
+edge_mount_path: /mnt
+edge_secure_store_props: "{{ edge_mount_path }}/{{ edge_secure_store | lower }}.properties"
+
+folio_modules:
+  - name: "edge-rtac"
+  - version: "2.0.2"
+  - deploy: true

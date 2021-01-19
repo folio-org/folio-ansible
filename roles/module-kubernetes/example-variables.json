@@ -12,7 +12,6 @@
     "ingress_dns": "okapi-demo2.ci.folio.org",
     "folio_registry": "http://folio-registry.aws.indexdata.com",
     "folio_options_url": "https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot",
-    "db_secret_name": "db-connect",
     "service_type": "ClusterIP",
     "k8s_state":"present",
     "module_list": ["mod-users-15.7.0-SNAPSHOT.85"]

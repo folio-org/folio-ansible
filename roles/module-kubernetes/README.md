@@ -36,6 +36,10 @@ With the CI/CD process, can run this role from the command line. Publish each ba
 
       $ ansible localhost -m include_role -a name=module-kubernetes -e '@example-variables.json'
 
+### Edge Modules
+Ansible current role can handle `Vault` or `Ephemiral` Secure Store. The default is Ephemiral and uses `institutional_users` variable to set Institutional Users. Please refer to [Edge Vault Readme](vault-readme.md)
+
+
 ## Defaults
 ```yml
 ---
@@ -75,6 +79,20 @@ create_db: yes
 create_secret: yes
 okapi_pull: yes
 
+# Edge Modules
+# Currently setup for either Vault or Ephemiral Store
+# Varaibles 
+edge_secure_store: Vault or Ephemiral(Default)
+
+# Common Edge Modules Configs
+# Ephemiral set Institutional Users
+institutional_users:
+  - username: test
+    password: test1234
+    tenant: diku
+# Vault  
+vault_token: < token to access Hasicorp Vault >
+vault_addr: < hashicorp Vault address >  
 # set to true for deployment of pr preview module
 preview: false
 ```

@@ -53,10 +53,10 @@ spec:
           {% endfor -%}
           {% if module_item.name.startswith('edge') and module_item.name != "edge-sip2" -%}
           volumeMounts:
-          - name: {{ edge_vault_volume_name }}
-            mountPath: {{ edge_vault_mount_path }}
+          - name: {{ edge_volume_name }}
+            mountPath: {{ edge_mount_path }}
       volumes:
-        - name: {{ edge_vault_volume_name }}
+        - name: {{ edge_volume_name }}
           secret:
             secretName: {{ edge_secret_name }}
       {% endif -%}
