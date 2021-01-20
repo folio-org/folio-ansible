@@ -1,0 +1,16 @@
+secureStore.type=Ephemeral
+
+# a comma separated list of tenants
+
+tenants={{ institutional_users | community.general.json_query('[*].tenant') | join(',')}}
+
+#######################################################
+# For each tenant, the institutional user password...
+#
+# Note: this is intended for development purposes only
+#######################################################
+
+{% for user in institutional_users %}
+{{ user.tenant }}={{ user.username }},{{ user.password }}
+{% endfor %}
+

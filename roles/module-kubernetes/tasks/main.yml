@@ -12,6 +12,16 @@
     definition: "{{ lookup('template', 'kafka-secret.yml.j2') }}"
   when: create_secret
 
+- set_fact:
+    secure_store_properties: "{{ lookup('template', 'ss-{{ edge_secure_store | lower }}-properties.j2') | b64encode }}"
+  when: create_secret
+
+- name: create Secret Edge Secret Store
+  k8s:
+    state: "{{ k8s_state }}"
+    definition: "{{ lookup('template', 'secure-store-secret.j2') }}"
+  when: create_secret
+
 - name: get deployed mods
   uri:
     url: "{{ okapi_url }}/_/discovery/modules"

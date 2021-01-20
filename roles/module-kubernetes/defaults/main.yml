@@ -46,3 +46,29 @@ okapi_pull: yes
 
 # set to true for deployment of pr preview module
 preview: false
+
+# Edge Secure Store (Ephemeral, Vault)
+edge_secure_store: Ephemeral
+edge_secret_name: edge-properties
+edge_volume_name: edge-volume
+
+# Common Edge Modules Configs
+# Ephemiral
+institutional_users:
+  - username: test
+    password: test1234
+    tenant: diku
+
+# Vault 
+vault_token: default-token
+vault_addr: http://vault.vault.svc.cluster.local:8200 
+
+
+#Both variables below use to mount volume and specify file. 
+edge_mount_path: /mnt
+edge_secure_store_props: "{{ edge_mount_path }}/{{ edge_secure_store | lower }}.properties"
+
+folio_modules:
+  - name: "edge-rtac"
+  - version: "2.0.2"
+  - deploy: true
