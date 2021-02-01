@@ -24,6 +24,7 @@ module_env:
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
   - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
   - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
+  - { name: FOLIO_KAFKA_HOST, value: "{{ kafka_host }}" }
 
 # If the module_env list is populated, it will set global module environment variables
 # These environment variables can be overridden by the docker_env property of the folio_modules entries
