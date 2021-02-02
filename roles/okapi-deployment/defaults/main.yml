@@ -24,7 +24,7 @@ module_env:
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
   - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
   - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
-  - { name: FOLIO_KAFKA_PORT, value: "{{ kafka_port }}" }
+  - { name: FOLIO_KAFKA_HOST, value: "{{ kafka_port }}" }
 
 # Okapi setup
 okapi_port: 9130
