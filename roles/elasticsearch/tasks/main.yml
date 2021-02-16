@@ -1,12 +1,12 @@
-- name: elasticsearch
+- name: launch elasticsearch container
   docker_container:
     name: elasticsearch
     image: "{{ elasticsearch_image }}:{{ elasticsearch_image_tag }}"
     env:
       discovery.type: "single-node"
     memory: "{{ elasticsearch_memory_limit }}"
+    ES_JAVA_OPTS: "{{ es_java_opts }}"
     volumes:
-      #- "{{ elasticsearch_data_host_dir }}:/usr/share/elasticsearch/data:rw"
       - /usr/share/elasticsearch/data"
     ports:
       - "{{ elasticsearch_host_rest_port }}:9200"
