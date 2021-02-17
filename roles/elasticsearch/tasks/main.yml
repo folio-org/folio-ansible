@@ -4,8 +4,8 @@
     image: "{{ elasticsearch_image }}:{{ elasticsearch_image_tag }}"
     env:
       discovery.type: "single-node"
+      ES_JAVA_OPTS: "{{ es_java_opts }}"
     memory: "{{ elasticsearch_memory_limit }}"
-    ES_JAVA_OPTS: "{{ es_java_opts }}"
     volumes:
       - /usr/share/elasticsearch/data"
     ports:
