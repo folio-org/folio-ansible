@@ -23,4 +23,5 @@
   retries: 10
   delay: 5
   until: elasticsearch_status_check is not failed
+  when: folio_install_type == "single_server"
 
