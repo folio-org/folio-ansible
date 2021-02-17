@@ -159,6 +159,7 @@ stripes_github_project: https://github.com/folio-org/platform-core
 stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
+with_sourcemap: true
 node_environment:
   NODE_ENV: production
 
