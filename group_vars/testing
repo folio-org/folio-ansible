@@ -207,6 +207,9 @@ folio_modules:
   - name: mod-audit
     deploy: yes
 
+  - name: mod-data-import
+    deploy: yes
+
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
