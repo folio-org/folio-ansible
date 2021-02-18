@@ -133,6 +133,9 @@ folio_modules:
   - name: mod-remote-storage
     deploy: yes
 
+  - name: mod-search
+    deploy: yes
+
   - name: mod-tags
     tenant_parameters:
       - { name: loadSample, value: "true" }
