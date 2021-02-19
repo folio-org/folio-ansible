@@ -21,7 +21,11 @@
     - docker-engine
     - okapi
     - kafka-zk
-    - elasticsearch
+
+- name: add elasticsearch to full platform-complete builds
+  hosts: snapshot
+  roles:
+    - role: elasticsearch
 
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build

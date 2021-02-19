@@ -20,7 +20,6 @@ add_modules:
   - mod-patron-blocks
   - mod-pubsub
   - edge-rtac
-  - mod-search
 
 # Sample pinned module
 # pinned_modules:
@@ -127,9 +126,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-rtac
-    deploy: yes
-
-  - name: mod-search
     deploy: yes
 
   - name: mod-sender

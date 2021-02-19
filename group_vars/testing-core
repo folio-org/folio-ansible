@@ -97,9 +97,6 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
-  - name: mod-search
-    deploy: yes
-
   - name: mod-inventory
     deploy: yes
 
