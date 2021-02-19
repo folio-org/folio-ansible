@@ -22,6 +22,11 @@
     - okapi
     - kafka-zk
 
+- name: add elasticsearch to full platform-complete builds
+  hosts: snapshot
+  roles:
+    - role: elasticsearch
+
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point

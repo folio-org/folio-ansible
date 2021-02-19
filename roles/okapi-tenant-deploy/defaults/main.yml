@@ -15,6 +15,10 @@ module_database: okapi_modules
 kafka_host: "{{ ansible_default_ipv4.address }}"
 kafka_port: 9092
 
+# Elasticsearch setup
+elasticsearch_host: "{{ ansible_default_ipv4.address }}"
+elasticsearch_port: 9301
+
 module_env:
   - { name: DB_HOST, value: "{{ pg_host }}" }
   - { name: DB_PORT, value: "{{ pg_port }}" }
@@ -24,6 +28,8 @@ module_env:
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
   - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
   - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
+  - { name: ELASTICSEARCH_HOST, value: "{{ elasticsearch_host }}" }
+  - { name: ELASTICSEARCH_PORT, value: "{{ elasticsearch_port }}" }
 
 # If the module_env list is populated, it will set global module environment variables
 # These environment variables can be overridden by the docker_env property of the folio_modules entries
