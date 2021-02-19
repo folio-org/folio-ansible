@@ -106,6 +106,9 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
+  - name: mod-search
+    deploy: yes
+
   - name: mod-inventory
     deploy: yes
 
@@ -181,9 +184,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-finance
-    deploy: yes
-
-  - name: mod-search
     deploy: yes
 
   - name: mod-tags
