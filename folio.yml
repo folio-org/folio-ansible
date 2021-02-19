@@ -21,6 +21,7 @@
     - docker-engine
     - okapi
     - kafka-zk
+    - elasticsearch
 
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
