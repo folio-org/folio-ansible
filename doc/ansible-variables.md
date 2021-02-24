@@ -69,12 +69,12 @@ admin_permissions:
 
 # Permissions not defined in backend module descriptors
 additional_permissions:
-  - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.users.enabled, displayName: "UI: Users module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.items.enabled, displayName: "UI: Items module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.scan.enabled, displayName: "UI: Scan module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]", mutable: "false" }
-  - { permissionName: module.organization.enabled, displayName: "UI: Organization module is enabled", subPermissions: "[]", mutable: "false" }
+  - { permissionName: module.trivial.enabled, displayName: "UI: Trivial module is enabled", subPermissions: "[]" }
+  - { permissionName: module.users.enabled, displayName: "UI: Users module is enabled", subPermissions: "[]" }
+  - { permissionName: module.items.enabled, displayName: "UI: Items module is enabled", subPermissions: "[]" }
+  - { permissionName: module.scan.enabled, displayName: "UI: Scan module is enabled", subPermissions: "[]" }
+  - { permissionName: module.okapi-console.enabled, displayName: "UI: Okapi Console module is enabled", subPermissions: "[]" }
+  - { permissionName: module.organization.enabled, displayName: "UI: Organization module is enabled", subPermissions: "[]" }
 
 mod_auth_users:
   - username: auth_test1
