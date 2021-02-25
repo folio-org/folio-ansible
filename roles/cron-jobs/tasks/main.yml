@@ -1,0 +1,17 @@
+---
+- name: Install prerequisites from apt
+  become: yes
+  apt:
+    name:
+      - python3-pip
+
+- name: Install FOLIO Cron Service
+  become: yes
+  pip:
+    name: "git+https://github.com/folio-org/folio-tools.git@{{ folio_cron_branch }}#egg=folioCronService\&subdirectory=folio-cron-jobs"
+    executable: pip3
+    extra_args: "--system"
+
+- name: Run foliocron config and setup 
+  shell:
+    cmd: "foliocron config {{ admin_user.username }} {{ admin_user.password }} && foliocron setup"
