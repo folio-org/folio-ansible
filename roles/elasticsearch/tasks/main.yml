@@ -1,0 +1,27 @@
+- name: launch elasticsearch container
+  docker_container:
+    name: elasticsearch
+    image: "{{ elasticsearch_image }}:{{ elasticsearch_image_tag }}"
+    env:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "{{ es_java_opts }}"
+    memory: "{{ elasticsearch_memory_limit }}"
+    volumes:
+      - /usr/share/elasticsearch/data"
+    ports:
+      - "{{ elasticsearch_host_rest_port }}:9200"
+      - "{{ elasticsearch_host_node_port }}:9300"
+    restart: yes
+  become: yes
+  when: folio_install_type == "single_server"
+
+- name: check if elasticseach launched properly
+  uri:
+    url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
+    status_code: 200
+  register: elasticsearch_status_check
+  retries: 10
+  delay: 5
+  until: elasticsearch_status_check is not failed
+  when: folio_install_type == "single_server"
+

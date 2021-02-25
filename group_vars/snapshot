@@ -38,6 +38,7 @@ add_modules:
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
+  - mod-search
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -229,6 +230,9 @@ folio_modules:
   - name: mod-rtac
     deploy: yes
 
+  - name: mod-search
+    deploy: yes
+
   - name: mod-sender
     deploy: yes
 
@@ -237,6 +241,9 @@ folio_modules:
 
   - name: mod-source-record-storage
     deploy: yes
+    docker_env:
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-tags
     tenant_parameters:
@@ -263,6 +270,7 @@ stripes_github_project: https://github.com/folio-org/platform-complete
 stripes_github_version: snapshot
 folio_npm_repo: npm-folioci
 platform_remove_lock: false
+with_sourcemap: true
 node_environment:
   NODE_ENV: production
 
