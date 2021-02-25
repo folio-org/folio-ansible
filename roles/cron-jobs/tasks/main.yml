@@ -8,7 +8,7 @@
 - name: Install FOLIO Cron Service
   become: yes
   pip:
-    name: "git+https://github.com/folio-org/folio-tools.git@{{ folio_cron_branch }}#egg=folioCronService\&subdirectory=folio-cron-jobs"
+    name: "git+https://github.com/folio-org/folio-tools.git@{{ folio_cron_branch }}#egg=folioCronService&subdirectory=folio-cron-jobs"
     executable: pip3
     extra_args: "--system"
 
