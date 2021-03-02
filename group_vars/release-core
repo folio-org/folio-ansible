@@ -44,10 +44,8 @@ with_sourcemap: no
 box_tag: folio/release-core
 version: 1.0.0
 version_descr: |
-  # FOLIO Honeysuckle Core Release (v1.0.2)
+  # FOLIO Honeysuckle Core Release (26 Feb 2021)
 
   Admin login: diku_admin/admin
 
-  Q3-2020 release version of the FOLIO core platform, built from Q3-2020 release artifacts. For details see http://localhost:3000/settings/about after `vagrant up`.
-
-  Using Okapi 4.4.2 instead of official release version 4.3.3 due to https://issues.folio.org/browse/OKAPI-966
+  Q3-2020 release version of the FOLIO core platform, built from Q3-2020 release artifacts, with all release hot fixes up to 26 Feb 2021. This includes all relevant Q3-2020 [post-release hot fixes](https://wiki.folio.org/display/REL/Q3+2020+%28Honeysuckle%29+Release+Notes#Q32020(Honeysuckle)ReleaseNotes-Post-ReleaseHotfixes). For details see http://localhost:3000/settings/about after `vagrant up`.
