@@ -30,6 +30,8 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-data-import-converter-storage
+  - mod-data-export-spring
+  - mod-data-export-worker
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
@@ -87,6 +89,19 @@ folio_modules:
     deploy: yes
 
   - name: mod-data-export
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
+
+  - name: mod-data-export-spring
+    deploy: yes
+
+  - name: mod-data-export-worker
     deploy: yes
     docker_env:
       - name: AWS_ACCESS_KEY_ID
