@@ -132,11 +132,11 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: AWS_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('') }}"
+        value: "{{ data_export_aws_id | default('foo') }}"
       - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('') }}"
+        value: "{{ data_export_aws_secret | default('bar') }}"
       - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
 
   - name: mod-data-export-spring
     deploy: yes
