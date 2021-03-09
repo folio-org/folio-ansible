@@ -73,11 +73,13 @@ inst_user_perms: [ ]
 # edge_module: edge-rtac
 # edge_module_publish_port: 9700
 # edge_module_path: /prod/rtac
+
 edge_module_expose_port: 8081
 edge_module_docker_env:
 # sample Docker env
 # edge_module_docker_env:
 #   JAVA_OPTIONS: "-Xmx256m"
 edge_module_okapi_url: "{{ okapi_url }}"
+edge_module_cmd: "-Dokapi_url={{ edge_module_okapi_url }} -Dsecure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
 edge_module_memory: 256M
 ```
