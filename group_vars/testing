@@ -138,8 +138,8 @@ folio_modules:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
 
-  - name: mod-data-export-spring
-    deploy: yes
+  #- name: mod-data-export-spring
+  #  deploy: yes
 
   - name: mod-feesfines
     tenant_parameters:
