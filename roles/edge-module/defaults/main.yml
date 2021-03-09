@@ -32,4 +32,5 @@ edge_module_docker_env:
 # edge_module_docker_env:
 #   JAVA_OPTIONS: "-Xmx256m"
 edge_module_okapi_url: "{{ okapi_url }}"
+edge_module_cmd: "-Dokapi_url={{ edge_module_okapi_url }} -Dsecure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
 edge_module_memory: 256M
