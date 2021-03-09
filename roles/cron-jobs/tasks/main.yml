@@ -12,6 +12,8 @@
     executable: pip3
     extra_args: "--system"
 
-- name: Run foliocron config and setup 
+- name: Run foliocron config and setup
+  environment:
+    OKAPI_URL: "{{ okapi_url }}"
   shell:
     cmd: "foliocron config {{ admin_user.username }} {{ admin_user.password }} && foliocron setup"

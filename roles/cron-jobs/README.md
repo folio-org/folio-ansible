@@ -23,7 +23,7 @@ Invoke the role in a playbook, e.g.:
 # defaults
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-folio_cron_branch: FOLIO-3013 || master
+folio_cron_branch: master
 admin_user:
   username: diku_admin
   password: admin
