@@ -115,6 +115,9 @@ folio_modules:
   - name: mod-source-record-manager
     deploy: yes
 
+  - name: mod-copycat
+    deploy: yes
+
   - name: mod-quick-marc
     deploy: yes
 
