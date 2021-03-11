@@ -1,0 +1,10 @@
+---
+# defaults
+minio_image: minio/minio
+minio_port: 9000
+minio_data_path: /data # path to data directory, see below
+
+# optional variables
+# Local mounts. Can be combined with minio_data_path above to persist minio storage
+# minio_volumes:
+#   - "/usr/local/shared/minio-data:{{ minio_data_path }}"

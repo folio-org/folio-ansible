@@ -21,6 +21,7 @@
     - docker-engine
     - okapi
     - kafka-zk
+    - minio-docker
 
 - name: add elasticsearch to full platform-complete builds
   hosts: snapshot
