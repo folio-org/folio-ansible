@@ -292,11 +292,11 @@ node_environment:
 # Jobs for folioCronService
 folio_cron_jobs:
   - name: scheduled-age-to-lost-fee-charging
-    cron_time: "*/30 * * * *"
+    cron_time: "15,45 * * * *"
     api_path: "/circulation/scheduled-age-to-lost-fee-charging"
     method: POST
   - name: scheduled-age-to-lost
-    cron_time: "*/30 * * * *"
+    cron_time: "0,30 * * * *"
     api_path: "/circulation/scheduled-age-to-lost"
     method: POST
 
