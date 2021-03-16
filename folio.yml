@@ -21,6 +21,7 @@
     - docker-engine
     - okapi
     - kafka-zk
+    - okapi-docker-container
 
 - name: add elasticsearch to full platform-complete builds
   hosts: snapshot

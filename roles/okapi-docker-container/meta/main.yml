@@ -1,0 +1,10 @@
+---
+
+dependencies:
+  - role: create-database
+    vars:
+      db_admin_user: "{{ okapidb_user }}"
+      db_admin_password: "{{ okapidb_password }}"
+      database_name: "{{ okapidb_name }}"
+    when: okapi_storage == "postgres"
+  - role: docker-engine  

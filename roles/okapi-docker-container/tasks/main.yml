@@ -1,0 +1,8 @@
+---
+
+- name: Pull okapi image
+  become: yes
+  docker_image:
+    name: folioci/okapi
+  docker_container:
+    name: okapi
