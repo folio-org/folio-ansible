@@ -1,5 +1,5 @@
 #!/bin/bash
-cd {{ ldp_config_dir }}/derived_tables_repo/sql/derived_tables
+cd {{ ldp_cron_home }}/derived_tables_repo/sql/derived_tables
 git checkout {{ ldp_derived_tables_version }}
 git pull
 psql -U {{ ldp_admin_user }} -h {{ pg_host }} {{ ldp_db }} -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO {{ ldp_user }};"

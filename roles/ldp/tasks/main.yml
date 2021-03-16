@@ -146,36 +146,54 @@
   when: not check_init.query_result[0].exists and not update_only
 
 # LDP udpate tasks
+- name: set fact for existing user groups
+  set_fact:
+    grp: "{{ lookup('file', '/etc/group') }}"
+
+- name: Create LDP group
+  group: 
+    name: "{{ ldp_cron_group }}"
+  become: yes
+  when: (not init_only) and ('docker' in grp)
+
+- name: Add the user ldpcron user
+  ansible.builtin.user:
+    name: "{{ ldp_cron_user }}"
+    shell: /bin/bash
+    home: "{{ ldp_cron_home }}"
+    groups: "{{ ldp_cron_group }},docker"
+    append: yes
+  become: yes
+  when: (not init_only) and ('docker' in grp)
+
 - name: template ldp update script
   template:
     src: ldp_update.j2
-    dest: "{{ ldp_config_dir }}/ldp_update"
+    dest: "{{ ldp_cron_home }}/ldp_update"
+    owner: "{{ ldp_cron_user }}"
+    group: "{{ ldp_cron_group }}"
     mode: a+x
   become: yes
-  when: not init_only
-
-#- name: Do initial run of ldp update script
-#  command: "{{ ldp_config_dir }}/ldp_update"
-#  become: yes
-#  when: not init_only
+  when: (not init_only) and ('docker' in grp)
 
 - name: Set up LDP update cron job
   ansible.builtin.cron:
     name: ldp update
     special_time: hourly
-    user: root
-    job: "{{ ldp_config_dir }}/ldp_update"
+    user: "{{ ldp_cron_user }}"
+    job: "{{ ldp_cron_home }}/ldp_update"
     cron_file: ansible_ldp_update
   become: yes
-  when: not init_only
+  when: (not init_only) and ('docker' in grp)
 
 - name: clone derived tables repo
   git:
     repo: "{{ ldp_derived_tables_repo }}"
     version: "{{ ldp_derived_tables_version }}"
-    dest: "{{ ldp_config_dir }}/derived_tables_repo"
+    dest: "{{ ldp_cron_home }}/derived_tables_repo"
   become: yes
-  when: not init_only
+  become_user: "{{ ldp_cron_user }}"
+  when: (not init_only) and ('docker' in grp)
 
 - name: Setup folio_reporting schema for derived tables
   postgresql_query:
@@ -185,30 +203,36 @@
     login_password: "{{ pg_admin_password }}"
     query: "{{ item }}"
   with_items: "{{ reporting_setup_queries }}"
-  when: not init_only
+  when: (not init_only) and ('docker' in grp)
 
 - name: template .pgpass
   template:
     src: pgpass.j2
     mode: 0600
-    dest: ~/.pgpass
+    dest: "{{ ldp_cron_home }}/.pgpass"
+    owner: "{{ ldp_cron_user }}"
+    group: "{{ ldp_cron_group }}"
   become: yes
-  when: not init_only
+  when: (not init_only) and ('docker' in grp)
+  when: (not init_only) and ('docker' in grp)
 
 - name: template ldp derived_tables script
   template:
     src: derived_tables.j2
-    dest: "{{ ldp_config_dir }}/derived_tables"
+    dest: "{{ ldp_cron_home }}/derived_tables"
     mode: a+x
+    owner: "{{ ldp_cron_user }}"
+    group: "{{ ldp_cron_group }}"
   become: yes
-  when: not init_only
+  when: (not init_only) and ('docker' in grp)
 
 - name: Set up derived tables update cron job
   ansible.builtin.cron:
     name: ldp derived tables
     special_time: hourly
-    user: root
-    job: "{{ ldp_config_dir }}/derived_tables"
+    user: "{{ ldp_cron_user }}"
+    job: "{{ ldp_cron_home }}/derived_tables"
     cron_file: ansible_ldp_derived_tables
   become: yes
   when: not init_only
+  when: (not init_only) and ('docker' in grp)

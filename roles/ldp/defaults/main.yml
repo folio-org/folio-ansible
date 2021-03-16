@@ -33,7 +33,7 @@ ldp_derived_tables_dir: /sql/derived_tables
 # for cron jobs
 ldp_cron_user: ldpcron
 ldp_cron_group: ldpcron
-ldp_cron_home: ldpcron
+ldp_cron_home: /home/ldpcron
 
 reporting_setup_queries:
   - "CREATE SCHEMA IF NOT EXISTS folio_reporting;"
