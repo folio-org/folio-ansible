@@ -1,0 +1,14 @@
+#!/bin/bash
+cd {{ ldp_config_dir }}/derived_tables_repo/sql/derived_tables
+git checkout {{ ldp_derived_tables_version }}
+git pull
+psql -U {{ ldp_admin_user }} -h {{ pg_host }} {{ ldp_db }} -c "GRANT SELECT ON ALL TABLES IN SCHEMA public TO {{ ldp_user }};"
+echo > logfile
+for f in $( cat runlist.txt ); do
+    echo >> logfile
+    echo "======== $f ========" >> logfile
+    echo >> logfile
+    cat $f > tmpfile
+    echo "GRANT SELECT ON ALL TABLES IN SCHEMA folio_reporting TO ldp;" >> tmpfile
+    psql -U {{ ldp_admin_user }} -h {{ pg_host }} {{ ldp_db }} -a -f tmpfile >> logfile 2>&1
+done

@@ -24,6 +24,22 @@ ldpconfig_user: ldpconfig
 ldpconfig_password: diku_ldpconfig9367
 ldp_user: ldp
 ldp_password: diku_ldp9367
+ldp_config_dir: /etc/ldp
+ldp_data_dir: /var/lib/ldp
+ldp_derived_tables_repo: https://github.com/folio-org/folio-analytics.git
+ldp_derived_tables_version: main
+ldp_derived_tables_dir: /sql/derived_tables
+
+# for cron jobs
+ldp_cron_user: ldpcron
+ldp_cron_group: ldpcron
+ldp_cron_home: ldpcron
+
+reporting_setup_queries:
+  - "CREATE SCHEMA IF NOT EXISTS folio_reporting;"
+  - "ALTER SCHEMA folio_reporting OWNER TO {{ ldp_admin_user }};"
+  - "GRANT CREATE, USAGE ON SCHEMA folio_reporting TO {{ ldp_user }};"
+  - "GRANT USAGE ON SCHEMA folio_reporting TO {{ ldp_user }};"
 
 init_only: False
-server_only: False
+update_only: False

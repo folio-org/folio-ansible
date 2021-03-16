@@ -1,6 +1,7 @@
 ---
 # see https://github.com/library-data-platform/ldp/blob/master/doc/Admin_Guide.md
 # use create-database role to make admin user, and assign role to pg admin user if RDS
+
 - name: Create database and ldp admin user for ldp tenants
   include_role:
     name: create-database
@@ -10,7 +11,7 @@
     database_name: "{{ ldp_db }}"
     db_admin_user: "{{ ldp_admin_user }}"
     db_admin_password: "{{ ldp_admin_password }}"
-  when: not server_only
+  when: not update_only
 
 # create additional config and ldp users
 - name: Create ldpconfig user for {{ tenant }}
@@ -22,7 +23,7 @@
     db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
-  when: not server_only
+  when: not update_only
 
 - name: Create ldp user for {{ tenant }}
   postgresql_user:
@@ -33,7 +34,7 @@
     db: "{{ ldp_db }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
-  when: not server_only
+  when: not update_only
 
 # assign perms for additional users
 - name: GRANT USAGE ON SCHEMA public TO {{ ldpconfig_user }}
@@ -48,7 +49,7 @@
     roles: "{{ ldpconfig_user }}"
     privs: USAGE
     state: present
-  when: not server_only
+  when: not update_only
 
 - name: GRANT USAGE ON SCHEMA public TO {{ ldp_user }}
   postgresql_privs:
@@ -62,38 +63,54 @@
     roles: "{{ ldp_user }}"
     privs: USAGE
     state: present
-  when: not server_only
+  when: not update_only
+
+#- name: Create LDP cron group
+#  group: 
+#    name: "{{ ldp_cron_group }}"
+#  become: yes
+#  when: not init_only
+#
+#- name: Create LDP cron user
+#  user:
+#    name: "{{ ldp_cron_user }}"
+#    group: "{{ ldp_cron_group }}"
+#    home: "{{ ldp_cron_home }}"
+#    password: "*"
+#    comment: "LDP Cron User"
+#  become: yes
+#  when: not init_only
 
 - name: Create directory for ini files
   file:
-    path: /etc/ldp
+    path: "{{ ldp_config_dir }}"
     state: directory
   become: yes
 
 - name: template odbc.ini
   template:
     src: odbc.ini.j2
-    dest: /etc/ldp/odbc.ini
+    dest: "{{ ldp_config_dir }}/odbc.ini"
     mode: 0644
   become: yes
 
 - name: template odbcinst.ini
   template:
     src: odbcinst.ini.j2
-    dest: /etc/ldp/odbcinst.ini
+    dest: "{{ ldp_config_dir }}/odbcinst.ini"
     mode: 0644
   become: yes
 
 - name: Create directory ldp data dir
   file:
-    path: /var/lib/ldp
+    path: "{{ ldp_data_dir }}"
     state: directory
   become: yes
 
 - name: template ldpconf.json
   template:
     src: ldpconf.json.j2
-    dest: /var/lib/ldp/ldpconf.json
+    dest: "{{ ldp_data_dir }}/ldpconf.json"
     mode: 0644
   become: yes
 
@@ -113,31 +130,85 @@
     command: "init-database -D /var/lib/ldp --profile folio"
     detach: false
     volumes:
-      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
-      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
-      - "/var/lib/ldp:/var/lib/ldp:rw"
+      - "{{ ldp_config_dir }}/odbc.ini:/root/.odbc.ini"
+      - "{{ ldp_config_dir }}/odbcinst.ini:/root/.odbcinst.ini"
+      - "{{ ldp_data_dir }}:/var/lib/ldp:rw"
   become: yes
-  when: not check_init.query_result[0].exists and not server_only
+  when: not check_init.query_result[0].exists and not update_only
 
-- name: warn init is not complete server only
+- name: warn init is not complete update only
   debug: msg="LDP database has not been initialized"
-  when: not check_init.query_result[0].exists and server_only
+  when: not check_init.query_result[0].exists and update_only
 
 - name: pause for init container
   pause:
     seconds: 3
-  when: not check_init.query_result[0].exists and not server_only
+  when: not check_init.query_result[0].exists and not update_only
 
-- name: run ldp server
-  docker_container:
-    name: ldp_server
-    image: folioci/ldp:latest
-    command: "server -D /var/lib/ldp"
-    volumes:
-      - "/etc/ldp/odbc.ini:/root/.odbc.ini"
-      - "/etc/ldp/odbcinst.ini:/root/.odbcinst.ini"
-      - "/var/lib/ldp:/var/lib/ldp:rw"
-    restart: yes
-  register: server_result
+# LDP udpate tasks
+- name: template ldp update script
+  template:
+    src: ldp_update.j2
+    dest: "{{ ldp_config_dir }}/ldp_update"
+    mode: a+x
+  become: yes
+  when: not init_only
+
+#- name: Do initial run of ldp update script
+#  command: "{{ ldp_config_dir }}/ldp_update"
+#  become: yes
+#  when: not init_only
+
+- name: Set up LDP update cron job
+  ansible.builtin.cron:
+    name: ldp update
+    special_time: hourly
+    user: root
+    job: "{{ ldp_config_dir }}/ldp_update"
+    cron_file: ansible_ldp_update
+  become: yes
+  when: not init_only
+
+- name: clone derived tables repo
+  git:
+    repo: "{{ ldp_derived_tables_repo }}"
+    version: "{{ ldp_derived_tables_version }}"
+    dest: "{{ ldp_config_dir }}/derived_tables_repo"
+  become: yes
+  when: not init_only
+
+- name: Setup folio_reporting schema for derived tables
+  postgresql_query:
+    db: ldp
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    query: "{{ item }}"
+  with_items: "{{ reporting_setup_queries }}"
+  when: not init_only
+
+- name: template .pgpass
+  template:
+    src: pgpass.j2
+    mode: 0600
+    dest: ~/.pgpass
+  become: yes
+  when: not init_only
+
+- name: template ldp derived_tables script
+  template:
+    src: derived_tables.j2
+    dest: "{{ ldp_config_dir }}/derived_tables"
+    mode: a+x
+  become: yes
+  when: not init_only
+ 
+- name: Set up derived tables update cron job
+  ansible.builtin.cron:
+    name: ldp derived tables
+    special_time: hourly
+    user: root
+    job: "{{ ldp_config_dir }}/serived_tables"
+    cron_file: ansible_ldp_update
   become: yes
   when: not init_only
