@@ -31,7 +31,7 @@ add_modules:
   - mod-codex-ekb
   - mod-data-import-converter-storage
   #- mod-data-export-spring
-  #- mod-data-export-worker
+  - mod-data-export-worker
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
@@ -101,15 +101,21 @@ folio_modules:
   #- name: mod-data-export-spring
   #  deploy: yes
 
-  #- name: mod-data-export-worker
-  #  deploy: yes
-  #  docker_env:
-  #    - name: AWS_ACCESS_KEY_ID
-  #      value: "{{ data_export_aws_id | default('foo') }}"
-  #    - name: AWS_SECRET_ACCESS_KEY
-  #      value: "{{ data_export_aws_secret | default('bar') }}"
-  #    - name: JAVA_OPTIONS
-  #      value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
+  - name: mod-data-export-worker
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('foo') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('bar') }}"
+      - name: AWS_URL
+        value: "https://s3.amazonaws.com"
+      - name: AWS_REGION
+        value: "{{ aws_region }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('baz') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
 
   - name: mod-data-import
     deploy: yes
