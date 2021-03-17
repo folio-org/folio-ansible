@@ -151,7 +151,7 @@
     grp: "{{ lookup('file', '/etc/group') }}"
 
 - name: Create LDP group
-  group: 
+  group:
     name: "{{ ldp_cron_group }}"
   become: yes
   when: (not init_only) and ('docker' in grp)
@@ -179,7 +179,7 @@
 - name: Set up LDP update cron job
   ansible.builtin.cron:
     name: ldp update
-    special_time: hourly
+    minute: "12"
     user: "{{ ldp_cron_user }}"
     job: "{{ ldp_cron_home }}/ldp_update"
     cron_file: ansible_ldp_update
@@ -229,7 +229,7 @@
 - name: Set up derived tables update cron job
   ansible.builtin.cron:
     name: ldp derived tables
-    special_time: hourly
+    minute: "21"
     user: "{{ ldp_cron_user }}"
     job: "{{ ldp_cron_home }}/derived_tables"
     cron_file: ansible_ldp_derived_tables
