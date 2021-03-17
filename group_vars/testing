@@ -69,6 +69,9 @@ folio_modules:
 
   - name: mod-password-validator
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
 
   - name: mod-event-config
     deploy: yes
@@ -138,6 +141,12 @@ folio_modules:
         value: "{{ data_export_aws_id | default('foo') }}"
       - name: AWS_SECRET_ACCESS_KEY
         value: "{{ data_export_aws_secret | default('bar') }}"
+      - name: AWS_URL
+        value: "https://s3.amazonaws.com"
+      - name: AWS_REGION
+        value: "{{ aws_region }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('baz') }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
 
@@ -246,11 +255,11 @@ node_environment:
 # Jobs for folioCronService
 folio_cron_jobs:
   - name: scheduled-age-to-lost-fee-charging
-    cron_time: "*/30 * * * *"
+    cron_time: "15,45 * * * *"
     api_path: "/circulation/scheduled-age-to-lost-fee-charging"
     method: POST
   - name: scheduled-age-to-lost
-    cron_time: "*/30 * * * *"
+    cron_time: "0,30 * * * *"
     api_path: "/circulation/scheduled-age-to-lost"
     method: POST
 
