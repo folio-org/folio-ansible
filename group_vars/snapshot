@@ -225,9 +225,6 @@ folio_modules:
 
   - name: mod-password-validator
     deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
 
   - name: mod-patron-blocks
     deploy: yes
