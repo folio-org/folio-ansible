@@ -1,3 +1,5 @@
+okapi_role: cluster
+
 okapidb_user: okapi
 okapidb_password: okapi25
 okapidb_name: okapi
@@ -5,3 +7,11 @@ okapi_image: folioci/okapi
 okapi_port: 9130
 # okapi_volumes:
 #   - "usr/local/shared/okapi-data"
+
+okapi_port_start: 9131
+okapi_port_end: 9141
+
+okapi_host: "{{ ansible_default_ipv4.address }}"
+okapi_nodename: "{{ ansible_default_ipv4.address }}"
+
+okapi_storage: inmemory
