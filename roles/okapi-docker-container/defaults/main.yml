@@ -1,3 +1,7 @@
 okapidb_user: okapi
 okapidb_password: okapi25
 okapidb_name: okapi
+okapi_image: folioci/okapi
+okapi_port: 9130
+# okapi_volumes:
+#   - "usr/local/shared/okapi-data"

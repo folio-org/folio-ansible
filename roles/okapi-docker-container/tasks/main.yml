@@ -1,8 +1,13 @@
 ---
 
-- name: Pull okapi image
+- name: Create and Launch Okapi Docker Container
   become: yes
-  docker_image:
-    name: folioci/okapi
   docker_container:
     name: okapi
+    image: "{{ okapi_image }}"
+    volumes:
+      - "{{ okapi_volumes|default(omit) }}" #still thinking on how add volumes
+    published_ports:
+      - "{{ okapi_port }}:9130"
+    state: started
+    restart_policy: always

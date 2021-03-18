@@ -7,4 +7,5 @@ dependencies:
       db_admin_password: "{{ okapidb_password }}"
       database_name: "{{ okapidb_name }}"
     when: okapi_storage == "postgres"
-  - role: docker-engine  
+  - role: docker-engine
+    
