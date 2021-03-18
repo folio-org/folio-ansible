@@ -1,0 +1,9 @@
+{
+  "enable": true,
+  "user_config_section": "{{ item.user_config_section|default('DEFAULT') }}",
+  "cron_time": "{{ item.cron_time }}",
+  "tenant": "{{ item.tenant|default(tenant) }}",
+  "api-path": "{{ item.api_path }}",
+  "method": "{{ item.method }}",
+  "data": {{ item.data|default({})|to_json }}
+}

@@ -138,6 +138,11 @@
       permissions:
         - okapi.all
 
+- name: Set up folioCronService
+  hosts: snapshot-core:testing-core:testing:snapshot
+  roles:
+    - cron-jobs
+
 # Set up stripes
 - name: Build stripes webpack, assign permissions
   hosts: stripes-build

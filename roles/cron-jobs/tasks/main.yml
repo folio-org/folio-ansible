@@ -1,0 +1,31 @@
+---
+- name: Install prerequisites from apt
+  become: yes
+  apt:
+    name:
+      - python3-pip
+
+- name: Install FOLIO Cron Service
+  become: yes
+  pip:
+    name: "git+https://github.com/folio-org/folio-tools.git@{{ folio_cron_branch }}#egg=folioCronService&subdirectory=folio-cron-jobs"
+    executable: pip3
+    extra_args: "--system"
+
+- name: Create configuration directory if there are custom job definitions
+  file:
+    path: "{{ config_dir|default('folio_cron_jobs') }}"
+    state: directory
+  when: folio_cron_jobs|default(false)
+
+- name: Template custom job definitions
+  template:
+    src: job.json.j2
+    dest: "{{ config_dir|default('folio_cron_jobs') }}/{{ item.name }}.json"
+  loop: "{{ folio_cron_jobs|default([]) }}"
+
+- name: Run foliocron config and setup
+  environment:
+    OKAPI_URL: "{{ okapi_url }}"
+  shell:
+    cmd: "foliocron config {{ admin_user.username }} {{ admin_user.password }} && foliocron setup{% if folio_cron_jobs|default(false) %} --configDir={{ config_dir|default('folio_cron_jobs') }}{% endif %}"

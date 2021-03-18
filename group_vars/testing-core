@@ -66,6 +66,9 @@ folio_modules:
 
   - name: mod-password-validator
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
 
   - name: mod-event-config
     deploy: yes
@@ -150,6 +153,17 @@ okapi_register_modules: true
 okapi_enable_modules: true
 node_environment:
   NODE_ENV:
+
+# Jobs for folioCronService
+folio_cron_jobs:
+  - name: scheduled-age-to-lost-fee-charging
+    cron_time: "15,45 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost-fee-charging"
+    method: POST
+  - name: scheduled-age-to-lost
+    cron_time: "0,30 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost"
+    method: POST
 
 # Metadata for CI build
 version: 5.0.0

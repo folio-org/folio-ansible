@@ -30,6 +30,8 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-data-import-converter-storage
+  - mod-data-export-spring
+  - mod-data-export-worker
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
@@ -95,6 +97,23 @@ folio_modules:
         value: "{{ data_export_aws_secret | default('') }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
+
+  - name: mod-data-export-spring
+    deploy: yes
+
+  - name: mod-data-export-worker
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('foo') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('bar') }}"
+      - name: AWS_URL
+        value: "https://s3.amazonaws.com"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('baz') }}"
 
   - name: mod-data-import
     deploy: yes
@@ -206,6 +225,9 @@ folio_modules:
 
   - name: mod-password-validator
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
 
   - name: mod-patron-blocks
     deploy: yes
@@ -273,6 +295,17 @@ platform_remove_lock: false
 with_sourcemap: true
 node_environment:
   NODE_ENV: production
+
+# Jobs for folioCronService
+folio_cron_jobs:
+  - name: scheduled-age-to-lost-fee-charging
+    cron_time: "15,45 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost-fee-charging"
+    method: POST
+  - name: scheduled-age-to-lost
+    cron_time: "0,30 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost"
+    method: POST
 
 # Metadata for CI build
 version: 1.0.0
