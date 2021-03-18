@@ -114,8 +114,6 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('baz') }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
 
   - name: mod-data-import
     deploy: yes
