@@ -148,8 +148,8 @@ folio_modules:
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('baz') }}"
 
-  #- name: mod-data-export-spring
-  #  deploy: yes
+  - name: mod-data-export-spring
+    deploy: yes
 
   - name: mod-feesfines
     tenant_parameters:
