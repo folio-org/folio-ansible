@@ -1,4 +1,5 @@
 ---
 dependencies:
-  - { role: edge-nginx }
+  - role: edge-nginx
+    when: edge_nginx_proxy|default(true)
   - { role: okapi-authenticate }
