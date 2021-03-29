@@ -13,6 +13,9 @@ folio_install_type: single_server
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
 
+okapi_java_opts:
+  - "-Ddeploy.waitIterations=90"
+
 # used in okapi-tenant-deploy
 update_launch_descr: true
 
@@ -69,9 +72,6 @@ folio_modules:
 
   - name: mod-password-validator
     deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
 
   - name: mod-event-config
     deploy: yes
