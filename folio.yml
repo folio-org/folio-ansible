@@ -19,9 +19,11 @@
     - common
     - postgresql
     - docker-engine
-    - okapi
     - kafka-zk
     - okapi-docker-container
+  tasks:
+    - fail:
+        msg: Skipping other steps
 
 - name: add elasticsearch to full platform-complete builds
   hosts: snapshot
