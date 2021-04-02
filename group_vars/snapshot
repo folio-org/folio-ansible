@@ -43,7 +43,6 @@ add_modules:
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
-  - mod-search
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -250,9 +249,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-rtac
-    deploy: yes
-
-  - name: mod-search
     deploy: yes
 
   - name: mod-sender
