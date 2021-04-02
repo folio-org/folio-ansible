@@ -18,6 +18,7 @@ okapi_java_opts:
 
 # used in okapi-tenant-deploy
 update_launch_descr: true
+deploy_timeout: 1200
 
 # proxy edge modules - folio-elb
 include_edge_elb: true

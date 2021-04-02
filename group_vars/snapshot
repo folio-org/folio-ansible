@@ -11,6 +11,9 @@ folio_install_type: single_server
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
 
+# used in okapi-tenant-deploy
+deploy_timeout: 1200
+
 # proxy edge modules - folio-elb
 include_edge_elb: true
 
