@@ -6,8 +6,23 @@
     name: okapi
     image: "{{ okapi_image }}"
     volumes:
-      - "{{ okapi_volumes|default(omit) }}" #still thinking on how add volumes
+      - "{{ okapi_volumes|default(omit) }}" 
     published_ports:
       - "{{ okapi_port }}:9130"
     state: started
     restart_policy: always
+    command: "dev -conf /etc/folio/okapi/okapi.json"
+
+- name: Install okapi.conf
+  become: yes
+  template:
+    src: okapi.json.j2
+    dest: /etc/folio/okapi/okapi.conf
+    owner: okapi
+    group: okapi
+    mode: 0600
+    backup: yes
+  notify: okapi restart
+  
+
+  
