@@ -65,6 +65,9 @@ edge_conf_dir: /etc/folio/edge
 inst_user:
   username: "{{ tenant }}"
   password: "{{ tenant }}"
+  personal:
+    lastName: SYSTEM
+    firstName: EDGE
   inst_user_perms: [ ]
 
 # Proxy through nginx
