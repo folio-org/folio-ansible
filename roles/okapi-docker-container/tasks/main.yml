@@ -13,13 +13,17 @@
     restart_policy: always
     command: "dev -conf /etc/folio/okapi/okapi.json"
 
-- name: Install okapi.conf
+- name: Create configuration source directory
+  become: yes
+  file:
+    path: '/etc/folio/okapi'
+    state: directory
+
+- name: Install okapi.json
   become: yes
   template:
     src: okapi.json.j2
-    dest: /etc/folio/okapi/okapi.conf
-    owner: okapi
-    group: okapi
+    dest: /etc/folio/okapi/okapi.json
     mode: 0600
     backup: yes
   notify: okapi restart
