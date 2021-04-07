@@ -8,6 +8,12 @@ folio_install_type: single_server
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
 
+okapi_java_opts:
+  - "-Ddeploy.waitIterations=90"
+
+# used in okapi-tenant-deploy
+deploy_timeout: 1200
+
 # proxy edge modules - folio-elb
 include_edge_elb: true
 
@@ -30,7 +36,7 @@ add_modules:
   - mod-codex-inventory
   - mod-codex-ekb
   - mod-data-import-converter-storage
-  #- mod-data-export-spring
+  - mod-data-export-spring
   - mod-data-export-worker
   - mod-erm-usage-harvester
   - mod-gobi
@@ -40,7 +46,6 @@ add_modules:
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
-  - mod-search
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -98,8 +103,8 @@ folio_modules:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
 
-  #- name: mod-data-export-spring
-  #  deploy: yes
+  - name: mod-data-export-spring
+    deploy: yes
 
   - name: mod-data-export-worker
     deploy: yes
@@ -108,8 +113,12 @@ folio_modules:
         value: "{{ data_export_aws_id | default('foo') }}"
       - name: AWS_SECRET_ACCESS_KEY
         value: "{{ data_export_aws_secret | default('bar') }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
+      - name: AWS_URL
+        value: "https://s3.amazonaws.com"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('baz') }}"
 
   - name: mod-data-import
     deploy: yes
@@ -245,9 +254,6 @@ folio_modules:
   - name: mod-rtac
     deploy: yes
 
-  - name: mod-search
-    deploy: yes
-
   - name: mod-sender
     deploy: yes
 
@@ -292,11 +298,11 @@ node_environment:
 # Jobs for folioCronService
 folio_cron_jobs:
   - name: scheduled-age-to-lost-fee-charging
-    cron_time: "*/30 * * * *"
+    cron_time: "15,45 * * * *"
     api_path: "/circulation/scheduled-age-to-lost-fee-charging"
     method: POST
   - name: scheduled-age-to-lost
-    cron_time: "*/30 * * * *"
+    cron_time: "0,30 * * * *"
     api_path: "/circulation/scheduled-age-to-lost"
     method: POST
 

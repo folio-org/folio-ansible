@@ -13,8 +13,12 @@ folio_install_type: single_server
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
 
+okapi_java_opts:
+  - "-Ddeploy.waitIterations=90"
+
 # used in okapi-tenant-deploy
 update_launch_descr: true
+deploy_timeout: 1200
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
@@ -115,6 +119,9 @@ folio_modules:
   - name: mod-source-record-manager
     deploy: yes
 
+  - name: mod-copycat
+    deploy: yes
+
   - name: mod-quick-marc
     deploy: yes
 
@@ -135,11 +142,15 @@ folio_modules:
         value: "{{ data_export_aws_id | default('foo') }}"
       - name: AWS_SECRET_ACCESS_KEY
         value: "{{ data_export_aws_secret | default('bar') }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('baz') }}"
+      - name: AWS_URL
+        value: "https://s3.amazonaws.com"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('baz') }}"
 
-  #- name: mod-data-export-spring
-  #  deploy: yes
+  - name: mod-data-export-spring
+    deploy: yes
 
   - name: mod-feesfines
     tenant_parameters:
@@ -243,11 +254,11 @@ node_environment:
 # Jobs for folioCronService
 folio_cron_jobs:
   - name: scheduled-age-to-lost-fee-charging
-    cron_time: "*/30 * * * *"
+    cron_time: "15,45 * * * *"
     api_path: "/circulation/scheduled-age-to-lost-fee-charging"
     method: POST
   - name: scheduled-age-to-lost
-    cron_time: "*/30 * * * *"
+    cron_time: "0,30 * * * *"
     api_path: "/circulation/scheduled-age-to-lost"
     method: POST
 

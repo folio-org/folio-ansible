@@ -1,8 +1,8 @@
 # edge-module
 
-Ansible role to set up an "edge" module (e.g. [edge-rtac](https://github.com/folio-org/edge-rtac)) that uses an HTTP API.
+Ansible role to set up an "edge" module (e.g. [edge-rtac](https://github.com/folio-org/edge-rtac)).
 
-This role deploys an edge module as a Docker container, and sets up nginx to proxy it.
+This role deploys an edge module as a Docker container. By default it sets up nginx to proxy it (for HTTP APIs only).
 
 ## Prerequisites
 
@@ -65,10 +65,17 @@ edge_conf_dir: /etc/folio/edge
 inst_user:
   username: "{{ tenant }}"
   password: "{{ tenant }}"
-inst_user_perms: [ ]
+  personal:
+    lastName: SYSTEM
+    firstName: EDGE
+  inst_user_perms: [ ]
+
+# Proxy through nginx
+edge_nginx_proxy: yes
 
 # Module setup
-# edge_module, and edge_module_publish_port, edge_module_path variables must be defined or the role will fail
+# edge_module, and edge_module_publish_port variables must be defined or the role will fail
+# edge_module_path must be defined if proxying through nginx
 # edge_module_path can take either a single value or a list
 # edge_module: edge-rtac
 # edge_module_publish_port: 9700

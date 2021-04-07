@@ -49,7 +49,8 @@
       {
         "id": "{{ 9999999999999999999998 | random | to_uuid }}",
         "username": "{{ inst_user.username }}",
-        "active": true
+        "active": true{% if inst_user.personal|default(false) %},
+        "personal": {{ inst_user.personal|to_json(ensure_ascii=False) }}{% endif %}
       }
     status_code: 201
   when: check_inst_user.json.totalRecords == 0
@@ -188,11 +189,12 @@
 - name: Copy edge_module_path
   set_fact:
     edge_module_path_working: "{{ edge_module_path }}"
+  when: edge_nginx_proxy|default(true)
 
 - name: Turn edge_module_path into a list
   set_fact:
     edge_module_path_working: "{{ [ edge_module_path_working ] }}"
-  when: edge_module_path_working|type_debug != "list"
+  when: edge_nginx_proxy|default(true) and edge_module_path_working|type_debug != "list"
 
 - name: Configure nginx
   become: yes
@@ -208,5 +210,6 @@
   loop: "{{ edge_module_path_working }}"
   loop_control:
     index_var: path_idx
+  when: edge_nginx_proxy|default(true)
 
 - meta: flush_handlers
