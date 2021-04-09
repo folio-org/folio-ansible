@@ -21,6 +21,11 @@
     - docker-engine
     - okapi
     - kafka-zk
+
+# Required for mod-data-export-worker
+- name: add minio to platform-complete builds
+  hosts: testing:snapshot
+  roles:
     - minio-docker
 
 - name: add elasticsearch to full platform-complete builds
@@ -33,6 +38,10 @@
 # But don't want to register or enable modules at this point
 - name: Configure testing build
   hosts: testing-core:testing
+  pre_tasks:
+    - name: set data export AWS URL for minio
+      set_fact:
+        data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -48,6 +57,10 @@
 # (Okapi dependency resolution)
 - name: Configure snapshot build
   hosts: snapshot-core:snapshot
+  pre_tasks:
+    - name: set data export AWS URL for minio
+      set_fact:
+        data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
