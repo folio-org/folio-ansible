@@ -1,0 +1,13 @@
+---
+# Role to launch MinIO container
+- name: Launch MinIO container
+  become: yes
+  docker_container:
+    name: minio
+    image: "{{ minio_image }}"
+    volumes: "{{ minio_volumes|default(omit) }}"
+    published_ports:
+      - "{{ minio_port }}:9000"
+    command: "server {{ minio_data_path }}"
+    state: started
+    restart_policy: always
