@@ -208,9 +208,6 @@ folio_modules:
   - name: mod-finance
     deploy: yes
 
-  - name: mod-ebsconet
-    deploy: yes
-
   - name: mod-tags
     tenant_parameters:
       - { name: loadSample, value: "true" }
@@ -227,6 +224,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-orders
+    deploy: yes
+
+  - name: mod-ebsconet
     deploy: yes
 
   - name: mod-remote-storage
