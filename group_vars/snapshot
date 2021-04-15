@@ -255,6 +255,18 @@ folio_modules:
   - name: mod-rtac
     deploy: yes
 
+  - name: mod-search
+    deploy: yes
+    docker_env:
+      - name: ELASTICSEARCH_URL
+        value: "http://elasticseach:9200"
+      - name: KAFKA_HOST
+        value: "kafka"
+      - name: KAFKA_PORT
+        value: "9092"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
   - name: mod-sender
     deploy: yes
 
