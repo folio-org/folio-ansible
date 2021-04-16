@@ -259,7 +259,7 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: ELASTICSEARCH_URL
-        value: "http://elasticseach:9200"
+        value: "http://{{ ansible_default_ipv4.address }}:9301"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
