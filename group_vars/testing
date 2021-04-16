@@ -238,6 +238,15 @@ folio_modules:
   - name: mod-data-import
     deploy: yes
 
+  - name: mod-search
+    deploy: yes
+    docker_env:
+      - name: ELASTICSEARCH_URL
+        value: "http://{{ ansible_default_ipv4.address }}:9301"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
