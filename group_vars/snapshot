@@ -262,6 +262,8 @@ folio_modules:
         value: "http://{{ ansible_default_ipv4.address }}:9301"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
 
   - name: mod-sender
     deploy: yes
