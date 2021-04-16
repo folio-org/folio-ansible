@@ -260,10 +260,6 @@ folio_modules:
     docker_env:
       - name: ELASTICSEARCH_URL
         value: "http://elasticseach:9200"
-      - name: KAFKA_HOST
-        value: "kafka"
-      - name: KAFKA_PORT
-        value: "9092"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
