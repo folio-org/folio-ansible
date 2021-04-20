@@ -158,9 +158,6 @@ folio_modules:
       - { name: loadReference, value: "true" }
     deploy: yes
 
-  - name: mod-bursar-export
-    deploy: yes
-
   - name: mod-patron-blocks
     deploy: yes
 
