@@ -4,16 +4,20 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/q3-2020/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-core/q3-2020/stripes-install.json
-update_launch_descr: true
+
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-core/R1-2021/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-core/R1-2021/stripes-install.json
+
+#update_launch_descr: true
 # Need to use xenial repo for Okapi 3.X
 folio_apt_repos:
   - focal
-okapi_version: 4.4.2-1
+okapi_version: 4.7.2-1
+okapi_java_opts:
+  - "-Ddeploy.waitIterations=90"
 save_install: no
+# used in okapi-tenant-deploy
 
-# proxy edge modules - folio-elb
 include_edge_elb: false
 
 # load ref and sample data
@@ -25,7 +29,22 @@ tenant_parameters:
 
 # Some modules require special initialization parameters.
 folio_modules:
+  - name: mod-data-export
+    deploy: yes
+    docker_env:
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('') }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
   - name: mod-pubsub
+    deploy: yes
+    docker_env:
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
+  - name: mod-source-record-storage
     deploy: yes
     docker_env:
       - name: OKAPI_URL
@@ -33,19 +52,32 @@ folio_modules:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-core
-stripes_github_version: q3-2020
+stripes_github_version: R1-2021
 folio_npm_repo: npm-folio
 okapi_register_modules: no
 okapi_enable_modules: no
 platform_remove_lock: no
 with_sourcemap: no
+node_environment: 
+   NODE_ENV: production
+
+# Jobs for folioCronService
+folio_cron_jobs:
+  - name: scheduled-age-to-lost-fee-charging
+    cron_time: "15,45 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost-fee-charging"
+    method: POST
+  - name: scheduled-age-to-lost
+    cron_time: "0,30 * * * *"
+    api_path: "/circulation/scheduled-age-to-lost"
+    method: POST
 
 # Metadata for CI build
-box_tag: folio/release-core
+box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Honeysuckle Core Release (26 Feb 2021)
+  # FOLIO Iris Release
 
   Admin login: diku_admin/admin
 
-  Q3-2020 release version of the FOLIO core platform, built from Q3-2020 release artifacts, with all release hot fixes up to 26 Feb 2021. This includes all relevant Q3-2020 [post-release hot fixes](https://wiki.folio.org/display/REL/Q3+2020+%28Honeysuckle%29+Release+Notes#Q32020(Honeysuckle)ReleaseNotes-Post-ReleaseHotfixes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R1-2021 (Iris) release version of the FOLIO platform, built from R1-2021 release artifacts, with all updates  [Iris release notes](https://wiki.folio.org/display/REL/R1+2021+%28Iris%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
