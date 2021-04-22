@@ -1,18 +1,5 @@
 ---
 
-- name: Create and Launch Okapi Docker Container
-  become: yes
-  docker_container:
-    name: okapi
-    image: "{{ okapi_image }}"
-    volumes:
-      - "{{ okapi_volumes|default(omit) }}" 
-    published_ports:
-      - "{{ okapi_port }}:9130"
-    state: started
-    restart_policy: always
-    command: "dev -conf /etc/folio/okapi/okapi.json"
-
 - name: Create configuration source directory
   become: yes
   file:
@@ -26,7 +13,20 @@
     dest: /etc/folio/okapi/okapi.json
     mode: 0600
     backup: yes
-  notify: okapi restart
+  
+- name: Create and Launch Okapi Docker Container
+  become: yes
+  docker_container:
+    name: okapi
+    image: "{{ okapi_image }}"
+    volumes:
+      - /etc/folio/okapi/okapi.json 
+    ports:
+      - "{{ okapi_port }}:9130"
+    state: started
+    restart_policy: always
+    command: "dev -conf /etc/folio/okapi/okapi.json"
+    restart: yes
   
 
   
