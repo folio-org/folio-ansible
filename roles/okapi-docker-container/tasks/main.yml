@@ -20,7 +20,7 @@
     name: okapi
     image: "{{ okapi_image }}"
     volumes:
-      - /etc/folio/okapi/okapi.json 
+      - /etc/folio/okapi/okapi.json:/etc/folio/okapi/okapi.json
     ports:
       - "{{ okapi_port }}:9130"
     state: started
