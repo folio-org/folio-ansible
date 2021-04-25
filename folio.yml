@@ -22,16 +22,11 @@
     - okapi
     - kafka-zk
 
-# Required for mod-data-export-worker
-- name: add minio to platform-complete builds
-  hosts: testing:snapshot
+# Additional infrastructure for platform-complete builds
+- hosts: testing:snapshot
   roles:
-    - minio-docker
-
-- name: add elasticsearch to full platform-complete builds
-  hosts: snapshot
-  roles:
-    - role: elasticsearch
+    - minio-docker # for mod-data-export-worker
+    - elasticsearch # for mod-search
 
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
