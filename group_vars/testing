@@ -245,6 +245,9 @@ folio_modules:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
 
+  - name: mod-service-interaction
+    deploy: yes
+
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
 stripes_github_version: snapshot
