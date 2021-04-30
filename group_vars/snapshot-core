@@ -113,6 +113,10 @@ folio_modules:
     docker_env:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: pubsub-user
+      - name: SYSTEM_USER_PASSWORD
+        value: pubsub2021
 
   - name: mod-password-validator
     deploy: yes
