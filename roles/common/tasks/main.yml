@@ -3,8 +3,12 @@
 - name: Update apt-cache if not updated in last sixty minutes
   become: yes
   apt:
-    update-cache: yes
+    update_cache: yes
     cache_valid_time: 3600
+  register: apt_cache_status_check
+  retries: 3
+  delay: 1
+  until: apt_cache_status_check is not failed
 
 - name: create folio group
   become: yes
