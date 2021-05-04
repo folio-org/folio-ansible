@@ -11,6 +11,7 @@
   template:
     src: ephemeral.properties
     dest: "{{ edge_conf_dir }}/{{ edge_module }}-ephemeral.properties"
+    mode: 0644
 
 # Set up institutional user
 - name: Login as {{ admin_user.username }}
