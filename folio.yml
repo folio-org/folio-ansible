@@ -92,16 +92,21 @@
       folio_modules:
         - name: mod-oai-pmh
         - name: mod-rtac
+        - name: mod-gobi
         - name: edge-oai-pmh
         - name: edge-rtac
+        - name: edge-orders
     - role: okapi-tenant-deploy
       folio_modules:
         - name: mod-oai-pmh
           deploy: yes
         - name: mod-rtac
           deploy: yes
+        - name: mod-gobi
+          deploy: yes
         - name: edge-oai-pmh
         - name: edge-rtac
+        - name: edge-orders
     - tenant-admin-permissions
 
 - name: Set up edge modules
@@ -125,6 +130,26 @@
       auth_required: yes
       inst_user_perms:
         - oai-pmh.all
+      edge_extra_tenants:
+        - tenant_id: test_oaipmh
+          inst_user:
+            username: test-user
+            password: test
+    - role: edge-module
+      edge_module: edge-orders
+      edge_module_publish_port: 9702
+      edge_module_path: /orders
+      edge_module_expose_port: 8081
+      edge_module_docker_env:
+      auth_required: yes
+      inst_user_perms:
+        - gobi.all
+        - ebsconet.all
+      edge_extra_tenants:
+        - tenant_id: test_edge_orders
+          inst_user:
+            username: test-user
+            password: test
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds

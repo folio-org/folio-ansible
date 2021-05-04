@@ -3,3 +3,4 @@ dependencies:
   - role: edge-nginx
     when: edge_nginx_proxy|default(true)
   - { role: okapi-authenticate }
+  - role: docker-engine
