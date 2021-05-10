@@ -43,3 +43,4 @@ reporting_setup_queries:
 
 init_only: False
 update_only: False
+ldp_use_odbc: false
