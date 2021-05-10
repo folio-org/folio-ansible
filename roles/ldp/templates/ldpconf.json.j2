@@ -1,7 +1,16 @@
 {
     "deployment_environment": "production",
     "ldp_database": {
+{% if ldp_use_odbc %}
         "odbc_database": "{{ ldp_db }}"
+{% else %}
+        "database_name": "{{ ldp_db }}",
+        "database_host": "{{ pg_host }}",
+        "database_port": {{ pg_port }},
+        "database_user": "{{ ldp_admin_user }}",
+        "database_password": "{{ ldp_admin_password }}",
+        "database_sslmode": "require"
+{% endif %}
     },
     "enable_sources": ["{{ tenant }}"],
     "sources": {
