@@ -57,14 +57,6 @@ folio_modules:
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
-  - name: mod-ldp
-    deploy: yes
-    docker_env:
-      - name: SPRING_DATASOURCE_PASSWORD
-        value: "{{ ldp_password }}"
-      - name: SPRING_DATASOURCE_URL
-        value: "jdbc:postgresql://{{ pg_host }}/ldp"
-
   - name: mod-pubsub
     deploy: yes
     docker_env:
