@@ -30,7 +30,7 @@
     url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
     status_code: 200
   register: elasticsearch_status_check
-  retries: 10
+  retries: 20
   delay: 5
   until: elasticsearch_status_check is not failed
   when: folio_install_type == "single_server"
