@@ -3,8 +3,9 @@
     name: elasticsearch
     image: "{{ elasticsearch_image }}:{{ elasticsearch_image_tag }}"
     env:
-      discovery.type: "single-node"
-      ES_JAVA_OPTS: "{{ es_java_opts }}"
+      ELASTICSEARCH_EXTRA_FLAGS: -Ediscovery.type=single-node
+      ELASTICSEARCH_HEAP_SIZE: "{{ jvm_heap_size }}"
+      ELASTICSEARCH_PLUGINS: analysis-icu,analysis-kuromoji,analysis-smartcn,analysis-nori,analysis-phonetic
     memory: "{{ elasticsearch_memory_limit }}"
     volumes:
       - /usr/share/elasticsearch/data"
