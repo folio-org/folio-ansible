@@ -272,6 +272,9 @@ folio_modules:
   - name: mod-sender
     deploy: yes
 
+  - name: mod-service-interaction
+    deploy: yes
+
   - name: mod-source-record-manager
     deploy: yes
 
