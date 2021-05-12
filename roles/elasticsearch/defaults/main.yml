@@ -1,10 +1,10 @@
-elasticsearch_version: 7.10.1
-elasticsearch_image: elasticsearch
+elasticsearch_version: 7.10.2
+elasticsearch_image: docker.io/bitnami/elasticsearch
 elasticsearch_image_tag: "{{ elasticsearch_version }}"
 # non-standard host port mapping, see FOLIO-2997
 elasticsearch_host_rest_port: 9301
 elasticsearch_host_node_port: 9300
 elasticsearch_memory_limit: 1G
-es_java_opts: "-Xms512m -Xmx512m"
+jvm_heap_size: 512m
 
 folio_install_type: single_server

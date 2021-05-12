@@ -1,10 +1,20 @@
+
+- name: set minimum ES kernel requirement for vm.max_map_count
+  sysctl:
+    name: vm.max_map_count
+    value: '262144'
+    sysctl_set: yes  
+    state: present
+    reload: yes 
+
 - name: launch elasticsearch container
   docker_container:
     name: elasticsearch
     image: "{{ elasticsearch_image }}:{{ elasticsearch_image_tag }}"
     env:
-      discovery.type: "single-node"
-      ES_JAVA_OPTS: "{{ es_java_opts }}"
+      ELASTICSEARCH_EXTRA_FLAGS: -Ediscovery.type=single-node
+      ELASTICSEARCH_HEAP_SIZE: "{{ jvm_heap_size }}"
+      ELASTICSEARCH_PLUGINS: analysis-icu,analysis-kuromoji,analysis-smartcn,analysis-nori,analysis-phonetic
     memory: "{{ elasticsearch_memory_limit }}"
     volumes:
       - /usr/share/elasticsearch/data"
@@ -20,7 +30,7 @@
     url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
     status_code: 200
   register: elasticsearch_status_check
-  retries: 10
+  retries: 20
   delay: 5
   until: elasticsearch_status_check is not failed
   when: folio_install_type == "single_server"
