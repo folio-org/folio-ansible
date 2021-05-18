@@ -1,11 +1,13 @@
 
 - name: set minimum ES kernel requirement for vm.max_map_count
+  become: yes
   sysctl:
     name: vm.max_map_count
     value: '262144'
-    sysctl_set: yes  
+    sysctl_set: yes
     state: present
-    reload: yes 
+    reload: yes
+  when: folio_install_type == "single_server"
 
 - name: launch elasticsearch container
   docker_container:
@@ -17,7 +19,7 @@
       ELASTICSEARCH_PLUGINS: analysis-icu,analysis-kuromoji,analysis-smartcn,analysis-nori,analysis-phonetic
     memory: "{{ elasticsearch_memory_limit }}"
     volumes:
-      - /usr/share/elasticsearch/data"
+      - "/usr/share/elasticsearch/data"
     ports:
       - "{{ elasticsearch_host_rest_port }}:9200"
       - "{{ elasticsearch_host_node_port }}:9300"
@@ -34,4 +36,3 @@
   delay: 5
   until: elasticsearch_status_check is not failed
   when: folio_install_type == "single_server"
-
