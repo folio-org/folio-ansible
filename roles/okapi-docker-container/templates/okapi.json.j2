@@ -7,9 +7,9 @@
     "storage": "{{ okapi_storage }}",
     "okapiurl": "{{ okapi_url }}",
     "dockerUrl": "{{ docker_url }}",
-    "containerHost": "{{ okapi_default_host: localhost }}",
-    "postgres_host": "{{ okapi_default_host: localhost }}",
-    "postgres_port": "{{ postgres_host }}",
+    "containerHost": "{{ okapi_default_host }}",
+    "postgres_host": "{{ okapi_default_host }}",
+    "postgres_port": "{{ postgres_port }}",
     "postgres_username": "{{ postgres_username }}",
     "postgres_password": "{{ postgres_password }}",
     "postgres_database": "{{ postgres_db }}",
@@ -17,6 +17,7 @@
     "token_cache_max_size": "10000",
     "token_cache_ttl_ms": "180000",
     "deploy_waitIterations": "60"
+    
 
 
 }
