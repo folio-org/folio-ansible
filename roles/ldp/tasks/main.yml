@@ -86,6 +86,7 @@
     path: "{{ ldp_config_dir }}"
     state: directory
   become: yes
+  when: ldp_use_odbc
 
 - name: template odbc.ini
   template:
@@ -93,6 +94,7 @@
     dest: "{{ ldp_config_dir }}/odbc.ini"
     mode: 0644
   become: yes
+  when: ldp_use_odbc
 
 - name: template odbcinst.ini
   template:
@@ -100,6 +102,7 @@
     dest: "{{ ldp_config_dir }}/odbcinst.ini"
     mode: 0644
   become: yes
+  when: ldp_use_odbc
 
 - name: Create directory ldp data dir
   file:
@@ -123,7 +126,7 @@
     query: SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'user_users')
   register: check_init
 
-- name: run ldp init
+- name: run ldp init with ODBC
   docker_container:
     name: ldp_init
     image: "{{ ldp_docker_image }}"
@@ -134,7 +137,18 @@
       - "{{ ldp_config_dir }}/odbcinst.ini:/root/.odbcinst.ini"
       - "{{ ldp_data_dir }}:/var/lib/ldp:rw"
   become: yes
-  when: not check_init.query_result[0].exists and not update_only
+  when: ldp_use_odbc and not check_init.query_result[0].exists and not update_only
+
+- name: run ldp init with libpq
+  docker_container:
+    name: ldp_init
+    image: "{{ ldp_docker_image }}"
+    command: "init-database -D /var/lib/ldp --profile folio"
+    detach: false
+    volumes:
+      - "{{ ldp_data_dir }}:/var/lib/ldp:rw"
+  become: yes
+  when: not ldp_use_odbc and not check_init.query_result[0].exists and not update_only
 
 - name: warn init is not complete update only
   debug: msg="LDP database has not been initialized"

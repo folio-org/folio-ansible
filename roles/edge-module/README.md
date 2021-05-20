@@ -33,6 +33,11 @@ Invoke this role for each edge module you wish to set up. For example:
         JAVA_OPTIONS: "-Xmx256m"
       inst_user_perms:
         - rtac.all
+      edge_extra_tenants:
+        - tenant_id: test_rtac
+          inst_user:
+            username: test-user
+            password: test
 ```
 
 ## Known issues/limitations
@@ -65,7 +70,18 @@ edge_conf_dir: /etc/folio/edge
 inst_user:
   username: "{{ tenant }}"
   password: "{{ tenant }}"
+  personal:
+    lastName: SYSTEM
+    firstName: EDGE
   inst_user_perms: [ ]
+
+# Extra tenants (not created in Okapi, used for API testing)
+# Optional
+# edge_extra_tenants:
+#   - tenant_id: test_rtac
+#     inst_user:
+#       username: test-user
+#       password: test
 
 # Proxy through nginx
 edge_nginx_proxy: yes

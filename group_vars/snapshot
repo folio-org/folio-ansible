@@ -4,12 +4,16 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
+minio_port: 9500
 
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
 
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
+
+# used in okapi-tenant-deploy
+deploy_timeout: 1200
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
@@ -43,7 +47,6 @@ add_modules:
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
-  - mod-search
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -108,15 +111,15 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: AWS_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('foo') }}"
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('bar') }}"
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
       - name: AWS_URL
-        value: "https://s3.amazonaws.com"
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('us-east-1') }}"
+        value: "{{ aws_region | default('') }}"
       - name: AWS_BUCKET
-        value: "{{ data_export_bucket_name | default('baz') }}"
+        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
   - name: mod-data-import
     deploy: yes
@@ -242,6 +245,10 @@ folio_modules:
     docker_env:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: pubsub-user
+      - name: SYSTEM_USER_PASSWORD
+        value: pubsub2021
 
   - name: mod-quick-marc
     deploy: yes
@@ -254,8 +261,18 @@ folio_modules:
 
   - name: mod-search
     deploy: yes
+    docker_env:
+      - name: ELASTICSEARCH_URL
+        value: "http://{{ ansible_default_ipv4.address }}:9301"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
 
   - name: mod-sender
+    deploy: yes
+
+  - name: mod-service-interaction
     deploy: yes
 
   - name: mod-source-record-manager

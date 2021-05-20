@@ -25,16 +25,21 @@
     - fail:
         msg: Skipping other steps
 
-- name: add elasticsearch to full platform-complete builds
-  hosts: snapshot
+# Additional infrastructure for platform-complete builds
+- hosts: testing:snapshot
   roles:
-    - role: elasticsearch
+    - minio-docker # for mod-data-export-worker
+    - elasticsearch # for mod-search
 
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
 - name: Configure testing build
   hosts: testing-core:testing
+  pre_tasks:
+    - name: set data export AWS URL for minio
+      set_fact:
+        data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -50,6 +55,10 @@
 # (Okapi dependency resolution)
 - name: Configure snapshot build
   hosts: snapshot-core:snapshot
+  pre_tasks:
+    - name: set data export AWS URL for minio
+      set_fact:
+        data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -86,16 +95,21 @@
       folio_modules:
         - name: mod-oai-pmh
         - name: mod-rtac
+        - name: mod-gobi
         - name: edge-oai-pmh
         - name: edge-rtac
+        - name: edge-orders
     - role: okapi-tenant-deploy
       folio_modules:
         - name: mod-oai-pmh
           deploy: yes
         - name: mod-rtac
           deploy: yes
+        - name: mod-gobi
+          deploy: yes
         - name: edge-oai-pmh
         - name: edge-rtac
+        - name: edge-orders
     - tenant-admin-permissions
 
 - name: Set up edge modules
@@ -119,6 +133,26 @@
       auth_required: yes
       inst_user_perms:
         - oai-pmh.all
+      edge_extra_tenants:
+        - tenant_id: test_oaipmh
+          inst_user:
+            username: test-user
+            password: test
+    - role: edge-module
+      edge_module: edge-orders
+      edge_module_publish_port: 9702
+      edge_module_path: /orders
+      edge_module_expose_port: 8081
+      edge_module_docker_env:
+      auth_required: yes
+      inst_user_perms:
+        - gobi.all
+        - ebsconet.all
+      edge_extra_tenants:
+        - tenant_id: test_edge_orders
+          inst_user:
+            username: test-user
+            password: test
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds

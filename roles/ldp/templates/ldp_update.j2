@@ -1,7 +1,9 @@
 #!/bin/bash
 
 docker run \
+{% if ldp_use_odbc %}
   -v "{{ ldp_config_dir }}/odbc.ini:/root/.odbc.ini" \
   -v "{{ ldp_config_dir }}/odbcinst.ini:/root/.odbcinst.ini" \
+{% endif %}
   -v "{{ ldp_data_dir }}:/var/lib/ldp:rw" \
   "{{ ldp_docker_image }}" update -D /var/lib/ldp
