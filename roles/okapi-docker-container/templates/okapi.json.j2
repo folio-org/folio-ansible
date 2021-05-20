@@ -3,6 +3,20 @@
     "port": "{{ okapi_port }}",
     "port_start": "{{okapi_port_start}}",
     "port_end": "{{ okapi_port_end }}",
-    "host": "{{ ansible_default_ipv4.address }}"
+    "host": "{{ ansible_default_ipv4.address }}",
+    "storage": "{{ okapi_storage }}",
+    "okapiurl": "{{ okapi_url }}",
+    "dockerUrl": "{{ docker_url }}",
+    "containerHost": "{{ okapi_default_host: localhost }}",
+    "postgres_host": "{{ okapi_default_host: localhost }}",
+    "postgres_port": "{{ postgres_host }}",
+    "postgres_username": "{{ postgres_username }}",
+    "postgres_password": "{{ postgres_password }}",
+    "postgres_database": "{{ postgres_db }}",
+    "postgres_db_init": "1",
+    "token_cache_max_size": "10000",
+    "token_cache_ttl_ms": "180000",
+    "deploy_waitIterations": "60"
+
 
 }
