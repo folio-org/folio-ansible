@@ -127,6 +127,9 @@ folio_modules:
   - name: mod-data-import-converter-storage
     deploy: yes
 
+  - name: mod-ebsconet
+    deploy: yes
+
   - name: mod-email
     deploy: yes
 
