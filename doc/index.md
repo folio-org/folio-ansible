@@ -202,10 +202,18 @@ configure it:
 
 ## Replace port 9130
 
-This is an example how to avoid using port 9130 that may be blocked at
-some institutions. Instead all front-end and back-end requests arrive
-at the same default port (80 for HTTP or 443 for HTTPS). Configure the
-Okapi URL like
+This is an example how to avoid using port 9130.
+Instead all front-end and back-end requests arrive
+at the same default port (80 for HTTP or 443 for HTTPS).
+
+This has two advantages:
+* Faster responses (less latency) because the browser no longer
+  needs to send extra "preflight" OPTIONS HTTP requests for
+  cross-origin resource sharing (CORS) protection.
+* Avoids port 9130 that may be blocked at some institutions and
+  at some internet access points.
+
+Configure the Okapi URL like
 
     "OKAPI" => "http://example.com/okapi"
 
