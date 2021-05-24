@@ -39,6 +39,7 @@ add_modules:
   - mod-data-import-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
+  - mod-ebsconet
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
