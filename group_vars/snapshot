@@ -39,6 +39,7 @@ add_modules:
   - mod-data-import-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
+  - mod-ebsconet
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
@@ -125,6 +126,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-data-import-converter-storage
+    deploy: yes
+
+  - name: mod-ebsconet
     deploy: yes
 
   - name: mod-email
