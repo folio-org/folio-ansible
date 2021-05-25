@@ -16,11 +16,14 @@ okapi_nodename: "{{ ansible_default_ipv4.address }}"
 
 okapi_storage: inmemory
 okapi_url: http://localhost:9130
-docker_url: unix:///var/run/docker.sock
+docker_url: http://localhost:4243
 
 okapi_default_host: localhost
-
+postgres_host: "{{ ansible_default_ipv4.address }}"
 postgres_port: 5432
 postgres_username: okapi
 postgres_password: okapi25
 postgres_db: okapi
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_maint_db: postgres
