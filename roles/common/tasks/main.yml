@@ -40,7 +40,7 @@
     name:
       - libpq-dev
       - python3-psycopg2
-      - postgresql-client
+      - "{{ pg_client_pkg }}"
 
 - name: Set up FOLIO apt repo GPG key
   become: yes
