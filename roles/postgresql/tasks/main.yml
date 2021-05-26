@@ -24,12 +24,12 @@
   become: yes
   apt:
     name:
-      - postgresql-10
+      - "postgresql-{{ pg_major_version }}"
 
 - name: Configure postgresql to listen on all interfaces
   become: yes
   lineinfile:
-    dest: /etc/postgresql/10/main/postgresql.conf
+    dest: "/etc/postgresql/{{ pg_major_version }}/main/postgresql.conf"
     line: "listen_addresses = '*'"
     insertafter: 'Connection Settings'
   notify: Restart postgresql
@@ -37,7 +37,7 @@
 - name: Set max number of postgresql connections
   become: yes
   lineinfile:
-    dest: /etc/postgresql/10/main/postgresql.conf
+    dest: "/etc/postgresql/{{ pg_major_version }}/main/postgresql.conf"
     regexp: '^max_connections\s*=\s*\d+.*$'
     line: "max_connections = {{ pg_max_conn }}"
     backrefs: yes
@@ -46,7 +46,7 @@
 - name: Configure postgresql to allow connections from all addresses
   become: yes
   lineinfile:
-    dest: /etc/postgresql/10/main/pg_hba.conf
+    dest: "/etc/postgresql/{{ pg_major_version }}/main/pg_hba.conf"
     line: "host  all  all  0.0.0.0/0  md5"
   notify: Restart postgresql
 
