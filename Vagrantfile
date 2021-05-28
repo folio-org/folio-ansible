@@ -23,6 +23,9 @@ Vagrant.configure(2) do |config|
     snapshot_backend_core.vm.box = "folio/snapshot-backend-core"
     snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
     snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
+    snapshot_backend_core.vm.provision "ansible" do |ansible|
+      ansible.playbook = "test.yml"
+    end
   end
 
   config.vm.define "testing", autostart: false do |testing|
