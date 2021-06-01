@@ -14,7 +14,7 @@
 
 - name: build and start stripes docker container
   become: yes
-  docker_compose:
+  docker_service:
     project_name: stripes
     definition:
       version: '2'

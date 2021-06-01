@@ -13,7 +13,7 @@
   when: folio_install_type == "single_server"
 
 - name: start kafka and zookeeper containers
-  docker_compose:
+  docker_service:
     project_src: /opt/kafka-zk
   become: yes
   register: kafka_zk_output

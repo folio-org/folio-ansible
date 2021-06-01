@@ -21,9 +21,6 @@
     - docker-engine
     - kafka-zk
     - okapi-docker-container
-  tasks:
-    - fail:
-        msg: Skipping other steps
 
 # Additional infrastructure for platform-complete builds
 - hosts: testing:snapshot
