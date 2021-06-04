@@ -23,7 +23,7 @@
     - kafka-zk
 
 # Additional infrastructure for platform-complete builds
-- hosts: testing:snapshot
+- hosts: testing:snapshot:release
   roles:
     - minio-docker # for mod-data-export-worker
     - elasticsearch # for mod-search
@@ -147,7 +147,7 @@
         - okapi.all
 
 - name: Set up folioCronService
-  hosts: snapshot-core:testing-core:testing:snapshot
+  hosts: snapshot-core:testing-core:testing:snapshot:release-core:release
   roles:
     - cron-jobs
 

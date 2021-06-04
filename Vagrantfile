@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_snapshot_backend_core", autostart: false do |build_snapshot_backend_core|
     build_snapshot_backend_core.vm.box = "bento/ubuntu-20.04"
     build_snapshot_backend_core.vm.provider "virtualbox" do |vt|
-      vt.memory = 10240
+      vt.memory = 12288
     end
     build_snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
@@ -179,9 +179,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_release_core", autostart: false do |build_release_core|
-    build_release_core.vm.box = "bento/ubuntu-16.04"
+    build_release_core.vm.box = "bento/ubuntu-20.04"
     build_release_core.vm.provider "virtualbox" do |vr|
-      vr.memory = 10240
+      vr.memory = 12288
     end
     build_release_core.vm.network "forwarded_port", guest: 9130, host: 9130
     build_release_core.vm.network "forwarded_port", guest: 3000, host: 3000
@@ -197,9 +197,9 @@ Vagrant.configure(2) do |config|
   end
 
   config.vm.define "build_release", autostart: false do |build_release|
-    build_release.vm.box = "bento/ubuntu-16.04"
+    build_release.vm.box = "bento/ubuntu-20.04"
     build_release.vm.provider "virtualbox" do |vrel|
-      vrel.memory = 10240
+      vrel.memory = 20480
     end
     build_release.vm.network "forwarded_port", guest: 9130, host: 9130
     build_release.vm.network "forwarded_port", guest: 3000, host: 3000
