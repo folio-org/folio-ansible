@@ -23,7 +23,7 @@
     - kafka-zk
 
 # Additional infrastructure for platform-complete builds
-- hosts: testing:snapshot
+- hosts: testing:snapshot:release
   roles:
     - minio-docker # for mod-data-export-worker
     - elasticsearch # for mod-search
@@ -75,6 +75,10 @@
 
 - name: Configure release build
   hosts: release-core:release
+  pre_tasks:
+    - name: set data export AWS URL for minio
+      set_fact:
+        data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - build-module-list
     - okapi-register-modules
@@ -147,7 +151,7 @@
         - okapi.all
 
 - name: Set up folioCronService
-  hosts: snapshot-core:testing-core:testing:snapshot
+  hosts: snapshot-core:testing-core:testing:snapshot:release-core:release
   roles:
     - cron-jobs
 
