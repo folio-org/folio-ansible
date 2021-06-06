@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_snapshot_backend_core", autostart: false do |build_snapshot_backend_core|
     build_snapshot_backend_core.vm.box = "bento/ubuntu-20.04"
     build_snapshot_backend_core.vm.provider "virtualbox" do |vt|
-      vt.memory = 12288
+      vt.memory = 10240
     end
     build_snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
