@@ -52,7 +52,8 @@
   with_items: "{{ add_modules }}"
 
 - name: Add pinned modules to install_list
-  set_fact: install_list='{{ install_list }} { "id":"{{ item.module }}-{{ item.version }}", "action":"enable" },'
+  set_fact:
+    install_list: "{{ install_list + [ { 'id': item.module + '-' + item.version, 'action': 'enable' } ] }}"
   with_items: "{{ pinned_modules }}"
 
 - name: Get dependencies for modules from Okapi
