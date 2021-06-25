@@ -3,7 +3,7 @@
   become: yes
   docker_container:
     name: okapi
-    image: "{{ okapi_image }}"
+    image: "{{ okapi_docker_org }}/okapi:{{ okapi_version }}"
     volumes:
       - /etc/folio/okapi:/usr/verticles/okapi:ro
     network_mode: host
