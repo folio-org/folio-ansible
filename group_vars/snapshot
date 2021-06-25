@@ -8,7 +8,7 @@ minio_port: 9500
 
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
-
+okapi_docker_org: folioci
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
 

@@ -1,0 +1,14 @@
+---
+- name: okapi restart
+  become: yes
+  docker_container:
+    name: okapi
+    image: "{{ okapi_image }}"
+    volumes:
+      - /etc/folio/okapi:/usr/verticles/okapi:ro
+    network_mode: host
+    state: started
+    restart_policy: always
+    command: "dev -conf okapi/okapi.json"
+    restart: yes
+  when: not okapi_create_container.changed|default(false)

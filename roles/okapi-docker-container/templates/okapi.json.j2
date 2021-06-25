@@ -1,21 +1,17 @@
 {
-
-    "port": "{{ okapi_port }}",
-    "port_start": "{{okapi_port_start}}",
-    "port_end": "{{ okapi_port_end }}",
-    "host": "{{ ansible_default_ipv4.address }}",
-    "storage": "{{ okapi_storage }}",
-    "okapiurl": "{{ okapi_url }}",
-    "dockerUrl": "{{ docker_url }}",
-    "postgres_host": "{{ postgres_host }}",
-    "postgres_port": "{{ postgres_port }}",
-    "postgres_username": "{{ postgres_username }}",
-    "postgres_password": "{{ postgres_password }}",
-    "postgres_database": "{{ postgres_db }}",
-    "token_cache_max_size": "10000",
-    "token_cache_ttl_ms": "180000",
-    "deploy_waitIterations": "60"
-     
-
-
+  "port": "{{ okapi_port }}",
+  "port_start": "{{okapi_port_start}}",
+  "port_end": "{{ okapi_port_end }}",
+  "host": "{{ okapi_default_host }}",
+  "storage": "{{ okapi_storage }}",
+  "okapiurl": "{{ okapi_url }}",
+  "dockerUrl": "{{ okapi_dockerurl }}",
+  "postgres_host": "{{ pg_host }}",
+  "postgres_port": "{{ pg_port }}",
+  "postgres_username": "{{ okapidb_user }}",
+  "postgres_password": "{{ okapidb_password }}",
+  "postgres_database": "{{ okapidb_name }}",
+  "token_cache_max_size": "10000",
+  "token_cache_ttl_ms": "180000",
+  "deploy_waitIterations": "60"
 }

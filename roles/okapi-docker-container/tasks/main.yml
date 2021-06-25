@@ -16,17 +16,22 @@
     group: "1000"
     mode: 0640
     backup: yes
+  notify: okapi restart
 
+# Use host networking so Okapi can communicate with the local Docker daemon
 - name: Create and Launch Okapi Docker Container
   become: yes
   docker_container:
     name: okapi
-    image: "{{ okapi_image }}"
+    image: "{{ okapi_docker_org }}/okapi:{{ okapi_version }}"
     volumes:
       - /etc/folio/okapi:/usr/verticles/okapi:ro
-    ports:
-      - "{{ okapi_port }}:9130"
+    network_mode: host
     state: started
     restart_policy: always
     command: "dev -conf okapi/okapi.json"
-    restart: yes
+    env:
+      JAVA_OPTIONS: "-Djava.awt.headless=true{% for option in okapi_java_opts %} {{ option }}{% endfor %}"
+  register: okapi_create_container
+
+- meta: flush_handlers
