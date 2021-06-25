@@ -1,4 +1,7 @@
 {
+{% if lookup('env','DOCKER_REGISTRIES')|default(false,true) or okapi_docker_registries|default(false) %}
+  "dockerRegistries": {{ lookup('env','DOCKER_REGISTRIES')|default(okapi_docker_registries|default([])|to_nice_json,true) }},
+{% endif %}
   "port": "{{ okapi_port }}",
   "port_start": "{{okapi_port_start}}",
   "port_end": "{{ okapi_port_end }}",
