@@ -206,6 +206,9 @@
     block: |
       location {{ item }} {
         proxy_pass http://localhost:{{ edge_module_publish_port }};
+      {% if edge_http_version|default(false) %}
+        proxy_http_version {{ edge_http_version }};
+      {% endif %}
       }
   notify: Restart nginx
   loop: "{{ edge_module_path_working }}"

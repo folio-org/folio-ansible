@@ -86,6 +86,9 @@ inst_user:
 # Proxy through nginx
 edge_nginx_proxy: yes
 
+# HTTP version produced by module, default 1.0
+# edge_http_version: 1.1
+
 # Module setup
 # edge_module, and edge_module_publish_port variables must be defined or the role will fail
 # edge_module_path must be defined if proxying through nginx

@@ -40,19 +40,4 @@
     name:
       - libpq-dev
       - python3-psycopg2
-      - postgresql-client
-
-- name: Set up FOLIO apt repo GPG key
-  become: yes
-  apt_key:
-    id: "{{ folio_apt_key_id }}"
-    url: "{{ folio_apt_key_url }}"
-    state: present
-
-- name: Configure FOLIO apt repository
-  become: yes
-  apt_repository:
-    repo: deb "{{ folio_apt_repo_url }}" "{{ item }}"/
-    filename: folioci
-    state: present
-  with_items: "{{ folio_apt_repos }}"
+      - "{{ pg_client_pkg }}"
