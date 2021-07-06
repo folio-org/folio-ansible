@@ -19,8 +19,8 @@
     - common
     - postgresql
     - docker-engine
-    - okapi
     - kafka-zk
+    - okapi-docker-container
 
 # Additional infrastructure for platform-complete builds
 - hosts: testing:snapshot

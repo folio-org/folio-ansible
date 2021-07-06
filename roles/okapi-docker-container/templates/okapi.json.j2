@@ -1,0 +1,20 @@
+{
+{% if lookup('env','DOCKER_REGISTRIES')|default(false,true) or okapi_docker_registries|default(false) %}
+  "dockerRegistries": {{ lookup('env','DOCKER_REGISTRIES')|default(okapi_docker_registries|default([])|to_nice_json,true) }},
+{% endif %}
+  "port": "{{ okapi_port }}",
+  "port_start": "{{okapi_port_start}}",
+  "port_end": "{{ okapi_port_end }}",
+  "host": "{{ okapi_default_host }}",
+  "storage": "{{ okapi_storage }}",
+  "okapiurl": "{{ okapi_url }}",
+  "dockerUrl": "{{ okapi_dockerurl }}",
+  "postgres_host": "{{ pg_host }}",
+  "postgres_port": "{{ pg_port }}",
+  "postgres_username": "{{ okapidb_user }}",
+  "postgres_password": "{{ okapidb_password }}",
+  "postgres_database": "{{ okapidb_name }}",
+  "token_cache_max_size": "10000",
+  "token_cache_ttl_ms": "180000",
+  "deploy_waitIterations": "60"
+}
