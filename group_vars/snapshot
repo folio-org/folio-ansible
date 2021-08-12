@@ -163,6 +163,9 @@ folio_modules:
   - name: mod-graphql
     deploy: yes
 
+  - name: mod-inn-reach
+    deploy: yes
+
   - name: mod-inventory
     deploy: yes
 
