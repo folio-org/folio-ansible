@@ -35,15 +35,25 @@ Invoke the role in a playbook, e.g.:
 ```yaml
 ---
 # defaults
-
 # Database setup
 create_db: yes
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
+pg_maint_db: postgres
 pg_max_pool_size: 5
 module_database: okapi_modules
+
+# Kafka setup
+kafka_host: "{{ ansible_default_ipv4.address }}"
+kafka_port: 9092
+kafka_topic_env: "FOLIO"
+
+# Elasticsearch setup
+elasticsearch_host: "{{ ansible_default_ipv4.address }}"
+elasticsearch_port: 9301
+
 # If the module_env list is populated, it will set global module environment variables
 # These environment variables can be overridden by the docker_env property of the folio_modules entries
 module_env:
@@ -53,6 +63,11 @@ module_env:
   - { name: DB_USERNAME, value: "{{ pg_admin_user }}" }
   - { name: DB_PASSWORD, value: "{{ pg_admin_password }}" }
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
+  - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
+  - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
+  - { name: ENV, value: "{{ kafka_topic_env }}" }
+  - { name: ELASTICSEARCH_HOST, value: "{{ elasticsearch_host }}" }
+  - { name: ELASTICSEARCH_PORT, value: "{{ elasticsearch_port }}" }
 
 # Okapi setup
 okapi_port: 9130

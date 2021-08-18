@@ -45,7 +45,7 @@ folio_modules:
 
   - name: mod-data-export-worker
     deploy: yes
-    docker_env: 
+    docker_env:
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -72,6 +72,8 @@ folio_modules:
         value: "{{ okapi_url }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
+      - name: KAFKA_EVENTS_CONSUMER_PATTERN
+        value: "FOLIO\.(.*\.)inventory\.(instance|holdings-record|item)"
 
   - name: mod-source-record-storage
     deploy: yes
@@ -87,7 +89,7 @@ okapi_register_modules: no
 okapi_enable_modules: no
 platform_remove_lock: no
 with_sourcemap: no
-node_environment: 
+node_environment:
    NODE_ENV: production
 
 # Jobs for folioCronService
