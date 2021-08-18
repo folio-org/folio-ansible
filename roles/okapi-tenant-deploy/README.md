@@ -72,7 +72,7 @@ module_env:
   - { name: DB_MAXPOOLSIZE, value: "{{ pg_max_pool_size }}" }
   - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
   - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
-  - { name: ENV, value: "{{ kafka_topic_env }}"
+  - { name: ENV, value: "{{ kafka_topic_env }}" }
   - { name: ELASTICSEARCH_HOST, value: "{{ elasticsearch_host }}" }
   - { name: ELASTICSEARCH_PORT, value: "{{ elasticsearch_port }}" }
 
