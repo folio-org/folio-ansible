@@ -276,7 +276,7 @@ folio_modules:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
       - name: KAFKA_EVENTS_CONSUMER_PATTERN
-        value: "FOLIO\.(.*\.)inventory\.(instance|holdings-record|item)"
+        value: "FOLIO\\.(.*\\.)inventory\\.(instance|holdings-record|item)"
 
   - name: mod-sender
     deploy: yes
