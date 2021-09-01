@@ -45,6 +45,7 @@ add_modules:
   - mod-graphql
   - mod-ldp
   - mod-ncip
+  - mod-oa
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
@@ -214,6 +215,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-notify
+    deploy: yes
+
+  - name: mod-oa
     deploy: yes
 
   - name: mod-oai-pmh
