@@ -219,11 +219,6 @@ folio_modules:
 
   - name: mod-oa
     deploy: yes
-    docker_env:
-      - name: OKAPI_SERVICE_HOST
-        value: "{{ ansible_default_ipv4.address }}"
-      - name: OKAPI_SERVICE_PORT
-        value: "{{ okapi_port }}"
 
   - name: mod-oai-pmh
     deploy: yes
