@@ -272,6 +272,9 @@ folio_modules:
 
   - name: mod-search
     deploy: yes
+    tenant_parameters:
+      - name: runReindex
+        value: "true"
     docker_env:
       - name: ELASTICSEARCH_URL
         value: "http://{{ ansible_default_ipv4.address }}:9301"
