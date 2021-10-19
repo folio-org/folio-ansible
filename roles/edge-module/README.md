@@ -83,6 +83,12 @@ inst_user:
 #       username: test-user
 #       password: test
 
+# Generate the tenantsMappings key (required for edge-inn-reach)
+# Optional
+# edge_tenants_mappings:
+#   - tenant: "{{ tenant }}"
+#     mapping: fli01
+
 # Proxy through nginx
 edge_nginx_proxy: yes
 
