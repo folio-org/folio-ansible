@@ -16,7 +16,7 @@ admin_user:
   password: admin
 
 tenant: diku
-ldp_docker_image: folioci/ldp:latest
+ldp_docker_image: ghcr.io/library-data-platform/ldp:latest
 ldp_db: ldp
 ldp_admin_user: ldpadmin
 ldp_admin_password: diku_ldpadmin9367
