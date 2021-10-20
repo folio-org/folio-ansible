@@ -1,0 +1,14 @@
+---
+
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+
+admin_user:
+  username: diku_admin
+  password: admin
+
+tenant: diku
+
+ldp_user: ldp
+ldp_db: ldp
+ldp_password: diku_ldp9367
