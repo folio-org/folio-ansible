@@ -26,7 +26,7 @@
       X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
       Content-Type: application/vnd.api+json
-    body: '{"key":"dbinfo,"tenant":"{{ tenant }}","value":"{"user":"{{ ldp_user }}","url":"jdbc:postgresql://{{ pg_host }}:{{ pg_port }}/{{ ldp_db }}","pass":"{{ ldp_password }}"}"}'
+    body: '{"key":"dbinfo","tenant":"{{ tenant }}","value":"{"user":"{{ ldp_user }}","url":"jdbc:postgresql://{{ pg_host }}:{{ pg_port }}/{{ ldp_db }}","pass":"{{ ldp_password }}"}"}'
     status_code: 200,422
   register: mod_ldp_config
   changed_when: mod_ldp_config.status == 200
