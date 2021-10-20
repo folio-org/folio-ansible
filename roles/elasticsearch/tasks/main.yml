@@ -23,6 +23,8 @@
     ports:
       - "{{ elasticsearch_host_rest_port }}:9200"
       - "{{ elasticsearch_host_node_port }}:9300"
+    state: started
+    restart_policy: always
     restart: yes
   become: yes
   when: folio_install_type == "single_server"
