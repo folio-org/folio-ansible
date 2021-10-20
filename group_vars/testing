@@ -134,11 +134,15 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: AWS_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('') }}"
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('') }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Daws.accessKeyId={{ data_export_aws_id | default('minioadmin') }} -Daws.secretKey={{ data_export_aws_secret | default('minioadmin') }} -Daws.url={{ data_export_aws_url | default('https://s3.amazonaws.com') }} -Daws.region={{ aws_region | default('') }} -Dbucket.name={{ data_export_bucket_name | default('data-export-bucket') }}"
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
   - name: mod-data-export-worker
     deploy: yes
