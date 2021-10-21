@@ -72,6 +72,7 @@
     - tenant-admin-permissions
     - set-patron-group
     - ldp
+    - mod-ldp-config
 
 - name: Configure release build
   hosts: release-core:release
