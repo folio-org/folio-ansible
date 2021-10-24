@@ -348,7 +348,8 @@ whichever ports you prefer.
 
 ### Viewing the Okapi log
 
-The Okapi logfile is at `/var/log/folio/okapi/okapi.log`.
+Okapi is deployed as a Docker container.
+So view its logs as for other [module logs](#viewing-backend-module-logs).
 
 ### Viewing backend module logs
 
