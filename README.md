@@ -15,7 +15,7 @@ The primary audiences for this project are:
 
 ## License
 
-Copyright (C) 2016-2020 The Open Library Foundation
+Copyright (C) 2016-2021 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
@@ -43,7 +43,7 @@ Windows 10. Note that Windows cannot serve as an Ansible control host.
 If all you want to do is try out a prepackaged FOLIO demo Vagrant box,
 create a new directory, `cd` into it, and try:
 
-    $ vagrant init folio/Q4-2018
+    $ vagrant init folio/release-core
     $ vagrant up
 
 Now you can open [http://localhost:3000](http://localhost:3000).
