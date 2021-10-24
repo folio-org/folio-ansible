@@ -29,9 +29,10 @@ The Vagrantfile and Ansible playbooks and roles in this project are
 used to generate prebuilt Vagrant boxes, available on
 [Vagrant Cloud](https://app.vagrantup.com/folio):
 
-* [folio/Q4-2018](https://app.vagrantup.com/folio/boxes/Q4-2018) -- a
+* [folio/release](https://app.vagrantup.com/folio/boxes/release) -- a
   full-stack FOLIO system with stable releases of front- and
   backend modules. All components should interoperate correctly.
+  This is the most recent "[flower release](https://dev.folio.org/guides/regular-releases/)".
 
 * [folio/snapshot](https://app.vagrantup.com/folio/boxes/snapshot)
   -- a full-stack FOLIO system, built from the most recent working
