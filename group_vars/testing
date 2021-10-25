@@ -175,6 +175,9 @@ folio_modules:
   - name: mod-circulation
     deploy: yes
 
+  - name: mod-patron
+    deploy: yes
+
   - name: mod-inn-reach
     deploy: yes
 
@@ -263,9 +266,6 @@ folio_modules:
 
   - name: mod-service-interaction
     deploy: yes
-
-  - name: mod-patron
-    deploy: yes 
 
 
 # Variables for building UI
