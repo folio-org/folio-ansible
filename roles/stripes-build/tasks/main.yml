@@ -69,9 +69,9 @@
   when: with_github and stripes_strict_md
   notify: "Rebuild stripes"
 
-- name: Move to Node.js 6.X lts
+- name: Pin Nodejs to v14
   become: yes
-  shell: n lts && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
+  shell: n 14 && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
   args:
     creates: "{{ stripes_conf_dir }}/.set_nodedefault_ansible"
 
