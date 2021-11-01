@@ -12,19 +12,6 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
-  config.vm.define "snapshot-core", autostart: false do |snapshot_core|
-    snapshot_core.vm.box = "folio/snapshot-core"
-    snapshot_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    snapshot_core.vm.network "forwarded_port", guest: 3000, host: 3000
-    snapshot_core.vm.network "forwarded_port", guest: 8000, host: 8130
-  end
-
-  config.vm.define "snapshot-backend-core", autostart: false do |snapshot_backend_core|
-    snapshot_backend_core.vm.box = "folio/snapshot-backend-core"
-    snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
-  end
-
   config.vm.define "testing", autostart: false do |testing|
     testing.vm.box = "folio/testing"
     testing.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -59,40 +46,6 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
-  config.vm.define "build_snapshot_core", autostart: false do |build_snapshot_core|
-    build_snapshot_core.vm.box = "bento/ubuntu-20.04"
-    build_snapshot_core.vm.provider "virtualbox" do |vt|
-      vt.memory = 10240
-    end
-    build_snapshot_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_snapshot_core.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_snapshot_core.vm.network "forwarded_port", guest: 8000, host: 8130
-    build_snapshot_core.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_snapshot_core"],
-        "snapshot-core" => ["build_snapshot_core"],
-        "stripes-docker" => ["build_snapshot_core"]
-      }
-    end
-  end
-
-  config.vm.define "build_snapshot_backend_core", autostart: false do |build_snapshot_backend_core|
-    build_snapshot_backend_core.vm.box = "bento/ubuntu-20.04"
-    build_snapshot_backend_core.vm.provider "virtualbox" do |vt|
-      vt.memory = 10240
-    end
-    build_snapshot_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_snapshot_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
-    build_snapshot_backend_core.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_snapshot_backend_core"],
-        "snapshot-core" => ["build_snapshot_backend_core"]
-      }
-    end
-  end
-
   config.vm.define "build_testing", autostart: false do |build_testing|
     build_testing.vm.box = "bento/ubuntu-20.04"
     build_testing.vm.provider "virtualbox" do |vt|
@@ -124,41 +77,6 @@ Vagrant.configure(2) do |config|
         "vagrant" => ["build_testing_backend"],
         "testing" => ["build_testing_backend"],
         "stripes-build" => ["build_testing_backend"]
-      }
-    end
-  end
-
-  config.vm.define "build_testing_core", autostart: false do |build_testing_core|
-    build_testing_core.vm.box = "bento/ubuntu-20.04"
-    build_testing_core.vm.provider "virtualbox" do |vt|
-      vt.memory = 10240
-    end
-    build_testing_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_testing_core.vm.network "forwarded_port", guest: 3000, host: 3000
-    build_testing_core.vm.network "forwarded_port", guest: 8000, host: 8130
-    build_testing_core.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_testing_core"],
-        "testing-core" => ["build_testing_core"],
-        "stripes" => ["build_testing_core"]
-      }
-    end
-  end
-
-  config.vm.define "build_testing_backend_core", autostart: false do |build_testing_backend_core|
-    build_testing_backend_core.vm.box = "bento/ubuntu-20.04"
-    build_testing_backend_core.vm.provider "virtualbox" do |vtb|
-      vtb.memory = 10240
-    end
-    build_testing_backend_core.vm.network "forwarded_port", guest: 9130, host: 9130
-    build_testing_backend_core.vm.network "forwarded_port", guest: 8000, host: 8130
-    build_testing_backend_core.vm.provision "ansible" do |ansible|
-      ansible.playbook = "folio.yml"
-      ansible.groups = {
-        "vagrant" => ["build_testing_backend_core"],
-        "testing-core" => ["build_testing_backend_core"],
-        "stripes-build" => ["build_testing_backend_core"]
       }
     end
   end
