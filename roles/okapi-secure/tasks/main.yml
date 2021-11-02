@@ -113,6 +113,10 @@
   changed_when: mod_login_enable.status == 201
   when: mod_login_check.status == 404
 
+- name: Set permissions_list
+  set_fact:
+    permissions_list: '{% if perms_users_assign %}"perms.users.assign.immutable","perms.users.assign.mutable","perms.users.assign.okapi",{% endif %}"perms.all","okapi.all","okapi.proxy.pull.modules.post","login.all","users.all"'
+
 - name: add permissions for superuser on supertenant
   uri:
     url: "{{ okapi_url }}/perms/users"
@@ -122,7 +126,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     body_format: json
-    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ "okapi.all", "okapi.proxy.pull.modules.post", "perms.all", "login.all", "users.all" ] }'
+    body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ {{ permissions_list }} ] }'
     status_code: 201
   when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
 

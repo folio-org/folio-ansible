@@ -11,6 +11,9 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
+# used in create-tenant-admin role
+perms_users_assign: true
+
 # remove this to unpin okapi
 #okapi_version: 4.1.7-1
 okapi_docker_org: folioci

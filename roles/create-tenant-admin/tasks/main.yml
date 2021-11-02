@@ -121,6 +121,10 @@
           {
             "userId": "{{ admin_user_id }}",
             "permissions": [
+          {% if perms_users_assign %}
+              "perms.users.assign.immutable",
+              "perms.users.assign.mutable",
+          {% endif %}
               "perms.all"
             ]
           }
