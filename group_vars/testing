@@ -267,6 +267,8 @@ folio_modules:
   - name: mod-service-interaction
     deploy: yes
 
+  - name: mod-eusage-reports
+    deploy: yes
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete

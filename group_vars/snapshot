@@ -145,6 +145,9 @@ folio_modules:
   - name: mod-erm-usage-harvester
     deploy: yes
 
+  - name: mod-eusage-reports
+    deploy: yes
+
   - name: mod-event-config
     deploy: yes
 
