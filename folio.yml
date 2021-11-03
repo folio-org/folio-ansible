@@ -32,7 +32,7 @@
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
 - name: Configure testing build
-  hosts: testing-core:testing
+  hosts: testing
   pre_tasks:
     - name: set data export AWS URL for minio
       set_fact:
@@ -51,7 +51,7 @@
 # Configure build for top-down deployment
 # (Okapi dependency resolution)
 - name: Configure snapshot build
-  hosts: snapshot-core:snapshot
+  hosts: snapshot
   pre_tasks:
     - name: set data export AWS URL for minio
       set_fact:
