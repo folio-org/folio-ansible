@@ -169,11 +169,8 @@ folio_modules:
 
   - name: mod-erm-usage-harvester
     deploy: yes
- 
-  - name: mod-invoice-storage
-    deploy: yes
 
-  - name: mod-invoice
+  - name: mod-agreements
     deploy: yes
 
   - name: mod-feesfines
@@ -250,6 +247,12 @@ folio_modules:
     deploy: yes
 
   - name: mod-orders
+    deploy: yes
+
+  - name: mod-invoice-storage
+    deploy: yes
+
+  - name: mod-invoice
     deploy: yes
 
   - name: mod-ebsconet
