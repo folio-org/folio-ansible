@@ -21,6 +21,7 @@ Invoke the role in a playbook, e.g.:
     - role: okapi-secure
       superuser_username: okapi_superuser
       superuser_password: mysecret
+      perms_users_assign: yes
 ```
 
 ## Defaults
@@ -30,6 +31,8 @@ okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 superuser_username: super_admin
 superuser_password: admin
+user_only: false
+perms_users_assign: false
 ```
 
 ## Notes
