@@ -127,6 +127,21 @@ folio_modules:
   - name: mod-inventory
     deploy: yes
 
+  - name: mod-search
+    deploy: yes
+    tenant_parameters:
+      - name: runReindex
+        value: "true"
+    docker_env:
+      - name: ELASTICSEARCH_URL
+        value: "http://{{ ansible_default_ipv4.address }}:9301"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: KAFKA_EVENTS_CONSUMER_PATTERN
+        value: "FOLIO\\.(.*\\.)inventory\\.(instance|holdings-record|item)"
+
   - name: mod-copycat
     deploy: yes
 
@@ -266,21 +281,6 @@ folio_modules:
 
   - name: mod-data-import
     deploy: yes
-
-  - name: mod-search
-    deploy: yes
-    tenant_parameters:
-      - name: runReindex
-        value: "true"
-    docker_env:
-      - name: ELASTICSEARCH_URL
-        value: "http://{{ ansible_default_ipv4.address }}:9301"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0"
-      - name: KAFKA_EVENTS_CONSUMER_PATTERN
-        value: "FOLIO\\.(.*\\.)inventory\\.(instance|holdings-record|item)"
 
   - name: mod-service-interaction
     deploy: yes
