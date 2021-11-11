@@ -8,7 +8,7 @@
 * [Replace port 9130](#replace-port-9130)
 * [Updating FOLIO components on Vagrant boxes](#updating-folio-components-on-vagrant-boxes)
     * [Updating Okapi](#updating-okapi)
-    * [Updating Docker-based modules](#updating-docker-based-modules)
+    * [Updating FOLIO backend modules](#updating-folio-backend-modules)
     * [Updating Stripes](#updating-stripes)
 * [Vagrantfile targets](#vagrantfile-targets)
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
@@ -65,27 +65,41 @@ time-to-time it will need to be updated with `vagrant box update`
 (followed by `vagrant destroy` to disable the old default machine).
 The Vagrant box can then be launched with `vagrant up`.
 
-Okapi will be listening on localhost
-port 9130, and the Stripes development server will be on localhost
-port 3000 (on the demo box only).
+Okapi will be listening on localhost port 9130. On the `release`,
+`snapshot`, and `testing` boxes, there will be an nginx server with a
+FOLIO UI bundle listening on localhost port 3000, and another nginx
+server proxying edge modules on port 8000.
 
 ## FOLIO system setup on Vagrant boxes
 
-The prebuilt Vagrant boxes have the FOLIO stack set up to mimic
-production. Okapi is installed using a Debian installation package,
-with its home directory in `/usr/share/folio/okapi`, configuration
-files in `/etc/folio/okapi`, and logs in `/var/log/folio/okapi`. The
-backend modules are deployed through Okapi using its Docker deployment
-facility. The `okapi-deploy` systemd service unit is used to manage
-starting and stopping backend modules. Modules are installed following
-the convention of configuration in `/etc/folio` and static files in
-`/usr/share/folio`. Stripes is installed as a Docker container
-configured to restart on reboot.
+The prebuilt Vagrant boxes have the FOLIO stack set up for convenient
+development. The base distribution is Linux Ubuntu Focal (20.04).
 
-Data is persisted for all modules using a PostgreSQL server running on
-the Vagrant box. The Docker engine is also installed, and configured
-to listen on localhost:4243 of the Vagrant box so that Okapi can use
-it for module deployment.
+* PostgreSQL and the Docker Engine are installed as system services
+  from those projects' APT repositories.
+
+* Kafka/Zookeeper and Elasticsearch are deployed as Docker containers
+  using container images from those projects.
+
+* Okapi is deployed as a Docker container using a container image
+  from the FOLIO project. It uses the configuration file at
+  `/etc/folio/okapi/okapi.json`.
+
+* The FOLIO UI is installed as an Docker container running nginx, with
+  the Stripes UI bundled as the default document.
+
+* For boxes that include edge modules, nginx is installed from the
+  Ubuntu APT repository to proxy edge module traffic.
+
+* All FOLIO backend modules are deployed through Okapi using its
+  Docker deployment facility.
+
+* Edge modules are deployed as Docker containers.
+
+All FOLIO project containers are based on the container images
+published by the project on Docker Hub at
+[folioorg](https://hub.docker.com/u/folioorg) and
+[folioci](https://hub.docker.com/u/folioorg).
 
 ## Running backend modules on your host system
 
@@ -121,11 +135,10 @@ end
 4. Take down Okapi on the VM with `sudo systemctl stop okapi`.
 
 5. Update the Okapi configuration file
-   `/etc/folio/okapi/okapi.conf`. Change the value of the `okapiurl`
+   `/etc/folio/okapi/okapi.json`. Change the value of the `okapiurl`
    property from `http://10.0.2.15:9130` to the newly assigned
    host-only network address (in the example above,
-   `http://192.168.56.101:9130`). Restart Okapi with `sudo systemctl
-   start okapi`.
+   `http://192.168.56.101:9130`). Restart Okapi with `docker restart okapi`.
 
 6. Build and run the module locally on an available port on the host
    machine. Your module will have access to the PostgreSQL database on
@@ -192,12 +205,12 @@ configure it:
         "OKAPI" => "http://example.com:9130"
       }, inline: <<-SHELL
         set -e
-        systemctl stop okapi-deploy 2>/dev/null || systemctl stop okapi
+        docker stop okapi
         sleep 10
         docker ps -a -q | xargs --no-run-if-empty docker rm -f
         rm -rf /etc/folio/stripes/output
         /etc/folio/stripes/build-run
-        systemctl start okapi-deploy 2>/dev/null || systemctl start okapi
+        docker start okapi
       SHELL
     end
 
@@ -256,32 +269,40 @@ stop working.
 
 ### Updating Okapi
 
-    $ sudo systemctl stop okapi-deploy
-    $ sudo apt-get update
-    $ sudo apt-get install okapi
-    $ sudo systemctl start okapi-deploy
+Since Okapi is running as a container, you can upgrade it by using
+`docker pull` to pull in a new version and redeploying. For example,
+to upgrade to the latest Okapi release from the folioorg image repository
+on Docker Hub:
 
-### Updating Docker-based modules
+    $ docker stop okapi
+    $ docker rm okapi
+    $ docker run --detach --name okapi -v /etc/folio/okapi:/usr/verticles/okapi:ro --network host --restart always --env JAVA_OPTIONS='-Djava.awt.headless=true -Ddeploy.waitIterations=90' folioorg/okapi:latest dev -conf okapi/okapi.json
 
-    # for a list of images
-    $ docker images
+### Updating FOLIO backend modules
 
-    # To update a module, first undeploy the modules using the
-    # okapi-deploy service:
-    $ sudo systemctl stop okapi-deploy
+Since the Vagrant boxes use Okapi for module deployment, upgrading
+backend modules is done using the Okapi API.
 
-    # If you want the latest version of the module, just do a
-    # docker pull:
-    $ docker pull folioci/mod-users:latest
+1. Post the module descriptor to `/_/proxy/modules` or use the FOLIO
+   module descriptor repository to get the newest module descriptors.
+1. Post a tenant module descriptor list to
+   `/_/proxy/tenants/diku/install?deploy=true`. For example:
 
-    # To update to a specific version of a module,
-    # edit its deployment descriptor to update
-    # the version specified and pull the image, e.g.:
-    $ sudo vi /etc/folio/deployment-descriptors/mod-users.json
-    $ docker pull folioci/mod-users:14.4.1-SNAPSHOT.13
+```json
+[
+  {
+    "id": "mod-users-14.4.1-SNAPSHOT.13",
+    "action": "enable"
+  }
+]
+```
 
-    # Then redeploy using the new image
-    $ sudo systemctl start okapi-deploy
+Okapi will deploy the new module version and upgrade the `diku` tenant
+to use it.
+
+To use a Vagrant box with local module versions that are not included
+in the FOLIO Docker image repositories, see
+[Running backend modules on your host system](#running-backend-modules-on-your-host-system).
 
 ### Updating Stripes
 
@@ -348,8 +369,8 @@ whichever ports you prefer.
 
 ### Viewing the Okapi log
 
-Okapi is deployed as a Docker container.
-So view its logs as for other [module logs](#viewing-backend-module-logs).
+Okapi is deployed as a Docker container. To view its log, use `docker
+logs okapi`.
 
 ### Viewing backend module logs
 
