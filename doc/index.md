@@ -283,22 +283,14 @@ on Docker Hub:
 Since the Vagrant boxes use Okapi for module deployment, upgrading
 backend modules is done using the Okapi API.
 
-1. Post the module descriptor to `/_/proxy/modules` or use the FOLIO
-   module descriptor repository to get the newest module descriptors.
-1. Post a tenant module descriptor list to
-   `/_/proxy/tenants/diku/install?deploy=true`. For example:
+    # Get the newest module descriptors from the FOLIO repository
+    $ curl -w '\n' -X POST -d '{"urls": ["https://folio-registry.dev.folio.org"]}' http://localhost:9130/_/proxy/pull/modules
 
-```json
-[
-  {
-    "id": "mod-users-14.4.1-SNAPSHOT.13",
-    "action": "enable"
-  }
-]
-```
+    # Upgrade the module for the diku tenant
+    $ curl -w '\n' -X POST -d '[{"id": "mod-email-1.12.0","action": "enable"}]' "http://localhost:9130/_/proxy/tenants/diku/install?deploy=true"
 
-Okapi will deploy the new module version and upgrade the `diku` tenant
-to use it.
+Okapi will deploy the new version of the module, enable it for the
+tenant, and undeploy the old version.
 
 To use a Vagrant box with local module versions that are not included
 in the FOLIO Docker image repositories, see
