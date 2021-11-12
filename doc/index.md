@@ -132,7 +132,7 @@ end
    address 10.0.2.15 and eth1 with the address you assign from the
    host-only network.
 
-4. Take down Okapi on the VM with `sudo systemctl stop okapi`.
+4. Take down Okapi on the VM with `docker stop okapi`.
 
 5. Update the Okapi configuration file
    `/etc/folio/okapi/okapi.json`. Change the value of the `okapiurl`
