@@ -85,7 +85,7 @@ development. The base distribution is Linux Ubuntu Focal (20.04).
   from the FOLIO project. It uses the configuration file at
   `/etc/folio/okapi/okapi.json`.
 
-* The FOLIO UI is installed as an Docker container running nginx, with
+* The FOLIO UI is installed as a Docker container running nginx, with
   the Stripes UI bundled as the default document.
 
 * For boxes that include edge modules, nginx is installed from the
@@ -99,7 +99,7 @@ development. The base distribution is Linux Ubuntu Focal (20.04).
 All FOLIO project containers are based on the container images
 published by the project on Docker Hub at
 [folioorg](https://hub.docker.com/u/folioorg) and
-[folioci](https://hub.docker.com/u/folioorg).
+[folioci](https://hub.docker.com/u/folioci).
 
 ## Running backend modules on your host system
 
