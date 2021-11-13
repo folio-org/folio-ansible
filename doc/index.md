@@ -3,6 +3,10 @@
 <!-- ../../okapi/doc/md2toc -l 2 index.md -->
 * [Prebuilt Vagrant boxes](#prebuilt-vagrant-boxes)
 * [FOLIO system setup on Vagrant boxes](#folio-system-setup-on-vagrant-boxes)
+* [Log files](#log-files)
+    * [Viewing the Okapi log](#viewing-the-okapi-log)
+    * [Viewing backend module logs](#viewing-backend-module-logs)
+    * [Viewing the Stripes log](#viewing-the-stripes-log)
 * [Running backend modules on your host system](#running-backend-modules-on-your-host-system)
 * [Replace localhost by hostname on the demo box](#replace-localhost-by-hostname-on-the-demo-box)
 * [Replace port 9130](#replace-port-9130)
@@ -14,9 +18,6 @@
 * [Troubleshooting/Known Issues](#troubleshootingknown-issues)
     * [404 error on Vagrant box update](#404-error-on-vagrant-box-update)
     * [Vagrant "forwarded port is already in use"](#vagrant-forwarded-port-is-already-in-use)
-    * [Viewing the Okapi log](#viewing-the-okapi-log)
-    * [Viewing backend module logs](#viewing-backend-module-logs)
-    * [Viewing the Stripes log](#viewing-the-stripes-log)
     * [Authentication failure after vagrant box update](#authentication-failure-after-vagrant-box-update)
     * [Launching Vagrant on Windows](#launching-vagrant-on-windows)
     * [Some recent Vagrant versions have non-working `curl`](#some-recent-vagrant-versions-have-non-working-curl)
@@ -100,6 +101,37 @@ All FOLIO project containers are based on the container images
 published by the project on Docker Hub at
 [folioorg](https://hub.docker.com/u/folioorg) and
 [folioci](https://hub.docker.com/u/folioci).
+
+## Log files
+
+The log files of all modules can be viewed by logging into the box
+with `vagrant ssh`, and then using `docker logs <container_name>`.
+
+Follow the logs by appending `--follow` parameter to the `docker logs` command.
+
+### Viewing the Okapi log
+
+Okapi is deployed as a Docker container. To watch its log, use
+`docker logs okapi --follow`
+
+### Viewing backend module logs
+
+Backend modules on the prebuilt boxes are deployed by Okapi as Docker
+containers. To view the logs:
+
+1. Log into the box using `vagrant ssh`.
+2. Get the container name of the module you want to check by using `docker ps`.
+3. Look at the log with `docker logs <container_name>`.
+
+### Viewing the Stripes log
+
+Stripes is deployed as a Docker container.
+
+    $ docker logs stripes_stripes_1
+
+To follow the log:
+
+    $ docker logs stripes_stripes_1 --follow
 
 ## Running backend modules on your host system
 
@@ -358,33 +390,6 @@ to add the line(s):
 
 And then add lines to forward the Okapi and/or stripes ports to
 whichever ports you prefer.
-
-### Viewing the Okapi log
-
-Okapi is deployed as a Docker container. To view its log, use `docker
-logs okapi`.
-
-### Viewing backend module logs
-
-Backend modules on the prebuilt boxes are deployed by Okapi as Docker
-containers. To view the logs:
-
-1. Log into the box using `vagrant ssh`.
-2. Get the container name of the module you want to check with `docker ps`.
-3. Look at the log with `docker logs <container_name>`. You can
-   follow the log by adding the `--follow` parameter to the `docker
-   logs` command.
-
-### Viewing the Stripes log
-
-Stripes is deployed as a Docker container.  You can
-view the log by logging into the box with `vagrant ssh`, then:
-
-    $ docker logs stripes_stripes_1
-
-To follow the log:
-
-    $ docker logs stripes_stripes_1 --follow
 
 ### Authentication failure after vagrant box update
 
