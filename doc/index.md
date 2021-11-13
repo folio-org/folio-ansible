@@ -66,6 +66,15 @@ time-to-time it will need to be updated with `vagrant box update`
 (followed by `vagrant destroy` to disable the old default machine).
 The Vagrant box can then be launched with `vagrant up`.
 
+Do `vagrant ssh` and watch Okapi preparing the system:
+`docker logs okapi --follow`
+
+The [Tutorial](https://dev.folio.org/tutorials/folio-vm/)
+provides further introduction to using these boxes.
+
+However, as explained there, wait a while before attempting to interact
+because Okapi will still be starting modules.
+
 Okapi will be listening on localhost port 9130. On the `release`,
 `snapshot`, and `testing` boxes, there will be an nginx server with a
 FOLIO UI bundle listening on localhost port 3000, and another nginx
@@ -97,8 +106,9 @@ development. The base distribution is Linux Ubuntu Focal (20.04).
 
 * Edge modules are deployed as Docker containers.
 
-All FOLIO project containers are based on the container images
-published by the project on Docker Hub at
+All FOLIO project containers are based on the images that are
+[published](https://dev.folio.org/download/artifacts/#docker-images)
+by the project on Docker Hub at
 [folioorg](https://hub.docker.com/u/folioorg) and
 [folioci](https://hub.docker.com/u/folioci).
 
