@@ -16,7 +16,7 @@
 - name: "Get all permissionSets excluding okapi.*, modperms.*, and SYS#*"
   # cql query for cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#*
   uri:
-    url: "{{ okapi_url }}/perms/permissions?query=cql.allRecords%3D1%20not%20permissionName%3D%3Dokapi.%2A%20not%20permissionName%3D%3Dmodperms.%2A%20not%20permissionName%3D%3DSYS%23%2A&length=5000"
+    url: "{{ okapi_url }}/perms/permissions?query=cql.allRecords%3D1%20not%20permissionName%3D%3Dokapi.%2A%20not%20permissionName%3D%3Dperms.users.assign.okapi%20not%20permissionName%3D%3Dmodperms.%2A%20not%20permissionName%3D%3DSYS%23%2A&length=5000"
     method: GET
     headers:
       Accept: "application/json, text/plain"
