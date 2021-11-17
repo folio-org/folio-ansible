@@ -27,7 +27,7 @@ Invoke the role in a playbook, optionally with variables defined, e.g.:
 
 ## Notes
 
-The behavior of this role depends on the variable `perms_users_assign`. If that variable is true, the user is given the extra permissions `perms.users.assign.immutable` and `perms.users.assign.mutable` for compatibility with versions of mod-permissions later than v5.15.0-SNAPSHOT.121. Otherwise, the default behavior is to give the user only the `perms.all` permission.
+The behavior of this role depends on the variable `perms_users_assign`. If that variable is true, the user is given the extra permissions `perms.users.assign.immutable`, `perms.users.assign.mutable`, and `perms.users.assign.okapi` for compatibility with versions of mod-permissions later than v5.15.0-SNAPSHOT.121. Otherwise, the default behavior is to give the user only the `perms.all` permission.
 
 ## Variables
 
