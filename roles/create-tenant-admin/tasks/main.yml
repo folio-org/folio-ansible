@@ -124,6 +124,7 @@
           {% if perms_users_assign %}
               "perms.users.assign.immutable",
               "perms.users.assign.mutable",
+              "perms.users.assign.okapi"
           {% endif %}
               "perms.all"
             ]
