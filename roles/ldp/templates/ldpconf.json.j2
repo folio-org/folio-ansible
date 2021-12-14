@@ -18,7 +18,19 @@
             "okapi_url": "{{ okapi_url }}",
             "okapi_tenant": "{{ tenant }}",
             "okapi_user": "{{ admin_user.username }}",
-            "okapi_password": "{{ admin_user.password }}"
+            "okapi_password": "{{ admin_user.password }}",
+            "direct_tables": [
+               "inventory_instances",
+               "inventory_holdings",
+               "inventory_items",
+               "srs_marc",
+               "srs_records" 
+            ],
+            "direct_database_name": "{{ folio_database_name }}",
+            "direct_database_host": "{{ pg_host }}",
+            "direct_database_port": {{ pg_port }},
+            "direct_database_user": "{{ pg_admin_user }}",
+            "direct_database_password": "{{ pg_admin_password }}"
         }
     },
     "anonymize": false

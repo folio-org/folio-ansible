@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker run \
+  -v {{ ldp_data_dir }}:/var/lib/ldp:rw \
+  {{ ldpmarc_docker_image }} -u {{ ldp_user }}

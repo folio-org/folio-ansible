@@ -13,6 +13,15 @@
     db_admin_password: "{{ ldp_admin_password }}"
   when: not update_only
 
+- name: Enable postgresql trigram support
+  postgresql_query: 
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    db: "{{ ldp_db }}"
+    query: CREATE EXTENSION pg_trgm
+  when: not update_only
+
 # create additional config and ldp users
 - name: Create ldpconfig user for {{ tenant }}
   postgresql_user:
@@ -200,6 +209,26 @@
   become: yes
   when: (not init_only) and ('docker' in grp)
 
+- name: template ldpmarc 
+  template:
+    src: ldpmarc.j2
+    dest: "{{ ldp_cron_home }}/ldpmarc"
+    mode: a+x
+    owner: "{{ ldp_cron_user }}"
+    group: "{{ ldp_cron_group }}"
+  become: yes
+  when: (not init_only) and ('docker' in grp)
+
+- name: Set up the ldpmarc cron job
+  ansible.builtin.cron: 
+    name: ldpmarc
+    minute: "18"
+    user: "{{ ldp_cron_user }}" 
+    job: "{{ ldp_cron_home }}/ldpmarc"
+    cron_file: ansible_ldp_marc
+  become: yes
+  when: (not init_only) and ('docker' in grp)
+
 - name: clone derived tables repo
   git:
     repo: "{{ ldp_derived_tables_repo }}"
@@ -228,7 +257,6 @@
     group: "{{ ldp_cron_group }}"
   become: yes
   when: (not init_only) and ('docker' in grp)
-  when: (not init_only) and ('docker' in grp)
 
 - name: template ldp derived_tables script
   template:
@@ -248,5 +276,4 @@
     job: "{{ ldp_cron_home }}/derived_tables"
     cron_file: ansible_ldp_derived_tables
   become: yes
-  when: not init_only
   when: (not init_only) and ('docker' in grp)

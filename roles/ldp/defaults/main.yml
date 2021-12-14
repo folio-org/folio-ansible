@@ -2,14 +2,13 @@
 okapi_port: "9130"
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 
-pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_maint_db: postgres
 pg_host: "{{ ansible_default_ipv4.address }}"
 pg_port: 5432
-
+folio_database_name: okapi_modules
 
 admin_user:
   username: diku_admin
@@ -17,6 +16,7 @@ admin_user:
 
 tenant: diku
 ldp_docker_image: ghcr.io/library-data-platform/ldp:latest
+ldpmarc_docker_image: ghcr.io/library-data-platform/ldpmarc:latest
 ldp_db: ldp
 ldp_admin_user: ldpadmin
 ldp_admin_password: diku_ldpadmin9367
