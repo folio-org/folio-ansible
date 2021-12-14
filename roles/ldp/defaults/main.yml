@@ -16,6 +16,7 @@ admin_user:
 
 tenant: diku
 ldp_docker_image: ghcr.io/library-data-platform/ldp:latest
+ldpmarc_docker_image: ghcr.io/library-data-platform/ldpmarc:latest
 ldp_db: ldp
 ldp_admin_user: ldpadmin
 ldp_admin_password: diku_ldpadmin9367
