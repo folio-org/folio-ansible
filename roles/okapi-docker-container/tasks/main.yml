@@ -32,6 +32,8 @@
     command: "dev -conf okapi/okapi.json"
     env:
       JAVA_OPTIONS: "-Djava.awt.headless=true{% for option in okapi_java_opts %} {{ option }}{% endfor %}"
+    labels:
+      service: okapi
   register: okapi_create_container
 
 - meta: flush_handlers

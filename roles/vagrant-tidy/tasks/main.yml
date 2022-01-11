@@ -1,19 +1,21 @@
 ---
 # Role to tidy up a Vagrant box for packaging
-# Note that vagrant-tidy.sh destroys all free disk space!
-- name: Copy vagrant-tidy.sh to /root
+- name: Stop okapi container
   become: yes
-  copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
+  docker_container:
+    name: okapi
+    state: stopped
+
+- name: Prune containers for backend modules
+  become: yes
+  command: "/usr/bin/docker system prune -f --volumes --filter label!=service"
 
 - name: Stop services
   become: yes
   service: name={{ item }} state=stopped
   with_items:
-    - okapi-deploy
-    - okapi
     - docker
     - postgresql
-  ignore_errors: yes
 
 # packer sticks this in here?
 - name: Remove guest additions ISO, if there
@@ -27,6 +29,52 @@
   file:
     path: "~/.docker"
     state: absent
+
+- name: Clean up stripes build directory node_modules
+  become: yes
+  file:
+    path: "{{ stripes_conf_dir|default('/etc/folio/stripes') }}/node_modules"
+    state: absent
+
+- name: Clean up stripes build directory output
+  become: yes
+  file:
+    path: "{{ stripes_conf_dir|default('/etc/folio/stripes') }}/output"
+    state: absent
+
+- name: Clean out yarn cache
+  become: yes
+  command: "/usr/bin/yarn cache clean --all"
+  ignore_errors: yes
+
+- name: Remove root bash history
+  become: yes
+  file:
+    path: /root/.bash_history
+    state: absent
+
+- name: Remove vagrant bash history
+  file:
+    path: /home/vagrant/.bash_history
+    state: absent
+
+- name: apt autoremove
+  become: yes
+  apt: autoremove=yes
+
+- name: Clear out apt cache
+  become: yes
+  command: /usr/bin/apt-get clean -y
+
+- name: Clean up log files
+  become: yes
+  shell:
+    cmd: "find /var/log -type f | while read f; do echo -ne '' > $f; done;"
+
+# Note that vagrant-tidy.sh destroys all free disk space!
+- name: Copy vagrant-tidy.sh to /root
+  become: yes
+  copy: src=vagrant-tidy.sh dest=/root/vagrant-tidy.sh mode=0700
 
 - name: Run vagrant-tidy.sh
   become: yes
