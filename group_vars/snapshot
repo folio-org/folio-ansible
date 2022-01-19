@@ -63,6 +63,17 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     deploy: yes
+    docker_env
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ erm_aws_id | default('minioadmin') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
   - name: mod-audit
     deploy: yes
@@ -200,6 +211,17 @@ folio_modules:
 
   - name: mod-licenses
     deploy: yes
+    docker_env
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ erm_aws_id | default('minioadmin') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
   - name: mod-login
     docker_cmd:
