@@ -63,7 +63,7 @@ add_modules:
 folio_modules:
   - name: mod-agreements
     deploy: yes
-    docker_env
+    docker_env:
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -211,7 +211,7 @@ folio_modules:
 
   - name: mod-licenses
     deploy: yes
-    docker_env
+    docker_env:
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
