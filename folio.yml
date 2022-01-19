@@ -34,9 +34,10 @@
 - name: Configure testing build
   hosts: testing
   pre_tasks:
-    - name: set data export AWS URL for minio
+    - name: set data export and erm AWS URL for minio
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+        erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -53,9 +54,10 @@
 - name: Configure snapshot build
   hosts: snapshot
   pre_tasks:
-    - name: set data export AWS URL for minio
+    - name: set data export and erm AWS URL for minio
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+        erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
@@ -78,8 +80,11 @@
   hosts: release-core:release
   pre_tasks:
     - name: set data export AWS URL for minio
+    - name: set data export and erm AWS URL for minio
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+        erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+
   roles:
     - build-module-list
     - okapi-register-modules
