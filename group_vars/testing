@@ -148,6 +148,9 @@ folio_modules:
   - name: mod-quick-marc
     deploy: yes
 
+  - name: mod-audit
+    deploy: yes
+
   - name: mod-data-export
     deploy: yes
     docker_env:
@@ -287,9 +290,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-remote-storage
-    deploy: yes
-
-  - name: mod-audit
     deploy: yes
 
   - name: mod-data-import
