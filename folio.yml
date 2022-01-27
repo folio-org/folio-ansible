@@ -127,6 +127,7 @@
       edge_module_path: /prod/rtac
       edge_module_expose_port: 8081
       edge_module_docker_env:
+        LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
       auth_required: yes
       inst_user_perms:
         - rtac.all
@@ -136,6 +137,7 @@
       edge_module_path: /oai
       edge_module_expose_port: 8081
       edge_module_docker_env:
+        LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
       auth_required: yes
       inst_user_perms:
         - oai-pmh.all
@@ -150,6 +152,7 @@
       edge_module_path: /orders
       edge_module_expose_port: 8081
       edge_module_docker_env:
+        LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
       auth_required: yes
       inst_user_perms:
         - gobi.all

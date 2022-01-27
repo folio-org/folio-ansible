@@ -33,6 +33,7 @@ module_env:
   - { name: ENV, value: "{{ kafka_topic_env }}" }
   - { name: ELASTICSEARCH_HOST, value: "{{ elasticsearch_host }}" }
   - { name: ELASTICSEARCH_PORT, value: "{{ elasticsearch_port }}" }
+  - { name: LOG4J_FORMAT_MSG_NO_LOOKUPS, value: "true" }
 
 # Okapi setup
 okapi_port: 9130
