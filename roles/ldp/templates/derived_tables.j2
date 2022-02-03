@@ -10,5 +10,5 @@ for f in $( cat runlist.txt ); do
     echo >> logfile
     cat $f > tmpfile
     echo "GRANT SELECT ON ALL TABLES IN SCHEMA folio_reporting TO ldp;" >> tmpfile
-    psql -U {{ ldp_admin_user }} -h {{ pg_host }} {{ ldp_db }} -a -f tmpfile >> logfile 2>&1
+    psql -U {{ ldp_admin_user }} -h {{ pg_host }} {{ ldp_db }} -a -c 'set search_path = folio_derived' -f tmpfile >> logfile 2>&1
 done
