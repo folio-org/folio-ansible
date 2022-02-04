@@ -4,22 +4,28 @@ auth_required: true
 load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
+minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2021/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2021/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-2021/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-2021/stripes-install.json
+
+# used in create-tenant-admin role
+# enable in Lotus release
+#perms_users_assign: true
 
 update_launch_descr: true
 # Need to use xenial repo for Okapi 3.x
 folio_apt_repos:
   - focal
-okapi_version: 4.8.2
+okapi_version: 4.11.1
+okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
 save_install: no
 minio_port: 9500
-# used in okapi-tenant-deploy
-deploy_timeout: 1800
 
+# used in okapi-tenant-deploy
+deploy_timeout: 1200
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
@@ -41,17 +47,41 @@ tenant_parameters:
   - name: loadSample
     value: "true"
 
+# ldp
+ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.4.2'
+ldp_derived_tables_version: 'release-1.2'
+
 # Some modules require special initialization parameters.
 folio_modules:
+  - name: mod-agreements
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ erm_aws_id | default('minioadmin') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ erm_bucket_name | default('erm-bucket') }}"
+
   - name: mod-data-export
     deploy: yes
     docker_env:
       - name: AWS_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('') }}"
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('') }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -Dbucket.name={{ data_export_bucket_name | default('') }}"
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
   - name: mod-data-export-worker
     deploy: yes
@@ -66,6 +96,22 @@ folio_modules:
         value: "{{ aws_region | default('') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+
+  - name: mod-licenses
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+      - name: AWS_ACCESS_KEY_ID
+        value: "{{ erm_aws_id | default('minioadmin') }}"
+      - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: AWS_URL
+        value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: AWS_BUCKET
+        value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
   - name: mod-pubsub
     deploy: yes
@@ -97,7 +143,7 @@ folio_modules:
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R2-2021
+stripes_github_version: R3-2021
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
@@ -119,8 +165,8 @@ folio_cron_jobs:
 box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Juniper Release
+  # FOLIO Kiwi Release
 
   Admin login: diku_admin/admin
 
-  R2-2021 (Juniper) release version of the FOLIO platform, built from R2-2021 release artifacts, with all updates  [Juniper release notes](https://wiki.folio.org/display/REL/R2+2021+%28Juniper%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R3-2021 (Kiwi) release version of the FOLIO platform, built from R3-2021 release artifacts, with all updates  [Kiwi release notes](https://wiki.folio.org/display/REL/Kiwi+%28R3+2021%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
