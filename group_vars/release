@@ -10,7 +10,8 @@ deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-202
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-2021/stripes-install.json
 
 # used in create-tenant-admin role
-perms_users_assign: true
+# enable in Lotus release
+#perms_users_assign: true
 
 update_launch_descr: true
 # Need to use xenial repo for Okapi 3.x
