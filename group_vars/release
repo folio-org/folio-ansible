@@ -25,7 +25,7 @@ save_install: no
 minio_port: 9500
 
 # used in okapi-tenant-deploy
-deploy_timeout: 1200
+deploy_timeout: 1800
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
