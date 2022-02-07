@@ -121,7 +121,7 @@
           {
             "userId": "{{ admin_user_id }}",
             "permissions": [
-          {% if perms_users_assign %}
+          {% if perms_users_assign|default(false) %}
               "perms.users.assign.immutable",
               "perms.users.assign.mutable",
               "perms.users.assign.okapi",
