@@ -77,13 +77,12 @@
     - mod-ldp-config
 
 - name: Configure release build
-  hosts: release-core:release
+  hosts: release
   pre_tasks:
     - name: set data export and erm AWS URL for minio
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
-
   roles:
     - build-module-list
     - okapi-register-modules
@@ -175,7 +174,7 @@
     - add-users
 
 - name: Add testing_admin user for diku with okapi.all permissions
-  hosts: snapshot-core:snapshot:testing-core:testing:release-core:release
+  hosts: snapshot-core:snapshot:testing-core:testing:release
   roles:
     - role: create-user
       username: testing_admin
