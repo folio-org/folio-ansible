@@ -66,10 +66,11 @@
   become: yes
   command: /usr/bin/apt-get clean -y
 
-- name: Clean up log files
-  become: yes
-  shell:
-    cmd: "find /var/log -type f | while read f; do echo -ne '' > $f; done;"
+# This fails for some reason with the "release" build
+# - name: Clean up log files
+#   become: yes
+#   shell:
+#     cmd: "find /var/log -type f | while read f; do echo -ne '' > $f; done;"
 
 # Note that vagrant-tidy.sh destroys all free disk space!
 - name: Copy vagrant-tidy.sh to /root
