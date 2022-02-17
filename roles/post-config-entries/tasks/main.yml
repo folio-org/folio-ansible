@@ -75,7 +75,7 @@
           X-Okapi-Tenant: "{{ tenant }}"
           Accept: application/json
           X-Okapi-Token: "{{ tenant_token | default('') }}"
-        body: "{{ lookup('template', 'suppress-edit.json.j2') }}"
+        body: "{{ lookup('template', 'suppress_edit.json.j2') }}"
         status_code: 201, 422
   when: do_suppress_edit 
 
