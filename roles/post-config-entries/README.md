@@ -27,3 +27,9 @@ admin_user:
   username: diku_admin
   password: admin
 ```
+
+In addition to the default config entries, when 'do_suppress_edit' is set to 'True' and a
+list of users is defined in 'suppress_edit_userlist',  the list of users are configured so 
+that they cannot be edited via the Stripes UI (@folio/users). 
+
+
