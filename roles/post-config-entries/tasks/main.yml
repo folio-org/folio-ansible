@@ -53,17 +53,9 @@
         uuid_list="{{ uuid_list|default([]) + [ item.json.users[0].id ] }}"
       loop: "{{ user_list.results }}"
 
-    - name: debug uuid_list
-      ansible.builtin.debug:
-        msg: "{{ uuid_list }}"
-
     - name: concat list to string
       set_fact: 
         uuids="{{ uuid_list | join('\\", \\"') }}" 
-  
-    - name: debug uuids
-      ansible.builtin.debug:
-        msg: "{{ uuids }}"
  
     - name: POST suppress-edit configuration
       uri: 
