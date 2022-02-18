@@ -69,5 +69,6 @@
           X-Okapi-Token: "{{ tenant_token | default('') }}"
         body: "{{ lookup('template', 'suppress_edit.json.j2') }}"
         status_code: 201, 422
+      when: uuid_list|length > 0 
   when: do_suppress_edit 
 
