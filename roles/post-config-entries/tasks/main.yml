@@ -33,3 +33,42 @@
     body: "{{ lookup('template', item) }}" 
     status_code: 201, 422
   with_items: "{{ config_entry_list }}"
+
+- name: Configure suppress-edit users
+  block: 
+    - name: get user uuids 
+      uri: 
+        url: "{{ okapi_url }}/users?query=username%3d%3d{{ item }}"
+        headers: 
+          Authtoken-Refresh-Cache: "true"
+          Accept: "application/json, text/plain"
+          X-Okapi-Tenant: "{{ tenant }}"
+          X-Okapi-Token: "{{ tenant_token | default('') }}"
+        status_code: 200
+      loop: "{{ suppress_edit_userlist }}"   
+      register: user_list  
+
+    - name: set fact uuids
+      set_fact: 
+        uuid_list="{{ uuid_list|default([]) + [ item.json.users[0].id ] }}"
+      loop: "{{ user_list.results }}"
+
+    - name: concat list to string
+      set_fact: 
+        uuids="{{ uuid_list | join('\\", \\"') }}" 
+ 
+    - name: POST suppress-edit configuration
+      uri: 
+        url: "{{ okapi_url }}/configurations/entries"
+        method: POST
+        body_format: json
+        headers: 
+          Authtoken-Refresh-Cache: "true"
+          X-Okapi-Tenant: "{{ tenant }}"
+          Accept: application/json
+          X-Okapi-Token: "{{ tenant_token | default('') }}"
+        body: "{{ lookup('template', 'suppress_edit.json.j2') }}"
+        status_code: 201, 422
+      when: uuid_list|length > 0 
+  when: do_suppress_edit 
+
