@@ -31,6 +31,8 @@
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
 # But don't want to register or enable modules at this point
+#
+# Deprecated: FOLIO-3419
 - name: Configure testing build
   hosts: testing
   pre_tasks:
