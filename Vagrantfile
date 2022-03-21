@@ -12,6 +12,7 @@ Vagrant.configure(2) do |config|
     vb.cpus = 2
   end
 
+# deprecated
   config.vm.define "testing", autostart: false do |testing|
     testing.vm.box = "folio/testing"
     testing.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -19,6 +20,7 @@ Vagrant.configure(2) do |config|
     testing.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
+# deprecated
   config.vm.define "testing-backend", autostart: false do |testing_backend|
     testing_backend.vm.box = "folio/testing-backend"
     testing_backend.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -46,6 +48,7 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
+# deprecated
   config.vm.define "build_testing", autostart: false do |build_testing|
     build_testing.vm.box = "bento/ubuntu-20.04"
     build_testing.vm.provider "virtualbox" do |vt|
@@ -64,6 +67,7 @@ Vagrant.configure(2) do |config|
     end
   end
 
+# deprecated
   config.vm.define "build_testing_backend", autostart: false do |build_testing_backend|
     build_testing_backend.vm.box = "bento/ubuntu-20.04"
     build_testing_backend.vm.provider "virtualbox" do |vtb|

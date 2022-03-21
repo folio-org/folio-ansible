@@ -1,4 +1,6 @@
 ---
+# Deprecated: FOLIO-3419
+
 # Variables for building testing/testing-backend
 auth_required: true
 total_records_key: totalRecords

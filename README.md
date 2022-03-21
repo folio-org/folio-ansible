@@ -15,7 +15,7 @@ The primary audiences for this project are:
 
 ## License
 
-Copyright (C) 2016-2021 The Open Library Foundation
+Copyright (C) 2016-2022 The Open Library Foundation
 
 This software is distributed under the terms of the Apache License,
 Version 2.0. See the file "[LICENSE](LICENSE)" for more information.
@@ -46,16 +46,20 @@ create a new directory, `cd` into it, and try:
     $ vagrant init folio/release-core
     $ vagrant up
 
+Note: That is for the Juniper R2-2021 release -- subsequent flower releases do not have a release-core.
+Awaiting platform-minimal [FOLIO-3253](https://issues.folio.org/browse/FOLIO-3253).
+
 Now you can open [http://localhost:3000](http://localhost:3000).
 Admin login: diku\_admin/admin
 
 Or, if you want to try a prepackaged FOLIO backend Vagrant box with the
-most recent versions of all components, try:
+most recent versions of all components, do:
 
-    $ vagrant init folio/testing-backend
+    $ vagrant init folio/snapshot
     $ vagrant up
 
-The testing boxes are absolutely _not_ guaranteed to work together.
+Note: The VM will require the allocation of more memory.
+Refer to [notes](https://dev.folio.org/tutorials/folio-vm/01-create-workspace/#configure-vagrantfile).
 
 The Vagrant Cloud page [folio](https://app.vagrantup.com/folio) lists
 all available boxes and has
