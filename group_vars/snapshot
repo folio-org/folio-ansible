@@ -115,6 +115,8 @@ folio_modules:
   - name: mod-data-export
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -132,6 +134,8 @@ folio_modules:
   - name: mod-data-export-worker
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -285,6 +289,8 @@ folio_modules:
   - name: mod-pubsub
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
       - name: SYSTEM_USER_NAME
@@ -315,6 +321,8 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: KAFKA_EVENTS_CONSUMER_PATTERN
         value: "FOLIO\\.(.*\\.)inventory\\.(instance|holdings-record|item)"
+      - name: SEARCH_BY_ALL_FIELDS_ENABLED
+        value: "true"
 
   - name: mod-sender
     deploy: yes
@@ -328,6 +336,8 @@ folio_modules:
   - name: mod-source-record-storage
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
