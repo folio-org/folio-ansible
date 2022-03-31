@@ -129,7 +129,7 @@
 - name: ldp_add_column.conf
   get_url: 
     url: "{{ ldp_add_column_conf }}"
-    dest: "{{ ldp_data_dir }}"
+    dest: "{{ ldp_data_dir }}/ldp_add_column.conf"
     mode: 0644
   become: yes
 
