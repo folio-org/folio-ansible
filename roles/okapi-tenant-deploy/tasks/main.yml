@@ -1,18 +1,18 @@
 ---
-#- name: Set Okapi environment
-#  uri:
-#    url: "{{ okapi_url }}/_/env"
-#    method: POST
-#    body_format: json
-#    headers:
-#      X-Okapi-Tenant: "supertenant"
-#      X-Okapi-Token: "{{ supertenant_token | default('') }}"
-#      Accept: application/json, text/plain
-#    body: "{{ item|to_json }}"
-#    status_code: 201
-#  register: set_okapi_env
-#  changed_when: set_okapi_env.status == 201
-#  with_items: "{{ module_env }}"
+- name: Set Okapi environment
+  uri:
+    url: "{{ okapi_url }}/_/env"
+    method: POST
+    body_format: json
+    headers:
+      X-Okapi-Tenant: "supertenant"
+      X-Okapi-Token: "{{ supertenant_token | default('') }}"
+      Accept: application/json, text/plain
+    body: "{{ item|to_json }}"
+    status_code: 201
+  register: set_okapi_env
+  changed_when: set_okapi_env.status == 201
+  with_items: "{{ module_env }}"
 
 - name: Post deployment descriptors for remote modules
   include_tasks: okapi-discovery.yml
