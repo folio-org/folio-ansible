@@ -340,8 +340,6 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
-      - name: DB_MAXPOOLSIZE
-        value: "15"
 
   - name: mod-tags
     tenant_parameters:
