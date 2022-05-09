@@ -29,6 +29,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "snapshot", autostart: false do |snapshot|
     snapshot.vm.box = "folio/snapshot"
+    snapshot.vm.provider "virtualbox" do |vb|
+      vb.memory = 20480
+    end
     snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
@@ -90,6 +93,9 @@ Vagrant.configure(2) do |config|
     build_snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     build_snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
+    build_snapshot.vm.provider "virtualbox" do |vb|
+      vb.memory = 20480
+    end
     build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
       ansible.groups = {
@@ -113,7 +119,7 @@ Vagrant.configure(2) do |config|
       ansible.groups = {
         "vagrant" => ["build_release_core"],
         "release-core" => ["build_release_core"],
-        "stripes" => ["build_release_core"]
+        "stripes-docker" => ["build_release_core"]
       }
     end
   end
