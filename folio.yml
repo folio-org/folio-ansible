@@ -17,7 +17,8 @@
 - hosts: all
   roles:
     - common
-    - postgresql
+    - role: postgresql
+      pg_max_conn: 1000
     - docker-engine
     - kafka-zk
     - okapi-docker-container
@@ -85,15 +86,22 @@
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
-
   roles:
-    - build-module-list
-    - okapi-register-modules
+    - role: stripes-build
+      okapi_register_modules: false
+      okapi_enable_modules: false
+    - okapi-pull
     - tenant-data
-    - okapi-tenant-deploy
+    - build-module-list
+    - okapi-deployment
+    - role: okapi-tenant-deploy
+      create_db: no
+      module_env: []
     - create-tenant-admin
     - tenant-admin-permissions
     - set-patron-group
+    - ldp
+    - mod-ldp-config
 
 # Edge modules
 - name: Set up Okapi to support edge modules
@@ -121,7 +129,7 @@
     - tenant-admin-permissions
 
 - name: Set up edge modules
-  hosts: testing:snapshot
+  hosts: testing:snapshot:release
   roles:
     - role: edge-module
       edge_module: edge-rtac
