@@ -58,6 +58,7 @@ Refer to [notes](https://dev.folio.org/tutorials/folio-vm/01-create-workspace/#c
 If you have downloaded a previous version of the box, then from
 time-to-time it will need to be updated with `vagrant box update`
 (followed by `vagrant destroy` to disable the old default machine).
+
 The Vagrant box can then be launched with `vagrant up`.
 
 Do `vagrant ssh` and watch Okapi preparing the system:
