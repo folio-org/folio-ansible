@@ -1,11 +1,13 @@
 email_smtp_host: localhost
 email_smtp_port: 587
 email_from: noreply@localhost
+email_reply_to: noreply@localhost
 email_username: "email_user"
 email_password: "email_password"
 
 config_entry_list:
   - email_from.json.j2
+  - email_reply_to.json.j2
   - email_password.json.j2
   - email_smtp_host.json.j2
   - email_smtp_port.json.j2
@@ -25,6 +27,6 @@ admin_user:
 do_suppress_edit: False
 
 # If 'do-suppress-edit' is set, suppress edit of tenant admin by default
-suppress_edit_userlist: 
+suppress_edit_userlist:
   - "{{ admin_user.username }}"
 
