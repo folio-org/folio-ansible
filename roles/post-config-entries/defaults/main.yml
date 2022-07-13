@@ -1,7 +1,7 @@
 email_smtp_host: localhost
 email_smtp_port: 587
 email_from: noreply@localhost
-email_reply_to: noreply@localhost
+email_reply_to: "{{ email_from }}"
 email_username: "email_user"
 email_password: "email_password"
 
