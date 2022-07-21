@@ -30,11 +30,11 @@
     path: "~/.docker"
     state: absent
 
+# Use rm to avoid errors from file module
 - name: Clean up stripes build directory node_modules
   become: yes
-  file:
-    path: "{{ stripes_conf_dir|default('/etc/folio/stripes') }}/node_modules"
-    state: absent
+  command: "rm -rf {{ stripes_conf_dir|default('/etc/folio/stripes') }}/node_modules"
+  ignore_errors: yes
 
 - name: Clean up stripes build directory output
   become: yes
