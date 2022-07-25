@@ -1,5 +1,7 @@
 FROM nginx:stable-alpine
 
+RUN apk --no-cache upgrade
+
 {%if stripes_enable_https %}
 COPY --chown=nginx:nginx {{ stripes_certificate_file|basename }} /etc/nginx/ssl/{{ stripes_certificate_file|basename }}
 COPY --chown=nginx:nginx {{ stripes_certificate_key_file|basename }} /etc/nginx/ssl/{{ stripes_certificate_key_file|basename }}
