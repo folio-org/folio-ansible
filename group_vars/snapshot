@@ -36,6 +36,7 @@ add_modules:
   - edge-oai-pmh
   - edge-patron
   - edge-rtac
+  - edge-inn-reach
   # MISSING: edge-sip2
   - mod-codex-inventory
   - mod-codex-ekb
