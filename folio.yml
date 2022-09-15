@@ -193,7 +193,7 @@
       edge_extra_tenants:
         - tenant_id: test_edge_inn_reach
           inst_user:
-            username: innReachClient
+            username: innreachClient
             password: "password"
       edge_tenants_mappings:
         - tenant: "{{ tenant }}"
