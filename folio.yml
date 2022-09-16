@@ -183,7 +183,7 @@
       edge_module_cmd: "--okapi_url={{edge_module_okapi_url}} --secure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
       inst_user:
         username: "innreachClient"
-        password: "{{ tenant }}"
+        password: "admin"
         personal:
           lastName: SYSTEM
           firstName: innreachClient
@@ -193,13 +193,13 @@
       edge_extra_tenants:
         - tenant_id: test_edge_inn_reach
           inst_user:
-            username: innReachClient
-            password: test
+            username: innreachClient
+            password: "password"
       edge_tenants_mappings:
         - tenant: "{{ tenant }}"
           mapping: fli01
         - tenant: "test_edge_inn_reach"
-          mapping: fli01
+          mapping: "5858f9d8-1558-4513-aa25-bad839eb803a"
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Load sample data for testing/snapshot builds
