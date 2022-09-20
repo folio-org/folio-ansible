@@ -44,6 +44,7 @@ add_modules:
   - mod-data-export-spring
   - mod-data-export-worker
   - mod-ebsconet
+  - mod-entities-links
   - mod-erm-usage-harvester
   - mod-gobi
   - mod-graphql
@@ -158,6 +159,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-email
+    deploy: yes
+
+  - name: mod-entities-links
     deploy: yes
 
   - name: mod-erm-usage
