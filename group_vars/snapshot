@@ -148,6 +148,18 @@ folio_modules:
         value: "{{ aws_region | default('') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: LOCAL_FS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
+      - name: LOCAL_FS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: LOCAL_FS_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: LOCAL_FS_REGION
+        value: "{{ aws_region | default('') }}"
+      - name: LOCAL_FS_BUCKET
+        value: "{{ data_export_local_bucket_name | default('data-export-local-bucket') }}"
+      - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
+        value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-data-import
     deploy: yes
