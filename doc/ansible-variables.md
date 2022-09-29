@@ -18,7 +18,7 @@ folio_apt_key_url: https://repository.folio.org/packages/debian/folio-apt-archiv
 # 'xenial' contains releases only while 'testing' includes dev
 # snapshots.   Default is to configure just the 'xenial' repo which
 # the most stable.  If you want both, add 'testing' to this list.
-folio_apt_repos: 
+folio_apt_repos:
   - xenial
 
 # docker-engine role
@@ -105,15 +105,6 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 auth_required: false
 admin_user: { username: diku_admin, password: admin }
 
-# mod-metadata-data role
-okapi_port: 9130
-okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-mod_metadata_modules:
-  - { index: 0, module: inventory-storage }
-  - { index: 1, module: inventory }
-auth_required: false
-admin_user: { username: diku_admin, password: admin }
-
 # mod-users-bl-data role
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
@@ -162,7 +153,7 @@ carbon_port: 2003
 # either here or at the host or group var level.  These are mostly
 # needed for advanced configuration or running Okapi in 'cluster' mode
 # on AWS.
-# 
+#
 # Set 'hazelcast_aws_conf' to 'true' if 'okapi_role' is 'cluster' and
 # you are running on ec2 instances
 hazelcast_aws_conf: "false"
@@ -180,7 +171,7 @@ folio_conf: /etc/folio
 okapi_deploy_home: /usr/share/folio/okapi-deploy
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
-docker_repo: folioci  
+docker_repo: folioci
 pg_admin_user: folio_admin
 pg_admin_password: folio_admin
 pg_host: "{{ ansible_default_ipv4.address }}"
@@ -221,7 +212,7 @@ sdkman_user: folio
 with_github: true
 stripes_github_project: https://github.com/folio-org/stripes-demo-platform
 
-# OR specify stripes configuration here and configure from ansible templates 
+# OR specify stripes configuration here and configure from ansible templates
 stripes_core_version: "^0.7.0"
 stripes_modules:
   - { name: "@folio/users", version: "^1.1.0" }
@@ -239,7 +230,7 @@ stripes_okapi_port: 9130
 disable_auth: false
 stripes_okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ stripes_okapi_port }}"
 stripes_tenant: diku
-# host address to map container to. '127.0.0.1' by default  
+# host address to map container to. '127.0.0.1' by default
 stripes_host_address: '127.0.0.1'
 #
 # optional nginx proxy. disabled by default.
@@ -255,7 +246,7 @@ folio_npm_repo: npm-folio
 
 #
 # Disabled by default
-# 
+#
 npm_proxy: false
 npm_authtoken: ''
 
@@ -297,7 +288,7 @@ auth_modules:
   - { index: 1, module: authtoken }
   - { index: 2, module: permissions }
 # {{ folio_user }} and {{ folio_group }} from common dependency
-# {{ okapi_home }} from okapi-undeploy dependency 
+# {{ okapi_home }} from okapi-undeploy dependency
 
 
 # mod-circulation-build role
@@ -361,7 +352,7 @@ mod_metadata_pg_password: "{{ pg_admin_password }}" # from postgresql dependency
 mod_metadata_db: mod_metadata
 # {{ mod_metadata_src_home }} from mod-metadata-build dependency
 # {{ folio_user }} and {{ folio_group }} from common dependency
-# {{ okapi_home }} from okapi-undeploy dependency 
+# {{ okapi_home }} from okapi-undeploy dependency
 
 # mod-users role
 # folio_user needs to be a user with access to Docker

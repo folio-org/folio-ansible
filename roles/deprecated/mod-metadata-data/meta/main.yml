@@ -1,4 +1,0 @@
----
-dependencies:
-  - { role: tenant-data }
-  - { role: okapi-get-modules }
