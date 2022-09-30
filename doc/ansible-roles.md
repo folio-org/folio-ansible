@@ -52,7 +52,6 @@ mod-auth-data.
 Sample data for the mod-circulation business logic module. Depends on:
 - tenant-data
 - mod-users-data
-- mod-metadata-data
 
 *Note: without a running Okapi instance with mod-circulation and
  mod-loan-storage installed and enabled, this role will fail.*
@@ -62,13 +61,6 @@ Hooks up mod-configuration for the sample tenant. Depends on
 tenant-data.
 
 *Note: without a running Okapi instance, this role will fail*
-
-## mod-metadata-data
-Sample data for the mod-metadata backend modules. Depends on
-tenant-data and common.
-
-*Note: without a running Okapi instance with inventory and
-inventory-storage installed and enabled, this role will fail.*
 
 ## mod-users-bl-data
 Sample data for the mod-users-bl business logic module. Depends on:
@@ -302,8 +294,7 @@ following Stripes modules:
 - ui-users
 
 *Note: requires a running Okapi with a configured tenant, mod-users,
- and mod-metadata Sample data available in mod-users-data and
- mod-metadata-data*
+ and mod-metadata Sample data available in mod-users-data*
 
 ## stripes-core (*Deprecated*)
 Installs stripes from the
@@ -320,8 +311,7 @@ https://repository.folio.org/repository/npm-folioci/
 Depends on stripes-core.
 
 *Note: without a running Okapi instance and a configured tenant, the
- Items application will not run. Sample data is available in
- mod-metadata-data.*
+ Items application will not run.*
 
 ## ui-okapi-console (*Deprecated*)
 Adds the ui-okapi-console module to stripes-core from

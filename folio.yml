@@ -202,11 +202,6 @@
           mapping: "5858f9d8-1558-4513-aa25-bad839eb803a"
 
 # Sample data for snapshot-core, testing, snapshot
-- name: Load sample data for testing/snapshot builds
-  hosts: snapshot-core:testing-core:testing:snapshot
-  roles:
-    - mod-inventory-mods
-
 - name: Add sample users for permissions testing
   hosts: testing:snapshot:release
   roles:
