@@ -137,7 +137,7 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0"
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
