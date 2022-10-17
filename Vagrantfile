@@ -37,6 +37,7 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
+# deprecated
   config.vm.define "release-core", autostart: false do |snapshot|
     snapshot.vm.box = "folio/release-core"
     snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
@@ -44,11 +45,14 @@ Vagrant.configure(2) do |config|
     snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
-  config.vm.define "release", autostart: false do |snapshot|
-    snapshot.vm.box = "folio/release"
-    snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
-    snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
-    snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
+  config.vm.define "release", autostart: false do |release|
+    release.vm.box = "folio/release"
+    release.vm.provider "virtualbox" do |vb|
+      vb.memory = 20480
+    end
+    release.vm.network "forwarded_port", guest: 9130, host: 9130
+    release.vm.network "forwarded_port", guest: 3000, host: 3000
+    release.vm.network "forwarded_port", guest: 8000, host: 8130
   end
 
 # deprecated
@@ -106,6 +110,7 @@ Vagrant.configure(2) do |config|
     end
   end
 
+# deprecated
   config.vm.define "build_release_core", autostart: false do |build_release_core|
     build_release_core.vm.box = "bento/ubuntu-20.04"
     build_release_core.vm.provider "virtualbox" do |vr|
@@ -142,6 +147,7 @@ Vagrant.configure(2) do |config|
     end
   end
 
+# deprecated
   config.vm.define "build_minimal", autostart: false do |build_minimal|
     build_minimal.vm.box = "bento/ubuntu-20.04"
     build_minimal.vm.network "forwarded_port", guest: 9130, host: 9130
