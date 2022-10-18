@@ -7,7 +7,7 @@
 
 - name: Build stripes
   become: yes
-  shell: "yarn install"
+  shell: "npm_config_global=false npm_config_unsafe_perm=true npm_config_allow_root=true yarn install"
   args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
@@ -15,7 +15,7 @@
 - name: Generate module descriptors
   become: yes
   shell: "yarn build-module-descriptors"
-  args: 
+  args:
     chdir: "{{ stripes_conf_dir }}"
   listen: "Rebuild stripes"
   when: build_module_descriptors
