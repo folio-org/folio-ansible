@@ -38,8 +38,6 @@ add_modules:
   - edge-rtac
   - edge-inn-reach
   # MISSING: edge-sip2
-  - mod-codex-inventory
-  - mod-codex-ekb
   - mod-data-import-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
@@ -95,15 +93,6 @@ folio_modules:
     tenant_parameters:
       - { name: loadReference, value: "true" }
       - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-codex-ekb
-    deploy: yes
-
-  - name: mod-codex-inventory
-    deploy: yes
-
-  - name: mod-codex-mux
     deploy: yes
 
   - name: mod-configuration
