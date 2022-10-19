@@ -21,11 +21,11 @@
 
 - name: Set platform_list
   set_fact:
-    platform_list: "{{ platform_list|default([]) }} + [ '{{ item }}' ]"
+    platform_list: "{{ platform_list|default([]) + [ item ] }}"
   with_items: "{{ mod_descrs_files.stdout_lines }}"
 
 - name: Bump stripes-core to the top of the list
-  set_fact: platform_list="['stripes-core.json'] + {{ platform_list|difference(['stripes-core.json']) }}"
+  set_fact: platform_list="{{ ['stripes-core.json'] + platform_list|difference(['stripes-core.json']) }}"
 
 - name: Slurp module descriptors
   slurp: src={{ stripes_platform }}/ModuleDescriptors/{{ item }}
@@ -34,7 +34,7 @@
 
 - name: Build platform_descrs
   set_fact:
-    platform_descrs: "{{ platform_descrs|default([]) }} + [ {{ item.content|b64decode|from_json }} ]"
+    platform_descrs: "{{ platform_descrs|default([]) + [ item.content|b64decode|from_json ] }}"
   with_items: "{{ mod_descrs_raw.results }}"
 
 - name: Build module list from Stripes mod descriptors
