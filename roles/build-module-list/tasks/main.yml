@@ -7,8 +7,14 @@
   uri:
     url: "{{ deploy_url }}"
     method: GET
+    return_content: yes
   register: deploy_json
   when: stripes_platform is not defined and deploy_url|default(false)
+
+- name: Convert deploy URL content to JSON if needed
+  set_fact:
+    deploy_json: "{{ deploy_json | combine( { 'json': deploy_json.content|from_json } ) }}"
+  when: deploy_json|default(false) and deploy_json.json is not defined
 
 - name: Get install JSON from file for deployment
   set_fact:
@@ -26,8 +32,14 @@
   uri:
     url: "{{ enable_url }}"
     method: GET
+    return_content: yes
   register: enable_json
   when: stripes_platform is not defined and enable_url|default(false)
+
+- name: Convert enable URL content to JSON if needed
+  set_fact:
+    enable_json: "{{ enable_json | combine( { 'json': enable_json.content|from_json } ) }}"
+  when: enable_json|default(false) and enable_json.json is not defined
 
 - name: Get install JSON from file for enabling modules (no deployment)
   set_fact:
