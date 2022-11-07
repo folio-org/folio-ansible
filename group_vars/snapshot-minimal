@@ -1,0 +1,51 @@
+---
+# Variables for building snapshot from platform-complete
+auth_required: true
+enable_okapi: true
+folio_install_type: single_server
+
+# used in create-tenant-admin role
+perms_users_assign: true
+
+# remove this to unpin okapi
+#okapi_version: 4.1.7-1
+okapi_docker_org: folioci
+okapi_java_opts:
+  - "-Ddeploy.waitIterations=90"
+
+# used in okapi-tenant-deploy
+deploy_timeout: 1200
+
+
+# modules that need to be deployed
+folio_modules:
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-permissions
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-users
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+
+# Variables for building UI
+stripes_github_project: https://github.com/folio-org/platform-minimal
+stripes_github_version: snapshot
+folio_npm_repo: npm-folioci
+platform_remove_lock: false
+with_sourcemap: true
+node_environment:
+  NODE_ENV: production
+
+# Metadata for CI build
+version: 1.0.0
