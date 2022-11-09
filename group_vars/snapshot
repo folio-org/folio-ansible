@@ -73,7 +73,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
@@ -115,7 +115,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
@@ -134,7 +134,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
       - name: LOCAL_FS_ACCESS_KEY_ID
@@ -144,7 +144,7 @@ folio_modules:
       - name: LOCAL_FS_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: LOCAL_FS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: LOCAL_FS_BUCKET
         value: "{{ data_export_local_bucket_name | default('data-export-local-bucket') }}"
       - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
@@ -233,7 +233,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
