@@ -76,6 +76,8 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
+      - name: DB_MAXPOOLSIZE
+        value: "10"
 
   - name: mod-audit
     deploy: yes
