@@ -53,6 +53,7 @@ add_modules:
   - mod-oai-pmh
   - mod-patron
   - mod-rtac
+  - mod-settings
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -341,6 +342,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-service-interaction
+    deploy: yes
+
+  - name: mod-settings
     deploy: yes
 
   - name: mod-source-record-manager
