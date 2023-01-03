@@ -38,6 +38,7 @@ add_modules:
   - edge-rtac
   - edge-inn-reach
   # MISSING: edge-sip2
+  - mod-bulk-operations
   - mod-data-import-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
@@ -83,6 +84,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-authtoken
+    deploy: yes
+
+  - name: mod-bulk-operations
     deploy: yes
 
   - name: mod-calendar
