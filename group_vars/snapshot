@@ -39,7 +39,7 @@ add_modules:
   - edge-inn-reach
   # MISSING: edge-sip2
   - mod-bulk-operations
-  - mod-data-import-converter-storage
+  - mod-di-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
   - mod-ebsconet
@@ -160,7 +160,7 @@ folio_modules:
   - name: mod-data-import
     deploy: yes
 
-  - name: mod-data-import-converter-storage
+  - name: mod-di-converter-storage
     deploy: yes
 
   - name: mod-ebsconet
