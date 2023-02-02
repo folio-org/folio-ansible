@@ -10,15 +10,15 @@
       - python3-pip
       - python3-apt
 
-- name: Install docker-py and docker-compose from pip
-  become: yes
-  pip:
-    name: "{{ item.name }}"
-    version: "{{ item.version }}"
-    state: present
-  with_items:
-     - { name: 'docker-py', version: '1.10.6' }
-     - { name: 'docker-compose', version: '1.9.0' }
+#- name: Install docker-py and docker-compose from pip
+#  become: yes
+#  pip:
+#    name: "{{ item.name }}"
+#    version: "{{ item.version }}"
+#    state: present
+#  with_items:
+#     - { name: 'docker-py', version: '1.10.6' }
+#     - { name: 'docker-compose', version: '1.9.0' }
 
 - name: Install apt key for Docker
   become: yes
@@ -44,6 +44,16 @@
       - docker-ce
       - docker-ce-cli
       - containerd.io
+      - docker-compose-plugin
+
+- name: Create /etc/docker
+  become: yes
+  file: 
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
 
 - name: install Docker daemon.json config
   become: yes
