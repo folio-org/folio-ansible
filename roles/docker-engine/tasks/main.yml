@@ -10,14 +10,14 @@
       - python3-pip
       - python3-apt
 
-#- name: Install docker-py and docker-compose from pip
-#  become: yes
-#  pip:
-#    name: "{{ item.name }}"
-#    version: "{{ item.version }}"
-#    state: present
-#  with_items:
-#     - { name: 'docker-py', version: '1.10.6' }
+- name: Install docker-py and docker-compose from pip
+  become: yes
+  pip:
+    name: "{{ item.name }}"
+    version: "{{ item.version }}"
+    state: present
+  with_items:
+     - { name: 'docker-py', version: '1.10.6' }
 #     - { name: 'docker-compose', version: '1.9.0' }
 
 - name: Install apt key for Docker
