@@ -89,6 +89,21 @@ folio_modules:
 
   - name: mod-bulk-operations
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: S3_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: S3_IS_AWS
+        value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-calendar
     deploy: yes
