@@ -54,6 +54,15 @@
     group: root
     mode: '0755'
 
+- name: Create /etc/docker
+  become: yes
+  file: 
+    path: /etc/docker
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
 - name: install Docker daemon.json config
   become: yes
   copy:
