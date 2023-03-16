@@ -39,6 +39,7 @@ add_modules:
   - edge-inn-reach
   # MISSING: edge-sip2
   - mod-bulk-operations
+  - mod-consortia
   - mod-di-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
@@ -120,6 +121,9 @@ folio_modules:
   - name: mod-configuration
     tenant_parameters:
       - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-consortia
     deploy: yes
 
   - name: mod-courses
