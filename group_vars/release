@@ -12,7 +12,7 @@ enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-202
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 4.14.10
+okapi_version: 4.14.11
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
