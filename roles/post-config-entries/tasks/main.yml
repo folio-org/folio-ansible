@@ -22,7 +22,7 @@
 
 - name: post mod-email configuration
   uri:
-    url: "{{ okapi_url }}/configurations/entries"
+    url: "{{ okapi_url }}/smtp-configuration"
     method: POST
     body_format: json
     headers:
