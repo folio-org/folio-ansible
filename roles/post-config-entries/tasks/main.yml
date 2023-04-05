@@ -20,7 +20,7 @@
     tenant_token: "{{ login_result['x_okapi_token'] }}"
   when: login_result.status is defined and login_result.status == 201
 
-- name: post mod-email configuration
+- name: post smtp configuration
   uri:
     url: "{{ okapi_url }}/smtp-configuration"
     method: POST
