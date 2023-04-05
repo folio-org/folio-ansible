@@ -1,18 +1,18 @@
 {
-    "host": "email-smtp.us-east-1.amazonaws.com",
-    "port": 587,
-    "username": "ABCDEFGHIJKLM",
-    "password": "ABCDEFGHIJKLMNOPQRS",
-    "ssl": false,
-    "trustAll": false,
-    "loginOption": "NONE",
-    "startTlsOptions": "OPTIONAL",
-    "authMethods": "",
-    "from": "folio-sandbox@palni.edu",
-    "emailHeaders": [
-      {
-        "name": "Reply-To",
-        "value": "folio-sandbox@palni.edu"
-      }
-    ]
- }
+  "host": "{{ email_smtp_host }}",
+  "port": "{{ email_smtp_port }}",
+  "username": "{{ email_username }}",
+  "password": "{{ email_password }}",
+  "ssl": "false",
+  "trustAll": "false",
+  "loginOption": "NONE",
+  "startTlsOptions": "OPTIONAL",
+  "authMethods": "",
+  "from": "{{ email_from }}",
+  "emailHeaders": [
+    {
+      "name": "Reply-To",
+      "value": "{{ email_reply_to }}"
+    }
+  ]
+}
