@@ -9,10 +9,12 @@
   "startTlsOptions": "OPTIONAL",
   "authMethods": "",
   "from": "{{ email_from }}",
+  {%if email_reply_to|default(false) %}
   "emailHeaders": [
     {
       "name": "Reply-To",
       "value": "{{ email_reply_to }}"
     }
   ]
+  {% endif %}
 }
