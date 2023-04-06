@@ -20,6 +20,20 @@
     tenant_token: "{{ login_result['x_okapi_token'] }}"
   when: login_result.status is defined and login_result.status == 201
 
+- name: post required configuration entries
+  uri:
+    url: "{{ okapi_url }}/configurations/entries"
+    method: POST
+    body_format: json
+    headers:
+      Authtoken-Refresh-Cache: "true"
+      X-Okapi-Tenant: "{{ tenant }}"
+      Accept: application/json
+      X-Okapi-Token: "{{ tenant_token | default('') }}"
+    body: "{{ lookup('template', item) }}" 
+    status_code: 201, 422
+  with_items: "{{ config_entry_list }}"
+
 - name: post smtp configuration
   uri:
     url: "{{ okapi_url }}/smtp-configuration"
@@ -32,7 +46,7 @@
       X-Okapi-Token: "{{ tenant_token | default('') }}"
     body: "{{ lookup('template', item) }}" 
     status_code: 201, 422
-  with_items: "{{ config_entry_list }}"
+  with_items: "{{ email_entry_list }}"
 
 - name: Configure suppress-edit users
   block: 
