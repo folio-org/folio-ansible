@@ -5,20 +5,17 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2022/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2022/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/stripes-install.json
 
 # used in create-tenant-admin role
-# enable in Lotus release
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 4.13.2
+okapi_version: 5.0.1
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
-save_install: no
-minio_port: 9500
 
 # used in okapi-tenant-deploy
 deploy_timeout: 1200
@@ -44,8 +41,8 @@ tenant_parameters:
     value: "true"
 
 # ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.7.0'
-ldp_derived_tables_version: 'v1.3.0'
+ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.9.0-beta2'
+ldp_derived_tables_version: 'v1.5.3'
 
 # Some modules require special initialization parameters.
 folio_modules:
@@ -64,10 +61,32 @@ folio_modules:
         value: "{{ aws_region | default('') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
+      - name: DB_MAXPOOLSIZE
+        value: "10"
+
+  - name: mod-bulk-operations
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: S3_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: S3_IS_AWS
+        value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-data-export
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -75,13 +94,15 @@ folio_modules:
       - name: AWS_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
 
   - name: mod-data-export-worker
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -89,9 +110,29 @@ folio_modules:
       - name: AWS_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: LOCAL_FS_ACCESS_KEY_ID
+        value: "{{ data_export_aws_id | default('minioadmin') }}"
+      - name: LOCAL_FS_SECRET_ACCESS_KEY
+        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+      - name: LOCAL_FS_URL
+        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: LOCAL_FS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: LOCAL_FS_BUCKET
+        value: "{{ data_export_local_bucket_name | default('data-export-local-bucket') }}"
+      - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
+        value: "{{ data_export_local_aws | default('false') }}"
+
+  - name: mod-entities-links
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=85.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-licenses
     deploy: yes
@@ -131,18 +172,14 @@ folio_modules:
         value: "{{ okapi_url }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
-      - name: KAFKA_EVENTS_CONSUMER_PATTERN
-        value: "FOLIO\\.(.*\\.)inventory\\.(instance|holdings-record|item)"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
-
-  - name: mod-service-interaction
-    deploy: yes
-    docker_mem: 1073741824
 
   - name: mod-source-record-storage
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
@@ -151,7 +188,7 @@ edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R1-2022
+stripes_github_version: R1-2023
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
@@ -162,8 +199,8 @@ node_environment:
 box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Lotus Release
+  # FOLIO Orchid Release
 
   Admin login: diku_admin/admin
 
-  R1-2022 (Lotus) release version of the FOLIO platform, built from R1-2022 release artifacts, with all updates  [Lotus release notes](https://wiki.folio.org/display/REL/Lotus+%28R1+2022%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R1-2023 (Orchid) release version of the FOLIO platform, built from R1-2023 release artifacts, with all updates  [Orchid release notes](https://wiki.folio.org/display/REL/Orchid+%28R1+2023%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
