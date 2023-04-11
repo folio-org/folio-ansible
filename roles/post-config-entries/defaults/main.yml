@@ -6,13 +6,10 @@ email_username: "email_user"
 email_password: "email_password"
 
 config_entry_list:
-  - email_from.json.j2
-  - email_reply_to.json.j2
-  - email_password.json.j2
-  - email_smtp_host.json.j2
-  - email_smtp_port.json.j2
-  - email_username.json.j2
   - usersbl_reset.json.j2
+
+email_entry_list:
+  - email_config.json.j2
 
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
