@@ -1,0 +1,20 @@
+{
+  "host": "{{ email_smtp_host }}",
+  "port": "{{ email_smtp_port }}",
+  "username": "{{ email_username }}",
+  "password": "{{ email_password }}",
+  "ssl": "false",
+  "trustAll": "false",
+  "loginOption": "NONE",
+  "startTlsOptions": "OPTIONAL",
+  "authMethods": "",
+  "from": "{{ email_from }}",
+  {%if email_reply_to|default(false) %}
+  "emailHeaders": [
+    {
+      "name": "Reply-To",
+      "value": "{{ email_reply_to }}"
+    }
+  ]
+  {% endif %}
+}
