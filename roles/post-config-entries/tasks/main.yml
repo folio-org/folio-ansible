@@ -47,6 +47,7 @@
     body: "{{ lookup('template', item) }}" 
     status_code: 201, 422
   with_items: "{{ email_entry_list }}"
+  when: email_entry_list|default(false)
 
 - name: Configure suppress-edit users
   block: 
