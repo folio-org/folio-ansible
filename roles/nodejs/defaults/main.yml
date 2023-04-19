@@ -1,1 +1,4 @@
+---
+# defaults
 folio_install_type: single_server
+nodejs_version: lts

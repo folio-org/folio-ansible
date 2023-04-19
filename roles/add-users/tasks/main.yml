@@ -5,10 +5,6 @@
     name:
       - git
 
-- name: Move node to latest LTS
-  become: yes
-  shell: n lts
-
 - name: Clone folio-tools repository
   git:
     repo: "https://github.com/folio-org/folio-tools"
