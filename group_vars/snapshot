@@ -6,6 +6,9 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
+# pin Node.js to supported version
+nodejs_version: v16
+
 # used in create-tenant-admin role
 perms_users_assign: true
 

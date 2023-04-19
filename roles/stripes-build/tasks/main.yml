@@ -1,16 +1,16 @@
 ---
 - name: create build dir
   become: yes
-  file: 
+  file:
     path: "{{ stripes_conf_dir }}"
     state: directory
 
 - name: generate templates and copy to build dir
   become: yes
-  template: 
+  template:
     src: "{{ item.src }}"
     dest: "{{ stripes_conf_dir }}/{{ item.dest }}"
-  with_items: 
+  with_items:
     - { src: 'stripes.config.js.j2', dest: 'stripes.config.js' }
     - { src: 'package.json.j2', dest: 'package.json' }
   when: with_github == false
@@ -24,7 +24,7 @@
 
 - name: copy stripes platform files from github project from branch
   become: yes
-  git: 
+  git:
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
     version: "{{ stripes_github_version }}"
@@ -34,7 +34,7 @@
 
 - name: copy stripes platform files from github project from refspec
   become: yes
-  git: 
+  git:
     repo: "{{ stripes_github_project }}"
     dest: "{{ stripes_conf_dir }}"
     version: "{{ stripes_github_version }}"
@@ -45,11 +45,11 @@
 
 - name: copy yarn.lock file to stripes_conf_dir
   become: yes
-  get_url: 
+  get_url:
     url: "{{ folio_snapshot_url }}/yarn.lock"
     dest: "{{ stripes_conf_dir }}"
   when: use_folio_snapshot
-  notify: "Rebuild stripes" 
+  notify: "Rebuild stripes"
 
 - name: Force build of mod descriptors from github without strict flag
   become: yes
@@ -69,15 +69,9 @@
   when: with_github and stripes_strict_md
   notify: "Rebuild stripes"
 
-- name: Pin Nodejs to v14
+- name: copy npmrc configuration
   become: yes
-  shell: n 14 && touch {{ stripes_conf_dir }}/.set_nodedefault_ansible
-  args:
-    creates: "{{ stripes_conf_dir }}/.set_nodedefault_ansible"
-
-- name: copy npmrc configuration 
-  become: yes
-  template: 
+  template:
     src: "{{ item.src }}"
     dest: "{{ stripes_conf_dir }}/{{ item.dest }}"
   with_items:
@@ -102,4 +96,4 @@
   when: okapi_enable_modules
   notify: "Enable modules"
 
-- meta: flush_handlers 
+- meta: flush_handlers

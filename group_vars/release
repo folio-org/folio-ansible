@@ -8,6 +8,9 @@ minio_port: 9500
 deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-2022/okapi-install.json
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R3-2022/stripes-install.json
 
+# pin Node.js to supported version
+nodejs_version: v16
+
 # used in create-tenant-admin role
 perms_users_assign: true
 
