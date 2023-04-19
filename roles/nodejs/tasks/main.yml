@@ -1,5 +1,5 @@
 ---
-# Install nodejs and mocha
+# Install Node.js, npm, and n; set the Node.js version
 - name: Install nodejs and npm from apt
   become: yes
   apt:
@@ -21,3 +21,9 @@
   become: yes
   npm: name="n" global=yes state=present
   when: folio_install_type == "single_server"
+
+- name: Set the Node.js version
+  become: yes
+  shell: "n {{nodejs_version}} && touch .set_nodedefault_ansible"
+  args:
+    creates: .set_nodedefault_ansible
