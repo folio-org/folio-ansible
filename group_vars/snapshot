@@ -178,6 +178,8 @@ folio_modules:
         value: "{{ data_export_local_bucket_name | default('data-export-local-bucket') }}"
       - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
         value: "{{ data_export_local_aws | default('false') }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-data-import
     deploy: yes
