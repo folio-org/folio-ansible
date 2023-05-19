@@ -147,6 +147,8 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: AWS_SDK
+        value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-data-export-spring
     deploy: yes
