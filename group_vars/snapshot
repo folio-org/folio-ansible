@@ -128,6 +128,9 @@ folio_modules:
 
   - name: mod-consortia
     deploy: yes
+    docker_env:
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-courses
     deploy: yes
