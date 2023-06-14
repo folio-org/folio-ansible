@@ -5,4 +5,4 @@ okapi_login_url: "{{ okapi_url }}"
 superuser_username: super_admin
 superuser_password: admin
 user_only: false
-perms_users_assign: false
+perms_users_assign: true
