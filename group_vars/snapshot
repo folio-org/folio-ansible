@@ -313,11 +313,11 @@ folio_modules:
       - name: S3_BUCKET
         value: "{{ oai_pmh_bucket_name | default('oai-pmh-bucket') }}"
       - name: S3_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('minioadmin') }}"
+        value: "{{ oai_pmh_aws_id | default('minioadmin') }}"
       - name: S3_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('minioadmin') }}"
+        value: "{{ oai_pmh_aws_secret | default('minioadmin') }}"
       - name: S3_IS_AWS
-        value: "{{ data_export_local_aws | default('false') }}"
+        value: "{{ oai_pmh_local_aws | default('false') }}"
 
   - name: mod-orders
     deploy: yes
