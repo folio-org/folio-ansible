@@ -29,7 +29,7 @@ ldp_data_dir: /var/lib/ldp
 ldp_derived_tables_repo: https://github.com/folio-org/folio-analytics.git
 ldp_derived_tables_version: main
 ldp_derived_tables_dir: /sql/derived_tables
-ldp_add_column_conf: https://raw.githubusercontent.com/folio-org/folio-analytics/main/sql/require_columns/ldp_add_column.conf
+ldp_add_column_conf: https://raw.githubusercontent.com/folio-org/folio-analytics/main/sql/require_columns/ldp1_add_column.conf
 
 # for cron jobs
 ldp_cron_user: ldpcron
