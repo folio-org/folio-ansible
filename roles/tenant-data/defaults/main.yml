@@ -1,6 +1,7 @@
 ---
 okapi_url: http://localhost:9130
 enable_okapi: false
+okapi_validate_certs: true
 
 # Diku is the default tenant
 tenant: diku

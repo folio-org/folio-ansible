@@ -15,5 +15,6 @@
     method: POST
     body: "{{ mod_descr_repos }}"
     timeout: "{{ okapi_pull_timeout }}"
+    validate_certs: "{{ okapi_validate_certs }}"
   register: okapi_pull
   changed_when: okapi_pull.json is defined and okapi_pull.json

@@ -37,6 +37,7 @@ Invoke the role in a playbook, e.g.:
 # defaults
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+okapi_validate_certs: true
 tenant: diku
 
 # Define or override one or more of these variables to post install JSON to Okapi.

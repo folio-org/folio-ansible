@@ -10,6 +10,7 @@
     body_format: json
     body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
     status_code: 201, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: login_result
   retries: 5
   delay: 10

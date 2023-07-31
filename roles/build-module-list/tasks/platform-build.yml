@@ -60,6 +60,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
     body_format: json
     body: "{{ install_list }}"
+    validate_certs: "{{ okapi_validate_certs }}"
   register: module_deps
 
 - name: Build module_deps_list, remove modules that are pinned
