@@ -6,3 +6,4 @@ superuser_username: super_admin
 superuser_password: admin
 user_only: false
 perms_users_assign: true
+okapi_validate_certs: true

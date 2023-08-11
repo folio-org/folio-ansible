@@ -7,6 +7,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200
+    validate_certs: "{{ okapi_validate_certs }}"
   register: disco_results
 
 - name: set list of discovered modules
@@ -38,6 +39,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: tenant_module_check
   with_items:
     - "{{ required_mods['mod-users'] }}"
@@ -54,6 +56,7 @@
     body_format: json
     body: '{ "id" : "{{ item.item }}" }'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   register: tenant_module_enable
   changed_when: tenant_module_enable.status == 201
   when: item.status == 404
@@ -67,6 +70,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: superuser_created_check
   retries: 10
   delay: 3
@@ -84,6 +88,7 @@
     body_format: json
     body: '{ "id": "{{ superuser_username | to_uuid }}", "username": "{{ superuser_username }}", "active": "true"}'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   register: superuser_mod_users
   changed_when: superuser_mod_users.status == 201
   when: superuser_created_check.status == 404
@@ -96,6 +101,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: mod_login_check
 
 - name: Enable mod-login on supertenant
@@ -109,6 +115,7 @@
     body_format: json
     body: '{ "id" : "{{ required_mods["mod-login"] }}" }'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   register: mod_login_enable
   changed_when: mod_login_enable.status == 201
   when: mod_login_check.status == 404
@@ -128,6 +135,7 @@
     body_format: json
     body: '{"userId": "{{ superuser_username | to_uuid }}", "permissions":[ {{ permissions_list }} ] }'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   when: superuser_created_check.status == 404 and superuser_mod_users.status == 201
 
 - name: Check if superuser credentials are created on supertenant
@@ -138,6 +146,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200
+    validate_certs: "{{ okapi_validate_certs }}"
   register: superuser_creds_check
 
 - name: Create login credentials for on supertenant
@@ -151,6 +160,7 @@
     body_format: json
     body: '{"username": "{{ superuser_username }}", "password": "{{ superuser_password }}"}'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   register: login_credentials_created
   when: superuser_creds_check.json.credentialsExist == false
 
@@ -162,6 +172,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: application/json
     status_code: 200, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: mod_authtoken_check
 
 - name: Enable mod-authtoken on supertenant
@@ -175,6 +186,7 @@
     body_format: json
     body: '{ "id" : "{{ required_mods["mod-authtoken"] }}" }'
     status_code: 201
+    validate_certs: "{{ okapi_validate_certs }}"
   register: mod_authtoken_enable
   changed_when: mod_authtoken_enable.status == 201
   notify: supertenant login

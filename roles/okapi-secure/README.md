@@ -32,7 +32,8 @@ okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 superuser_username: super_admin
 superuser_password: admin
 user_only: false
-perms_users_assign: false
+perms_users_assign: true
+okapi_validate_certs: true
 ```
 
 ## Notes

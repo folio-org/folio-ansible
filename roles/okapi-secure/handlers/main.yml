@@ -9,6 +9,7 @@
     body_format: json
     body: "{'username': '{{ superuser_username }}', 'password': '{{ superuser_password }}' }"
     status_code: 201, 404
+    validate_certs: "{{ okapi_validate_certs }}"
   register: login_result
   listen: supertenant login
 
@@ -17,4 +18,3 @@
     supertenant_token: "{{ login_result['x_okapi_token'] }}"
   when: login_result.status is defined and login_result.status == 201
   listen: supertenant login
-
