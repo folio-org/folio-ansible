@@ -23,6 +23,7 @@
       X-Okapi-Tenant: "supertenant"
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: "application/json, text/plain"
+    validate_certs: "{{ okapi_validate_certs }}"
   register: authtoken_module
 
 - name: Disable authtoken and dependencies
@@ -35,6 +36,7 @@
       X-Okapi-Token: "{{ supertenant_token | default('') }}"
       Accept: "application/json, text/plain"
     body: '[ { "id": "{{ authtoken_module.json.0.id }}", "action": "disable" } ]'
+    validate_certs: "{{ okapi_validate_certs }}"
   register: authtoken_disable
   when: authtoken_module.json.0 is defined
 
@@ -50,6 +52,7 @@
         headers:
           Accept: "application/json, text/plain"
           X-Okapi-Tenant: "{{ tenant }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: check_user
     - name: Get user ID if user already exists
       set_fact:
@@ -75,6 +78,7 @@
             }
           }
         status_code: 201
+        validate_certs: "{{ okapi_validate_certs }}"
       register: create_user
       changed_when: create_user.status == 201
       when: check_user.json.totalRecords == 0
@@ -84,6 +88,7 @@
         headers:
           Accept: "application/json, text/plain"
           X-Okapi-Tenant: "{{ tenant }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: check_login
     - name: Create login record
       uri:
@@ -99,6 +104,7 @@
             "password": "{{ admin_user.password }}"
           }
         status_code: 201
+        validate_certs: "{{ okapi_validate_certs }}"
       register: create_login
       changed_when: create_login.status == 201
       when: check_login.json.credentialsExist == false
@@ -108,6 +114,7 @@
         headers:
           Accept: "application/json, text/plain"
           X-Okapi-Tenant: "{{ tenant }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: check_perms
     - name: Create permissions record
       uri:
@@ -130,6 +137,7 @@
             ]
           }
         status_code: 201
+        validate_certs: "{{ okapi_validate_certs }}"
       register: create_login
       changed_when: create_login.status == 201
       when: check_perms.json.totalRecords == 0
@@ -140,6 +148,7 @@
           X-Okapi-Tenant: "supertenant"
           X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: check_sp_users_int
     - name: Check for service-points-users record
       uri:
@@ -147,6 +156,7 @@
         headers:
           Accept: "application/json, text/plain"
           X-Okapi-Tenant: "{{ tenant }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: check_sp_user
       when: check_sp_users_int.json|default([])|length > 0
     - name: Get service points
@@ -155,6 +165,7 @@
         headers:
           Accept: application/json
           X-Okapi-Tenant: "{{ tenant }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: service_points
       when: check_sp_users_int.json|default([])|length > 0 and check_sp_user.json.totalRecords == 0
     - name: Set list of service point ids
@@ -176,6 +187,7 @@
           "servicePointsIds": [ {{ service_points_ids }} ],
           "defaultServicePointId": "{{ service_points|json_query('json.servicepoints[*].id')|first }}"
           }
+        validate_certs: "{{ okapi_validate_certs }}"
       register: create_sp_user
       changed_when: create_sp_user.status == 201
       when: check_sp_users_int.json|default([])|length > 0 and check_sp_user.json.totalRecords == 0
@@ -200,5 +212,6 @@
           X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
         body: "{{ authtoken_enable }}"
+        validate_certs: "{{ okapi_validate_certs }}"
       register: authtoken_enable_result
       when: authtoken_module.json.0 is defined

@@ -43,5 +43,6 @@ admin_user:
   first_name: DIKU
   last_name: ADMINISTRATOR
   email: admin@diku.example.org
-perms_users_assign: no
+perms_users_assign: true
+okapi_validate_certs: true
 ```
