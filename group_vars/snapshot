@@ -49,6 +49,7 @@ add_modules:
   - mod-ebsconet
   - mod-entities-links
   - mod-erm-usage-harvester
+  - mod-fqm-manager
   - mod-gobi
   - mod-graphql
   - mod-ldp
@@ -236,6 +237,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-finance
+    deploy: yes
+
+  - name: mod-fqm-manager
     deploy: yes
 
   - name: mod-gobi
