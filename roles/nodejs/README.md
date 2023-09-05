@@ -10,7 +10,7 @@ Invoke this role to install and configure for any host that requires it. For exa
 - hosts: my-folio-test
   roles:
     - role: nodejs
-      nodejs_version: v16
+      nodejs_version: v18
 ```
 
 ## Variables
