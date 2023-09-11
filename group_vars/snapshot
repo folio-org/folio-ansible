@@ -250,6 +250,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-inn-reach
+    docker_env:
+      - name: INNREACH_TENANTS
+        value: "testTenant|diku"
     deploy: yes
 
   - name: mod-inventory
