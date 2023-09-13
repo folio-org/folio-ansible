@@ -217,8 +217,14 @@ folio_modules:
   - name: mod-erm-usage-harvester
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: DIKU_USER_NAME
+        value: "mod-erm-usage-harvester"
+      - name: DIKU_USER_PASS
+        value: "mod-erm-usage-harvester"
 
   - name: mod-eusage-reports
     deploy: yes
