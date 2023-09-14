@@ -301,6 +301,8 @@ folio_modules:
   - name: mod-lists
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
       - name: AWS_URL
         value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
