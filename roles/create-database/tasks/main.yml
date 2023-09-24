@@ -50,7 +50,3 @@
     login_password: "{{ pg_admin_password }}"
     name: "{{ database_name }}"
     owner: "{{ db_admin_user }}"
-    encoding: "{{ db_encoding }}"
-    lc_collate: "{{ db_lc_collate }}"
-    lc_ctype: "{{ db_lc_ctype }}"
-    template: "{{ db_template }}"
