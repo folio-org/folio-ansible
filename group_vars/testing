@@ -199,8 +199,10 @@ folio_modules:
   - name: mod-agreements
     deploy: yes
     docker_env:
+      - name: CONTAINER_MAX_MEMORY
+        value: "1610612736"
       - name: JAVA_OPTIONS
-        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=67.0 -XX:+PrintFlagsFinal"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
