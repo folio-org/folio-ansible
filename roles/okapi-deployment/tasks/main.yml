@@ -67,7 +67,7 @@
 
 - name: Combine dep_descrs dicts
   set_fact:
-    dep_descrs: "{{ dep_descrs|combine(dep_descrs_env|default({}), dep_descrs_cmd|default({}), dep_descrs_mem|default({}), recursive=True) }}"
+    dep_descrs: "{{ dep_descrs|combine(dep_descrs_env|default({}), dep_descrs_cmd|default({}), dep_descrs_mem|default({}), list_merge='append_rp', recursive=True) }}"
 
 - name: Check for module deployment
   uri:
