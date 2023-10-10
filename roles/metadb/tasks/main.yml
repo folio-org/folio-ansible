@@ -7,6 +7,7 @@
     login_host: "{{ pg_host }}"
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
+    db: postgres
     port: "{{ pg_port }}"
 
 - name: Create account in metadb database for LDP app
@@ -17,6 +18,7 @@
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
     port: "{{ pg_port }}"
+    db: postgres
 
 - name: Download metadb pg dump
   get_url:
