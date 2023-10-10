@@ -38,7 +38,7 @@
 #    target:  "{{ metadb_dumpfile }}" 
 #    target_opts: "-Fc -O"
 
-- name: Template grant privs script to remote host
+- name: Create .pgpass file
   template:
     src: pgpass.j2
     dest: /home/ubuntu/.pgpass
@@ -58,7 +58,7 @@
 
 - name: Restore DB from PG dump
   shell: 
-    cmd: /usr/bin/pg_restore -Fc -O --dbname {{ metadb_db }} -U {{ metadb_admin_user }} {{ metadb_dumpfile }}
+    cmd: /usr/bin/pg_restore -Fc -O --dbname {{ metadb_db }} -U {{ metadb_admin_user }} -w {{ metadb_dumpfile }}
     creates: /tmp/pg_restore_complete
   
 - name: Create schema for LDP app user
