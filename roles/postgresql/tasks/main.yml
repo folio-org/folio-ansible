@@ -50,6 +50,15 @@
     line: "host  all  all  0.0.0.0/0  md5"
   notify: Restart postgresql
 
+- name: Configure postgresql to allow local connections from non-system users
+  become: yes
+  lineinfile:
+    dest: "/etc/postgresql/{{ pg_major_version }}/main/pg_hba.conf"
+    regexp: '^local\s+all\s+all'
+    line: "local    all     all    md5"
+  notify: Restart postgresql
+
+
 # This is the pg_admin_user that will be used in create-database role
 - name: Create a postgres admin user that can create roles and databases
   become: yes

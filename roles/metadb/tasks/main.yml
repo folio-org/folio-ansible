@@ -1,0 +1,70 @@
+---
+
+- name: Create metadb database admin account
+  postgresql_user:
+    name: "{{ metadb_admin_user }}"
+    password: "{{ metadb_admin_password }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+
+- name: Create account in metadb database for LDP app
+  postgresql_user:
+    name: "{{ metadb_app_user }}"
+    password: "{{ metadb_app_password }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+
+- name: Download metadb pg dump
+  get_url:
+    url: "{{ metadb_dumpfile_url }}" 
+    dest: "{{ metadb_dumpfile }}" 
+
+- name: Create metadb database
+  postgresql_db:
+    name: "{{ metadb_db }}"
+    owner: "{{ metadb_admin_user }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    state: restore
+    target:  "{{ metadb_dumpfile }}" 
+    target_opts: "-Fc -O"
+
+- name: Create schema for LDP app user
+  postgresql_schema: 
+    name: "{{ metadb_user }}"
+    db: "{{ metadb_db }}"
+    owner: "{{ metadb_user }}"
+    state: present
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}" 
+
+- name: Revoke CREATE privs in public schema to public
+  postgresql_privs:
+    db: "{{ metadb_db }}"
+    type: schema
+    objs: public
+    privs: CREATE
+    role: public
+    state: absent
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}" 
+    
+- name: grant privileges to metadb app user
+  postgresql_script: 
+    db: "{{ metadb_db }}" 
+    path: "{{ lookup('template', 'set_metadb_user_privs.sql.j2') }}" 
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}"
+

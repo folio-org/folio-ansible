@@ -1,0 +1,12 @@
+DO $$
+DECLARE 
+   rec TEXT;
+   folio_user TEXT = "{{ metadb_app_user }}";
+
+BEGIN
+ FOR rec in SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname LIKE 'folio\_%'
+ LOOP 
+   EXECUTE format('GRANT USAGE ON SCHEMA %1$s TO %2$s',rec,folio_user) ;
+   EXECUTE format('GRANT SELECT on ALL TABLES in SCHEMA %1$s TO %2$s',rec,folio_user) ;
+ END LOOP;
+END $$;
