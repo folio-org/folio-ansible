@@ -1,7 +1,7 @@
 DO $$
 DECLARE 
    rec TEXT;
-   folio_user TEXT = "{{ metadb_app_user }}";
+   folio_user TEXT = '{{ metadb_app_user }}';
 
 BEGIN
  FOR rec in SELECT nspname FROM pg_catalog.pg_namespace WHERE nspname LIKE 'folio\_%'
