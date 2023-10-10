@@ -20,5 +20,5 @@ metadb_app_user: metadb
 metadb_app_password: metadb
 
 metadb_dumpfile_url: "https://metadb.dev/pg_dump/metadb_folio.dump"
-metadb_dumpfile: "/tmp/metadb_folio.pgc"
+metadb_dumpfile: "/tmp/metadb_folio.dump"
 

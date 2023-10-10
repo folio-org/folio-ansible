@@ -58,7 +58,7 @@
 
 - name: Restore DB from PG dump
   shell: 
-    cmd: /usr/bin/pg_restore -Fc -O --dbname "{{ metadb_db }}" -U "{{ metadb_admin_user }} "{{ metadb_dumpfile }}"
+    cmd: /usr/bin/pg_restore -Fc -O --dbname {{ metadb_db }} -U {{ metadb_admin_user }} {{ metadb_dumpfile }}
     creates: /tmp/pg_restore_complete
   
 - name: Create schema for LDP app user
