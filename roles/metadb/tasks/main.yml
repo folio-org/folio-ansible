@@ -25,6 +25,27 @@
     url: "{{ metadb_dumpfile_url }}" 
     dest: "{{ metadb_dumpfile }}" 
 
+# This is broken in the 2.9 version of Ansible
+#- name: Create metadb database
+#  postgresql_db:
+#    name: "{{ metadb_db }}"
+#    owner: "{{ metadb_admin_user }}"
+#    login_host: "{{ pg_host }}"
+#    login_user: "{{ pg_admin_user }}"
+#    login_password: "{{ pg_admin_password }}"
+#    port: "{{ pg_port }}"
+#    state: restore
+#    target:  "{{ metadb_dumpfile }}" 
+#    target_opts: "-Fc -O"
+
+- name: Template grant privs script to remote host
+  template:
+    src: pgpass.j2
+    dest: /home/ubuntu/.pgpass
+    owner: ubuntu
+    group: ubuntu
+    mode: '0600'
+
 - name: Create metadb database
   postgresql_db:
     name: "{{ metadb_db }}"
@@ -33,10 +54,13 @@
     login_user: "{{ pg_admin_user }}"
     login_password: "{{ pg_admin_password }}"
     port: "{{ pg_port }}"
-    state: restore
-    target:  "{{ metadb_dumpfile }}" 
-    target_opts: "-Fc -O"
+    state: present
 
+- name: Restore DB from PG dump
+  shell: 
+    cmd: /usr/bin/pg_restore -Fc -O --dbname "{{ metadb_db }}" -U "{{ metadb_admin_user }} "{{ metadb_dumpfile }}"
+    creates: /tmp/pg_restore_complete
+  
 - name: Create schema for LDP app user
   postgresql_schema: 
     name: "{{ metadb_user }}"
