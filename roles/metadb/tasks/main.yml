@@ -25,7 +25,8 @@
     url: "{{ metadb_dumpfile_url }}" 
     dest: "{{ metadb_dumpfile }}" 
 
-# This is broken in the 2.9 version of Ansible
+# This is broken in the 2.9 version of Ansible.  The next three plays
+# are needed to accomplish the same thing. 
 #- name: Create metadb database
 #  postgresql_db:
 #    name: "{{ metadb_db }}"
@@ -65,9 +66,9 @@
   
 - name: Create schema for LDP app user
   postgresql_schema: 
-    name: "{{ metadb_user }}"
+    name: "{{ metadb_app_user }}"
     db: "{{ metadb_db }}"
-    owner: "{{ metadb_user }}"
+    owner: "{{ metadb_app_user }}"
     state: present
     login_host: "{{ pg_host }}"
     login_user: "{{ metadb_admin_user }}"
