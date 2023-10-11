@@ -69,14 +69,14 @@
 
 - name: print return info from data check
   debug: 
-    var: data_check_result
+    var: data_check_result.query_result[].count
 
 - name: Restore DB from PG dump
   shell: 
     cmd: /usr/bin/pg_restore -Fc -O --host {{ pg_host }} --dbname {{ metadb_db }} -U {{ metadb_admin_user }} -w {{ metadb_dumpfile }} || /bin/true
   become: true
   become_user: ubuntu 
-  when: data_check_result.query_result < 10 
+  when: data_check_result.query_result[].count < 10 
   
 - name: Create schema for LDP app user
   postgresql_schema: 
