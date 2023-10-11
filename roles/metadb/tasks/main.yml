@@ -58,7 +58,7 @@
 
 - name: Restore DB from PG dump
   shell: 
-    cmd: /usr/bin/pg_restore -Fc -O --host {{ pg_host }} --dbname {{ metadb_db }} -U {{ metadb_admin_user }} -w {{ metadb_dumpfile }}
+    cmd: /usr/bin/pg_restore -Fc -O --host {{ pg_host }} --dbname {{ metadb_db }} -U {{ metadb_admin_user }} -w {{ metadb_dumpfile }} || /bin/true
     creates: /tmp/pg_restore_complete
   become: true
   become_user: ubuntu 
