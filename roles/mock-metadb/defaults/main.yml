@@ -1,0 +1,24 @@
+---
+okapi_port: "9130"
+okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
+
+pg_admin_user: folio_admin
+pg_admin_password: folio_admin
+pg_host: "{{ ansible_default_ipv4.address }}"
+pg_port: 5432
+
+admin_user:
+  username: diku_admin
+  password: admin
+
+tenant: diku
+
+metadb_db: metadb_snapshot
+metadb_admin_user: metadbadmin
+metadb_admin_password: metadbadmin
+metadb_app_user: metadb_app_user
+metadb_app_password: metadb_app_user
+
+metadb_dumpfile_url: "https://metadb.dev/pg_dump/metadb_folio.dump"
+metadb_dumpfile: "/tmp/metadb_folio.dump"
+
