@@ -71,8 +71,8 @@
     owner: "{{ metadb_app_user }}"
     state: present
     login_host: "{{ pg_host }}"
-    login_user: "{{ metadb_admin_user }}"
-    login_password: "{{ metadb_admin_password }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
     port: "{{ pg_port }}" 
 
 - name: Revoke CREATE privs in public schema to public
