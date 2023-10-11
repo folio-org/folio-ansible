@@ -57,12 +57,6 @@
     port: "{{ pg_port }}"
     state: present
 
-- name: Copy sample data query to remote host
-  copy: 
-    src: data_check.sql 
-    dest: /tmp/data_check.sql
-    mode: '0644'
-
 - name: Check if sample data has already been loaded
   postgresql_query:
     db: "{{ metadb_db }}"
