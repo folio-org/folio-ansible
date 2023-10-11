@@ -70,7 +70,7 @@
     login_user: "{{ metadb_admin_user }}"
     login_password: "{{ metadb_admin_password }}"
     port: "{{ pg_port }}"
-    path_to_script: /tmp/data_check.sql
+    query: SELECT COUNT(*) FROM pg_catalog.pg_namespace WHERE nspname LIKE 'folio\_%'
   register: data_check_result
 
 - name: print return info from data check
