@@ -16,8 +16,8 @@ tenant: diku
 metadb_db: metadb_snapshot
 metadb_admin_user: metadbadmin
 metadb_admin_password: metadbadmin
-metadb_app_user: metadb
-metadb_app_password: metadb
+metadb_app_user: ldp_app_user
+metadb_app_password: ldp_app_user
 
 metadb_dumpfile_url: "https://metadb.dev/pg_dump/metadb_folio.dump"
 metadb_dumpfile: "/tmp/metadb_folio.dump"
