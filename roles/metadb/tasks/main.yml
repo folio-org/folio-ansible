@@ -99,7 +99,6 @@
 - name: Grant privileges to metadb app user
   postgresql_query: 
     db: "{{ metadb_db }}" 
-    path: "{{ lookup('template', 'set_metadb_user_privs.sql.j2') }}" 
     login_host: "{{ pg_host }}"
     login_user: "{{ metadb_admin_user }}"
     login_password: "{{ metadb_admin_password }}"
