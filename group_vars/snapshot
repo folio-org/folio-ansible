@@ -326,9 +326,15 @@ folio_modules:
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
+    docker_env:
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
 
   - name: mod-login-saml
     deploy: yes
+    docker_env:
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
 
   - name: mod-ncip
     deploy: yes
