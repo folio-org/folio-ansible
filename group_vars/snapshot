@@ -327,12 +327,16 @@ folio_modules:
       - { name: loadSample, value: "true" }
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: LOGIN_COOKIE_SAMESITE
         value: "None"
 
   - name: mod-login-saml
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: LOGIN_COOKIE_SAMESITE
         value: "None"
 
