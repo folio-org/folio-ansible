@@ -133,8 +133,14 @@ folio_modules:
   - name: mod-consortia
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-consortia"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-consortia"
 
   - name: mod-courses
     deploy: yes
@@ -160,6 +166,8 @@ folio_modules:
   - name: mod-data-export-spring
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
       - name: SYSTEM_USER_PASSWORD
@@ -212,6 +220,10 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=85.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-entities-links"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-entities-links"
 
   - name: mod-erm-usage
     deploy: yes
@@ -259,10 +271,16 @@ folio_modules:
 
   - name: mod-inn-reach
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: INNREACH_TENANTS
         value: "testTenant|diku"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-innreach"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-innreach"
     deploy: yes
 
   - name: mod-inventory
@@ -416,8 +434,12 @@ folio_modules:
   - name: mod-remote-storage
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-remote-storage"
       - name: SYSTEM_USER_PASSWORD
-        value: system-user
+        value: "system-user-mod-remote-storage"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
@@ -438,6 +460,10 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-search"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-search"
 
   - name: mod-sender
     deploy: yes
