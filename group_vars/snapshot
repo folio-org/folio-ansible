@@ -94,6 +94,9 @@ folio_modules:
 
   - name: mod-authtoken
     deploy: yes
+    docker_env:
+      - name: LEGACY_TOKEN_TENANTS
+        value: ""
 
   - name: mod-bulk-operations
     deploy: yes
@@ -326,9 +329,15 @@ folio_modules:
     tenant_parameters:
       - { name: loadSample, value: "true" }
     deploy: yes
+    docker_env:
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
 
   - name: mod-login-saml
     deploy: yes
+    docker_env:
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
 
   - name: mod-ncip
     deploy: yes
