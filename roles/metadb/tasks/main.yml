@@ -75,7 +75,6 @@
   debug: 
     var: data_check_result.query_result[0].count
 
-# psql -h 10.36.1.189 -d metadb_snapshot -U metadbadmin < id-test.sql
 - name: Restore DB from PG dump
   shell: 
     cmd: psql -h {{ pg_host }} -d {{ metadb_db }} -U {{ metadb_admin_user }} < {{ metadb_dumpfile }} || /bin/true
