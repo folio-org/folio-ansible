@@ -25,6 +25,10 @@
     url: "{{ metadb_dumpfile_url }}" 
     dest: "{{ metadb_dumpfile }}" 
 
+- name: Uncompress pg dump
+  shell:
+    cmd: /usr/bin/gunzip {{ metadb_dumpfile }}.gz || /bin/true
+  
 # This is broken in the 2.9 version of Ansible.  The next three plays
 # are needed to accomplish the same thing. 
 #- name: Create metadb database
@@ -71,9 +75,10 @@
   debug: 
     var: data_check_result.query_result[0].count
 
+# psql -h 10.36.1.189 -d metadb_snapshot -U metadbadmin < id-test.sql
 - name: Restore DB from PG dump
   shell: 
-    cmd: /usr/bin/pg_restore -Fc -O --host {{ pg_host }} --dbname {{ metadb_db }} -U {{ metadb_admin_user }} -w {{ metadb_dumpfile }} || /bin/true
+    cmd: psql -h {{ pg_host }} -d {{ metadb_db }} -U {{ metadb_admin_user }} < {{ metadb_dumpfile }} || /bin/true
   become: true
   become_user: ubuntu 
   when: data_check_result.query_result[0].count < 10 
