@@ -23,11 +23,11 @@
 - name: Download metadb pg dump
   get_url:
     url: "{{ metadb_dumpfile_url }}" 
-    dest: "{{ metadb_dumpfile }}" 
+    dest: "{{ metadb_dumpfile_compressed }}" 
 
 - name: Uncompress pg dump
   shell:
-    cmd: /usr/bin/gunzip {{ metadb_dumpfile }}.gz || /bin/true
+    cmd: /usr/bin/gunzip {{ metadb_dumpfile_compressed }} || /bin/true
   
 # This is broken in the 2.9 version of Ansible.  The next three plays
 # are needed to accomplish the same thing. 

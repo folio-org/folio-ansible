@@ -20,5 +20,6 @@ metadb_app_user: rptapp
 metadb_app_password: rptapp
 
 metadb_dumpfile_url: "https://metadb.dev/pg_dump/metadb_folio.sql.gz"
+metadb_dumpfile_compressed: "/tmp/metadb_folio.sql.gz"
 metadb_dumpfile: "/tmp/metadb_folio.sql"
 
