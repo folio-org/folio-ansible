@@ -1,0 +1,125 @@
+---
+
+- name: Create metadb database admin account
+  postgresql_user:
+    name: "{{ metadb_admin_user }}"
+    password: "{{ metadb_admin_password }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    db: postgres
+    port: "{{ pg_port }}"
+
+- name: Create account in metadb database for LDP app
+  postgresql_user:
+    name: "{{ metadb_app_user }}"
+    password: "{{ metadb_app_password }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    db: postgres
+
+- name: Download metadb pg dump
+  get_url:
+    url: "{{ metadb_dumpfile_url }}" 
+    dest: "{{ metadb_dumpfile_compressed }}" 
+
+- name: Uncompress pg dump
+  shell:
+    cmd: /usr/bin/gunzip {{ metadb_dumpfile_compressed }} || /bin/true
+  
+# This is broken in the 2.9 version of Ansible.  The next three plays
+# are needed to accomplish the same thing. 
+#- name: Create metadb database
+#  postgresql_db:
+#    name: "{{ metadb_db }}"
+#    owner: "{{ metadb_admin_user }}"
+#    login_host: "{{ pg_host }}"
+#    login_user: "{{ pg_admin_user }}"
+#    login_password: "{{ pg_admin_password }}"
+#    port: "{{ pg_port }}"
+#    state: restore
+#    target:  "{{ metadb_dumpfile }}" 
+#    target_opts: "-Fc -O"
+
+- name: Create .pgpass file
+  template:
+    src: pgpass.j2
+    dest: /home/ubuntu/.pgpass
+    owner: ubuntu
+    group: ubuntu
+    mode: '0600'
+
+- name: Create metadb database
+  postgresql_db:
+    name: "{{ metadb_db }}"
+    owner: "{{ metadb_admin_user }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}"
+    state: present
+
+- name: Check if sample data has already been loaded
+  postgresql_query:
+    db: "{{ metadb_db }}"
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}"
+    query: SELECT COUNT(*) FROM pg_catalog.pg_namespace WHERE nspname LIKE 'folio\_%'
+  register: data_check_result
+
+- name: print return info from data check
+  debug: 
+    var: data_check_result.query_result[0].count
+
+- name: Restore DB from PG dump
+  shell: 
+    cmd: psql -h {{ pg_host }} -d {{ metadb_db }} -U {{ metadb_admin_user }} < {{ metadb_dumpfile }} || /bin/true
+  become: true
+  become_user: ubuntu 
+  when: data_check_result.query_result[0].count < 10 
+  
+- name: Create schema for LDP app user
+  postgresql_schema: 
+    name: "{{ metadb_app_user }}"
+    db: "{{ metadb_db }}"
+    owner: "{{ metadb_app_user }}"
+    state: present
+    login_host: "{{ pg_host }}"
+    login_user: "{{ pg_admin_user }}"
+    login_password: "{{ pg_admin_password }}"
+    port: "{{ pg_port }}" 
+
+- name: Revoke CREATE privs in public schema to public
+  postgresql_privs:
+    db: "{{ metadb_db }}"
+    type: schema
+    objs: public
+    privs: CREATE
+    role: public
+    state: absent
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}" 
+
+- name: Template grant privs script to remote host
+  template:
+    src: set_metadb_user_privs.sql.j2
+    dest: /tmp/set_metadb_user_privs.sql
+    owner: root
+    group: root
+    mode: '0644'
+    
+- name: Grant privileges to metadb app user
+  postgresql_query: 
+    db: "{{ metadb_db }}" 
+    login_host: "{{ pg_host }}"
+    login_user: "{{ metadb_admin_user }}"
+    login_password: "{{ metadb_admin_password }}"
+    port: "{{ pg_port }}"
+    path_to_script: /tmp/set_metadb_user_privs.sql
+
