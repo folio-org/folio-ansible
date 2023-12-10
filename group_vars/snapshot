@@ -41,6 +41,7 @@ add_modules:
   - edge-rtac
   - edge-inn-reach
   # MISSING: edge-sip2
+  - mod-batch-print
   - mod-bulk-operations
   - mod-consortia
   - mod-di-converter-storage
@@ -93,6 +94,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-authtoken
+    deploy: yes
+
+  - name: mod-batch-print
     deploy: yes
 
   - name: mod-bulk-operations
