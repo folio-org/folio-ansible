@@ -55,6 +55,7 @@ add_modules:
   - mod-graphql
   - mod-ldp
   - mod-lists
+  - mod-marc-migrations
   - mod-ncip
   - mod-oa
   - mod-oai-pmh
@@ -361,6 +362,16 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: LOGIN_COOKIE_SAMESITE
         value: "None"
+
+  - name: mod-marc-migrations
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=85.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-marc-migrations"
+    deploy: yes
 
   - name: mod-ncip
     deploy: yes
