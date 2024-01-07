@@ -62,6 +62,7 @@ add_modules:
   - mod-patron
   - mod-rtac
   - mod-settings
+  - mod-tlr
   - mod-user-import
   - mod-audit
 # Sample pinned module
@@ -509,6 +510,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-template-engine
+    deploy: yes
+
+  - name: mod-tlr
     deploy: yes
 
   - name: mod-user-import
