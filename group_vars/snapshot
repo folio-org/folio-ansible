@@ -60,6 +60,7 @@ add_modules:
   - mod-oa
   - mod-oai-pmh
   - mod-patron
+  - mod-requests-mediated
   - mod-rtac
   - mod-settings
   - mod-tlr
@@ -458,6 +459,9 @@ folio_modules:
         value: "system-user-mod-remote-storage"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+
+  - name: mod-requests-mediated
+    deploy: yes
 
   - name: mod-rtac
     deploy: yes
