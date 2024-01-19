@@ -4,6 +4,9 @@ docker_users:
 
 folioci: false
 
+# Unpinning this will cause an API error with older versions of docker-compose
+docker_version: "5:24.0.7-1~ubuntu.20.04~focal"
+
 # no default for these, if undefined use unauthenticated sessions to
 # Docker Hub for image pulls
 # docker_image_repo:
