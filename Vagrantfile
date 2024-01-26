@@ -30,7 +30,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "snapshot", autostart: false do |snapshot|
     snapshot.vm.box = "folio/snapshot"
     snapshot.vm.provider "virtualbox" do |vb|
-      vb.memory = 20480
+      vb.memory = 24576
     end
     snapshot.vm.network "forwarded_port", guest: 9130, host: 9130
     snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
@@ -48,7 +48,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "release", autostart: false do |release|
     release.vm.box = "folio/release"
     release.vm.provider "virtualbox" do |vb|
-      vb.memory = 20480
+      vb.memory = 24576
     end
     release.vm.network "forwarded_port", guest: 9130, host: 9130
     release.vm.network "forwarded_port", guest: 3000, host: 3000
@@ -98,10 +98,11 @@ Vagrant.configure(2) do |config|
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     build_snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
     build_snapshot.vm.provider "virtualbox" do |vb|
-      vb.memory = 20480
+      vb.memory = 24576
     end
     build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.compatibility_mode = "2.0"
       ansible.groups = {
         "vagrant" => ["build_snapshot"],
         "snapshot" => ["build_snapshot"],
@@ -132,7 +133,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "build_release", autostart: false do |build_release|
     build_release.vm.box = "bento/ubuntu-20.04"
     build_release.vm.provider "virtualbox" do |vrel|
-      vrel.memory = 20480
+      vrel.memory = 24576
     end
     build_release.vm.network "forwarded_port", guest: 9130, host: 9130
     build_release.vm.network "forwarded_port", guest: 3000, host: 3000
