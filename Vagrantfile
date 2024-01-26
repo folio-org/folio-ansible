@@ -98,10 +98,11 @@ Vagrant.configure(2) do |config|
     build_snapshot.vm.network "forwarded_port", guest: 3000, host: 3000
     build_snapshot.vm.network "forwarded_port", guest: 8000, host: 8130
     build_snapshot.vm.provider "virtualbox" do |vb|
-      vb.memory = 20480
+      vb.memory = 24576
     end
     build_snapshot.vm.provision "ansible" do |ansible|
       ansible.playbook = "folio.yml"
+      ansible.compatibility_mode = "2.0"
       ansible.groups = {
         "vagrant" => ["build_snapshot"],
         "snapshot" => ["build_snapshot"],
