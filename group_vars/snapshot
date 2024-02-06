@@ -45,6 +45,7 @@ add_modules:
   - mod-bulk-operations
   - mod-circulation-item
   - mod-consortia
+  - mod-dcb
   - mod-di-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
@@ -219,6 +220,16 @@ folio_modules:
 
   - name: mod-data-import
     deploy: yes
+
+  - name: mod-dcb
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_PASSWORD
+        value: dcb-system-user
 
   - name: mod-di-converter-storage
     deploy: yes
