@@ -43,6 +43,7 @@ add_modules:
   # MISSING: edge-sip2
   - mod-batch-print
   - mod-bulk-operations
+  - mod-circulation-item
   - mod-consortia
   - mod-di-converter-storage
   - mod-data-export-spring
@@ -125,6 +126,14 @@ folio_modules:
 
   - name: mod-circulation
     deploy: yes
+
+  - name: mod-circulation-item
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-circulation-storage
     tenant_parameters:
