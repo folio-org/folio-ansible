@@ -255,6 +255,18 @@ folio_modules:
         value: "system-user-mod-entities-links"
       - name: SYSTEM_USER_PASSWORD
         value: "system-user-mod-entities-links"
+      - name: S3_URL
+        value: "{{ mod_elinks_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ mod_elinks_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ mod_elinks_bucket_name | default('mod-elinks-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ mod_elinks_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ mod_elinks_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ mod_elinks_local_aws | default('false') }}"
 
   - name: mod-erm-usage
     deploy: yes
