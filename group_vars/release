@@ -5,17 +5,17 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2023-csp-1/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2023-csp-1/stripes-install.json
 
 # pin Node.js to supported version
-nodejs_version: v16
+nodejs_version: v18
 
 # used in create-tenant-admin role
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 5.0.1
+okapi_version: 5.1.2
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
@@ -44,13 +44,12 @@ tenant_parameters:
     value: "true"
 
 # ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.9.0-beta2'
-ldp_derived_tables_version: 'v1.5.3'
+ldp_docker_image: 'ghcr.io/library-data-platform/ldp:2.0.0'
+ldp_derived_tables_version: 'v1.7.4'
 
 # Some modules require special initialization parameters.
 folio_modules:
   - name: mod-agreements
-    deploy: yes
     docker_env:
       - name: CONTAINER_MAX_MEMORY
         value: "1610612736"
@@ -63,14 +62,13 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
       - name: DB_MAXPOOLSIZE
         value: "20"
 
   - name: mod-bulk-operations
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
@@ -87,8 +85,18 @@ folio_modules:
       - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
 
+  - name: mod-consortia
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-consortia"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-consortia"
+
   - name: mod-data-export
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
@@ -102,9 +110,19 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: AWS_SDK
+        value: "{{ data_export_local_aws | default('false') }}"
+
+  - name: mod-data-export-spring
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_PASSWORD
+        value: data-export-system-user
 
   - name: mod-data-export-worker
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
@@ -132,15 +150,28 @@ folio_modules:
         value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-entities-links
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=85.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-entities-links"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-entities-links"
+
+  - name: mod-erm-usage-harvester
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: DIKU_USER_NAME
+        value: "mod-erm-usage-harvester"
+      - name: DIKU_USER_PASS
+        value: "mod-erm-usage-harvester"
 
   - name: mod-licenses
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
@@ -151,12 +182,59 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
+  - name: mod-lists
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+      - name: AWS_URL
+        value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: LIST_APP_S3_BUCKET
+        value: "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ lists_app_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ lists_app_aws_secret | default('minioadmin') }}"
+      - name: USE_AWS_SDK
+        value: "{{ lists_app_local_aws | default('false') }}"
+
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
+
+  - name: mod-login-saml
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
+
+  - name: mod-oai-pmh
+    docker_env:
+      - name: S3_URL
+        value: "{{ oai_pmh_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ oai_pmh_bucket_name | default('oai-pmh-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ oai_pmh_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ oai_pmh_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ oai_pmh_local_aws | default('false') }}"
+
   - name: mod-pubsub
-    deploy: yes
     docker_env:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
@@ -165,8 +243,18 @@ folio_modules:
       - name: SYSTEM_USER_PASSWORD
         value: pubsub2021
 
+  - name: mod-remote-storage
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-remote-storage"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-remote-storage"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
   - name: mod-search
-    deploy: yes
     tenant_parameters:
       - name: runReindex
         value: "true"
@@ -179,9 +267,12 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-search"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-search"
 
   - name: mod-source-record-storage
-    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
@@ -193,7 +284,7 @@ edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R1-2023
+stripes_github_version: R2-2023-csp-1
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
@@ -204,8 +295,8 @@ node_environment:
 box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Orchid Release
+  # FOLIO Poppy Release
 
   Admin login: diku_admin/admin
 
-  R1-2023 (Orchid) release version of the FOLIO platform, built from R1-2023 release artifacts, with all updates  [Orchid release notes](https://wiki.folio.org/display/REL/Orchid+%28R1+2023%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R2-2023 (Poppy) release version of the FOLIO platform, built from R2-2023 release artifacts, with all updates [Poppy release notes](https://folio-org.atlassian.net/wiki/x/aoJP). For details see http://localhost:3000/settings/about after `vagrant up`.
