@@ -174,34 +174,6 @@
           inst_user:
             username: test-user
             password: test
-    - role: edge-module
-      edge_module: edge-inn-reach
-      edge_module_publish_port: 9703
-      edge_module_path: /innreach
-      edge_module_expose_port: 8081
-      edge_module_docker_env:
-        JAVA_OPTIONS: "-XX:MaxRAMPercentage=66.0"
-        LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
-      edge_module_cmd: "--okapi_url={{edge_module_okapi_url}} --secure_store_props=/mnt/{{ edge_module }}-ephemeral.properties"
-      inst_user:
-        username: "innreachClient"
-        password: "admin"
-        personal:
-          lastName: SYSTEM
-          firstName: innreachClient
-      inst_user_perms:
-        - inn-reach.all
-      edge_http_version: 1.1
-      edge_extra_tenants:
-        - tenant_id: test_edge_inn_reach
-          inst_user:
-            username: innreachClient
-            password: "password"
-      edge_tenants_mappings:
-        - tenant: "{{ tenant }}"
-          mapping: fli01
-        - tenant: "test_edge_inn_reach"
-          mapping: "5858f9d8-1558-4513-aa25-bad839eb803a"
 
 # Sample data for snapshot-core, testing, snapshot
 - name: Add sample users for permissions testing
