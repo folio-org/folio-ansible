@@ -171,17 +171,17 @@ folio_modules:
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
-      - name: AWS_ACCESS_KEY_ID
+      - name: S3_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
-      - name: AWS_SECRET_ACCESS_KEY
+      - name: S3_SECRET_ACCESS_KEY
         value: "{{ data_export_aws_secret | default('minioadmin') }}"
-      - name: AWS_URL
+      - name: S3_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: AWS_REGION
+      - name: S3_REGION
         value: "{{ aws_region | default('us-east-1') }}"
-      - name: AWS_BUCKET
+      - name: S3_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
-      - name: AWS_SDK
+      - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-data-export-spring
