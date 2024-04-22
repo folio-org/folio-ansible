@@ -63,6 +63,7 @@ add_modules:
   - mod-oa
   - mod-oai-pmh
   - mod-patron
+  - mod-reading-room
   - mod-requests-mediated
   - mod-rtac
   - mod-settings
@@ -462,6 +463,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-patron-blocks
+    deploy: yes
+
+  - name: mod-reading-room
     deploy: yes
 
   - name: mod-permissions
