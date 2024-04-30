@@ -57,7 +57,7 @@ module_list:
   - mod-users-15.7.0-SNAPSHOT.85
 
 # Mod descriptor registry
-folio_registry: http://folio-registry.aws.indexdata.com
+folio_registry: http://folio-registry.dev.folio.org
 folio_options_url: https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot
 # DB connection
 pg_admin_user: folio_admin
@@ -81,7 +81,7 @@ okapi_pull: yes
 
 # Edge Modules
 # Currently setup for either Vault or Ephemeral Store
-# Varaibles 
+# Varaibles
 edge_secure_store: Vault or Ephemeral(Default)
 
 # Common Edge Modules Configs
@@ -90,9 +90,9 @@ institutional_users:
   - username: test
     password: test1234
     tenant: diku
-# Vault  
+# Vault
 vault_token: < token to access Hasicorp Vault >
-vault_addr: < https://hashicorpVaultaddress >  
+vault_addr: < https://hashicorpVaultaddress >
 # set to true for deployment of pr preview module
 preview: false
 ```

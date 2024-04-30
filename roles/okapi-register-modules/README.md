@@ -22,7 +22,7 @@ Invoke the role in a playbook, e.g.:
           # If mod_descriptor_url is defined, it overrides mod_descriptor_repo
           # (both the role-level variable and the item-level variable)
           # mod_descriptor_url: https://cdn.rawgit.com/folio-org/mod-login/v3.1.0/ModuleDescriptor.json
-          mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+          mod_descriptor_repo: http://folio-registry.dev.folio.org
           # the following properties override the embedded launch descriptor in the
           # module descriptor, if it exists
           # override dockerCMD
@@ -50,6 +50,6 @@ See above for documentation on the format of the `folio_modules` variable.
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_modules: [ ]
-mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+mod_descriptor_repo: http://folio-registry.dev.folio.org
 update_launch_descr: no
 ```
