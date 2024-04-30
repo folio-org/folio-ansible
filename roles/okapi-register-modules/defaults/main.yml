@@ -3,5 +3,5 @@
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 folio_modules: [ ]
-mod_descriptor_repo: http://folio-registry.aws.indexdata.com
+mod_descriptor_repo: http://folio-registry.dev.folio.org
 update_launch_descr: no

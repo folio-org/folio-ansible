@@ -10,7 +10,7 @@
     "db_secret_name": "db-connect",
     "okapi_url": "http://okapi:9130",
     "ingress_dns": "okapi-demo2.ci.folio.org",
-    "folio_registry": "http://folio-registry.aws.indexdata.com",
+    "folio_registry": "http://folio-registry.dev.folio.org",
     "folio_options_url": "https://raw.githubusercontent.com/folio-org/folio-ansible/master/group_vars/snapshot",
     "service_type": "ClusterIP",
     "k8s_state":"present",
