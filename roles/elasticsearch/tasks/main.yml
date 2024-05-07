@@ -25,7 +25,7 @@
       - "{{ elasticsearch_host_node_port }}:9300"
     state: started
     restart_policy: always
-    restart: yes
+#    restart: yes
   become: yes
   when: folio_install_type == "single_server"
 
@@ -34,7 +34,7 @@
     url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
     status_code: 200
   register: elasticsearch_status_check
-  retries: 30
-  delay: 5
+  retries: 60
+  delay: 30
   until: elasticsearch_status_check is not failed
   when: folio_install_type == "single_server"
