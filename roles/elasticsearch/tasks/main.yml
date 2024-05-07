@@ -25,16 +25,22 @@
       - "{{ elasticsearch_host_node_port }}:9300"
     state: started
     restart_policy: always
-    restart: yes
+#    restart: yes
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
   become: yes
   when: folio_install_type == "single_server"
 
-- name: check if elasticseach launched properly
-  uri:
-    url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
-    status_code: 200
-  register: elasticsearch_status_check
-  retries: 30
-  delay: 5
-  until: elasticsearch_status_check is not failed
-  when: folio_install_type == "single_server"
+#- name: check if elasticseach launched properly
+#  uri:
+#    url: "http://localhost:{{ elasticsearch_host_rest_port }}/_cluster/health"
+#    status_code: 200
+#  register: elasticsearch_status_check
+#  retries: 60
+#  delay: 5
+#  until: elasticsearch_status_check is not failed
+#  when: folio_install_type == "single_server"
