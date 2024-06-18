@@ -6,6 +6,8 @@ services:
     restart: always
     ports:
       - "{{ zk_port }}:2181"
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
     image: bitnami/kafka
     container_name: kafka
