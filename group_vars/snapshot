@@ -406,14 +406,28 @@ folio_modules:
         value: "None"
 
   - name: mod-marc-migrations
+    deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=85.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-marc-migrations"
       - name: SYSTEM_USER_PASSWORD
         value: "system-user-mod-marc-migrations"
-    deploy: yes
+      - name: S3_URL
+        value: "{{ mod_marc_migrations_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ mod_marc_migrations_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ mod_marc_migrations_bucket_name | default('mod-marc-migrations-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ mod_marc_migrations_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ mod_marc_migrations_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ mod_marc_migrations_local_aws | default('false') }}"
 
   - name: mod-ncip
     deploy: yes
