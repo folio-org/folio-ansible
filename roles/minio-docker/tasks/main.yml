@@ -1,5 +1,13 @@
 ---
+# HERE I AM Try uninstalling boto3/botocore, install from PIP instead.
 # Role to launch MinIO container
+- name: Install prereqs from pip
+  become: yes
+  pip:
+    name:
+      - boto3
+      - botocore
+
 - name: Launch MinIO container
   become: yes
   docker_container:
@@ -11,3 +19,12 @@
     command: "server {{ minio_data_path }}"
     state: started
     restart_policy: always
+
+- name: Create buckets
+  s3_bucket:
+    name: "{{ item }}"
+    access_key: minioadmin
+    secret_key: minioadmin
+    s3_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+    state: present
+  loop: "{{ minio_buckets | default([]) }}"
