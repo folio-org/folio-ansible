@@ -19,4 +19,7 @@ minio_data_path: /data # path to data directory, see below
 # Local mounts. Can be combined with minio_data_path above to persist minio storage
 # minio_volumes:
 #   - "/usr/local/shared/minio-data:{{ minio_data_path }}"
+# Buckets to create on initialization
+# minio_buckets:
+#   - "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
 ```

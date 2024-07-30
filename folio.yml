@@ -26,8 +26,10 @@
 # Additional infrastructure for platform-complete builds
 - hosts: testing:snapshot:release
   roles:
-    - minio-docker # for mod-data-export-worker
-    - elasticsearch # for mod-search
+    - role: minio-docker # for multiple modules
+      minio_buckets:
+        - "{{ lists_app_bucket_name | default('lists-app-bucket') }}" # mod-lists requires the bucket to be created ahead of time
+    - role: elasticsearch # for mod-search
 
 # Configure builds
 # Need to build the webpack early to allow enough RAM for the build
@@ -57,13 +59,14 @@
 - name: Configure snapshot build
   hosts: snapshot
   pre_tasks:
-    - name: set data export, mod-oai-pmh, mod-entities-links, mod-marc-migrations, and erm AWS URLs for minio
+    - name: set AWS URLs for minio
       set_fact:
         data_export_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         erm_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         oai_pmh_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         mod_elinks_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
         mod_marc_migrations_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
+        lists_app_aws_url: "http://{{ ansible_default_ipv4.address }}:{{ minio_port|default('9000') }}"
   roles:
     - role: stripes-build
       okapi_register_modules: false
