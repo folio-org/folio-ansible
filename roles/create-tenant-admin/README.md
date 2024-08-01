@@ -27,7 +27,9 @@ Invoke the role in a playbook, optionally with variables defined, e.g.:
 
 ## Notes
 
-The behavior of this role depends on the variable `perms_users_assign`. If that variable is true, the user is given the extra permissions `perms.users.assign.immutable`, `perms.users.assign.mutable`, and `perms.users.assign.okapi` for compatibility with versions of mod-permissions later than v5.15.0-SNAPSHOT.121. Otherwise, the default behavior is to give the user only the `perms.all` permission.
+* mod-authtoken is disabled and reenabled **without dependency checking**. That means while this role is running, modules that depend on the authtoken interface may throw errors.
+
+* The behavior of this role depends on the variable `perms_users_assign`. If that variable is true, the user is given the extra permissions `perms.users.assign.immutable`, `perms.users.assign.mutable`, and `perms.users.assign.okapi` for compatibility with versions of mod-permissions later than v5.15.0-SNAPSHOT.121. Otherwise, the default behavior is to give the user only the `perms.all` permission.
 
 ## Variables
 
