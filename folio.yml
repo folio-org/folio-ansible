@@ -74,7 +74,8 @@
     - okapi-pull
     - tenant-data
     - role: build-module-list
-      stripes_platform: /etc/folio/stripes
+      deploy_url: "https://raw.githubusercontent.com/folio-org/platform-complete/snapshot/okapi-install.json"
+      enable_url: "https://raw.githubusercontent.com/folio-org/platform-complete/snapshot/stripes-install.json"
     - okapi-deployment
     - role: okapi-tenant-deploy
       create_db: no
