@@ -5,8 +5,8 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/FOLIO-4029-orchid/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/FOLIO-4029-orchid/stripes-install.json
 
 # pin Node.js to supported version
 nodejs_version: v16
