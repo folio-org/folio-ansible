@@ -184,6 +184,12 @@
     ####################
     # Enable authtoken #
     ####################
+    - name: Build authtoken_enable list
+      set_fact:
+        authtoken_enable: "{{ authtoken_enable|default([]) + [ { 'id': item.id, 'action': 'enable' } ] }}"
+      when: authtoken_module.json.0 is defined
+      with_items: "{{ authtoken_disable.json|reverse|list }}"
+
     - name: Enable authtoken
       uri:
         url: "{{ okapi_url }}/_/proxy/tenants/{{ tenant }}/install?depCheck=false"
@@ -193,6 +199,6 @@
           X-Okapi-Tenant: "supertenant"
           X-Okapi-Token: "{{ supertenant_token | default('') }}"
           Accept: "application/json, text/plain"
-        body: '[ { "id": "{{ authtoken_module.json.0.id }}", "action": "enable" } ]'
+        body: "{{ authtoken_enable }}"
       register: authtoken_enable_result
       when: authtoken_module.json.0 is defined
