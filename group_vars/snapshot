@@ -43,6 +43,7 @@ add_modules:
   # MISSING: edge-sip2
   - mod-batch-print
   - mod-bulk-operations
+  - mod-circulation-bff
   - mod-circulation-item
   - mod-consortia
   - mod-copycat
@@ -127,6 +128,9 @@ folio_modules:
     deploy: yes
 
   - name: mod-circulation
+    deploy: yes
+
+  - name: mod-circulation-bff
     deploy: yes
 
   - name: mod-circulation-item
