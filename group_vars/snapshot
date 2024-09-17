@@ -57,6 +57,7 @@ add_modules:
   - mod-fqm-manager
   - mod-gobi
   - mod-graphql
+  - mod-ldp
   - mod-lists
   - mod-marc-migrations
   - mod-ncip
@@ -66,7 +67,6 @@ add_modules:
   - mod-reading-room
   - mod-record-specifications
   - mod-requests-mediated
-  - mod-reporting
   - mod-rtac
   - mod-settings
   - mod-tlr
@@ -338,6 +338,9 @@ folio_modules:
   - name: mod-kb-ebsco-java
     deploy: yes
 
+  - name: mod-ldp
+    deploy: yes
+
   - name: mod-licenses
     deploy: yes
     docker_env:
@@ -477,9 +480,6 @@ folio_modules:
     deploy: yes
 
   - name: mod-record-specifications
-    deploy: yes
-
-  - name: mod-reporting
     deploy: yes
 
   - name: mod-permissions
