@@ -572,6 +572,15 @@ folio_modules:
 
   - name: mod-tlr
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-tlr"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-tlr"
 
   - name: mod-user-import
     deploy: yes
