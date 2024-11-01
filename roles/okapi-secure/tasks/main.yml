@@ -115,7 +115,7 @@
 
 - name: Set permissions_list
   set_fact:
-    permissions_list: '{% if perms_users_assign %}"perms.users.assign.immutable","perms.users.assign.mutable","perms.users.assign.okapi",{% endif %}"perms.all","okapi.all","okapi.proxy.pull.modules.post","login.all","users.all","auth.signtoken","auth.signrefreshtoken"'
+    permissions_list: '{% if perms_users_assign %}"perms.users.assign.immutable","perms.users.assign.mutable","perms.users.assign.okapi",{% endif %}"perms.all","okapi.all","okapi.proxy.pull.modules.post","login.all","users.all","auth.sign-and-refresh-token.all"'
 
 - name: add permissions for superuser on supertenant
   uri:
