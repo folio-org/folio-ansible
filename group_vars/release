@@ -5,8 +5,8 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2023/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2024/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2024/stripes-install.json
 
 # pin Node.js to supported version
 nodejs_version: v16
@@ -205,7 +205,7 @@ edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R1-2023
+stripes_github_version: R1-2024
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
@@ -216,8 +216,8 @@ node_environment:
 box_tag: folio/release
 version: 1.0.0
 version_descr: |
-  # FOLIO Orchid Release
+  # FOLIO Quesnelia Release
 
   Admin login: diku_admin/admin
 
-  R1-2023 (Orchid) release version of the FOLIO platform, built from R1-2023 release artifacts, with all updates  [Orchid release notes](https://wiki.folio.org/display/REL/Orchid+%28R1+2023%29+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R1-2024 (Quesnelia) release version of the FOLIO platform, built from R1-2024 release artifacts, with all updates [Quesnelia release notes](https://folio-org.atlassian.net/wiki/spaces/REL/pages/105775729/Quesnelia+R1+2024+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
