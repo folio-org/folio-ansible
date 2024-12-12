@@ -16,7 +16,7 @@ nodejs_version: v18
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 5.3.0
+okapi_version: 6.0.3
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
