@@ -220,7 +220,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
