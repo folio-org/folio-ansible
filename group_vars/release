@@ -1,6 +1,7 @@
 ---
 # Variables for building a FOLIO release
 auth_required: true
+load_mods_larger: true
 enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
@@ -9,7 +10,7 @@ deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-202
 enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2024/stripes-install.json
 
 # pin Node.js to supported version
-nodejs_version: v16
+nodejs_version: v18
 
 # used in create-tenant-admin role
 perms_users_assign: true
@@ -21,7 +22,7 @@ okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
 
 # used in okapi-tenant-deploy
-deploy_timeout: 1200
+deploy_timeout: 1800
 
 # proxy edge modules - folio-elb
 include_edge_elb: true
@@ -44,8 +45,8 @@ tenant_parameters:
     value: "true"
 
 # ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.9.0-beta2'
-ldp_derived_tables_version: 'v1.5.3'
+ldp_docker_image: 'ghcr.io/library-data-platform/ldp:2.0.1'
+ldp_derived_tables_version: 'v1.7.9'
 
 # Some modules require special initialization parameters.
 folio_modules:
@@ -61,7 +62,7 @@ folio_modules:
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
-        value: "{{ aws_region | default('') }}"
+        value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
       - name: DB_MAXPOOLSIZE
@@ -85,25 +86,48 @@ folio_modules:
       - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
 
+  - name: mod-circulation-item
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+
+  - name: mod-circulation-storage
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-configuration
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-data-export
     deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
-      - name: AWS_ACCESS_KEY_ID
+      - name: S3_ACCESS_KEY_ID
         value: "{{ data_export_aws_id | default('minioadmin') }}"
-      - name: AWS_SECRET_ACCESS_KEY
+      - name: S3_SECRET_ACCESS_KEY
         value: "{{ data_export_aws_secret | default('minioadmin') }}"
-      - name: AWS_URL
+      - name: S3_URL
         value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: AWS_REGION
+      - name: S3_REGION
         value: "{{ aws_region | default('us-east-1') }}"
-      - name: AWS_BUCKET
+      - name: S3_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+      - name: S3_IS_AWS
+        value: "{{ data_export_local_aws | default('false') }}"
 
   - name: mod-data-export-spring
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
       - name: SYSTEM_USER_PASSWORD
@@ -137,6 +161,16 @@ folio_modules:
       - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
         value: "{{ data_export_local_aws | default('false') }}"
 
+  - name: mod-dcb
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_PASSWORD
+        value: dcb-system-user
+
   - name: mod-entities-links
     deploy: yes
     docker_env:
@@ -144,6 +178,35 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=85.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+
+  - name: mod-erm-usage-harvester
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: DIKU_USER_NAME
+        value: "mod-erm-usage-harvester"
+      - name: DIKU_USER_PASS
+        value: "mod-erm-usage-harvester"
+
+  - name: mod-feesfines
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+    deploy: yes
+
+  - name: mod-finance-storage
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-inventory-storage
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
 
   - name: mod-licenses
     deploy: yes
@@ -161,9 +224,80 @@ folio_modules:
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
 
+  - name: mod-lists
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+      - name: AWS_URL
+        value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: AWS_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: LIST_APP_S3_BUCKET
+        value: "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ lists_app_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ lists_app_aws_secret | default('minioadmin') }}"
+      - name: USE_AWS_SDK
+        value: "{{ lists_app_local_aws | default('false') }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-lists"
+
+  - name: mod-login
+    docker_cmd:
+      - "verify.user=true"
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
+
+  - name: mod-login-saml
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: LOGIN_COOKIE_SAMESITE
+        value: "None"
+
+  - name: mod-oai-pmh
+    deploy: yes
+    docker_env:
+      - name: S3_URL
+        value: "{{ oai_pmh_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ aws_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ oai_pmh_bucket_name | default('oai-pmh-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ oai_pmh_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ oai_pmh_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ oai_pmh_local_aws | default('false') }}"
+
+  - name: mod-orders-storage
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-organizations-storage
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
   - name: mod-pubsub
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -XX:+HeapDumpOnOutOfMemoryError"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
       - name: SYSTEM_USER_NAME
@@ -174,8 +308,14 @@ folio_modules:
   - name: mod-remote-storage
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=75.0"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-remote-storage"
       - name: SYSTEM_USER_PASSWORD
-        value: system-user
+        value: "system-user-mod-remote-storage"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-search
     deploy: yes
@@ -191,6 +331,10 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-search"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-search"
 
   - name: mod-source-record-storage
     deploy: yes
@@ -199,6 +343,17 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0 -Djava.util.logging.config.file=vertx-default-jul-logging.properties"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+
+  - name: mod-tags
+    tenant_parameters:
+      - { name: loadSample, value: "true" }
+    deploy: yes
+
+  - name: mod-users
+    tenant_parameters:
+      - { name: loadReference, value: "true" }
+      - { name: loadSample, value: "true" }
+    deploy: yes
 
 # edge module setup
 edge_docker_repo: folioorg
