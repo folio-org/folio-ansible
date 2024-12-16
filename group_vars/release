@@ -45,7 +45,7 @@ tenant_parameters:
     value: "true"
 
 # ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:2.0.1'
+ldp_docker_image: 'ghcr.io/library-data-platform/ldp:2.1.0'
 ldp_derived_tables_version: 'v1.7.9'
 
 # Some modules require special initialization parameters.
