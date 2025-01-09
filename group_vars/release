@@ -6,8 +6,8 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2024/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2024/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/refs/tags/R1-2024-csp-7/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/refs/tags/R1-2024-csp-7/stripes-install.json
 
 # pin Node.js to supported version
 nodejs_version: v18
@@ -360,7 +360,7 @@ edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R1-2024
+stripes_github_version: R1-2024-csp-7
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
