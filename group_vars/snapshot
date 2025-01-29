@@ -123,6 +123,12 @@ folio_modules:
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
       - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "mod-bulk-operations-system-user"
+      - name: SYSTEM_USER_PASSWORD
+        value: "mod-bulk-operations-system-user"
 
   - name: mod-calendar
     deploy: yes
