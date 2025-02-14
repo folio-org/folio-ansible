@@ -88,6 +88,8 @@ folio_modules:
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
         value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: GLOBAL_S3_SECRET_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
       - name: AWS_REGION
@@ -352,6 +354,8 @@ folio_modules:
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
+        value: "{{ erm_aws_secret | default('minioadmin') }}"
+      - name: GLOBAL_S3_SECRET_KEY
         value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: AWS_URL
         value: "{{ erm_aws_url | default('https://s3.amazonaws.com') }}"
