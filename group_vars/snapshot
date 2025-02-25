@@ -86,8 +86,6 @@ folio_modules:
         value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=67.0 -XX:+PrintFlagsFinal"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
-      - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: GLOBAL_S3_SECRET_KEY
         value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: AWS_URL
@@ -353,8 +351,6 @@ folio_modules:
         value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
-      - name: AWS_SECRET_ACCESS_KEY
-        value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: GLOBAL_S3_SECRET_KEY
         value: "{{ erm_aws_secret | default('minioadmin') }}"
       - name: AWS_URL
