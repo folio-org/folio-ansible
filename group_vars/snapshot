@@ -527,6 +527,11 @@ folio_modules:
 
   - name: mod-requests-mediated
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
 
   - name: mod-rtac
     deploy: yes
