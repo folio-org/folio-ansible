@@ -13,6 +13,7 @@ module_database: okapi_modules
 # Kafka setup
 kafka_host: "{{ ansible_default_ipv4.address }}"
 kafka_port: 9092
+kafka_port_2: 9093
 kafka_topic_env: "FOLIO"
 
 # Elasticsearch setup
@@ -27,6 +28,7 @@ module_env:
   - { name: DB_PASSWORD, value: "{{ pg_admin_password }}" }
   - { name: KAFKA_HOST, value: "{{ kafka_host }}" }
   - { name: KAFKA_PORT, value: "{{ kafka_port }}" }
+  - { name: KAFKA_PORT_2, value: "{{ kafka_port_2 }}" }
   - { name: ENV, value: "{{ kafka_topic_env }}" }
   - { name: ELASTICSEARCH_HOST, value: "{{ elasticsearch_host }}" }
   - { name: ELASTICSEARCH_PORT, value: "{{ elasticsearch_port }}" }
