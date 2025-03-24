@@ -27,6 +27,7 @@ db_password: password
 db_username: folio_admin
 kafka_host: kafka
 kafka_port: 9092
+kafka_port_2: 9093
 
 # Kubernetes Secret Names for Backend Module DB and Kafka ENV
 db_secret_name: db-connect
