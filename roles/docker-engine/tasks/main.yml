@@ -41,13 +41,13 @@
   become: yes
   apt:
     name:
-      - docker-ce={{ docker_version }}
-      - docker-ce-cli={{ docker_version }}
+      - docker-ce
+      - docker-ce-cli
       - containerd.io
 
 - name: Create /etc/docker
   become: yes
-  file: 
+  file:
     path: /etc/docker
     state: directory
     owner: root
