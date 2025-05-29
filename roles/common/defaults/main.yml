@@ -19,5 +19,4 @@ folio_apt_repos:
   - focal
 
 # postgresql client version.  Stay in sync with server.
-pg_client_pkg: postgresql-client-12
-
+pg_client_pkg: postgresql-client-14
