@@ -548,6 +548,8 @@ folio_modules:
         value: "{{ okapi_url }}"
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0"
+      - name: ELASTICSEARCH_SERVER
+        value: "true"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
       - name: SYSTEM_USER_NAME
