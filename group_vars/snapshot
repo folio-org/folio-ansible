@@ -102,9 +102,9 @@ folio_modules:
 
   - name: mod-authtoken
     deploy: yes
-    docker_env:
-      - name: TOKEN_EXPIRATION_SECONDS
-        value: "tenantId:diku,accessToken:600,refreshToken:3600"
+#    docker_env:
+#      - name: TOKEN_EXPIRATION_SECONDS
+#        value: "tenantId:diku,accessToken:600,refreshToken:3600"
 
   - name: mod-batch-print
     deploy: yes
