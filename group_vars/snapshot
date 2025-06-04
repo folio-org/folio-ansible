@@ -102,6 +102,9 @@ folio_modules:
 
   - name: mod-authtoken
     deploy: yes
+    docker_env:
+      - name: TOKEN_EXPIRATION_SECONDS
+        value: "accessToken:600,refreshToken:1800"
 
   - name: mod-batch-print
     deploy: yes
