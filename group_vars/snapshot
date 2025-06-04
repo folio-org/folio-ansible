@@ -104,7 +104,7 @@ folio_modules:
     deploy: yes
     docker_env:
       - name: TOKEN_EXPIRATION_SECONDS
-        value: "accessToken:600,refreshToken:1800"
+        value: "accessToken:1800,refreshToken:1800"
       - name: LEGACY_TOKEN_TENANTS
         value: "*"
 
