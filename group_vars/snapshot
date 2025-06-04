@@ -105,6 +105,8 @@ folio_modules:
     docker_env:
       - name: TOKEN_EXPIRATION_SECONDS
         value: "accessToken:600,refreshToken:1800"
+      - name: LEGACY_TOKEN_TENANTS
+        value: "*"
 
   - name: mod-batch-print
     deploy: yes
