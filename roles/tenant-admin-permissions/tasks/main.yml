@@ -17,7 +17,7 @@
   # cql query for cql.allRecords=1 not permissionName==okapi.* not permissionName==modperms.* not permissionName==SYS#* not permissionName==ui-tenant-settings.settings.locale
   # avoiding ui-tenant-settings.settings.locale will, hopefully, deter folks from changing the locale in the reference environments
   uri:
-    url: "{{ okapi_url }}/perms/permissions?query=cql.allRecords%3D1%20not%20permissionName%3D%3Dokapi.%2A%20not%20permissionName%3D%3Dperms.users.assign.okapi%20not%20permissionName%3D%3Dmodperms.%2A    %20not%20permissionName%3D%3DSYS%23%2A%20not%20permissionName%3D%3Dui-tenant-settings.settings.locale&length=5000"
+    url: "{{ okapi_url }}%2Fperms%2Fpermissions%3Fquery%3Dcql.allRecords%3D1%20not%20permissionName%3D%3Dokapi.*%20not%20permissionName%3D%3Dperms.users.assign.okapi%20not%20permissionName%3D%3Dmodperms.*%20not%20permissionName%3D%3DSYS%23*%20not%20permissionName%3D%3Dui-tenant-settings.settings.locale&length=5000"
     method: GET
     headers:
       Accept: "application/json, text/plain"
