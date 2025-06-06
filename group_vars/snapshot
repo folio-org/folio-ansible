@@ -96,6 +96,8 @@ folio_modules:
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
       - name: DB_MAXPOOLSIZE
         value: "20"
+      - name: ENDPOINTS_INCLUDE_STACK_TRACE
+        value: "true"
 
   - name: mod-audit
     deploy: yes
