@@ -369,6 +369,8 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
+      - name: ENDPOINTS_INCLUDE_STACK_TRACE
+        value: "true"
 
   - name: mod-lists
     deploy: yes
@@ -449,6 +451,9 @@ folio_modules:
 
   - name: mod-oa
     deploy: yes
+    docker_env:
+      - name: ENDPOINTS_INCLUDE_STACK_TRACE
+        value: "true"
 
   - name: mod-oai-pmh
     deploy: yes
@@ -567,9 +572,15 @@ folio_modules:
 
   - name: mod-serials-management
     deploy: yes
+    docker_env:
+      - name: ENDPOINTS_INCLUDE_STACK_TRACE
+        value: "true"
 
   - name: mod-service-interaction
     deploy: yes
+    docker_env:
+      - name: ENDPOINTS_INCLUDE_STACK_TRACE
+        value: "true"
 
   - name: mod-settings
     deploy: yes
