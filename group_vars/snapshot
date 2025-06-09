@@ -369,6 +369,8 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
+      - name: DB_MAXPOOLSIZE
+        value: "20"
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
 
@@ -452,6 +454,10 @@ folio_modules:
   - name: mod-oa
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+      - name: DB_MAXPOOLSIZE
+        value: "20"
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
 
@@ -573,12 +579,18 @@ folio_modules:
   - name: mod-serials-management
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+      - name: DB_MAXPOOLSIZE
+        value: "20"
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
 
   - name: mod-service-interaction
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=67.0 -XX:+PrintFlagsFinal"
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
 
