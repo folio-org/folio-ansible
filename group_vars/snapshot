@@ -379,18 +379,20 @@ folio_modules:
     docker_env:
       - name: JAVA_OPTIONS
         value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
-      - name: AWS_URL
+      - name: S3_URL
         value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: AWS_REGION
+      - name: S3_REGION
         value: "{{ aws_region | default('us-east-1') }}"
-      - name: LIST_APP_S3_BUCKET
+      - name: S3_BUCKET
         value: "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
       - name: S3_ACCESS_KEY_ID
         value: "{{ lists_app_aws_id | default('minioadmin') }}"
       - name: S3_SECRET_ACCESS_KEY
         value: "{{ lists_app_aws_secret | default('minioadmin') }}"
-      - name: USE_AWS_SDK
+      - name: S3_IS_AWS
         value: "{{ lists_app_local_aws | default('false') }}"
+      - name: S3_SUB_PATH
+        value: "mod-lists"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
       - name: SYSTEM_USER_PASSWORD
