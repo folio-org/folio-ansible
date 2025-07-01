@@ -104,6 +104,9 @@ folio_modules:
 
   - name: mod-users-bl
     deploy: yes
+    docker_env:
+      - name: EUREKA_LOGIN_PERMS
+        value: "false"
 
   - name: mod-login-saml
     deploy: yes

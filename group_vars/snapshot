@@ -641,6 +641,9 @@ folio_modules:
 
   - name: mod-users-bl
     deploy: yes
+    docker_env:
+      - name: EUREKA_LOGIN_PERMS
+        value: "false"
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
