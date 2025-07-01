@@ -83,8 +83,6 @@
     - create-tenant-admin
     - tenant-admin-permissions
     - set-patron-group
-    - ldp
-    - mod-ldp-config
 
 - name: Configure release build
   hosts: release-core:release
@@ -107,8 +105,6 @@
     - create-tenant-admin
     - tenant-admin-permissions
     - set-patron-group
-    - ldp
-    - mod-ldp-config
 
 # Edge modules
 - name: Set up Okapi to support edge modules

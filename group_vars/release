@@ -43,10 +43,6 @@ tenant_parameters:
   - name: loadSample
     value: "true"
 
-# ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:1.9.0-beta2'
-ldp_derived_tables_version: 'v1.5.3'
-
 # Some modules require special initialization parameters.
 folio_modules:
   - name: mod-agreements
