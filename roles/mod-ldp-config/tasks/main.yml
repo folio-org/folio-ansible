@@ -15,7 +15,7 @@
   register: tenant_admin_login
   when: auth_required
 
-# Configure LDP connection info for mod-ldp
+# Configure LDP connection info
 - name: Configure LDP DB settings
   uri: 
     url: "{{ okapi_url }}/ldp/config/dbinfo"
