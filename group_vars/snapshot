@@ -80,6 +80,7 @@ add_modules:
 # modules to omit enabling even if they are deployed
 omit_enable:
   - mod-circulation-bff
+  - folio_requests-mediated
 
 # modules that need to be deployed
 folio_modules:
