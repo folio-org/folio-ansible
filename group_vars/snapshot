@@ -77,6 +77,10 @@ add_modules:
 #   - module: mod-authtoken
 #     version: v2.0.0
 
+# modules to omit enabling even if they are deployed
+omit_enable:
+  - mod-circulation-bff
+
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
