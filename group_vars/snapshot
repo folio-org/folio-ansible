@@ -554,6 +554,8 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_ENABLED
+        value: "false"
 
   - name: mod-rtac
     deploy: yes
