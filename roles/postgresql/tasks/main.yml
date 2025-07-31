@@ -16,9 +16,15 @@
   become: yes
   apt_key: url=https://www.postgresql.org/media/keys/ACCC4CF8.asc
 
-- name: Install apt repository for PostgreSQL
+- name: Install apt repository for PostgreSQL (focal)
+  become: yes
+  apt_repository: repo="deb http://apt-archive.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release}}-pgdg main"
+  when: ansible_distribution_release == "focal"
+
+- name: Install apt repository for PostgreSQL (newer releases)
   become: yes
   apt_repository: repo="deb http://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release}}-pgdg main"
+  when: ansible_distribution_release != "focal"
 
 - name: Install postgresql from apt
   become: yes
