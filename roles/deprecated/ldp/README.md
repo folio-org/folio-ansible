@@ -1,4 +1,6 @@
-# ldp
+# ldp -- DEPRECATED 6 August 2025
+**Note** ldp is no longer supported software. Please see the successor project of the Library Data Platform, [Metadb](https://github.com/metadb-project/metadb)
+
 Provisions LDP. This sets up an LDP database in postgres, plus an LDP server running in a docker container. See the [LDP Admin Guide](https://github.com/library-data-platform/ldp/blob/master/doc/Admin_Guide.md) for more details. This role performs the database initialization and starts the LDP server software.
 
 ## Requirements

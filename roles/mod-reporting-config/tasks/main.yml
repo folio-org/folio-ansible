@@ -2,11 +2,11 @@
 - wait_for: timeout=5
 
 - name: Login as {{ admin_user.username }}
-  uri: 
+  uri:
     url: "{{ okapi_url }}/authn/login"
     method: POST
     body_format: json
-    headers: 
+    headers:
       X-Okapi-Tenant: "{{ tenant }}"
       Accept: application/json
       Content-Type: application/json
@@ -15,36 +15,35 @@
   register: tenant_admin_login
   when: auth_required
 
-# Configure LDP connection info
-- name: Configure LDP DB settings
-  uri: 
+# Configure reporting database connection info
+- name: Configure mod-reporting DB settings
+  uri:
     url: "{{ okapi_url }}/ldp/config/dbinfo"
     method: PUT
     body_format: json
-    headers: 
+    headers:
       Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: "{{ tenant }}"
       X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
       Content-Type: application/vnd.api+json
     body: '{"key":"dbinfo","tenant":"{{ tenant }}","value":"{\"user\":\"{{ ldp_user }}\",\"url\":\"jdbc:postgresql://{{ pg_host }}:{{ pg_port }}/{{ ldp_db }}\",\"pass\":\"{{ ldp_password }}\"}"}'
     status_code: 200,422
-  register: mod_ldp_config
-  changed_when: mod_ldp_config.status == 200
+  register: mod_reporting_config
+  changed_when: mod_reporting_config.status == 200
 
 # Configure Saved Query repo
 - name: Configure Saved Query repo
-  uri: 
+  uri:
     url: "{{ okapi_url }}/ldp/config/sqconfig"
     method: PUT
     body_format: json
     headers:
       Authtoken-Refresh-Cache: "true"
       X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}" 
+      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
       Content-Type: application/vnd.api+json
     body: '{"key": "sqconfig","tenant":"{{ tenant }}","value":"{\"owner\":\"{{ gh_owner }}\",\"repo\":\"{{ gh_repo }}\",\"token\":\"{{ gh_token }}\"}"}'
     status_code: 200,422
-  register: mod_ldp_sq_config
-  changed_when: mod_ldp_sq_config.status == 200
+  register: mod_reporting_sq_config
+  changed_when: mod_reporting_sq_config.status == 200
   when: enable_saved_query_config
-
