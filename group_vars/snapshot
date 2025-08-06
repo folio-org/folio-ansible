@@ -77,6 +77,11 @@ add_modules:
 #   - module: mod-authtoken
 #     version: v2.0.0
 
+# modules to omit enabling even if they are deployed
+omit_enable:
+  - mod-circulation-bff
+  - folio_requests-mediated
+
 # modules that need to be deployed
 folio_modules:
   - name: mod-agreements
@@ -550,6 +555,8 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=66.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_ENABLED
+        value: "false"
 
   - name: mod-rtac
     deploy: yes

@@ -83,6 +83,7 @@ module_env:
 # Okapi setup
 folio_install_type: single_server
 folio_modules: []
+omit_enable: [] # omit these modules even if they appear in folio_modules
 okapi_port: 9130
 okapi_url: "http://{{ ansible_default_ipv4.address }}:{{ okapi_port }}"
 tenant: diku
