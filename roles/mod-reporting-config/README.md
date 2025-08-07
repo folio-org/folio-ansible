@@ -2,7 +2,7 @@
 
 Configure mod-reporting with tenant reporting database configuration.
 
-mod-reporting is the successor module to mod-ldp. It has the same API as mod-ldp, but provides full support for [Metadb](https://github.com/metadb-project/metadb) reporting databases as well as legacy [ldp](https://github.com/library-data-platform/ldp) reporting databases.
+[mod-reporting](https://github.com/folio-org/mod-reporting) is the successor module to [mod-ldp](https://github.com/folio-org/mod-ldp). It has the same API as mod-ldp, but provides full support for [Metadb](https://github.com/metadb-project/metadb) reporting databases as well as legacy [ldp](https://github.com/library-data-platform/ldp) reporting databases.
 
 Metadb is part of the [Library Data Platform project](https://librarydataplatform.org/) (LDP) of the Open Library Foundation.
 
