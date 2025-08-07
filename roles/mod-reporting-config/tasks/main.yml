@@ -30,20 +30,3 @@
     status_code: 200,422
   register: mod_reporting_config
   changed_when: mod_reporting_config.status == 200
-
-# Configure Saved Query repo
-- name: Configure Saved Query repo
-  uri:
-    url: "{{ okapi_url }}/ldp/config/sqconfig"
-    method: PUT
-    body_format: json
-    headers:
-      Authtoken-Refresh-Cache: "true"
-      X-Okapi-Tenant: "{{ tenant }}"
-      X-Okapi-Token: "{{ tenant_admin_login.x_okapi_token | default('token') }}"
-      Content-Type: application/vnd.api+json
-    body: '{"key": "sqconfig","tenant":"{{ tenant }}","value":"{\"owner\":\"{{ gh_owner }}\",\"repo\":\"{{ gh_repo }}\",\"token\":\"{{ gh_token }}\"}"}'
-    status_code: 200,422
-  register: mod_reporting_sq_config
-  changed_when: mod_reporting_sq_config.status == 200
-  when: enable_saved_query_config

@@ -24,12 +24,4 @@ tenant: diku
 ldp_user: ldp
 ldp_db: ldp
 ldp_password: diku_ldp9367
-
-# Enable saved query config. Default is 'false'
-enable_saved_query_config: false
-
-# Set the following if 'enable_saved_query_config' is set to true
-#gh_owner:
-#gh_repo:
-#gh_token:
 ```
