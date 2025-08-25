@@ -1,5 +1,5 @@
 elasticsearch_version: 8.17.4
-elasticsearch_image: docker.io/bitnami/elasticsearch
+elasticsearch_image: docker.io/bitnamilegacy/elasticsearch
 elasticsearch_image_tag: "{{ elasticsearch_version }}"
 # non-standard host port mapping, see FOLIO-2997
 elasticsearch_host_rest_port: 9301
