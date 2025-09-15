@@ -145,6 +145,9 @@ folio_modules:
 
   - name: mod-circulation
     deploy: yes
+    docker_env:
+      - name: ENABLE_FOR_USE_AT_LOCATION
+        value: "true"
 
   - name: mod-circulation-bff
     deploy: yes
