@@ -6,17 +6,17 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2024/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R2-2024/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-1/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-1/stripes-install.json
 
 # pin Node.js to supported version
-nodejs_version: v18
+nodejs_version: v20
 
 # used in create-tenant-admin role
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 6.1.3
+okapi_version: 6.2.5
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
@@ -44,17 +44,11 @@ tenant_parameters:
   - name: loadSample
     value: "true"
 
-# ldp
-ldp_docker_image: 'ghcr.io/library-data-platform/ldp:2.1.0'
-ldp_derived_tables_version: 'v1.7.9'
-
 # Some modules require special initialization parameters.
 folio_modules:
   - name: mod-agreements
     deploy: yes
     docker_env:
-      - name: CONTAINER_MAX_MEMORY
-        value: "1610612736"
       - name: JAVA_OPTIONS
         value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=67.0 -XX:+PrintFlagsFinal"
       - name: AWS_ACCESS_KEY_ID
@@ -68,7 +62,7 @@ folio_modules:
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
       - name: DB_MAXPOOLSIZE
-        value: "20"
+        value: "50"
 
   - name: mod-bulk-operations
     deploy: yes
@@ -87,6 +81,12 @@ folio_modules:
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
       - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "mod-bulk-operations-system-user"
+      - name: SYSTEM_USER_PASSWORD
+        value: "mod-bulk-operations-system-user"
 
   - name: mod-circulation-item
     deploy: yes
@@ -95,17 +95,6 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=75.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
-
-  - name: mod-circulation-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-configuration
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
 
   - name: mod-data-export
     deploy: yes
@@ -150,16 +139,6 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
-      - name: LOCAL_FS_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('minioadmin') }}"
-      - name: LOCAL_FS_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('minioadmin') }}"
-      - name: LOCAL_FS_URL
-        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: LOCAL_FS_REGION
-        value: "{{ aws_region | default('us-east-1') }}"
-      - name: LOCAL_FS_BUCKET
-        value: "{{ data_export_local_bucket_name | default('data-export-local-bucket') }}"
       - name: LOCAL_FS_COMPOSE_WITH_AWS_SDK
         value: "{{ data_export_local_aws | default('false') }}"
 
@@ -180,6 +159,23 @@ folio_modules:
         value: "-XX:MaxRAMPercentage=85.0"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-entities-links"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-entities-links"
+        # Note that S3 bucket must be shared with mod-marc-migrations
+      - name: S3_URL
+        value: "{{ mod_marc_migrations_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ mod_marc_migrations_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ mod_marc_migrations_bucket_name | default('mod-marc-migrations-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ mod_marc_migrations_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ mod_marc_migrations_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ mod_marc_migrations_local_aws | default('false') }}"
 
   - name: mod-erm-usage-harvester
     deploy: yes
@@ -193,28 +189,31 @@ folio_modules:
       - name: DIKU_USER_PASS
         value: "mod-erm-usage-harvester"
 
-  - name: mod-feesfines
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-    deploy: yes
-
-  - name: mod-finance-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
   - name: mod-inventory-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
     deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+        # Note that S3 bucket must be shared with mod-marc-migrations
+      - name: S3_URL
+        value: "{{ mod_marc_migrations_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ mod_marc_migrations_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ mod_marc_migrations_bucket_name | default('mod-marc-migrations-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ mod_marc_migrations_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ mod_marc_migrations_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ mod_marc_migrations_local_aws | default('false') }}"
+
 
   - name: mod-licenses
     deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
-        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=55.0 -XX:+PrintFlagsFinal"
+        value: "-server -XX:+UseContainerSupport -XX:MaxRAMPercentage=50.0 -XX:+PrintFlagsFinal"
       - name: AWS_ACCESS_KEY_ID
         value: "{{ erm_aws_id | default('minioadmin') }}"
       - name: AWS_SECRET_ACCESS_KEY
@@ -225,6 +224,8 @@ folio_modules:
         value: "{{ aws_region | default('us-east-1') }}"
       - name: AWS_BUCKET
         value: "{{ erm_bucket_name | default('erm-bucket') }}"
+      - name: DB_MAXPOOLSIZE
+        value: "50"
 
   - name: mod-lists
     deploy: yes
@@ -251,8 +252,6 @@ folio_modules:
   - name: mod-login
     docker_cmd:
       - "verify.user=true"
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
     deploy: yes
     docker_env:
       - name: JAVA_OPTIONS
@@ -268,9 +267,35 @@ folio_modules:
       - name: LOGIN_COOKIE_SAMESITE
         value: "None"
 
+  - name: mod-marc-migrations
+    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=85.0"
+      - name: OKAPI_URL
+        value: "{{ okapi_url }}"
+      - name: SYSTEM_USER_NAME
+        value: "system-user-mod-marc-migrations"
+      - name: SYSTEM_USER_PASSWORD
+        value: "system-user-mod-marc-migrations"
+      - name: S3_URL
+        value: "{{ mod_marc_migrations_aws_url | default('https://s3.amazonaws.com') }}"
+      - name: S3_REGION
+        value: "{{ mod_marc_migrations_region | default('us-east-1') }}"
+      - name: S3_BUCKET
+        value: "{{ mod_marc_migrations_bucket_name | default('mod-marc-migrations-bucket') }}"
+      - name: S3_ACCESS_KEY_ID
+        value: "{{ mod_marc_migrations_aws_id | default('minioadmin') }}"
+      - name: S3_SECRET_ACCESS_KEY
+        value: "{{ mod_marc_migrations_aws_secret | default('minioadmin') }}"
+      - name: S3_IS_AWS
+        value: "{{ mod_marc_migrations_local_aws | default('false') }}"
+
   - name: mod-oai-pmh
     deploy: yes
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0 -Dfile.encoding=UTF-8"
       - name: S3_URL
         value: "{{ oai_pmh_aws_url | default('https://s3.amazonaws.com') }}"
       - name: S3_REGION
@@ -283,17 +308,6 @@ folio_modules:
         value: "{{ oai_pmh_aws_secret | default('minioadmin') }}"
       - name: S3_IS_AWS
         value: "{{ oai_pmh_local_aws | default('false') }}"
-
-  - name: mod-orders-storage
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
-    deploy: yes
-
-  - name: mod-organizations-storage
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
 
   - name: mod-pubsub
     deploy: yes
@@ -325,12 +339,12 @@ folio_modules:
       - name: runReindex
         value: "true"
     docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=85.0"
       - name: ELASTICSEARCH_URL
         value: "http://{{ ansible_default_ipv4.address }}:9301"
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0"
       - name: SEARCH_BY_ALL_FIELDS_ENABLED
         value: "true"
       - name: SYSTEM_USER_NAME
@@ -346,23 +360,20 @@ folio_modules:
       - name: OKAPI_URL
         value: "{{ okapi_url }}"
 
-  - name: mod-tags
-    tenant_parameters:
-      - { name: loadSample, value: "true" }
+  - name: mod-users-bl
     deploy: yes
-
-  - name: mod-users
-    tenant_parameters:
-      - { name: loadReference, value: "true" }
-      - { name: loadSample, value: "true" }
-    deploy: yes
+    docker_env:
+      - name: JAVA_OPTIONS
+        value: "-XX:MaxRAMPercentage=66.0"
+      - name: EUREKA_LOGIN_PERMS
+        value: "false"
 
 # edge module setup
 edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R2-2024-csp-6
+stripes_github_version: R1-2025-okapi-csp-1
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
@@ -377,4 +388,4 @@ version_descr: |
 
   Admin login: diku_admin/admin
 
-  R2-2024 (Ramsons) release version of the FOLIO platform, built from R2-2024 release artifacts, with all updates [Ramsons release notes](https://folio-org.atlassian.net/wiki/spaces/REL/pages/105710217/Ramsons+R2+2024+Release+Notes). For details see http://localhost:3000/settings/about after `vagrant up`.
+  R1-2025 (Sunflower) release version of the FOLIO platform, built from R1-2025 release artifacts, with all updates [Sunflower release notes](https://folio-org.atlassian.net/wiki/x/qoDJFw). For details see http://localhost:3000/settings/about after `vagrant up`.
