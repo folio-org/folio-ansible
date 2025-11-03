@@ -373,7 +373,7 @@ edge_docker_repo: folioorg
 
 # Variables for building UI
 stripes_github_project: https://github.com/folio-org/platform-complete
-stripes_github_version: R1-2025-okapi-csp-1
+stripes_github_version: R1-2025-okapi
 folio_npm_repo: npm-folio
 platform_remove_lock: false
 with_sourcemap: false
