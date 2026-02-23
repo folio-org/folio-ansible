@@ -27,3 +27,6 @@
   shell: "n {{nodejs_version}} && touch .set_nodedefault_ansible"
   args:
     creates: .set_nodedefault_ansible
+
+- name: Report the Node.js version
+  shell: "node --version"
