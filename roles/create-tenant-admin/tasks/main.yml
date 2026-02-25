@@ -68,6 +68,7 @@
             "id": "{{ admin_user_id }}",
             "username": "{{ admin_user.username }}",
             "active": true,
+            "type": "staff",
             "personal": {
               "lastName": "{{ admin_user.last_name|default('') }}",
               "firstName": "{{ admin_user.first_name|default('') }}",
