@@ -44,7 +44,7 @@ add_modules:
   - mod-batch-print
 # - mod-bulk-operations
 # - mod-circulation-bff
-  - mod-circulation-item
+# - mod-circulation-item
   - mod-consortia
   - mod-copycat
 # - mod-dcb
@@ -80,6 +80,7 @@ add_modules:
 # modules to omit enabling even if they are deployed
 omit_enable:
   - mod-circulation-bff
+  - mod-circulation-item
   - mod-bulk-operations
   - mod-dcb
   - mod-fqm-manager
@@ -165,13 +166,13 @@ folio_modules:
   #     - name: OKAPI_URL
   #       value: "{{ okapi_url }}"
 
-  - name: mod-circulation-item
-    deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=75.0"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
+  # - name: mod-circulation-item
+  #   deploy: yes
+  #   docker_env:
+  #     - name: JAVA_OPTIONS
+  #       value: "-XX:MaxRAMPercentage=75.0"
+  #     - name: OKAPI_URL
+  #       value: "{{ okapi_url }}"
 
   - name: mod-circulation-storage
     tenant_parameters:
