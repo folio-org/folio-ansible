@@ -42,23 +42,23 @@ add_modules:
   - edge-inn-reach
   # MISSING: edge-sip2
   - mod-batch-print
-  - mod-bulk-operations
-  - mod-circulation-bff
+# - mod-bulk-operations
+# - mod-circulation-bff
   - mod-circulation-item
   - mod-consortia
   - mod-copycat
-  - mod-dcb
+# - mod-dcb
   - mod-di-converter-storage
   - mod-data-export-spring
   - mod-data-export-worker
   - mod-ebsconet
   - mod-entities-links
   - mod-erm-usage-harvester
-  - mod-fqm-manager
+# - mod-fqm-manager
   - mod-gobi
   - mod-graphql
-  - mod-lists
- # - mod-marc-migrations
+# - mod-lists
+# - mod-marc-migrations
   - mod-ncip
   - mod-oa
   - mod-oai-pmh
@@ -124,29 +124,29 @@ folio_modules:
   - name: mod-batch-print
     deploy: yes
 
-  - name: mod-bulk-operations
-    deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
-      - name: S3_ACCESS_KEY_ID
-        value: "{{ data_export_aws_id | default('minioadmin') }}"
-      - name: S3_SECRET_ACCESS_KEY
-        value: "{{ data_export_aws_secret | default('minioadmin') }}"
-      - name: S3_URL
-        value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: S3_REGION
-        value: "{{ aws_region | default('us-east-1') }}"
-      - name: S3_BUCKET
-        value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
-      - name: S3_IS_AWS
-        value: "{{ data_export_local_aws | default('false') }}"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
-      - name: SYSTEM_USER_NAME
-        value: "mod-bulk-operations-system-user"
-      - name: SYSTEM_USER_PASSWORD
-        value: "mod-bulk-operations-system-user"
+  # - name: mod-bulk-operations
+  #   deploy: yes
+  #   docker_env:
+  #     - name: JAVA_OPTIONS
+  #       value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+  #     - name: S3_ACCESS_KEY_ID
+  #       value: "{{ data_export_aws_id | default('minioadmin') }}"
+  #     - name: S3_SECRET_ACCESS_KEY
+  #       value: "{{ data_export_aws_secret | default('minioadmin') }}"
+  #     - name: S3_URL
+  #       value: "{{ data_export_aws_url | default('https://s3.amazonaws.com') }}"
+  #     - name: S3_REGION
+  #       value: "{{ aws_region | default('us-east-1') }}"
+  #     - name: S3_BUCKET
+  #       value: "{{ data_export_bucket_name | default('data-export-bucket') }}"
+  #     - name: S3_IS_AWS
+  #       value: "{{ data_export_local_aws | default('false') }}"
+  #     - name: OKAPI_URL
+  #       value: "{{ okapi_url }}"
+  #     - name: SYSTEM_USER_NAME
+  #       value: "mod-bulk-operations-system-user"
+  #     - name: SYSTEM_USER_PASSWORD
+  #       value: "mod-bulk-operations-system-user"
 
   - name: mod-calendar
     deploy: yes
@@ -157,13 +157,13 @@ folio_modules:
       - name: ENABLE_FOR_USE_AT_LOCATION
         value: "true"
 
-  - name: mod-circulation-bff
-    deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
+  # - name: mod-circulation-bff
+  #   deploy: yes
+  #   docker_env:
+  #     - name: JAVA_OPTIONS
+  #       value: "-XX:MaxRAMPercentage=66.0"
+  #     - name: OKAPI_URL
+  #       value: "{{ okapi_url }}"
 
   - name: mod-circulation-item
     deploy: yes
@@ -251,15 +251,15 @@ folio_modules:
   - name: mod-data-import
     deploy: yes
 
-  - name: mod-dcb
-    deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
-      - name: SYSTEM_USER_PASSWORD
-        value: dcb-system-user
+  # - name: mod-dcb
+  #   deploy: yes
+  #   docker_env:
+  #     - name: JAVA_OPTIONS
+  #       value: "-XX:MaxRAMPercentage=66.0"
+  #     - name: OKAPI_URL
+  #       value: "{{ okapi_url }}"
+  #     - name: SYSTEM_USER_PASSWORD
+  #       value: dcb-system-user
 
   - name: mod-di-converter-storage
     deploy: yes
@@ -329,8 +329,8 @@ folio_modules:
   - name: mod-finance
     deploy: yes
 
-  - name: mod-fqm-manager
-    deploy: yes
+  # - name: mod-fqm-manager
+  #   deploy: yes
 
   - name: mod-gobi
     deploy: yes
@@ -390,29 +390,29 @@ folio_modules:
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
 
-  - name: mod-lists
-    deploy: yes
-    docker_env:
-      - name: JAVA_OPTIONS
-        value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
-      - name: S3_URL
-        value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
-      - name: S3_REGION
-        value: "{{ aws_region | default('us-east-1') }}"
-      - name: S3_BUCKET
-        value: "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
-      - name: S3_ACCESS_KEY_ID
-        value: "{{ lists_app_aws_id | default('minioadmin') }}"
-      - name: S3_SECRET_ACCESS_KEY
-        value: "{{ lists_app_aws_secret | default('minioadmin') }}"
-      - name: S3_IS_AWS
-        value: "{{ lists_app_local_aws | default('false') }}"
-      - name: S3_SUB_PATH
-        value: "mod-lists"
-      - name: OKAPI_URL
-        value: "{{ okapi_url }}"
-      - name: SYSTEM_USER_PASSWORD
-        value: "system-user-mod-lists"
+  # - name: mod-lists
+  #   deploy: yes
+  #   docker_env:
+  #     - name: JAVA_OPTIONS
+  #       value: "-XX:MaxRAMPercentage=66.0 -XX:MetaspaceSize=384m -XX:MaxMetaspaceSize=512m -Xmx2048m"
+  #     - name: S3_URL
+  #       value: "{{ lists_app_aws_url | default('https://s3.amazonaws.com') }}"
+  #     - name: S3_REGION
+  #       value: "{{ aws_region | default('us-east-1') }}"
+  #     - name: S3_BUCKET
+  #       value: "{{ lists_app_bucket_name | default('lists-app-bucket') }}"
+  #     - name: S3_ACCESS_KEY_ID
+  #       value: "{{ lists_app_aws_id | default('minioadmin') }}"
+  #     - name: S3_SECRET_ACCESS_KEY
+  #       value: "{{ lists_app_aws_secret | default('minioadmin') }}"
+  #     - name: S3_IS_AWS
+  #       value: "{{ lists_app_local_aws | default('false') }}"
+  #     - name: S3_SUB_PATH
+  #       value: "mod-lists"
+  #     - name: OKAPI_URL
+  #       value: "{{ okapi_url }}"
+  #     - name: SYSTEM_USER_PASSWORD
+  #       value: "system-user-mod-lists"
 
   - name: mod-login
     docker_cmd:
