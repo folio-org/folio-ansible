@@ -83,7 +83,9 @@ omit_enable:
   - mod-circulation-item
   - mod-bulk-operations
   - mod-dcb
+  - edge-dcb
   - mod-fqm-manager
+  - edge-fqm
   - mod-lists
   - folio_requests-mediated
   - folio_bulk-edit
