@@ -54,7 +54,7 @@ add_modules:
   - mod-ebsconet
   - mod-entities-links
   - mod-erm-usage-harvester
-# - mod-fqm-manager
+  - mod-fqm-manager
   - mod-gobi
   - mod-graphql
 # - mod-lists
@@ -85,13 +85,10 @@ omit_enable:
   - mod-dcb
   - mod-tlr
   - edge-dcb
-  - mod-fqm-manager
-  - edge-fqm
   - mod-lists
   - folio_requests-mediated
   - folio_bulk-edit
   - folio_lists
-  - folio_plugin-query-builder
   
 
 # modules that need to be deployed
@@ -333,8 +330,8 @@ folio_modules:
   - name: mod-finance
     deploy: yes
 
-  # - name: mod-fqm-manager
-  #   deploy: yes
+  - name: mod-fqm-manager
+    deploy: yes
 
   - name: mod-gobi
     deploy: yes
