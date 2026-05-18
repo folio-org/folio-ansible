@@ -112,6 +112,8 @@ folio_modules:
         value: "20"
       - name: ENDPOINTS_INCLUDE_STACK_TRACE
         value: "true"
+      - name: ACCESSCONTROL_ACQUNITS_ENABLED
+        value: "false"
 
   - name: mod-audit
     deploy: yes
