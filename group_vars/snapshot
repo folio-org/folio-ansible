@@ -466,11 +466,7 @@ folio_modules:
 
   - name: mod-notes
     deploy: yes
-    docker_env:
-      - name: KAFKA_PORT
-        value: "9092"
-      - name: KAFKA_EXTERNAL_PORT
-        value: "9093"    
+#   docker_env:
 
   - name: mod-notify
     deploy: yes
