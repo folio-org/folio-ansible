@@ -465,9 +465,12 @@ folio_modules:
     deploy: yes
 
   - name: mod-notes
-#    docker_env:
-#      - { name: JAVA_OPTIONS, value: "-XX:MaxRAMPercentage=66.0" }
     deploy: yes
+    docker_env:
+      - name: KAFKA_PORT
+        value: "9092"
+      - name: KAFKA_EXTERNAL_PORT
+        value: "9093"    
 
   - name: mod-notify
     deploy: yes
