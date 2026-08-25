@@ -6,8 +6,8 @@ enable_okapi: true
 folio_install_type: single_server
 minio_port: 9500
 
-deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-8/okapi-install.json
-enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-8/stripes-install.json
+deploy_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-9/okapi-install.json
+enable_url: https://raw.githubusercontent.com/folio-org/platform-complete/R1-2025-okapi-csp-9/stripes-install.json
 
 # pin Node.js to supported version
 nodejs_version: v20
@@ -16,7 +16,7 @@ nodejs_version: v20
 perms_users_assign: true
 
 update_launch_descr: true
-okapi_version: 6.2.8
+okapi_version: 6.2.10
 okapi_docker_org: folioorg
 okapi_java_opts:
   - "-Ddeploy.waitIterations=90"
