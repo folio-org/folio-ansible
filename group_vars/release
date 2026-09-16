@@ -88,6 +88,14 @@ folio_modules:
       - name: S3_IS_AWS
         value: "{{ data_export_local_aws | default('false') }}"
 
+  - name: mod-circulation
+    deploy: yes
+    docker_env:
+      - name: ENABLE_FOR_USE_AT_LOCATION
+        value: "true"
+      - name: ENABLE_FLOATING_COLLECTIONS
+        value: "true"
+
   - name: mod-circulation-item
     deploy: yes
     docker_env:
